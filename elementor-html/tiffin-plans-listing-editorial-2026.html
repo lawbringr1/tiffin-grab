@@ -29,22 +29,30 @@
     .e-con-inner:has(#tg-tplans-2026) {
       overflow: visible !important;
       max-width: none !important;
-      background-color: #fef8f3 !important;
+      background-color: #fffbf7 !important;
       background-image: none !important;
     }
 
     .tg-tplans {
-      --tp-primary: #a23900;
-      --tp-primary-mid: #b8430d;
+      /* Brand orange (Home 2026 / site) — avoids rust + pink-tinted panels */
+      --tp-primary: #f06b1a;
+      --tp-primary-mid: #d3540f;
       --tp-on-primary: #ffffff;
-      --tp-surface: #fef8f3;
+      --tp-surface: #fffbf7;
       --tp-card: #ffffff;
-      --tp-panel: #fdf0e8;
-      --tp-panel-2: #f2ede8;
+      --tp-panel: #fff3e8;
+      --tp-panel-2: #f7f2eb;
       --tp-on: #1d1b19;
       --tp-muted: #5c5854;
       --tp-ghost: rgba(29, 27, 25, 0.14);
       --tp-shadow: 0 24px 48px rgba(29, 27, 25, 0.06);
+      --tp-orange-a12: rgba(240, 107, 26, 0.12);
+      --tp-orange-a18: rgba(240, 107, 26, 0.18);
+      --tp-orange-a22: rgba(240, 107, 26, 0.22);
+      --tp-orange-a28: rgba(240, 107, 26, 0.28);
+      --tp-orange-a35: rgba(240, 107, 26, 0.35);
+      --tp-orange-a45: rgba(240, 107, 26, 0.45);
+      --tp-orange-fill: rgba(240, 107, 26, 0.09);
       --tp-font-display: "Sora", system-ui, sans-serif;
       --tp-font-body: "DM Sans", system-ui, sans-serif;
       font-family: var(--tp-font-body);
@@ -143,7 +151,7 @@
     .tg-tplans-filter[aria-pressed="true"] {
       background: linear-gradient(180deg, var(--tp-primary) 0%, var(--tp-primary-mid) 100%);
       color: var(--tp-on-primary);
-      box-shadow: 0 12px 28px rgba(162, 57, 0, 0.22);
+      box-shadow: 0 12px 28px var(--tp-orange-a22);
     }
 
     .tg-tplans-grid {
@@ -198,18 +206,19 @@
       font-family: var(--tp-font-display);
     }
     .tg-tplans-body {
-      padding: 1.5rem;
+      padding: 1.35rem 1.5rem 1.65rem;
       display: flex;
       flex-direction: column;
       flex: 1;
-      gap: 0;
+      gap: 0.2rem;
     }
     .tg-tplans-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       gap: 1rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
+      margin-top: 0.15rem;
     }
     .tg-tplans-name {
       font-family: var(--tp-font-display);
@@ -231,7 +240,8 @@
       font-size: 0.875rem;
       color: var(--tp-muted);
       line-height: 1.55;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+      margin-top: 0.2rem;
     }
     .tg-tplans-read {
       align-self: flex-start;
@@ -246,33 +256,35 @@
       font-weight: 700;
       color: var(--tp-primary);
       cursor: pointer;
-      margin-bottom: 1rem;
+      margin-bottom: 1.1rem;
     }
     .tg-tplans-read:hover {
       text-decoration: underline;
+      color: var(--tp-primary-mid);
     }
 
     .tg-tplans-actions {
       margin-top: auto;
-      padding-top: 1.25rem;
+      padding-top: 1.35rem;
       background: linear-gradient(to top, var(--tp-card) 70%, transparent);
     }
     .tg-tplans-quick {
       width: 100%;
       padding: 0.95rem 1rem;
       border-radius: 12px;
-      border: 1px solid rgba(162, 57, 0, 0.22);
+      border: 1px solid var(--tp-orange-a22);
       background: var(--tp-panel);
       color: var(--tp-primary);
       font-family: var(--tp-font-display);
       font-weight: 700;
       font-size: 0.9375rem;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, transform 0.15s;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
     }
     .tg-tplans-quick:hover {
       background: var(--tp-primary);
       color: var(--tp-on-primary);
+      border-color: var(--tp-primary-mid);
       transform: scale(0.99);
     }
     .tg-tplans-quick:disabled {
@@ -281,12 +293,12 @@
     }
 
     .tg-tplans-config {
-      margin-top: 1.25rem;
-      padding-top: 1.25rem;
+      margin-top: 1.35rem;
+      padding-top: 1.5rem;
       border-top: 1px dashed rgba(29, 27, 25, 0.16);
       display: none;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.5rem;
     }
     .tg-tplans-card--open .tg-tplans-config {
       display: flex;
@@ -302,7 +314,8 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--tp-muted);
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.75rem;
+      margin-top: 0.15rem;
       font-family: var(--tp-font-body);
     }
     .tg-tplans-seg {
@@ -327,6 +340,10 @@
       color: var(--tp-on-primary);
       border-color: transparent;
     }
+    .tg-tplans-seg button:hover:not([aria-pressed="true"]) {
+      background: #f2ebe3;
+      border-color: var(--tp-orange-a18);
+    }
 
     .tg-tplans-days {
       display: grid;
@@ -348,9 +365,13 @@
       text-align: left;
       transition: border-color 0.2s, background 0.2s;
     }
+    .tg-tplans-daybtn:hover:not([aria-pressed="true"]) {
+      background: #faf7f3;
+      border-color: var(--tp-orange-a28);
+    }
     .tg-tplans-daybtn[aria-pressed="true"] {
-      border-color: rgba(162, 57, 0, 0.45);
-      background: rgba(162, 57, 0, 0.06);
+      border-color: var(--tp-orange-a45);
+      background: var(--tp-orange-fill);
     }
     .tg-tplans-daybtn .material-symbols-outlined,
     .tg-tplans-daybtn .tg-tplans-icon {
@@ -372,7 +393,7 @@
     }
     .tg-tplans-select:focus,
     .tg-tplans-date:focus {
-      outline: 2px solid rgba(162, 57, 0, 0.35);
+      outline: 2px solid var(--tp-orange-a35);
       outline-offset: 1px;
     }
     .tg-tplans-field-wrap {
@@ -393,16 +414,16 @@
     }
 
     .tg-tplans-breakdown {
-      padding: 1rem;
+      padding: 1.35rem 1.45rem 1.4rem;
       border-radius: 14px;
       background: var(--tp-panel);
-      border: 1px solid rgba(162, 57, 0, 0.12);
+      border: 1px solid var(--tp-orange-a12);
     }
     .tg-tplans-breakdown-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.85rem;
     }
     .tg-tplans-breakdown-top span {
       font-size: 0.625rem;
@@ -417,11 +438,12 @@
     .tg-tplans-breakdown-rows > div {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.45;
     }
     .tg-tplans-breakdown-total {
-      margin-top: 0.65rem;
-      padding-top: 0.65rem;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
       border-top: 1px dashed rgba(29, 27, 25, 0.14);
       display: flex;
       justify-content: space-between;
@@ -453,11 +475,12 @@
       color: var(--tp-on-primary);
       background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
       cursor: pointer;
-      box-shadow: 0 14px 32px rgba(162, 57, 0, 0.25);
+      box-shadow: 0 14px 32px var(--tp-orange-a28);
       transition: opacity 0.2s, transform 0.15s;
     }
-    .tg-tplans-submit:hover {
-      opacity: 0.94;
+    .tg-tplans-submit:hover:not(:disabled) {
+      opacity: 0.95;
+      filter: brightness(1.03);
     }
     .tg-tplans-submit:active {
       transform: scale(0.98);
@@ -476,8 +499,17 @@
       border: none;
       cursor: pointer;
       text-decoration: underline;
-      padding: 0;
-      margin-bottom: -0.5rem;
+      padding: 0.15rem 0;
+      margin: 0 0 0.5rem 0;
+    }
+    .tg-tplans-close:hover {
+      color: var(--tp-primary);
+    }
+
+    .tg-tplans-config-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
 
     .tg-tplans-pager {
