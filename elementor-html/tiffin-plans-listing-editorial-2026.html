@@ -543,6 +543,118 @@
       cursor: default;
     }
 
+    /*
+      Elementor / Hello / kit often sets button:hover { color: #fff !important } globally.
+      That leaves white text on our light peach buttons. Force readable pairs under #tg-tplans-2026.
+    */
+    #tg-tplans-2026 button.tg-tplans-filter {
+      color: #1d1b19 !important;
+      background: #ffffff !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #tg-tplans-2026 button.tg-tplans-filter:hover:not([aria-pressed="true"]) {
+      color: #1d1b19 !important;
+      background: #faf7f3 !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-filter[aria-pressed="true"] {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-filter[aria-pressed="true"]:hover {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+      filter: brightness(1.06);
+    }
+
+    #tg-tplans-2026 button.tg-tplans-quick {
+      color: #f06b1a !important;
+      background: #fff3e8 !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick:hover:not(:disabled) {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+      border-color: #d3540f !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick:disabled {
+      color: #f06b1a !important;
+    }
+
+    #tg-tplans-2026 button.tg-tplans-read {
+      color: #f06b1a !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-read:hover {
+      color: #d3540f !important;
+      background: transparent !important;
+    }
+
+    #tg-tplans-2026 .tg-tplans-seg > button {
+      color: #1d1b19 !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button:hover:not([aria-pressed="true"]) {
+      color: #1d1b19 !important;
+      background: #f2ebe3 !important;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button[aria-pressed="true"] {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button[aria-pressed="true"]:hover {
+      color: #ffffff !important;
+    }
+
+    #tg-tplans-2026 button.tg-tplans-daybtn {
+      color: #1d1b19 !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #tg-tplans-2026 button.tg-tplans-daybtn:hover:not([aria-pressed="true"]) {
+      color: #1d1b19 !important;
+      background: #faf7f3 !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] {
+      color: #1d1b19 !important;
+    }
+
+    #tg-tplans-2026 button.tg-tplans-submit {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-submit:hover:not(:disabled) {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-submit:disabled {
+      color: #ffffff !important;
+    }
+
+    #tg-tplans-2026 button.tg-tplans-pagebtn {
+      color: #1d1b19 !important;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #tg-tplans-2026 button.tg-tplans-pagebtn:hover:not(:disabled) {
+      color: #1d1b19 !important;
+      background: #f7f2eb !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-pagebtn[aria-current="page"] {
+      color: #ffffff !important;
+      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+    }
+
+    #tg-tplans-2026 button.tg-tplans-close {
+      color: #5c5854 !important;
+      background: transparent !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-close:hover {
+      color: #f06b1a !important;
+      background: transparent !important;
+    }
+
     .tg-tplans-status {
       text-align: center;
       padding: 3rem 1rem;
