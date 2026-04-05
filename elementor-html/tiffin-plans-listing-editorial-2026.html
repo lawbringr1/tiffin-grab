@@ -12,7 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+<!-- Same Material Symbols URL as home-2026-hero-tags.html (variable wght/FILL). -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
 <section id="tg-tplans-2026" class="tg-tplans" data-store-root="" aria-labelledby="tg-tplans-title">
   <style>
@@ -70,17 +71,30 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-    .tg-tplans-icon {
-      font-family: "Material Symbols Outlined";
-      font-weight: normal;
-      font-style: normal;
+    /*
+      Icons: match Home 2026 / FAQ widgets — use class "material-symbols-outlined" + !important.
+      Elementor kit and body rules often set font-family: … !important on button/.elementor-widget,
+      which breaks ligature icons if we only set font on a weak selector.
+    */
+    #tg-tplans-2026 .material-symbols-outlined,
+    #tg-tplans-2026 .tg-tplans-icon {
+      font-family: "Material Symbols Outlined" !important;
+      font-weight: normal !important;
+      font-style: normal !important;
       font-size: 1.25rem;
       line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       vertical-align: middle;
       font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
     }
-    .tg-tplans-icon--fill {
-      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    #tg-tplans-2026 .tg-tplans-icon--fill {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24 !important;
     }
 
     .tg-tplans-hero {
@@ -338,9 +352,10 @@
       border-color: rgba(162, 57, 0, 0.45);
       background: rgba(162, 57, 0, 0.06);
     }
+    .tg-tplans-daybtn .material-symbols-outlined,
     .tg-tplans-daybtn .tg-tplans-icon {
       color: var(--tp-primary);
-      font-size: 1.1rem;
+      font-size: 1.1rem !important;
     }
 
     .tg-tplans-select,
@@ -363,6 +378,7 @@
     .tg-tplans-field-wrap {
       position: relative;
     }
+    .tg-tplans-field-wrap .material-symbols-outlined,
     .tg-tplans-field-wrap .tg-tplans-icon {
       position: absolute;
       right: 0.65rem;
@@ -739,7 +755,8 @@
         prev.type = "button";
         prev.className = "tg-tplans-pagebtn";
         prev.setAttribute("aria-label", "Previous page");
-        prev.innerHTML = '<span class="tg-tplans-icon">chevron_left</span>';
+        prev.innerHTML =
+          '<span class="material-symbols-outlined tg-tplans-icon" aria-hidden="true">chevron_left</span>';
         prev.disabled = state.page <= 1;
         prev.addEventListener("click", function () {
           if (state.page > 1) goToPage(state.page - 1);
@@ -790,7 +807,8 @@
         next.type = "button";
         next.className = "tg-tplans-pagebtn";
         next.setAttribute("aria-label", "Next page");
-        next.innerHTML = '<span class="tg-tplans-icon">chevron_right</span>';
+        next.innerHTML =
+          '<span class="material-symbols-outlined tg-tplans-icon" aria-hidden="true">chevron_right</span>';
         next.disabled = state.page >= state.totalPages;
         next.addEventListener("click", function () {
           if (state.page < state.totalPages) goToPage(state.page + 1);
@@ -829,7 +847,7 @@
             media.appendChild(im);
           } else {
             var ph = document.createElement("span");
-            ph.className = "tg-tplans-icon";
+            ph.className = "material-symbols-outlined tg-tplans-icon";
             ph.style.fontSize = "3rem";
             ph.style.position = "absolute";
             ph.style.left = "50%";
@@ -875,7 +893,7 @@
           readBtn.className = "tg-tplans-read";
           readBtn.setAttribute("data-open", "0");
           readBtn.innerHTML =
-            '<span class="tg-tplans-read-label">Read more</span><span class="tg-tplans-icon">expand_more</span>';
+            '<span class="tg-tplans-read-label">Read more</span><span class="material-symbols-outlined tg-tplans-icon" aria-hidden="true">expand_more</span>';
           readBtn.addEventListener("click", function () {
             var open = readBtn.getAttribute("data-open") === "1";
             spanShort.hidden = !open;
@@ -996,16 +1014,16 @@
                   b.innerHTML =
                     "<span>" +
                     opt.text.replace(/Monday/g, "Mon").replace(/Tuesday/g, "Tue").replace(/Wednesday/g, "Wed").replace(/Thursday/g, "Thu").replace(/Friday/g, "Fri").replace(/Saturday/g, "Sat").replace(/Sunday/g, "Sun") +
-                    '</span><span class="tg-tplans-icon tg-tplans-icon--fill" hidden>check_circle</span>';
-                  if (i === 0) b.querySelector(".tg-tplans-icon").hidden = false;
+                    '</span><span class="material-symbols-outlined tg-tplans-icon tg-tplans-icon--fill" aria-hidden="true" hidden>check_circle</span>';
+                  if (i === 0) b.querySelector(".tg-tplans-icon--fill").hidden = false;
                   b.addEventListener("click", function () {
                     grid.querySelectorAll(".tg-tplans-daybtn").forEach(function (x) {
                       x.setAttribute("aria-pressed", "false");
-                      var ic = x.querySelector(".tg-tplans-icon");
+                      var ic = x.querySelector(".tg-tplans-icon--fill");
                       if (ic) ic.hidden = true;
                     });
                     b.setAttribute("aria-pressed", "true");
-                    var ic2 = b.querySelector(".tg-tplans-icon");
+                    var ic2 = b.querySelector(".tg-tplans-icon--fill");
                     if (ic2) ic2.hidden = false;
                     values[field.name] = opt.value;
                     updateBreakdown();
@@ -1033,7 +1051,7 @@
                 values[field.name] = field.options[0].value;
                 fw.appendChild(sel);
                 var ic = document.createElement("span");
-                ic.className = "tg-tplans-icon";
+                ic.className = "material-symbols-outlined tg-tplans-icon";
                 ic.textContent = "keyboard_arrow_down";
                 fw.appendChild(ic);
                 wrap.appendChild(fw);
