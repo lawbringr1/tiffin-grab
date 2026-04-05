@@ -409,10 +409,6 @@
       color: var(--tp-muted);
     }
 
-    .tg-tplans-qty {
-      max-width: 6rem;
-    }
-
     .tg-tplans-breakdown {
       padding: 1.35rem 1.45rem 1.4rem;
       border-radius: 14px;
@@ -1063,17 +1059,6 @@
         optionsSlot.appendChild(loadingMsg);
         inner.appendChild(optionsSlot);
 
-        var qtyRow = document.createElement("div");
-        qtyRow.innerHTML = '<span class="tg-tplans-label">Quantity</span>';
-        var qty = document.createElement("input");
-        qty.type = "number";
-        qty.min = "1";
-        qty.step = "1";
-        qty.value = "1";
-        qty.className = "tg-tplans-date tg-tplans-qty";
-        qtyRow.appendChild(qty);
-        inner.appendChild(qtyRow);
-
         var breakdown = document.createElement("div");
         breakdown.className = "tg-tplans-breakdown";
         breakdown.innerHTML =
@@ -1097,7 +1082,7 @@
           rows.innerHTML =
             '<div><span style="color:var(--tp-muted)">Per meal</span><span style="font-weight:600">' +
             per +
-            '</span></div><div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">…</span></div>';
+            '</span></div><div><span style="color:var(--tp-muted)">Tiffins / week</span><span style="font-weight:600">…</span></div>';
           totalEl.innerHTML =
             '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:0.4">…</div></div>';
         }
@@ -1106,26 +1091,26 @@
           var sch = schemaRef.current;
           var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
           var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
-          var q = Math.max(1, parseInt(qty.value, 10) || 1);
           var tiffins = 1;
+          var hasTiffins = false;
           if (sch && sch.apo) {
             sch.apo.forEach(function (f) {
               if (labelKey(f.label) === "tiffins") {
+                hasTiffins = true;
                 var v = values[f.name];
                 tiffins = parseInt(v, 10) || 1;
               }
             });
           }
           var per = money(String(perMeal), curCode, curSym);
-          var sub = ((perMeal / 100) * tiffins * q).toFixed(2);
+          var sub = ((perMeal / 100) * tiffins).toFixed(2);
+          var tiffinsCell = hasTiffins ? String(tiffins) : "—";
           rows.innerHTML =
             "<div><span style=\"color:var(--tp-muted)\">Per meal</span><span style=\"font-weight:600\">" +
             per +
             "</span></div>" +
-            '<div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">' +
-            q +
-            " × " +
-            tiffins +
+            '<div><span style="color:var(--tp-muted)">Tiffins / week</span><span style="font-weight:600">' +
+            tiffinsCell +
             "</span></div>";
           totalEl.innerHTML =
             '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:1">' +
@@ -1133,11 +1118,6 @@
             sub +
             "</div></div>";
         }
-
-        qty.addEventListener("input", function () {
-          if (schemaRef.current) updateBreakdown();
-          else paintBreakdownPartial();
-        });
 
         paintBreakdownPartial();
 
@@ -1259,7 +1239,7 @@
               }
             }
             submit.disabled = true;
-            addToCart(sch, values, parseInt(qty.value, 10) || 1).then(function (r) {
+            addToCart(sch, values, 1).then(function (r) {
               submit.disabled = false;
               if (r.ok) {
                 showToast(r.message);
