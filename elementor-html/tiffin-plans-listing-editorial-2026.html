@@ -224,9 +224,8 @@
     }
     .tg-tplans-face--back {
       transform: rotateY(180deg) translateZ(1px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 1.35rem 1.5rem 1.5rem;
+      overflow: hidden;
+      padding: 1rem 1.15rem 1.1rem;
     }
     .tg-tplans-face--front .tg-tplans-media {
       flex-shrink: 0;
@@ -241,7 +240,7 @@
       align-items: center;
       gap: 0.75rem;
       flex-shrink: 0;
-      margin-bottom: 1.1rem;
+      margin-bottom: 0.6rem;
     }
     .tg-tplans-back-title {
       font-family: var(--tp-font-display);
@@ -367,32 +366,33 @@
     .tg-tplans-face--back .tg-tplans-config {
       display: flex;
       flex-direction: column;
-      gap: 1.35rem;
+      gap: 0.75rem;
       flex: 1;
       min-height: 0;
       margin: 0;
       padding: 0;
       border: none;
+      overflow: hidden;
     }
 
     .tg-tplans-label {
       display: block;
-      font-size: 0.6875rem;
+      font-size: 0.625rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--tp-muted);
-      margin-bottom: 0.75rem;
-      margin-top: 0.15rem;
+      margin-bottom: 0.4rem;
+      margin-top: 0;
       font-family: var(--tp-font-body);
     }
     .tg-tplans-seg {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .tg-tplans-seg button {
       flex: 1;
-      padding: 0.5rem 0.35rem;
+      padding: 0.42rem 0.3rem;
       border-radius: 10px;
       font-family: var(--tp-font-display);
       font-weight: 600;
@@ -416,13 +416,13 @@
     .tg-tplans-days {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
     .tg-tplans-daybtn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.65rem 0.75rem;
+      padding: 0.48rem 0.55rem;
       border-radius: 12px;
       border: 1px solid var(--tp-ghost);
       background: var(--tp-card);
@@ -450,7 +450,7 @@
     .tg-tplans-select,
     .tg-tplans-date {
       width: 100%;
-      padding: 0.75rem 2.25rem 0.75rem 1rem;
+      padding: 0.52rem 2.1rem 0.52rem 0.8rem;
       border-radius: 12px;
       border: 1px solid var(--tp-ghost);
       background: var(--tp-panel-2);
@@ -478,69 +478,90 @@
     }
 
     .tg-tplans-breakdown {
-      padding: 1.35rem 1.45rem 1.4rem;
-      border-radius: 14px;
+      flex-shrink: 0;
+      padding: 0.75rem 0.85rem 0.8rem;
+      border-radius: 12px;
       background: var(--tp-panel);
-      border: 1px solid var(--tp-orange-a12);
-    }
-    .tg-tplans-breakdown-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.85rem;
-    }
-    .tg-tplans-breakdown-top span {
-      font-size: 0.625rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--tp-muted);
+      box-shadow: 0 10px 28px rgba(29, 27, 25, 0.05);
+      border: none;
     }
     .tg-tplans-breakdown-rows {
       font-size: 0.8125rem;
     }
-    .tg-tplans-breakdown-rows > div {
+    .tg-tplans-bd-row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 0.5rem;
-      line-height: 1.45;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+    .tg-tplans-bd-row:last-of-type {
+      margin-bottom: 0;
+    }
+    .tg-tplans-bd-lbl {
+      color: var(--tp-muted);
+      font-weight: 500;
+    }
+    .tg-tplans-bd-val {
+      font-weight: 600;
+      color: var(--tp-on);
+      white-space: nowrap;
+    }
+    .tg-tplans-bd-free {
+      font-weight: 700;
+      font-size: 0.8125rem;
+      color: #15803d;
+      white-space: nowrap;
     }
     .tg-tplans-breakdown-total {
-      margin-top: 0.85rem;
-      padding-top: 0.85rem;
-      border-top: 1px dashed rgba(29, 27, 25, 0.14);
+      margin-top: 0.55rem;
+      padding-top: 0.55rem;
+      border-top: 1px solid rgba(29, 27, 25, 0.1);
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
+      gap: 0.65rem;
+    }
+    .tg-tplans-total-main {
+      flex: 1;
+      min-width: 0;
     }
     .tg-tplans-total-label {
-      font-size: 0.625rem;
+      display: block;
+      font-size: 0.5625rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--tp-muted);
+      color: var(--tp-primary);
+      margin-bottom: 0.15rem;
     }
     .tg-tplans-total-val {
       font-family: var(--tp-font-display);
-      font-size: 1.35rem;
+      font-size: 1.2rem;
       font-weight: 800;
-      color: var(--tp-primary);
-      letter-spacing: -0.02em;
+      color: var(--tp-on);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
 
     .tg-tplans-submit {
-      width: 100%;
-      padding: 1rem;
+      flex-shrink: 0;
+      width: auto;
+      max-width: 46%;
+      padding: 0.62rem 0.85rem;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       font-family: var(--tp-font-display);
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.75rem;
       color: var(--tp-on-primary);
       background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
       cursor: pointer;
-      box-shadow: 0 14px 32px var(--tp-orange-a28);
+      box-shadow: 0 8px 22px var(--tp-orange-a22);
       transition: opacity 0.2s, transform 0.15s;
+      white-space: nowrap;
     }
     .tg-tplans-submit:hover:not(:disabled) {
       opacity: 0.95;
@@ -578,7 +599,18 @@
     .tg-tplans-config-inner {
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
+      gap: 0.65rem;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .tg-tplans-options-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
     }
 
     .tg-tplans-pager {
@@ -693,6 +725,10 @@
       color: #1d1b19 !important;
     }
 
+    #tg-tplans-2026 .tg-tplans-breakdown-total button.tg-tplans-submit {
+      width: auto !important;
+      max-width: 48% !important;
+    }
     #tg-tplans-2026 button.tg-tplans-submit {
       color: #ffffff !important;
       background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
@@ -739,10 +775,10 @@
     }
 
     .tg-tplans-options-loading {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--tp-muted);
-      padding: 0 0 0.75rem;
-      margin: 0;
+      padding: 0;
+      margin: 0 0 0.25rem;
     }
 
     .tg-tplans-toast {
@@ -1269,6 +1305,27 @@
         return "other";
       }
 
+      function dayCountFromSchema(sch, values) {
+        if (!sch || !sch.apo || !values) return null;
+        for (var i = 0; i < sch.apo.length; i++) {
+          var f = sch.apo[i];
+          if (labelKey(f.label) !== "days" || !f.options) continue;
+          var sel = values[f.name];
+          if (sel === undefined || sel === "") continue;
+          for (var j = 0; j < f.options.length; j++) {
+            if (f.options[j].value !== sel) continue;
+            var tx = (f.options[j].text || "").toLowerCase();
+            if (/alternat/i.test(tx)) return null;
+            if (/mon[^\n]*sun|7\s*-?\s*day|every\s*day|full\s*week/i.test(tx)) return 7;
+            if (/sat/.test(tx) && !/sun/.test(tx)) return 6;
+            if (/fri/.test(tx) && !/sat|sun/.test(tx)) return 5;
+            if (/mon/.test(tx) && /fri/.test(tx)) return 5;
+            return null;
+          }
+        }
+        return null;
+      }
+
       function populateConfig(card, product) {
         var inner = card.querySelector(".tg-tplans-config-inner");
         var cfgEl = card.querySelector(".tg-tplans-config");
@@ -1289,61 +1346,61 @@
         var breakdown = document.createElement("div");
         breakdown.className = "tg-tplans-breakdown";
         breakdown.innerHTML =
-          '<div class="tg-tplans-breakdown-top"><span>Pricing (estimate)</span><span style="color:var(--tp-primary)">From list</span></div><div class="tg-tplans-breakdown-rows"></div><div class="tg-tplans-breakdown-total"></div>';
-        inner.appendChild(breakdown);
-
+          '<div class="tg-tplans-breakdown-rows"></div>' +
+          '<div class="tg-tplans-breakdown-total">' +
+          '<div class="tg-tplans-total-main">' +
+          '<span class="tg-tplans-total-label">Total Weekly</span>' +
+          '<div class="tg-tplans-total-val">…</div>' +
+          "</div>" +
+          "</div>";
+        var totalRow = breakdown.querySelector(".tg-tplans-breakdown-total");
         var submit = document.createElement("button");
         submit.type = "button";
         submit.className = "tg-tplans-submit";
-        submit.textContent = "Add to cart";
+        submit.textContent = "Add to Cart";
         submit.disabled = true;
-        inner.appendChild(submit);
+        totalRow.appendChild(submit);
+        inner.appendChild(breakdown);
 
         var values = {};
         var schemaRef = { current: null };
 
         function paintBreakdownPartial() {
           var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
-          var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
-          var per = money(String(perMeal), curCode, curSym);
+          var totalVal = breakdown.querySelector(".tg-tplans-total-val");
           rows.innerHTML =
-            '<div><span style="color:var(--tp-muted)">Per meal</span><span style="font-weight:600">' +
-            per +
-            '</span></div><div><span style="color:var(--tp-muted)">Tiffins / week</span><span style="font-weight:600">…</span></div>';
-          totalEl.innerHTML =
-            '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:0.4">…</div></div>';
+            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal</span><span class="tg-tplans-bd-val" style="opacity:0.45">…</span></div>' +
+            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
+          totalVal.textContent = "…";
+          totalVal.style.opacity = "0.4";
         }
 
         function updateBreakdown() {
           var sch = schemaRef.current;
           var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
-          var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
+          var totalVal = breakdown.querySelector(".tg-tplans-total-val");
           var tiffins = 1;
-          var hasTiffins = false;
           if (sch && sch.apo) {
             sch.apo.forEach(function (f) {
               if (labelKey(f.label) === "tiffins") {
-                hasTiffins = true;
                 var v = values[f.name];
                 tiffins = parseInt(v, 10) || 1;
               }
             });
           }
-          var per = money(String(perMeal), curCode, curSym);
-          var sub = ((perMeal / 100) * tiffins).toFixed(2);
-          var tiffinsCell = hasTiffins ? String(tiffins) : "—";
+          var totalMinor = perMeal * tiffins;
+          var subFormatted = money(String(totalMinor), curCode, curSym);
+          var dc = dayCountFromSchema(sch, values);
+          var dayPart = dc ? " (" + dc + " days)" : "";
           rows.innerHTML =
-            "<div><span style=\"color:var(--tp-muted)\">Per meal</span><span style=\"font-weight:600\">" +
-            per +
+            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal' +
+            dayPart +
+            '</span><span class="tg-tplans-bd-val">' +
+            subFormatted +
             "</span></div>" +
-            '<div><span style="color:var(--tp-muted)">Tiffins / week</span><span style="font-weight:600">' +
-            tiffinsCell +
-            "</span></div>";
-          totalEl.innerHTML =
-            '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:1">' +
-            curSym +
-            sub +
-            "</div></div>";
+            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
+          totalVal.textContent = subFormatted;
+          totalVal.style.opacity = "1";
         }
 
         paintBreakdownPartial();
