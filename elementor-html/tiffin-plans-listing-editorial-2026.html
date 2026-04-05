@@ -1417,7 +1417,30 @@
         return false;
       }
 
-      /** Prefer option value 1; else smallest numeric option; else first. */
+      /** UI order for “Number of tiffins” (must match Woo APO option values when present). */
+      var TIFFIN_CHOICE_ORDER = [1, 5, 10, 15, 20];
+
+      function tiffinSegOptionsFromSchema(allOptions) {
+        if (!allOptions || !allOptions.length) return [];
+        function findOpt(n) {
+          var sv = String(n);
+          var i;
+          for (i = 0; i < allOptions.length; i++) {
+            var v = String(allOptions[i].value).trim();
+            if (v === sv || parseInt(v, 10) === n) return allOptions[i];
+          }
+          return null;
+        }
+        var out = [];
+        var u;
+        for (u = 0; u < TIFFIN_CHOICE_ORDER.length; u++) {
+          var o = findOpt(TIFFIN_CHOICE_ORDER[u]);
+          if (o) out.push(o);
+        }
+        return out.length ? out : allOptions.slice();
+      }
+
+      /** Prefer value 1 within the segment list; else smallest numeric; else 0. */
       function defaultTiffinOptionIndex(options) {
         if (!options || !options.length) return 0;
         var k;
@@ -1544,11 +1567,12 @@
               if (key === "tiffins") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Number of tiffins</span><div class="tg-tplans-seg"></div>';
                 var seg = wrap.querySelector(".tg-tplans-seg");
-                var tix = defaultTiffinOptionIndex(field.options);
-                field.options.forEach(function (opt, i) {
+                var segOpts = tiffinSegOptionsFromSchema(field.options);
+                var tix = defaultTiffinOptionIndex(segOpts);
+                segOpts.forEach(function (opt, i) {
                   var b = document.createElement("button");
                   b.type = "button";
-                  b.textContent = opt.value;
+                  b.textContent = String(opt.value).trim();
                   b.setAttribute("aria-pressed", i === tix ? "true" : "false");
                   b.addEventListener("click", function () {
                     seg.querySelectorAll("button").forEach(function (x) {
@@ -1560,7 +1584,7 @@
                   });
                   seg.appendChild(b);
                 });
-                values[field.name] = field.options[tix].value;
+                values[field.name] = segOpts.length ? segOpts[tix].value : field.options[0].value;
               } else if (key === "days") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Preferred days</span><div class="tg-tplans-days"></div>';
                 var grid = wrap.querySelector(".tg-tplans-days");
