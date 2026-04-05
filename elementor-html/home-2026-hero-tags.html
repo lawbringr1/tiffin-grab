@@ -3,9 +3,9 @@
   Boxes the hero section: max-width + horizontal margin auto + padding (no max-width:none on .e-con — that was breaking inset).
   Social proof row only (no “Freshly cooked daily” pill).
 
-  Also defines shared magnetic CTAs (.tg-h26-btn) for body.elementor-page-10016 — same pattern as Shadcn
-  Button + ArrowUpRight (rounded-full h-12, sliding white disc). Keep this widget loaded on Home 2026 so
-  downstream sections (Why choose, Audience, FAQ, Service area) pick up button styles.
+  Also defines shared magnetic CTAs (.tg-h26-btn) — scoped with body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)
+  so styles apply even if the WordPress page ID is not 10016, as long as this hero widget (id tg-hero-tags) is on the page.
+  Same pattern as Shadcn Button + ArrowUpRight. Keep this widget on Home 2026 so downstream sections pick up button CSS.
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,34 +19,34 @@
   --tg-font: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 /* Pinch-zoom on iOS: classic vw is wider than the *visual* viewport, so gaps show as white. Clip X + page canvas + dvw caps below. */
-body.elementor-page-10016 {
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
   --tg-page-canvas: #fff8f6;
 }
 
 /* Force Geist across the whole Home 2026 page (Elementor kit/theme overrides included). */
-body.elementor-page-10016,
-body.elementor-page-10016 button,
-body.elementor-page-10016 input,
-body.elementor-page-10016 select,
-body.elementor-page-10016 textarea,
-body.elementor-page-10016 .elementor,
-body.elementor-page-10016 .elementor-widget,
-body.elementor-page-10016 .e-con,
-body.elementor-page-10016 .e-con-inner,
-body.elementor-page-10016 .elementor-heading-title {
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016),
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) input,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) select,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) textarea,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-widget,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .e-con,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .e-con-inner,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-heading-title {
   font-family: var(--tg-font) !important;
 }
 @media (max-width: 767px) {
-  html:has(body.elementor-page-10016),
-  body.elementor-page-10016 {
+  html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)),
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
     background-color: var(--tg-page-canvas) !important;
   }
-  html:has(body.elementor-page-10016) {
+  html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)) {
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
   }
-  body.elementor-page-10016 {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
@@ -269,10 +269,10 @@ body.elementor-page-10016 .elementor-heading-title {
    * Matches: rounded-full h-12, ps-6 pe-14 ↔ hover swap, w-10 knob, calc(100%-44px), rotate-45 on primary.
    * Use on <a> or <button> with .tg-h26-btn__label + .tg-h26-btn__knob
    */
-  body.elementor-page-10016 a.tg-h26-btn,
-  body.elementor-page-10016 a.tg-h26-btn:link,
-  body.elementor-page-10016 a.tg-h26-btn:visited,
-  body.elementor-page-10016 button.tg-h26-btn {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:link,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:visited,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn {
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -299,30 +299,30 @@ body.elementor-page-10016 .elementor-heading-title {
     -webkit-appearance: none;
     appearance: none;
   }
-  body.elementor-page-10016 button.tg-h26-btn {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn {
     color: #fff !important;
   }
-  body.elementor-page-10016 a.tg-h26-btn:hover,
-  body.elementor-page-10016 a.tg-h26-btn:focus-visible,
-  body.elementor-page-10016 button.tg-h26-btn:hover:not(:disabled),
-  body.elementor-page-10016 button.tg-h26-btn:focus-visible:not(:disabled) {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:hover,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:focus-visible,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:hover:not(:disabled),
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:focus-visible:not(:disabled) {
     padding: 0.25rem 1.5rem 0.25rem 3.5rem;
   }
-  body.elementor-page-10016 a.tg-h26-btn:active,
-  body.elementor-page-10016 button.tg-h26-btn:active:not(:disabled) {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:active,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:active:not(:disabled) {
     transform: scale(0.98);
   }
-  body.elementor-page-10016 a.tg-h26-btn:focus-visible,
-  body.elementor-page-10016 button.tg-h26-btn:focus-visible {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:focus-visible,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:focus-visible {
     outline: 2px solid rgba(240, 107, 26, 0.55);
     outline-offset: 3px;
   }
-  body.elementor-page-10016 a.tg-h26-btn--wa:focus-visible,
-  body.elementor-page-10016 button.tg-h26-btn--wa:focus-visible {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--wa:focus-visible,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--wa:focus-visible {
     outline-color: rgba(37, 211, 102, 0.65);
   }
-  body.elementor-page-10016 a.tg-h26-btn .tg-h26-btn__label,
-  body.elementor-page-10016 button.tg-h26-btn .tg-h26-btn__label {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn .tg-h26-btn__label,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn .tg-h26-btn__label {
     position: relative;
     z-index: 2;
     color: #ffffff !important;
@@ -331,8 +331,8 @@ body.elementor-page-10016 .elementor-heading-title {
     padding: 0;
     margin: 0;
   }
-  body.elementor-page-10016 a.tg-h26-btn .tg-h26-btn__knob,
-  body.elementor-page-10016 button.tg-h26-btn .tg-h26-btn__knob {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn .tg-h26-btn__knob {
     position: absolute;
     top: 50%;
     right: 0.25rem;
@@ -351,14 +351,14 @@ body.elementor-page-10016 .elementor-heading-title {
     pointer-events: none;
     flex-shrink: 0;
   }
-  body.elementor-page-10016 a.tg-h26-btn:hover .tg-h26-btn__knob,
-  body.elementor-page-10016 a.tg-h26-btn:focus-visible .tg-h26-btn__knob,
-  body.elementor-page-10016 button.tg-h26-btn:hover:not(:disabled) .tg-h26-btn__knob,
-  body.elementor-page-10016 button.tg-h26-btn:focus-visible:not(:disabled) .tg-h26-btn__knob {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:hover .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:focus-visible .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:hover:not(:disabled) .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:focus-visible:not(:disabled) .tg-h26-btn__knob {
     right: calc(100% - 2.75rem);
   }
-  body.elementor-page-10016 a.tg-h26-btn--primary .tg-h26-btn__knob::before,
-  body.elementor-page-10016 button.tg-h26-btn--primary .tg-h26-btn__knob::before {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--primary .tg-h26-btn__knob::before,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--primary .tg-h26-btn__knob::before {
     content: "";
     display: block;
     width: 16px;
@@ -367,14 +367,14 @@ body.elementor-page-10016 .elementor-heading-title {
     background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
       center / contain no-repeat;
   }
-  body.elementor-page-10016 a.tg-h26-btn--primary:hover .tg-h26-btn__knob,
-  body.elementor-page-10016 a.tg-h26-btn--primary:focus-visible .tg-h26-btn__knob,
-  body.elementor-page-10016 button.tg-h26-btn--primary:hover:not(:disabled) .tg-h26-btn__knob,
-  body.elementor-page-10016 button.tg-h26-btn--primary:focus-visible:not(:disabled) .tg-h26-btn__knob {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--primary:hover .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--primary:focus-visible .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--primary:hover:not(:disabled) .tg-h26-btn__knob,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--primary:focus-visible:not(:disabled) .tg-h26-btn__knob {
     transform: translateY(-50%) rotate(45deg);
   }
-  body.elementor-page-10016 a.tg-h26-btn--wa .tg-h26-btn__knob::before,
-  body.elementor-page-10016 button.tg-h26-btn--wa .tg-h26-btn__knob::before {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--wa .tg-h26-btn__knob::before,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--wa .tg-h26-btn__knob::before {
     content: "";
     display: block;
     width: 17px;
@@ -383,47 +383,47 @@ body.elementor-page-10016 .elementor-heading-title {
     background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2325d366%22%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
       center / contain no-repeat;
   }
-  body.elementor-page-10016 a.tg-h26-btn--primary,
-  body.elementor-page-10016 button.tg-h26-btn--primary {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--primary,
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--primary {
     background: #f06b1a !important;
     background-color: #f06b1a !important;
     color: #ffffff !important;
   }
   @media (hover: hover) {
-    body.elementor-page-10016 a.tg-h26-btn--primary:hover,
-    body.elementor-page-10016 button.tg-h26-btn--primary:hover:not(:disabled) {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--primary:hover,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn--primary:hover:not(:disabled) {
       background-color: #e85f0f !important;
     }
   }
-  body.elementor-page-10016 a.tg-h26-btn--wa {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--wa {
     background: #25d366 !important;
     background-color: #25d366 !important;
     color: #ffffff !important;
   }
   @media (hover: hover) {
-    body.elementor-page-10016 a.tg-h26-btn--wa:hover {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn--wa:hover {
       background-color: color-mix(in srgb, #25d366 88%, #063a1f) !important;
     }
   }
-  body.elementor-page-10016 button.tg-h26-btn:disabled {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:disabled {
     opacity: 1;
     cursor: wait;
     transform: none;
     filter: brightness(0.92);
   }
-  body.elementor-page-10016 button.tg-h26-btn:disabled .tg-h26-btn__knob {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:disabled .tg-h26-btn__knob {
     opacity: 0.85;
   }
   /* FAQ band: center label text inside fixed-width row */
-  body.elementor-page-10016 #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn {
     justify-content: center;
   }
-  body.elementor-page-10016 #tg-common-faq .tg-faq-cta-actions .tg-h26-btn__label {
+  body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq .tg-faq-cta-actions .tg-h26-btn__label {
     text-align: center;
   }
   @media (max-width: 767px) {
-    body.elementor-page-10016 #tg-why-choose a.tg-h26-btn,
-    body.elementor-page-10016 #tg-perfect-for a.tg-h26-btn {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-why-choose a.tg-h26-btn,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-perfect-for a.tg-h26-btn {
       display: flex !important;
       width: 100%;
       max-width: 22rem;
@@ -435,14 +435,14 @@ body.elementor-page-10016 .elementor-heading-title {
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    body.elementor-page-10016 a.tg-h26-btn,
-    body.elementor-page-10016 button.tg-h26-btn,
-    body.elementor-page-10016 a.tg-h26-btn .tg-h26-btn__knob,
-    body.elementor-page-10016 button.tg-h26-btn .tg-h26-btn__knob {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn .tg-h26-btn__knob,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn .tg-h26-btn__knob {
       transition: none !important;
     }
-    body.elementor-page-10016 a.tg-h26-btn:active,
-    body.elementor-page-10016 button.tg-h26-btn:active {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:active,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:active {
       transform: none !important;
     }
   }

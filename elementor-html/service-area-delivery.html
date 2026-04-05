@@ -10,16 +10,16 @@
   <style>
     /* Pinch-zoom / iOS visual viewport: reinforce root clip + canvas (in case hero-tags widget order differs). */
     @media (max-width: 767px) {
-      html:has(body.elementor-page-10016),
-      body.elementor-page-10016 {
+      html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)),
+      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
         background-color: #fff8f6 !important;
       }
-      html:has(body.elementor-page-10016) {
+      html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)) {
         overflow-x: hidden;
         width: 100%;
         max-width: 100%;
       }
-      body.elementor-page-10016 {
+      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
         overflow-x: hidden;
         width: 100%;
         max-width: 100%;

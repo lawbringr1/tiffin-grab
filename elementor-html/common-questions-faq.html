@@ -351,21 +351,21 @@
       width: 100%;
     }
     /* Shared magnetic pill: .tg-h26-btn in home-2026-hero-tags.html (Shadcn-style) */
-    body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary {
       background: var(--faq-primary) !important;
       background-color: var(--faq-primary) !important;
     }
     @media (hover: hover) {
-      body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary:hover {
+      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary:hover {
         background-color: var(--faq-primary-mid) !important;
       }
     }
-    body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--wa {
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--wa {
       background: var(--tg-brand-green) !important;
       background-color: var(--tg-brand-green) !important;
     }
     @media (hover: hover) {
-      body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--wa:hover {
+      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--wa:hover {
         background-color: color-mix(in srgb, var(--tg-brand-green) 88%, #063a1f) !important;
       }
     }
@@ -477,7 +477,7 @@
         right: calc(100% - 2.55rem);
       }
       @media (hover: hover) {
-        body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary:hover {
+        body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary:hover {
           background-color: var(--faq-primary-mid) !important;
         }
       }
