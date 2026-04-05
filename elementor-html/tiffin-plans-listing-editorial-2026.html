@@ -1056,29 +1056,44 @@
       }
 
       async function addToCart(schema, fieldValues, quantity) {
-        var fd = new FormData();
-        fd.append("quantity", String(quantity || 1));
-        fd.append("add-to-cart", schema.productId);
-        schema.apo.forEach(function (f) {
-          var v = fieldValues[f.name];
-          if (v != null && v !== "") fd.append(f.name, v);
-        });
-        var res = await fetch(schema.action, {
-          method: "POST",
-          body: fd,
-          credentials: "same-origin",
-          redirect: "manual",
-        });
-        var text = await res.text();
-        if (text.indexOf("woocommerce-error") !== -1) {
-          var errDoc = new DOMParser().parseFromString(text, "text/html");
-          var notice = errDoc.querySelector(".woocommerce-error");
-          return { ok: false, message: notice ? notice.textContent.trim() : "Could not add to cart." };
+        try {
+          var fd = new FormData();
+          fd.append("quantity", String(quantity || 1));
+          fd.append("add-to-cart", schema.productId);
+          schema.apo.forEach(function (f) {
+            var v = fieldValues[f.name];
+            if (v != null && v !== "") fd.append(f.name, v);
+          });
+          var res = await fetch(schema.action, {
+            method: "POST",
+            body: fd,
+            credentials: "same-origin",
+            redirect: "manual",
+          });
+          var text = await res.text();
+          var doc = new DOMParser().parseFromString(text, "text/html");
+          /* Do not use string search: stylesheets contain “.woocommerce-error” and falsely trigger errors. */
+          var errLis = doc.querySelectorAll("ul.woocommerce-error li");
+          if (errLis && errLis.length) {
+            var parts = [];
+            errLis.forEach(function (li) {
+              var t = (li.textContent || "").trim();
+              if (t) parts.push(t);
+            });
+            return { ok: false, message: parts.length ? parts.join(" ") : "Could not add to cart." };
+          }
+          var okEl = doc.querySelector(".woocommerce-message");
+          if (okEl) {
+            var mt = (okEl.textContent || "").replace(/\s+/g, " ").trim();
+            return { ok: true, message: mt || "Added to cart." };
+          }
+          if (res.status === 302 || (res.ok && res.status < 400)) {
+            return { ok: true, message: "Added to cart." };
+          }
+          return { ok: false, message: "Unexpected response from server." };
+        } catch (e) {
+          return { ok: false, message: (e && e.message) || "Could not reach the server." };
         }
-        if (text.indexOf("woocommerce-message") !== -1 || res.ok || res.status === 302) {
-          return { ok: true, message: "Added to cart." };
-        }
-        return { ok: false, message: "Unexpected response from server." };
       }
 
       function setFiltersUI() {
@@ -1638,20 +1653,25 @@
               }
             }
             submit.disabled = true;
-            addToCart(sch, values, 1).then(function (r) {
-              submit.disabled = false;
-              if (r.ok) {
-                showToast(r.message);
-                card.classList.remove("tg-tplans-card--flipped");
-                if (state.openId === card) state.openId = null;
-                syncFlipA11y(card);
-                if (window.jQuery) {
-                  window.jQuery(document.body).trigger("added_to_cart");
+            addToCart(sch, values, 1)
+              .then(function (r) {
+                submit.disabled = false;
+                if (r.ok) {
+                  showToast(r.message);
+                  card.classList.remove("tg-tplans-card--flipped");
+                  if (state.openId === card) state.openId = null;
+                  syncFlipA11y(card);
+                  if (window.jQuery) {
+                    window.jQuery(document.body).trigger("added_to_cart");
+                  }
+                } else {
+                  showToast(r.message);
                 }
-              } else {
-                showToast(r.message);
-              }
-            });
+              })
+              .catch(function () {
+                submit.disabled = false;
+                showToast("Could not reach the server.");
+              });
           };
 
           updateBreakdown();
