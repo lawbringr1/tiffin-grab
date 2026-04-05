@@ -1,0 +1,1158 @@
+<!--
+  TiffinGrab — Tiffin Plans listing (Editorial Nourishment + live WooCommerce).
+  Paste into an Elementor HTML widget on the draft “Tiffin plans (new design)” page.
+  Omits site header/footer (theme supplies those).
+
+  Data: WooCommerce Store API GET /wp-json/wc/store/v1/products
+  Cart: same-origin POST to each product permalink (form.cart), including APO fields
+        (Prefered Days, Number Of Tiffins, Start Date) when present — same as single product pages.
+
+  Optional: set data-store-root on #tg-tplans-2026 if the widget is tested off-domain (defaults to location.origin).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+
+<section id="tg-tplans-2026" class="tg-tplans" data-store-root="" aria-labelledby="tg-tplans-title">
+  <style>
+    .elementor-widget-html:has(#tg-tplans-2026),
+    .elementor-widget-html:has(#tg-tplans-2026) .elementor-widget-container,
+    .elementor-widget-html-custom:has(#tg-tplans-2026),
+    .elementor-widget-html-custom:has(#tg-tplans-2026) .elementor-widget-container,
+    .elementor-widget-wrap:has(#tg-tplans-2026),
+    .elementor-column:has(#tg-tplans-2026),
+    .elementor-column-wrap:has(#tg-tplans-2026),
+    .elementor-section:has(#tg-tplans-2026),
+    .e-con:has(#tg-tplans-2026),
+    .e-con-inner:has(#tg-tplans-2026) {
+      overflow: visible !important;
+      max-width: none !important;
+      background-color: #fef8f3 !important;
+      background-image: none !important;
+    }
+
+    .tg-tplans {
+      --tp-primary: #a23900;
+      --tp-primary-mid: #b8430d;
+      --tp-on-primary: #ffffff;
+      --tp-surface: #fef8f3;
+      --tp-card: #ffffff;
+      --tp-panel: #fdf0e8;
+      --tp-panel-2: #f2ede8;
+      --tp-on: #1d1b19;
+      --tp-muted: #5c5854;
+      --tp-ghost: rgba(29, 27, 25, 0.14);
+      --tp-shadow: 0 24px 48px rgba(29, 27, 25, 0.06);
+      --tp-font-display: "Sora", system-ui, sans-serif;
+      --tp-font-body: "DM Sans", system-ui, sans-serif;
+      font-family: var(--tp-font-body);
+      color: var(--tp-on);
+      background: var(--tp-surface);
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: clamp(5rem, 10vw, 6.5rem) clamp(1.25rem, 4vw, 2rem) clamp(4rem, 8vw, 5.5rem);
+      box-sizing: border-box;
+    }
+    @supports (width: 100dvw) {
+      .tg-tplans {
+        width: 100dvw;
+        margin-left: calc(50% - 50dvw);
+        margin-right: calc(50% - 50dvw);
+      }
+    }
+    .tg-tplans * {
+      box-sizing: border-box;
+    }
+    .tg-tplans-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .tg-tplans-icon {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 1.25rem;
+      line-height: 1;
+      vertical-align: middle;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .tg-tplans-icon--fill {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .tg-tplans-hero {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    }
+    .tg-tplans-hero h1#tg-tplans-title {
+      font-family: var(--tp-font-display);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: clamp(2.25rem, 4.5vw, 3rem);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+    .tg-tplans-hero p {
+      max-width: 36rem;
+      margin: 0 auto;
+      color: var(--tp-muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .tg-tplans-filters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    }
+    .tg-tplans-filter {
+      font-family: var(--tp-font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: var(--tp-card);
+      color: var(--tp-on);
+      cursor: pointer;
+      box-shadow: var(--tp-shadow);
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .tg-tplans-filter:hover {
+      transform: translateY(-1px);
+    }
+    .tg-tplans-filter[aria-pressed="true"] {
+      background: linear-gradient(180deg, var(--tp-primary) 0%, var(--tp-primary-mid) 100%);
+      color: var(--tp-on-primary);
+      box-shadow: 0 12px 28px rgba(162, 57, 0, 0.22);
+    }
+
+    .tg-tplans-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+    @media (min-width: 640px) {
+      .tg-tplans-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .tg-tplans-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .tg-tplans-card {
+      background: var(--tp-card);
+      border-radius: 16px;
+      box-shadow: var(--tp-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 100%;
+    }
+    .tg-tplans-media {
+      position: relative;
+      height: 14rem;
+      background: var(--tp-panel-2);
+      overflow: hidden;
+    }
+    .tg-tplans-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tg-tplans-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.625rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--tp-primary);
+      color: var(--tp-on-primary);
+      font-family: var(--tp-font-display);
+    }
+    .tg-tplans-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0;
+    }
+    .tg-tplans-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .tg-tplans-name {
+      font-family: var(--tp-font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin: 0;
+    }
+    .tg-tplans-price {
+      font-family: var(--tp-font-display);
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+      color: var(--tp-primary);
+      white-space: nowrap;
+    }
+    .tg-tplans-desc {
+      font-size: 0.875rem;
+      color: var(--tp-muted);
+      line-height: 1.55;
+      margin-bottom: 0.5rem;
+    }
+    .tg-tplans-read {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      border: none;
+      background: none;
+      padding: 0;
+      font-family: var(--tp-font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tp-primary);
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .tg-tplans-read:hover {
+      text-decoration: underline;
+    }
+
+    .tg-tplans-actions {
+      margin-top: auto;
+      padding-top: 1.25rem;
+      background: linear-gradient(to top, var(--tp-card) 70%, transparent);
+    }
+    .tg-tplans-quick {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(162, 57, 0, 0.22);
+      background: var(--tp-panel);
+      color: var(--tp-primary);
+      font-family: var(--tp-font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .tg-tplans-quick:hover {
+      background: var(--tp-primary);
+      color: var(--tp-on-primary);
+      transform: scale(0.99);
+    }
+    .tg-tplans-quick:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .tg-tplans-config {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed rgba(29, 27, 25, 0.16);
+      display: none;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .tg-tplans-card--open .tg-tplans-config {
+      display: flex;
+    }
+    .tg-tplans-card--open .tg-tplans-quick-wrap {
+      display: none;
+    }
+
+    .tg-tplans-label {
+      display: block;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+      margin-bottom: 0.65rem;
+      font-family: var(--tp-font-body);
+    }
+    .tg-tplans-seg {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .tg-tplans-seg button {
+      flex: 1;
+      padding: 0.5rem 0.35rem;
+      border-radius: 10px;
+      font-family: var(--tp-font-display);
+      font-weight: 600;
+      font-size: 0.8125rem;
+      border: 1px solid var(--tp-ghost);
+      background: var(--tp-panel-2);
+      color: var(--tp-on);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .tg-tplans-seg button[aria-pressed="true"] {
+      background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
+      color: var(--tp-on-primary);
+      border-color: transparent;
+    }
+
+    .tg-tplans-days {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .tg-tplans-daybtn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--tp-ghost);
+      background: var(--tp-card);
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--tp-font-display);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .tg-tplans-daybtn[aria-pressed="true"] {
+      border-color: rgba(162, 57, 0, 0.45);
+      background: rgba(162, 57, 0, 0.06);
+    }
+    .tg-tplans-daybtn .tg-tplans-icon {
+      color: var(--tp-primary);
+      font-size: 1.1rem;
+    }
+
+    .tg-tplans-select,
+    .tg-tplans-date {
+      width: 100%;
+      padding: 0.75rem 2.25rem 0.75rem 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--tp-ghost);
+      background: var(--tp-panel-2);
+      font-family: var(--tp-font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--tp-on);
+    }
+    .tg-tplans-select:focus,
+    .tg-tplans-date:focus {
+      outline: 2px solid rgba(162, 57, 0, 0.35);
+      outline-offset: 1px;
+    }
+    .tg-tplans-field-wrap {
+      position: relative;
+    }
+    .tg-tplans-field-wrap .tg-tplans-icon {
+      position: absolute;
+      right: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--tp-muted);
+    }
+
+    .tg-tplans-qty {
+      max-width: 6rem;
+    }
+
+    .tg-tplans-breakdown {
+      padding: 1rem;
+      border-radius: 14px;
+      background: var(--tp-panel);
+      border: 1px solid rgba(162, 57, 0, 0.12);
+    }
+    .tg-tplans-breakdown-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .tg-tplans-breakdown-top span {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+    }
+    .tg-tplans-breakdown-rows {
+      font-size: 0.8125rem;
+    }
+    .tg-tplans-breakdown-rows > div {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+    }
+    .tg-tplans-breakdown-total {
+      margin-top: 0.65rem;
+      padding-top: 0.65rem;
+      border-top: 1px dashed rgba(29, 27, 25, 0.14);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .tg-tplans-total-label {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--tp-muted);
+    }
+    .tg-tplans-total-val {
+      font-family: var(--tp-font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--tp-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .tg-tplans-submit {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--tp-font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--tp-on-primary);
+      background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
+      cursor: pointer;
+      box-shadow: 0 14px 32px rgba(162, 57, 0, 0.25);
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .tg-tplans-submit:hover {
+      opacity: 0.94;
+    }
+    .tg-tplans-submit:active {
+      transform: scale(0.98);
+    }
+    .tg-tplans-submit:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .tg-tplans-close {
+      align-self: flex-end;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--tp-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+      margin-bottom: -0.5rem;
+    }
+
+    .tg-tplans-pager {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    }
+    .tg-tplans-pagebtn {
+      min-width: 2.5rem;
+      height: 2.5rem;
+      padding: 0 0.35rem;
+      border-radius: 10px;
+      border: 1px solid var(--tp-ghost);
+      background: var(--tp-card);
+      font-family: var(--tp-font-display);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      color: var(--tp-on);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tg-tplans-pagebtn:hover:not(:disabled) {
+      background: var(--tp-panel-2);
+    }
+    .tg-tplans-pagebtn[aria-current="page"] {
+      background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
+      color: var(--tp-on-primary);
+      border-color: transparent;
+    }
+    .tg-tplans-pagebtn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .tg-tplans-status {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--tp-muted);
+      font-size: 0.95rem;
+    }
+    .tg-tplans-status--err {
+      color: #8b1d1d;
+    }
+
+    .tg-tplans-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      z-index: 99999;
+      padding: 0.85rem 1.35rem;
+      border-radius: 12px;
+      background: var(--tp-on);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      box-shadow: var(--tp-shadow);
+      opacity: 0;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      pointer-events: none;
+      max-width: min(90vw, 22rem);
+      text-align: center;
+    }
+    .tg-tplans-toast--show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+
+  <div class="tg-tplans-inner">
+    <header class="tg-tplans-hero">
+      <h1 id="tg-tplans-title">Tiffin plans</h1>
+      <p>
+        Explore veg, non-veg, and healthy meal plans for Toronto and the GTA. Configure days, tiffin count, and start date here — same options as on each product page — then add to cart.
+      </p>
+    </header>
+
+    <div class="tg-tplans-filters" role="group" aria-label="Filter plans">
+      <button type="button" class="tg-tplans-filter" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="tg-tplans-filter" data-filter="veg" aria-pressed="false">Vegetarian</button>
+      <button type="button" class="tg-tplans-filter" data-filter="nonveg" aria-pressed="false">Non vegetarian</button>
+      <button type="button" class="tg-tplans-filter" data-filter="healthy" aria-pressed="false">Healthy meals</button>
+    </div>
+
+    <div id="tg-tplans-mount" class="tg-tplans-grid" aria-live="polite"></div>
+    <nav id="tg-tplans-pager" class="tg-tplans-pager" aria-label="Pagination"></nav>
+  </div>
+
+  <div id="tg-tplans-toast" class="tg-tplans-toast" role="status"></div>
+
+  <script>
+    (function () {
+      var root = document.getElementById("tg-tplans-2026");
+      if (!root) return;
+
+      var STORE = (root.getAttribute("data-store-root") || "").trim() || window.location.origin;
+      var API = STORE + "/wp-json/wc/store/v1/products";
+      var PER_PAGE = 9;
+      var CAT = { all: null, veg: 15, nonveg: 30, healthy: 50 };
+
+      var state = {
+        filter: "all",
+        page: 1,
+        totalPages: 1,
+        totalItems: 0,
+        loading: false,
+        allProducts: null,
+        openId: null,
+        schemaCache: {},
+      };
+
+      var mount = document.getElementById("tg-tplans-mount");
+      var pager = document.getElementById("tg-tplans-pager");
+      var toastEl = document.getElementById("tg-tplans-toast");
+
+      function money(minor, currencyCode, symbol) {
+        var n = (parseInt(minor, 10) || 0) / 100;
+        try {
+          return new Intl.NumberFormat("en-CA", { style: "currency", currency: currencyCode || "CAD" }).format(n);
+        } catch (e) {
+          return (symbol || "$") + n.toFixed(2);
+        }
+      }
+
+      function stripHtml(html) {
+        var d = document.createElement("div");
+        d.innerHTML = html || "";
+        return (d.textContent || "").replace(/\s+/g, " ").trim();
+      }
+
+      function excerptFromProduct(p) {
+        var t = stripHtml(p.short_description);
+        if (!t) t = stripHtml(p.description);
+        return t;
+      }
+
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add("tg-tplans-toast--show");
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(function () {
+          toastEl.classList.remove("tg-tplans-toast--show");
+        }, 4200);
+      }
+
+      function parseCartForm(html) {
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var form = doc.querySelector("form.cart");
+        if (!form) return { error: "No cart form on product page." };
+        var addBtn = form.querySelector('[name="add-to-cart"]');
+        var productId = addBtn ? addBtn.value : null;
+        if (!productId) return { error: "Missing product id." };
+        var action = form.getAttribute("action") || "";
+        var apo = [];
+        form.querySelectorAll("select[name^='apo_'], input[name^='apo_']").forEach(function (el) {
+          var name = el.getAttribute("name");
+          var labelEl = el.closest(".apo-option");
+          var labelText = "";
+          if (labelEl) {
+            var lb = labelEl.querySelector("label");
+            if (lb) {
+              labelText = (lb.textContent || "").replace(/\*/g, "").trim();
+            }
+          }
+          var entry = { name: name, label: labelText || name, required: el.required, tag: el.tagName.toLowerCase() };
+          if (entry.tag === "select") {
+            entry.options = [];
+            el.querySelectorAll("option").forEach(function (opt) {
+              var v = opt.getAttribute("value");
+              if (v === "" || v === null) return;
+              entry.options.push({ value: v, text: (opt.textContent || "").trim() });
+            });
+          }
+          apo.push(entry);
+        });
+        return { productId: productId, action: action, apo: apo };
+      }
+
+      async function fetchSchema(permalink) {
+        if (state.schemaCache[permalink]) return state.schemaCache[permalink];
+        var res = await fetch(permalink, { credentials: "same-origin" });
+        var html = await res.text();
+        var parsed = parseCartForm(html);
+        state.schemaCache[permalink] = parsed;
+        return parsed;
+      }
+
+      async function addToCart(schema, fieldValues, quantity) {
+        var fd = new FormData();
+        fd.append("quantity", String(quantity || 1));
+        fd.append("add-to-cart", schema.productId);
+        schema.apo.forEach(function (f) {
+          var v = fieldValues[f.name];
+          if (v != null && v !== "") fd.append(f.name, v);
+        });
+        var res = await fetch(schema.action, {
+          method: "POST",
+          body: fd,
+          credentials: "same-origin",
+          redirect: "manual",
+        });
+        var text = await res.text();
+        if (text.indexOf("woocommerce-error") !== -1) {
+          var errDoc = new DOMParser().parseFromString(text, "text/html");
+          var notice = errDoc.querySelector(".woocommerce-error");
+          return { ok: false, message: notice ? notice.textContent.trim() : "Could not add to cart." };
+        }
+        if (text.indexOf("woocommerce-message") !== -1 || res.ok || res.status === 302) {
+          return { ok: true, message: "Added to cart." };
+        }
+        return { ok: false, message: "Unexpected response from server." };
+      }
+
+      function setFiltersUI() {
+        root.querySelectorAll(".tg-tplans-filter").forEach(function (btn) {
+          btn.setAttribute("aria-pressed", btn.getAttribute("data-filter") === state.filter ? "true" : "false");
+        });
+      }
+
+      async function loadProducts() {
+        state.loading = true;
+        mount.innerHTML = '<p class="tg-tplans-status">Loading plans…</p>';
+        pager.innerHTML = "";
+
+        try {
+          if (state.filter === "all") {
+            if (!state.allProducts) {
+              var r = await fetch(API + "?per_page=100", { credentials: "same-origin" });
+              if (!r.ok) throw new Error("Could not load products.");
+              state.allProducts = await r.json();
+            }
+            state.totalItems = state.allProducts.length;
+            state.totalPages = Math.max(1, Math.ceil(state.totalItems / PER_PAGE));
+            if (state.page > state.totalPages) state.page = state.totalPages;
+            var start = (state.page - 1) * PER_PAGE;
+            renderCards(state.allProducts.slice(start, start + PER_PAGE));
+          } else {
+            var cat = CAT[state.filter];
+            var url = API + "?per_page=" + PER_PAGE + "&page=" + state.page + "&category=" + cat;
+            var res = await fetch(url, { credentials: "same-origin" });
+            if (!res.ok) throw new Error("Could not load products.");
+            var data = await res.json();
+            var total = parseInt(res.headers.get("X-WP-Total") || "0", 10);
+            var pages = parseInt(res.headers.get("X-WP-TotalPages") || "1", 10);
+            state.totalItems = total;
+            state.totalPages = Math.max(1, pages);
+            renderCards(data);
+          }
+        } catch (e) {
+          mount.innerHTML =
+            '<p class="tg-tplans-status tg-tplans-status--err">' +
+            (e.message || "Something went wrong.") +
+            "</p>";
+        } finally {
+          state.loading = false;
+        }
+        renderPager();
+      }
+
+      function renderPager() {
+        pager.innerHTML = "";
+        if (state.totalPages <= 1) return;
+
+        function goToPage(num) {
+          state.page = num;
+          state.openId = null;
+          loadProducts();
+          root.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        var prev = document.createElement("button");
+        prev.type = "button";
+        prev.className = "tg-tplans-pagebtn";
+        prev.setAttribute("aria-label", "Previous page");
+        prev.innerHTML = '<span class="tg-tplans-icon">chevron_left</span>';
+        prev.disabled = state.page <= 1;
+        prev.addEventListener("click", function () {
+          if (state.page > 1) goToPage(state.page - 1);
+        });
+        pager.appendChild(prev);
+
+        var total = state.totalPages;
+        var cur = state.page;
+        var pagesToShow = [];
+        if (total <= 9) {
+          for (var i = 1; i <= total; i++) pagesToShow.push(i);
+        } else {
+          pagesToShow.push(1);
+          var start = Math.max(2, cur - 1);
+          var end = Math.min(total - 1, cur + 1);
+          if (start > 2) pagesToShow.push(-1);
+          for (var j = start; j <= end; j++) pagesToShow.push(j);
+          if (end < total - 1) pagesToShow.push(-1);
+          pagesToShow.push(total);
+        }
+
+        var lastAdded = null;
+        pagesToShow.forEach(function (num) {
+          if (num === -1) {
+            var ell = document.createElement("span");
+            ell.textContent = "…";
+            ell.style.opacity = "0.45";
+            ell.style.padding = "0 0.25rem";
+            ell.style.alignSelf = "center";
+            pager.appendChild(ell);
+            lastAdded = null;
+            return;
+          }
+          if (lastAdded === num) return;
+          lastAdded = num;
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "tg-tplans-pagebtn";
+          b.textContent = String(num);
+          if (num === cur) b.setAttribute("aria-current", "page");
+          b.addEventListener("click", function () {
+            goToPage(num);
+          });
+          pager.appendChild(b);
+        });
+
+        var next = document.createElement("button");
+        next.type = "button";
+        next.className = "tg-tplans-pagebtn";
+        next.setAttribute("aria-label", "Next page");
+        next.innerHTML = '<span class="tg-tplans-icon">chevron_right</span>';
+        next.disabled = state.page >= state.totalPages;
+        next.addEventListener("click", function () {
+          if (state.page < state.totalPages) goToPage(state.page + 1);
+        });
+        pager.appendChild(next);
+      }
+
+      function renderCards(products) {
+        mount.innerHTML = "";
+        if (!products.length) {
+          mount.innerHTML = '<p class="tg-tplans-status">No plans in this filter.</p>';
+          return;
+        }
+
+        products.forEach(function (p, idx) {
+          var card = document.createElement("article");
+          card.className = "tg-tplans-card";
+          card.dataset.productId = String(p.id);
+
+          var imgUrl = p.images && p.images[0] ? p.images[0].src : "";
+          var alt = (p.images && p.images[0] && p.images[0].alt) || p.name;
+
+          var media = document.createElement("div");
+          media.className = "tg-tplans-media";
+          if (idx === 0 && state.page === 1) {
+            var badge = document.createElement("span");
+            badge.className = "tg-tplans-badge";
+            badge.textContent = "Popular";
+            media.appendChild(badge);
+          }
+          if (imgUrl) {
+            var im = document.createElement("img");
+            im.src = imgUrl;
+            im.alt = alt;
+            im.loading = "lazy";
+            media.appendChild(im);
+          } else {
+            var ph = document.createElement("span");
+            ph.className = "tg-tplans-icon";
+            ph.style.fontSize = "3rem";
+            ph.style.position = "absolute";
+            ph.style.left = "50%";
+            ph.style.top = "50%";
+            ph.style.transform = "translate(-50%,-50%)";
+            ph.style.color = "rgba(29,27,25,0.2)";
+            ph.textContent = "restaurant";
+            media.appendChild(ph);
+          }
+
+          var body = document.createElement("div");
+          body.className = "tg-tplans-body";
+
+          var row = document.createElement("div");
+          row.className = "tg-tplans-row";
+          var h = document.createElement("h2");
+          h.className = "tg-tplans-name";
+          h.textContent = p.name;
+          var price = document.createElement("span");
+          price.className = "tg-tplans-price";
+          price.textContent = money(p.prices.price, p.prices.currency_code, p.prices.currency_symbol);
+          row.appendChild(h);
+          row.appendChild(price);
+
+          var fullDesc = excerptFromProduct(p);
+          var shortLen = 110;
+          var short = fullDesc.length > shortLen ? fullDesc.slice(0, shortLen).trim() + "…" : fullDesc;
+
+          var desc = document.createElement("div");
+          desc.className = "tg-tplans-desc";
+          var spanShort = document.createElement("span");
+          spanShort.className = "tg-tplans-snippet";
+          spanShort.textContent = short;
+          var spanFull = document.createElement("span");
+          spanFull.className = "tg-tplans-full";
+          spanFull.hidden = true;
+          spanFull.textContent = fullDesc;
+          desc.appendChild(spanShort);
+          desc.appendChild(spanFull);
+
+          var readBtn = document.createElement("button");
+          readBtn.type = "button";
+          readBtn.className = "tg-tplans-read";
+          readBtn.setAttribute("data-open", "0");
+          readBtn.innerHTML =
+            '<span class="tg-tplans-read-label">Read more</span><span class="tg-tplans-icon">expand_more</span>';
+          readBtn.addEventListener("click", function () {
+            var open = readBtn.getAttribute("data-open") === "1";
+            spanShort.hidden = !open;
+            spanFull.hidden = open;
+            readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
+            readBtn.setAttribute("data-open", open ? "0" : "1");
+          });
+
+          var actions = document.createElement("div");
+          actions.className = "tg-tplans-actions";
+          var qw = document.createElement("div");
+          qw.className = "tg-tplans-quick-wrap";
+          var quick = document.createElement("button");
+          quick.type = "button";
+          quick.className = "tg-tplans-quick";
+          quick.textContent = "Choose plan";
+          quick.addEventListener("click", function () {
+            if (state.openId && state.openId !== card) {
+              state.openId.classList.remove("tg-tplans-card--open");
+            }
+            card.classList.add("tg-tplans-card--open");
+            state.openId = card;
+            populateConfig(card, p);
+          });
+          qw.appendChild(quick);
+          actions.appendChild(qw);
+
+          var config = document.createElement("div");
+          config.className = "tg-tplans-config";
+          config.dataset.permalink = p.permalink;
+          config.dataset.priceMinor = p.prices.price;
+          config.dataset.currency = p.prices.currency_code || "CAD";
+          config.dataset.symbol = p.prices.currency_symbol || "$";
+
+          var closeBtn = document.createElement("button");
+          closeBtn.type = "button";
+          closeBtn.className = "tg-tplans-close";
+          closeBtn.textContent = "Close";
+          closeBtn.addEventListener("click", function () {
+            card.classList.remove("tg-tplans-card--open");
+            if (state.openId === card) state.openId = null;
+          });
+          config.appendChild(closeBtn);
+
+          var configMount = document.createElement("div");
+          configMount.className = "tg-tplans-config-inner";
+          config.appendChild(configMount);
+
+          actions.appendChild(config);
+          body.appendChild(row);
+          body.appendChild(desc);
+          body.appendChild(readBtn);
+          body.appendChild(actions);
+
+          card.appendChild(media);
+          card.appendChild(body);
+          mount.appendChild(card);
+        });
+      }
+
+      function labelKey(txt) {
+        var t = (txt || "").toLowerCase();
+        if (t.indexOf("tiffin") !== -1) return "tiffins";
+        if (t.indexOf("day") !== -1) return "days";
+        if (t.indexOf("date") !== -1) return "date";
+        return "other";
+      }
+
+      function populateConfig(card, product) {
+        var inner = card.querySelector(".tg-tplans-config-inner");
+        inner.innerHTML = '<p class="tg-tplans-status" style="padding:1rem 0">Loading options…</p>';
+
+        fetchSchema(product.permalink).then(function (schema) {
+          inner.innerHTML = "";
+          if (schema.error) {
+            inner.innerHTML =
+              '<p class="tg-tplans-status tg-tplans-status--err">' + schema.error + '</p><p class="tg-tplans-status"><a href="' +
+              product.permalink +
+              '">Open product page</a></p>';
+            return;
+          }
+
+          var values = {};
+          var perMeal = parseInt(card.querySelector(".tg-tplans-config").dataset.priceMinor, 10) || 0;
+
+          schema.apo.forEach(function (field) {
+            var key = labelKey(field.label);
+            var wrap = document.createElement("div");
+
+            if (field.tag === "select" && field.options && field.options.length) {
+              if (key === "tiffins") {
+                wrap.innerHTML = '<span class="tg-tplans-label">Number of tiffins</span><div class="tg-tplans-seg"></div>';
+                var seg = wrap.querySelector(".tg-tplans-seg");
+                field.options.forEach(function (opt, i) {
+                  var b = document.createElement("button");
+                  b.type = "button";
+                  b.textContent = opt.value;
+                  b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+                  b.addEventListener("click", function () {
+                    seg.querySelectorAll("button").forEach(function (x) {
+                      x.setAttribute("aria-pressed", "false");
+                    });
+                    b.setAttribute("aria-pressed", "true");
+                    values[field.name] = opt.value;
+                    updateBreakdown();
+                  });
+                  seg.appendChild(b);
+                });
+                values[field.name] = field.options[0].value;
+              } else if (key === "days") {
+                wrap.innerHTML = '<span class="tg-tplans-label">Preferred days</span><div class="tg-tplans-days"></div>';
+                var grid = wrap.querySelector(".tg-tplans-days");
+                field.options.forEach(function (opt, i) {
+                  var b = document.createElement("button");
+                  b.type = "button";
+                  b.className = "tg-tplans-daybtn";
+                  b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+                  b.innerHTML =
+                    "<span>" +
+                    opt.text.replace(/Monday/g, "Mon").replace(/Tuesday/g, "Tue").replace(/Wednesday/g, "Wed").replace(/Thursday/g, "Thu").replace(/Friday/g, "Fri").replace(/Saturday/g, "Sat").replace(/Sunday/g, "Sun") +
+                    '</span><span class="tg-tplans-icon tg-tplans-icon--fill" hidden>check_circle</span>';
+                  if (i === 0) b.querySelector(".tg-tplans-icon").hidden = false;
+                  b.addEventListener("click", function () {
+                    grid.querySelectorAll(".tg-tplans-daybtn").forEach(function (x) {
+                      x.setAttribute("aria-pressed", "false");
+                      var ic = x.querySelector(".tg-tplans-icon");
+                      if (ic) ic.hidden = true;
+                    });
+                    b.setAttribute("aria-pressed", "true");
+                    var ic2 = b.querySelector(".tg-tplans-icon");
+                    if (ic2) ic2.hidden = false;
+                    values[field.name] = opt.value;
+                    updateBreakdown();
+                  });
+                  grid.appendChild(b);
+                });
+                values[field.name] = field.options[0].value;
+              } else {
+                wrap.innerHTML = '<span class="tg-tplans-label">' + escapeHtml(field.label) + "</span>";
+                var fw = document.createElement("div");
+                fw.className = "tg-tplans-field-wrap";
+                var sel = document.createElement("select");
+                sel.className = "tg-tplans-select";
+                sel.required = field.required;
+                field.options.forEach(function (opt) {
+                  var o = document.createElement("option");
+                  o.value = opt.value;
+                  o.textContent = opt.text;
+                  sel.appendChild(o);
+                });
+                sel.addEventListener("change", function () {
+                  values[field.name] = sel.value;
+                  updateBreakdown();
+                });
+                values[field.name] = field.options[0].value;
+                fw.appendChild(sel);
+                var ic = document.createElement("span");
+                ic.className = "tg-tplans-icon";
+                ic.textContent = "keyboard_arrow_down";
+                fw.appendChild(ic);
+                wrap.appendChild(fw);
+              }
+            } else {
+              wrap.innerHTML = '<span class="tg-tplans-label">' + escapeHtml(field.label) + "</span>";
+              var inp = document.createElement("input");
+              inp.className = "tg-tplans-date";
+              inp.type = "date";
+              inp.required = !!field.required;
+              inp.addEventListener("change", function () {
+                values[field.name] = inp.value;
+              });
+              wrap.appendChild(inp);
+            }
+            inner.appendChild(wrap);
+          });
+
+          var qtyRow = document.createElement("div");
+          qtyRow.innerHTML = '<span class="tg-tplans-label">Quantity</span>';
+          var qty = document.createElement("input");
+          qty.type = "number";
+          qty.min = "1";
+          qty.step = "1";
+          qty.value = "1";
+          qty.className = "tg-tplans-date tg-tplans-qty";
+          qty.addEventListener("input", updateBreakdown);
+          qtyRow.appendChild(qty);
+          inner.appendChild(qtyRow);
+
+          var breakdown = document.createElement("div");
+          breakdown.className = "tg-tplans-breakdown";
+          breakdown.innerHTML =
+            '<div class="tg-tplans-breakdown-top"><span>Pricing (estimate)</span><span style="color:var(--tp-primary)">Live</span></div><div class="tg-tplans-breakdown-rows"></div><div class="tg-tplans-breakdown-total"></div>';
+          inner.appendChild(breakdown);
+
+          var submit = document.createElement("button");
+          submit.type = "button";
+          submit.className = "tg-tplans-submit";
+          submit.textContent = "Add to cart";
+          submit.addEventListener("click", function () {
+            for (var i = 0; i < schema.apo.length; i++) {
+              var f = schema.apo[i];
+              if (f.required && (values[f.name] === undefined || values[f.name] === "")) {
+                showToast("Please complete: " + (f.label || f.name));
+                return;
+              }
+            }
+            submit.disabled = true;
+            addToCart(schema, values, parseInt(qty.value, 10) || 1).then(function (r) {
+              submit.disabled = false;
+              if (r.ok) {
+                showToast(r.message);
+                card.classList.remove("tg-tplans-card--open");
+                if (state.openId === card) state.openId = null;
+                if (window.jQuery) {
+                  window.jQuery(document.body).trigger("added_to_cart");
+                }
+              } else {
+                showToast(r.message);
+              }
+            });
+          });
+          inner.appendChild(submit);
+
+          function updateBreakdown() {
+            var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
+            var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
+            var q = Math.max(1, parseInt(qty.value, 10) || 1);
+            var tiffins = 1;
+            schema.apo.forEach(function (f) {
+              if (labelKey(f.label) === "tiffins") {
+                var v = values[f.name];
+                tiffins = parseInt(v, 10) || 1;
+              }
+            });
+            var per = money(String(perMeal), card.querySelector(".tg-tplans-config").dataset.currency, card.querySelector(".tg-tplans-config").dataset.symbol);
+            var sub = ((perMeal / 100) * tiffins * q).toFixed(2);
+            var cur = card.querySelector(".tg-tplans-config").dataset.symbol || "$";
+            rows.innerHTML =
+              "<div><span style=\"color:var(--tp-muted)\">Per meal</span><span style=\"font-weight:600\">" +
+              per +
+              "</span></div>" +
+              '<div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">' +
+              q +
+              " × " +
+              tiffins +
+              "</span></div>";
+            totalEl.innerHTML =
+              '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val">' +
+              cur +
+              sub +
+              "</div></div>";
+          }
+
+          updateBreakdown();
+        });
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      root.querySelectorAll(".tg-tplans-filter").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          state.filter = btn.getAttribute("data-filter") || "all";
+          state.page = 1;
+          state.openId = null;
+          setFiltersUI();
+          loadProducts();
+        });
+      });
+
+      setFiltersUI();
+      loadProducts();
+    })();
+  </script>
+</section>
