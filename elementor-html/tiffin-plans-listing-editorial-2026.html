@@ -525,6 +525,13 @@
       color: #8b1d1d;
     }
 
+    .tg-tplans-options-loading {
+      font-size: 0.8125rem;
+      color: var(--tp-muted);
+      padding: 0 0 0.75rem;
+      margin: 0;
+    }
+
     .tg-tplans-toast {
       position: fixed;
       bottom: 1.5rem;
@@ -659,13 +666,55 @@
         return { productId: productId, action: action, apo: apo };
       }
 
+      var schemaFetchInflight = {};
+
       async function fetchSchema(permalink) {
         if (state.schemaCache[permalink]) return state.schemaCache[permalink];
-        var res = await fetch(permalink, { credentials: "same-origin" });
-        var html = await res.text();
-        var parsed = parseCartForm(html);
-        state.schemaCache[permalink] = parsed;
-        return parsed;
+        if (schemaFetchInflight[permalink]) return schemaFetchInflight[permalink];
+        schemaFetchInflight[permalink] = (async function () {
+          try {
+            var res = await fetch(permalink, { credentials: "same-origin" });
+            var html = await res.text();
+            var parsed = parseCartForm(html);
+            state.schemaCache[permalink] = parsed;
+            return parsed;
+          } finally {
+            delete schemaFetchInflight[permalink];
+          }
+        })();
+        return schemaFetchInflight[permalink];
+      }
+
+      /** Warm cache for visible cards so “Choose plan” often hits cache (no full-page fetch on click). */
+      function prefetchSchemasForProducts(products) {
+        var q = [];
+        products.forEach(function (p) {
+          if (p && p.permalink && !state.schemaCache[p.permalink]) q.push(p);
+        });
+        if (!q.length) return;
+        function worker() {
+          var p = q.shift();
+          if (!p) return;
+          fetchSchema(p.permalink)
+            .catch(function () {})
+            .finally(function () {
+              if (!q.length) return;
+              if (typeof requestIdleCallback === "function") {
+                requestIdleCallback(worker, { timeout: 1200 });
+              } else {
+                setTimeout(worker, 50);
+              }
+            });
+        }
+        function start() {
+          var n = Math.min(3, q.length);
+          for (var i = 0; i < n; i++) worker();
+        }
+        if (typeof requestIdleCallback === "function") {
+          requestIdleCallback(start, { timeout: 2000 });
+        } else {
+          setTimeout(start, 120);
+        }
       }
 
       async function addToCart(schema, fieldValues, quantity) {
@@ -716,7 +765,9 @@
             state.totalPages = Math.max(1, Math.ceil(state.totalItems / PER_PAGE));
             if (state.page > state.totalPages) state.page = state.totalPages;
             var start = (state.page - 1) * PER_PAGE;
-            renderCards(state.allProducts.slice(start, start + PER_PAGE));
+            var slice = state.allProducts.slice(start, start + PER_PAGE);
+            renderCards(slice);
+            prefetchSchemasForProducts(slice);
           } else {
             var cat = CAT[state.filter];
             var url = API + "?per_page=" + PER_PAGE + "&page=" + state.page + "&category=" + cat;
@@ -728,6 +779,7 @@
             state.totalItems = total;
             state.totalPages = Math.max(1, pages);
             renderCards(data);
+            prefetchSchemasForProducts(data);
           }
         } catch (e) {
           mount.innerHTML =
@@ -964,20 +1016,113 @@
 
       function populateConfig(card, product) {
         var inner = card.querySelector(".tg-tplans-config-inner");
-        inner.innerHTML = '<p class="tg-tplans-status" style="padding:1rem 0">Loading options…</p>';
+        var cfgEl = card.querySelector(".tg-tplans-config");
+        var perMeal = parseInt(cfgEl.dataset.priceMinor, 10) || 0;
+        var curCode = cfgEl.dataset.currency || "CAD";
+        var curSym = cfgEl.dataset.symbol || "$";
 
-        fetchSchema(product.permalink).then(function (schema) {
-          inner.innerHTML = "";
+        inner.innerHTML = "";
+
+        var optionsSlot = document.createElement("div");
+        optionsSlot.className = "tg-tplans-options-slot";
+        var loadingMsg = document.createElement("p");
+        loadingMsg.className = "tg-tplans-options-loading";
+        loadingMsg.textContent = "Loading meal options…";
+        optionsSlot.appendChild(loadingMsg);
+        inner.appendChild(optionsSlot);
+
+        var qtyRow = document.createElement("div");
+        qtyRow.innerHTML = '<span class="tg-tplans-label">Quantity</span>';
+        var qty = document.createElement("input");
+        qty.type = "number";
+        qty.min = "1";
+        qty.step = "1";
+        qty.value = "1";
+        qty.className = "tg-tplans-date tg-tplans-qty";
+        qtyRow.appendChild(qty);
+        inner.appendChild(qtyRow);
+
+        var breakdown = document.createElement("div");
+        breakdown.className = "tg-tplans-breakdown";
+        breakdown.innerHTML =
+          '<div class="tg-tplans-breakdown-top"><span>Pricing (estimate)</span><span style="color:var(--tp-primary)">From list</span></div><div class="tg-tplans-breakdown-rows"></div><div class="tg-tplans-breakdown-total"></div>';
+        inner.appendChild(breakdown);
+
+        var submit = document.createElement("button");
+        submit.type = "button";
+        submit.className = "tg-tplans-submit";
+        submit.textContent = "Add to cart";
+        submit.disabled = true;
+        inner.appendChild(submit);
+
+        var values = {};
+        var schemaRef = { current: null };
+
+        function paintBreakdownPartial() {
+          var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
+          var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
+          var per = money(String(perMeal), curCode, curSym);
+          rows.innerHTML =
+            '<div><span style="color:var(--tp-muted)">Per meal</span><span style="font-weight:600">' +
+            per +
+            '</span></div><div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">…</span></div>';
+          totalEl.innerHTML =
+            '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:0.4">…</div></div>';
+        }
+
+        function updateBreakdown() {
+          var sch = schemaRef.current;
+          var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
+          var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
+          var q = Math.max(1, parseInt(qty.value, 10) || 1);
+          var tiffins = 1;
+          if (sch && sch.apo) {
+            sch.apo.forEach(function (f) {
+              if (labelKey(f.label) === "tiffins") {
+                var v = values[f.name];
+                tiffins = parseInt(v, 10) || 1;
+              }
+            });
+          }
+          var per = money(String(perMeal), curCode, curSym);
+          var sub = ((perMeal / 100) * tiffins * q).toFixed(2);
+          rows.innerHTML =
+            "<div><span style=\"color:var(--tp-muted)\">Per meal</span><span style=\"font-weight:600\">" +
+            per +
+            "</span></div>" +
+            '<div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">' +
+            q +
+            " × " +
+            tiffins +
+            "</span></div>";
+          totalEl.innerHTML =
+            '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val" style="opacity:1">' +
+            curSym +
+            sub +
+            "</div></div>";
+        }
+
+        qty.addEventListener("input", function () {
+          if (schemaRef.current) updateBreakdown();
+          else paintBreakdownPartial();
+        });
+
+        paintBreakdownPartial();
+
+        function applySchema(schema) {
+          optionsSlot.innerHTML = "";
+          schemaRef.current = schema;
+
           if (schema.error) {
-            inner.innerHTML =
-              '<p class="tg-tplans-status tg-tplans-status--err">' + schema.error + '</p><p class="tg-tplans-status"><a href="' +
+            optionsSlot.innerHTML =
+              '<p class="tg-tplans-status tg-tplans-status--err">' +
+              escapeHtml(schema.error) +
+              '</p><p class="tg-tplans-status"><a href="' +
               product.permalink +
               '">Open product page</a></p>';
+            submit.disabled = true;
             return;
           }
-
-          var values = {};
-          var perMeal = parseInt(card.querySelector(".tg-tplans-config").dataset.priceMinor, 10) || 0;
 
           schema.apo.forEach(function (field) {
             var key = labelKey(field.label);
@@ -1067,41 +1212,22 @@
               });
               wrap.appendChild(inp);
             }
-            inner.appendChild(wrap);
+            optionsSlot.appendChild(wrap);
           });
 
-          var qtyRow = document.createElement("div");
-          qtyRow.innerHTML = '<span class="tg-tplans-label">Quantity</span>';
-          var qty = document.createElement("input");
-          qty.type = "number";
-          qty.min = "1";
-          qty.step = "1";
-          qty.value = "1";
-          qty.className = "tg-tplans-date tg-tplans-qty";
-          qty.addEventListener("input", updateBreakdown);
-          qtyRow.appendChild(qty);
-          inner.appendChild(qtyRow);
-
-          var breakdown = document.createElement("div");
-          breakdown.className = "tg-tplans-breakdown";
-          breakdown.innerHTML =
-            '<div class="tg-tplans-breakdown-top"><span>Pricing (estimate)</span><span style="color:var(--tp-primary)">Live</span></div><div class="tg-tplans-breakdown-rows"></div><div class="tg-tplans-breakdown-total"></div>';
-          inner.appendChild(breakdown);
-
-          var submit = document.createElement("button");
-          submit.type = "button";
-          submit.className = "tg-tplans-submit";
-          submit.textContent = "Add to cart";
-          submit.addEventListener("click", function () {
-            for (var i = 0; i < schema.apo.length; i++) {
-              var f = schema.apo[i];
+          submit.disabled = false;
+          submit.onclick = function () {
+            var sch = schemaRef.current;
+            if (!sch || sch.error) return;
+            for (var i = 0; i < sch.apo.length; i++) {
+              var f = sch.apo[i];
               if (f.required && (values[f.name] === undefined || values[f.name] === "")) {
                 showToast("Please complete: " + (f.label || f.name));
                 return;
               }
             }
             submit.disabled = true;
-            addToCart(schema, values, parseInt(qty.value, 10) || 1).then(function (r) {
+            addToCart(sch, values, parseInt(qty.value, 10) || 1).then(function (r) {
               submit.disabled = false;
               if (r.ok) {
                 showToast(r.message);
@@ -1114,41 +1240,17 @@
                 showToast(r.message);
               }
             });
-          });
-          inner.appendChild(submit);
-
-          function updateBreakdown() {
-            var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
-            var totalEl = breakdown.querySelector(".tg-tplans-breakdown-total");
-            var q = Math.max(1, parseInt(qty.value, 10) || 1);
-            var tiffins = 1;
-            schema.apo.forEach(function (f) {
-              if (labelKey(f.label) === "tiffins") {
-                var v = values[f.name];
-                tiffins = parseInt(v, 10) || 1;
-              }
-            });
-            var per = money(String(perMeal), card.querySelector(".tg-tplans-config").dataset.currency, card.querySelector(".tg-tplans-config").dataset.symbol);
-            var sub = ((perMeal / 100) * tiffins * q).toFixed(2);
-            var cur = card.querySelector(".tg-tplans-config").dataset.symbol || "$";
-            rows.innerHTML =
-              "<div><span style=\"color:var(--tp-muted)\">Per meal</span><span style=\"font-weight:600\">" +
-              per +
-              "</span></div>" +
-              '<div><span style="color:var(--tp-muted)">Units</span><span style="font-weight:600">' +
-              q +
-              " × " +
-              tiffins +
-              "</span></div>";
-            totalEl.innerHTML =
-              '<div><div class="tg-tplans-total-label">Weekly total (est.)</div><div class="tg-tplans-total-val">' +
-              cur +
-              sub +
-              "</div></div>";
-          }
+          };
 
           updateBreakdown();
-        });
+        }
+
+        var cached = state.schemaCache[product.permalink];
+        if (cached) {
+          applySchema(cached);
+        } else {
+          fetchSchema(product.permalink).then(applySchema);
+        }
       }
 
       function escapeHtml(s) {
