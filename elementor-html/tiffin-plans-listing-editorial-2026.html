@@ -885,9 +885,27 @@
       box-shadow: var(--tp-shadow);
       opacity: 0;
       transition: transform 0.35s ease, opacity 0.35s ease;
-      pointer-events: none;
+      pointer-events: auto;
       max-width: min(90vw, 22rem);
       text-align: center;
+      line-height: 1.4;
+    }
+    .tg-tplans-toast-link {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 700;
+      margin-left: 0.25rem;
+      white-space: nowrap;
+    }
+    .tg-tplans-toast-link:hover,
+    .tg-tplans-toast-link:focus {
+      color: var(--tp-primary) !important;
+      outline: none;
+    }
+    .tg-tplans-toast-link:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
     }
     .tg-tplans-toast--show {
       transform: translateX(-50%) translateY(0);
@@ -962,13 +980,38 @@
         return t;
       }
 
-      function showToast(msg) {
-        toastEl.textContent = msg;
-        toastEl.classList.add("tg-tplans-toast--show");
+      function safeCartHref(href) {
+        try {
+          var u = new URL(href, STORE);
+          if (u.origin !== new URL(STORE).origin) return new URL("/cart/", STORE).href;
+          return u.href;
+        } catch (e) {
+          return new URL("/cart/", STORE).href;
+        }
+      }
+
+      /** @param cartUrl optional — same-origin cart URL; shows a “View cart” link in the toast */
+      function showToast(msg, cartUrl) {
         clearTimeout(showToast._t);
+        toastEl.innerHTML = "";
+        var url = cartUrl && String(cartUrl).trim();
+        if (url) {
+          var span = document.createElement("span");
+          span.textContent = (msg || "").trim();
+          toastEl.appendChild(span);
+          toastEl.appendChild(document.createTextNode(" "));
+          var a = document.createElement("a");
+          a.className = "tg-tplans-toast-link";
+          a.href = safeCartHref(url);
+          a.textContent = "View cart";
+          toastEl.appendChild(a);
+        } else {
+          toastEl.textContent = msg;
+        }
+        toastEl.classList.add("tg-tplans-toast--show");
         showToast._t = setTimeout(function () {
           toastEl.classList.remove("tg-tplans-toast--show");
-        }, 4200);
+        }, 5200);
       }
 
       function parseCartForm(html) {
@@ -1084,11 +1127,21 @@
           }
           var okEl = doc.querySelector(".woocommerce-message");
           if (okEl) {
-            var mt = (okEl.textContent || "").replace(/\s+/g, " ").trim();
-            return { ok: true, message: mt || "Added to cart." };
+            var clone = okEl.cloneNode(true);
+            clone.querySelectorAll("a").forEach(function (a) {
+              a.remove();
+            });
+            var mt = (clone.textContent || "").replace(/\s+/g, " ").trim();
+            var cartA = okEl.querySelector("a.wc-forward") || okEl.querySelector('a[href*="/cart"]');
+            var cartHref = cartA && cartA.getAttribute("href") ? cartA.getAttribute("href").trim() : "";
+            return {
+              ok: true,
+              message: mt || "Added to cart.",
+              cartUrl: cartHref || new URL("/cart/", STORE).href,
+            };
           }
           if (res.status === 302 || (res.ok && res.status < 400)) {
-            return { ok: true, message: "Added to cart." };
+            return { ok: true, message: "Added to cart.", cartUrl: new URL("/cart/", STORE).href };
           }
           return { ok: false, message: "Unexpected response from server." };
         } catch (e) {
@@ -1657,7 +1710,7 @@
               .then(function (r) {
                 submit.disabled = false;
                 if (r.ok) {
-                  showToast(r.message);
+                  showToast(r.message, r.cartUrl);
                   card.classList.remove("tg-tplans-card--flipped");
                   if (state.openId === card) state.openId = null;
                   syncFlipA11y(card);
