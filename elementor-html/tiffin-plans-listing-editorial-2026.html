@@ -457,11 +457,21 @@
       color: var(--tp-on);
     }
     .tg-tplans-daybtn .tg-tplans-day-ring {
+      display: inline-block;
+      flex-shrink: 0;
       color: rgba(92, 88, 84, 0.22) !important;
       font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 !important;
     }
     .tg-tplans-daybtn .tg-tplans-day-check {
+      display: none;
+      flex-shrink: 0;
       color: var(--tp-primary) !important;
+    }
+    .tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-check {
+      display: inline-block;
+    }
+    .tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-ring {
+      display: none;
     }
 
     .tg-tplans-select,
@@ -775,11 +785,20 @@
     #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] > span:first-of-type {
       color: #1d1b19 !important;
     }
+    /* Theme often breaks [hidden]; show check only when aria-pressed=true */
+    #tg-tplans-2026 button.tg-tplans-daybtn .tg-tplans-day-check {
+      display: none !important;
+      color: #f06b1a !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-check {
+      display: inline-block !important;
+    }
     #tg-tplans-2026 button.tg-tplans-daybtn .tg-tplans-day-ring {
+      display: inline-block !important;
       color: rgba(92, 88, 84, 0.22) !important;
     }
-    #tg-tplans-2026 button.tg-tplans-daybtn .tg-tplans-day-check {
-      color: #f06b1a !important;
+    #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-ring {
+      display: none !important;
     }
 
     #tg-tplans-2026 .tg-tplans-breakdown-total button.tg-tplans-submit {
@@ -1518,30 +1537,13 @@
                   b.innerHTML =
                     "<span>" +
                     opt.text.replace(/Monday/g, "Mon").replace(/Tuesday/g, "Tue").replace(/Wednesday/g, "Wed").replace(/Thursday/g, "Thu").replace(/Friday/g, "Fri").replace(/Saturday/g, "Sat").replace(/Sunday/g, "Sun") +
-                    '</span><span class="material-symbols-outlined tg-tplans-icon tg-tplans-icon--fill tg-tplans-day-check" aria-hidden="true" hidden>check_circle</span>' +
-                    '<span class="material-symbols-outlined tg-tplans-icon tg-tplans-day-ring" aria-hidden="true">circle</span>';
-                  var chk0 = b.querySelector(".tg-tplans-day-check");
-                  var ring0 = b.querySelector(".tg-tplans-day-ring");
-                  if (i === 0) {
-                    if (chk0) chk0.hidden = false;
-                    if (ring0) ring0.hidden = true;
-                  } else {
-                    if (chk0) chk0.hidden = true;
-                    if (ring0) ring0.hidden = false;
-                  }
+                    '</span><span class="material-symbols-outlined tg-tplans-icon tg-tplans-icon--fill tg-tplans-day-check" aria-hidden="true">check_circle</span>' +
+                    '<span class="material-symbols-outlined tg-tplans-icon tg-tplans-day-ring" aria-hidden="true">radio_button_unchecked</span>';
                   b.addEventListener("click", function () {
                     grid.querySelectorAll(".tg-tplans-daybtn").forEach(function (x) {
                       x.setAttribute("aria-pressed", "false");
-                      var ck = x.querySelector(".tg-tplans-day-check");
-                      var rg = x.querySelector(".tg-tplans-day-ring");
-                      if (ck) ck.hidden = true;
-                      if (rg) rg.hidden = false;
                     });
                     b.setAttribute("aria-pressed", "true");
-                    var ck2 = b.querySelector(".tg-tplans-day-check");
-                    var rg2 = b.querySelector(".tg-tplans-day-ring");
-                    if (ck2) ck2.hidden = false;
-                    if (rg2) rg2.hidden = true;
                     values[field.name] = opt.value;
                     updateBreakdown();
                   });
