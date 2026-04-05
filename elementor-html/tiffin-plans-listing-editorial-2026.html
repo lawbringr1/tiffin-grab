@@ -1423,36 +1423,6 @@
         return 1;
       }
 
-      function dayCountFromSchema(sch, values) {
-        if (!sch || !sch.apo || !values) return null;
-        for (var i = 0; i < sch.apo.length; i++) {
-          var f = sch.apo[i];
-          if (labelKey(f.label) !== "days" || !f.options) continue;
-          var sel = values[f.name];
-          if (sel === undefined || sel === "") continue;
-          for (var j = 0; j < f.options.length; j++) {
-            if (f.options[j].value !== sel) continue;
-            var tx = (f.options[j].text || "").toLowerCase();
-            if (/alternat/i.test(tx)) return null;
-            if (/mon[^\n]*wed[^\n]*fri|mwf|\b3\s*-?\s*day/i.test(tx)) return 3;
-            if (/mon[^\n]*sun|7\s*-?\s*day|every\s*day|full\s*week/i.test(tx)) return 7;
-            if (/sat/.test(tx) && !/sun/.test(tx)) return 6;
-            if (/fri/.test(tx) && !/sat|sun/.test(tx)) return 5;
-            if (/mon/.test(tx) && /fri/.test(tx)) return 5;
-            return null;
-          }
-        }
-        return null;
-      }
-
-      function schemaHasDaysField(sch) {
-        if (!sch || !sch.apo) return false;
-        for (var i = 0; i < sch.apo.length; i++) {
-          if (labelKey(sch.apo[i].label) === "days") return true;
-        }
-        return false;
-      }
-
       /** Prefer Woo option value 1 when present; else smallest numeric; else first. */
       function defaultTiffinOptionIndex(options) {
         if (!options || !options.length) return 0;
@@ -1534,21 +1504,16 @@
               }
             });
           }
-          var dc = dayCountFromSchema(sch, values);
-          var hasDays = schemaHasDaysField(sch);
-          /* Weekly total = unit price × how many tiffins/meals in the plan; day pattern is schedule only. */
+          /* Weekly total = listed meal price × number of tiffins only (preferred days = delivery schedule, not price). */
           var totalMinor = Math.round(perMeal * tiffins);
           var subFormatted = money(String(totalMinor), curCode, curSym);
-          var dayPart = hasDays && dc != null && dc > 0 ? " (" + dc + " days)" : "";
           var perStr = money(String(perMeal), curCode, curSym);
           var formula = perStr + " per meal × " + tiffins + " tiffins";
           rows.innerHTML =
             '<p class="tg-tplans-bd-formula">' +
             escapeHtml(formula) +
             "</p>" +
-            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal' +
-            dayPart +
-            '</span><span class="tg-tplans-bd-val">' +
+            '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal</span><span class="tg-tplans-bd-val">' +
             subFormatted +
             "</span></div>" +
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
