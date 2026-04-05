@@ -1,5 +1,7 @@
 # Secrets — do not commit
 .mcp.json
+.cursor/mcp.json
+.codex/config.toml
 
 # MCP / Elementor .tmp-* JSON payloads are tracked on purpose (offline reference / faster reruns).
 # Do not put passwords or API keys into these files.

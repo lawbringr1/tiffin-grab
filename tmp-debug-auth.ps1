@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$mcpPath = Join-Path $PSScriptRoot ".mcp.json"
+$mcpPath = Join-Path $PSScriptRoot ".cursor/mcp.json"
 $mcpConfig = Get-Content -Raw $mcpPath | ConvertFrom-Json
 $auth = $mcpConfig.mcpServers.'elementor-mcp'.headers.Authorization
 

@@ -1,11 +1,11 @@
 $ErrorActionPreference = "Stop"
 $workspaceRoot = $PSScriptRoot
-$mcpPath = Join-Path $workspaceRoot ".mcp.json"
+$mcpPath = Join-Path $workspaceRoot ".cursor/mcp.json"
 $serverUrl = "https://tiffingrab.ca/wp-json/mcp/elementor-mcp-server"
 
 $mcpRaw = Get-Content -Raw $mcpPath
 if ($mcpRaw -notmatch '"elementor-mcp"\s*:\s*\{\s*"url"\s*:\s*"[^"]+"\s*,\s*"headers"\s*:\s*\{\s*"Authorization"\s*:\s*"([^"]+)"') {
-  throw "Could not extract elementor-mcp Authorization from .mcp.json"
+  throw "Could not extract elementor-mcp Authorization from .cursor/mcp.json"
 }
 $basicHeader = $Matches[1]
 $sessionId = & (Join-Path $workspaceRoot "tmp-mcp-init.ps1")
