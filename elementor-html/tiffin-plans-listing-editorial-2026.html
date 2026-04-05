@@ -245,22 +245,22 @@
       justify-content: center;
     }
     /*
-     * “Customize & subscribe” — outline + white circle from bottom center (Shadcn ButtonDemo).
-     * Matches: border-primary, rounded-full, w-8 h-8 blob at left-1/2 top-full -translate, scale-0 → scale-[18] on hover.
+     * “Customize & subscribe” — outline + cursor-position fill (Shadcn ButtonDemo).
+     * Neutral border/text; expanding circle is charcoal (no brand orange). Label → white on hover.
      */
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise {
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       max-width: 100%;
-      min-height: 2.75rem;
-      padding: 0.5rem 1rem;
+      min-height: auto;
+      padding: 0.75rem 1.5rem;
       border-radius: 9999px;
       box-sizing: border-box;
       overflow: hidden;
-      border: 1px solid var(--tp-primary) !important;
+      border: 1px solid rgba(29, 27, 25, 0.14) !important;
       background: transparent !important;
       background-color: transparent !important;
       font-family: var(--tp-font-display) !important;
@@ -268,8 +268,8 @@
       font-weight: 500;
       line-height: 1.35;
       letter-spacing: 0.01em;
-      color: var(--tp-primary) !important;
-      -webkit-text-fill-color: var(--tp-primary);
+      color: var(--tp-on) !important;
+      -webkit-text-fill-color: var(--tp-on);
       text-align: center;
       cursor: pointer;
       -webkit-appearance: none;
@@ -278,36 +278,36 @@
       -webkit-tap-highlight-color: transparent;
       transition: border-color 0.3s ease, transform 0.2s ease;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover {
-      border-color: var(--tp-primary-mid) !important;
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover {
+      border-color: rgba(29, 27, 25, 0.22) !important;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible {
-      outline: 2px solid rgba(240, 107, 26, 0.55);
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible {
+      outline: 2px solid rgba(29, 27, 25, 0.28);
       outline-offset: 3px;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:active {
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:active {
       transform: scale(0.98);
     }
-    #tg-tplans-2026 .tg-tplans-blob-rise__circle {
+    #tg-tplans-2026 .tg-tplans-fill-cursor__blob {
       position: absolute;
-      left: 50%;
-      top: 100%;
-      width: 2rem;
-      height: 2rem;
+      left: 0;
+      top: 0;
+      width: 2.5rem;
+      height: 2.5rem;
       margin: 0;
       border-radius: 9999px;
-      background: #ffffff;
-      transform: translate(-50%, -50%) scale(0);
+      background: #292524;
+      transform: scale(0);
       transform-origin: center center;
       transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1;
       pointer-events: none;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__circle,
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__circle {
-      transform: translate(-50%, -50%) scale(18);
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover .tg-tplans-fill-cursor__blob,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible .tg-tplans-fill-cursor__blob {
+      transform: scale(15);
     }
-    #tg-tplans-2026 .tg-tplans-blob-rise__label {
+    #tg-tplans-2026 .tg-tplans-fill-cursor__label {
       position: relative;
       z-index: 2;
       pointer-events: none;
@@ -315,20 +315,10 @@
       text-align: center;
       transition: color 0.5s ease;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
-      color: #030712 !important;
-      -webkit-text-fill-color: #030712;
-    }
-    @media (prefers-color-scheme: dark) {
-      #tg-tplans-2026 .tg-tplans-blob-rise__circle {
-        background: #030712;
-      }
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
-        color: #fafafa !important;
-        -webkit-text-fill-color: #fafafa;
-      }
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover .tg-tplans-fill-cursor__label,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible .tg-tplans-fill-cursor__label {
+      color: #fafafa !important;
+      -webkit-text-fill-color: #fafafa;
     }
     @media (max-width: 520px) {
       #tg-tplans-2026 .tg-tplans-breakdown-total {
@@ -342,18 +332,19 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      #tg-tplans-2026 .tg-tplans-blob-rise__circle {
+      #tg-tplans-2026 .tg-tplans-fill-cursor__blob {
         display: none !important;
       }
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover,
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible {
-        background: #ffffff !important;
-        background-color: #ffffff !important;
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible {
+        background: #292524 !important;
+        background-color: #292524 !important;
+        border-color: #292524 !important;
       }
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
-        color: #030712 !important;
-        -webkit-text-fill-color: #030712 !important;
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover .tg-tplans-fill-cursor__label,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible .tg-tplans-fill-cursor__label {
+        color: #fafafa !important;
+        -webkit-text-fill-color: #fafafa !important;
       }
       #tg-tplans-2026 a.tg-h26-btn,
       #tg-tplans-2026 button.tg-h26-btn,
@@ -363,7 +354,7 @@
       }
       #tg-tplans-2026 a.tg-h26-btn:active,
       #tg-tplans-2026 button.tg-h26-btn:active,
-      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:active {
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:active {
         transform: none !important;
       }
     }
@@ -655,7 +646,7 @@
       padding-top: 1.35rem;
       background: linear-gradient(to top, var(--tp-card) 70%, transparent);
     }
-    /* Customize CTA: .tg-tplans-blob-rise (outline + rising white fill); Add to cart: .tg-h26-btn */
+    /* Customize CTA: .tg-tplans-fill-cursor (neutral outline + cursor fill); Add to cart: .tg-h26-btn */
     .tg-tplans-quick {
       width: 100%;
     }
@@ -995,15 +986,15 @@
       filter: brightness(1.06);
     }
 
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise {
-      color: var(--tp-primary) !important;
-      -webkit-text-fill-color: var(--tp-primary) !important;
-      border-color: var(--tp-primary) !important;
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor {
+      color: var(--tp-on) !important;
+      -webkit-text-fill-color: var(--tp-on) !important;
+      border-color: rgba(29, 27, 25, 0.14) !important;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
-      color: #030712 !important;
-      -webkit-text-fill-color: #030712 !important;
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover .tg-tplans-fill-cursor__label,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible .tg-tplans-fill-cursor__label {
+      color: #fafafa !important;
+      -webkit-text-fill-color: #fafafa !important;
     }
 
     #tg-tplans-2026 button.tg-tplans-read {
@@ -1253,6 +1244,36 @@
         } catch (e) {
           return new URL("/cart/", STORE).href;
         }
+      }
+
+      /** Neutral outline button: charcoal fill from pointer (40px disc, pos −20 — Shadcn outline demo). */
+      function attachTplansFillCursor(btn) {
+        var blob = btn.querySelector(".tg-tplans-fill-cursor__blob");
+        if (!blob) return;
+        function setBlobPos(clientX, clientY) {
+          var rect = btn.getBoundingClientRect();
+          var x = clientX - rect.left;
+          var y = clientY - rect.top;
+          blob.style.left = x - 20 + "px";
+          blob.style.top = y - 20 + "px";
+        }
+        function centerBlob() {
+          var rect = btn.getBoundingClientRect();
+          blob.style.left = Math.max(0, rect.width / 2 - 20) + "px";
+          blob.style.top = Math.max(0, rect.height / 2 - 20) + "px";
+        }
+        btn.addEventListener("mouseenter", function (e) {
+          setBlobPos(e.clientX, e.clientY);
+        });
+        btn.addEventListener("mousemove", function (e) {
+          setBlobPos(e.clientX, e.clientY);
+        });
+        btn.addEventListener("touchstart", function (e) {
+          if (e.touches && e.touches[0]) {
+            setBlobPos(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: true });
+        btn.addEventListener("focus", centerBlob);
       }
 
       /** @param cartUrl optional — same-origin cart URL; shows a “View cart” link in the toast */
@@ -1656,10 +1677,11 @@
           qw.className = "tg-tplans-quick-wrap";
           var quick = document.createElement("button");
           quick.type = "button";
-          quick.className = "tg-tplans-quick tg-tplans-blob-rise";
+          quick.className = "tg-tplans-quick tg-tplans-fill-cursor";
           quick.innerHTML =
-            '<span class="tg-tplans-blob-rise__circle" aria-hidden="true"></span>' +
-            '<span class="tg-tplans-blob-rise__label">Customize &amp; subscribe</span>';
+            '<span class="tg-tplans-fill-cursor__blob" aria-hidden="true"></span>' +
+            '<span class="tg-tplans-fill-cursor__label">Customize &amp; subscribe</span>';
+          attachTplansFillCursor(quick);
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
