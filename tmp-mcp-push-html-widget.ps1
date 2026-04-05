@@ -1,3 +1,4 @@
+# Windows: run in PowerShell. On macOS/Linux use: ./tmp-mcp-push-html-widget.sh (see scripts/elementor_mcp_push_html_widget.py).
 param(
   [Parameter(Mandatory = $true)][int]$PostId,
   [Parameter(Mandatory = $true)][string]$ElementId,
