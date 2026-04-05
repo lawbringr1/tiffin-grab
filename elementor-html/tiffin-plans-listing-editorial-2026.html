@@ -245,74 +245,90 @@
       justify-content: center;
     }
     /*
-     * “Customize & subscribe” — Shadcn Button variant=destructive + heartbeateffect (shadcn-space button-04).
-     * Destructive palette matches shadcn/ui; pulse is a double-beat scale + soft ring.
+     * “Customize & subscribe” — outline + white circle from bottom center (Shadcn ButtonDemo).
+     * Matches: border-primary, rounded-full, w-8 h-8 blob at left-1/2 top-full -translate, scale-0 → scale-[18] on hover.
      */
-    @keyframes tg-tplans-heartbeat {
-      0%,
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
-      }
-      12% {
-        transform: scale(1.045);
-        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.12);
-      }
-      22% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
-      }
-      34% {
-        transform: scale(1.045);
-        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.08);
-      }
-      48% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-      }
-    }
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       max-width: 100%;
-      min-height: 3rem;
-      padding: 0.75rem 1.5rem;
+      min-height: 2.75rem;
+      padding: 0.5rem 1rem;
       border-radius: 9999px;
       box-sizing: border-box;
-      border: 1px solid transparent;
-      background: #ef4444 !important;
-      background-color: #ef4444 !important;
+      overflow: hidden;
+      border: 1px solid var(--tp-primary) !important;
+      background: transparent !important;
+      background-color: transparent !important;
       font-family: var(--tp-font-display) !important;
-      font-size: 0.875rem;
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: 0.02em;
-      color: #fafafa !important;
-      -webkit-text-fill-color: #fafafa;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: 0.01em;
+      color: var(--tp-primary) !important;
+      -webkit-text-fill-color: var(--tp-primary);
       text-align: center;
       cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
+      box-shadow: none !important;
       -webkit-tap-highlight-color: transparent;
-      transform-origin: center center;
-      animation: tg-tplans-heartbeat 1.85s ease-in-out infinite;
-      transition: background-color 0.2s ease, filter 0.2s ease;
+      transition: border-color 0.3s ease, transform 0.2s ease;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:hover {
-      background: #dc2626 !important;
-      background-color: #dc2626 !important;
-      filter: brightness(1.03);
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover {
+      border-color: var(--tp-primary-mid) !important;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:focus-visible {
-      outline: 2px solid rgba(239, 68, 68, 0.65);
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible {
+      outline: 2px solid rgba(240, 107, 26, 0.55);
       outline-offset: 3px;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:active {
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:active {
       transform: scale(0.98);
-      animation: none;
+    }
+    #tg-tplans-2026 .tg-tplans-blob-rise__circle {
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2rem;
+      height: 2rem;
+      margin: 0;
+      border-radius: 9999px;
+      background: #ffffff;
+      transform: translate(-50%, -50%) scale(0);
+      transform-origin: center center;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+      pointer-events: none;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__circle,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__circle {
+      transform: translate(-50%, -50%) scale(18);
+    }
+    #tg-tplans-2026 .tg-tplans-blob-rise__label {
+      position: relative;
+      z-index: 2;
+      pointer-events: none;
+      width: 100%;
+      text-align: center;
+      transition: color 0.5s ease;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
+      color: #030712 !important;
+      -webkit-text-fill-color: #030712;
+    }
+    @media (prefers-color-scheme: dark) {
+      #tg-tplans-2026 .tg-tplans-blob-rise__circle {
+        background: #030712;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
+        color: #fafafa !important;
+        -webkit-text-fill-color: #fafafa;
+      }
     }
     @media (max-width: 520px) {
       #tg-tplans-2026 .tg-tplans-breakdown-total {
@@ -326,9 +342,18 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
-        animation: none !important;
-        box-shadow: none !important;
+      #tg-tplans-2026 .tg-tplans-blob-rise__circle {
+        display: none !important;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible {
+        background: #ffffff !important;
+        background-color: #ffffff !important;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
+        color: #030712 !important;
+        -webkit-text-fill-color: #030712 !important;
       }
       #tg-tplans-2026 a.tg-h26-btn,
       #tg-tplans-2026 button.tg-h26-btn,
@@ -338,7 +363,7 @@
       }
       #tg-tplans-2026 a.tg-h26-btn:active,
       #tg-tplans-2026 button.tg-h26-btn:active,
-      #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:active {
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:active {
         transform: none !important;
       }
     }
@@ -630,7 +655,7 @@
       padding-top: 1.35rem;
       background: linear-gradient(to top, var(--tp-card) 70%, transparent);
     }
-    /* Customize CTA: .heartbeateffect (destructive pulse); Add to cart: .tg-h26-btn */
+    /* Customize CTA: .tg-tplans-blob-rise (outline + rising white fill); Add to cart: .tg-h26-btn */
     .tg-tplans-quick {
       width: 100%;
     }
@@ -970,13 +995,15 @@
       filter: brightness(1.06);
     }
 
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
-      color: #fafafa !important;
-      -webkit-text-fill-color: #fafafa !important;
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise {
+      color: var(--tp-primary) !important;
+      -webkit-text-fill-color: var(--tp-primary) !important;
+      border-color: var(--tp-primary) !important;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:hover {
-      color: #fafafa !important;
-      -webkit-text-fill-color: #fafafa !important;
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:hover .tg-tplans-blob-rise__label,
+    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-blob-rise:focus-visible .tg-tplans-blob-rise__label {
+      color: #030712 !important;
+      -webkit-text-fill-color: #030712 !important;
     }
 
     #tg-tplans-2026 button.tg-tplans-read {
@@ -1629,8 +1656,10 @@
           qw.className = "tg-tplans-quick-wrap";
           var quick = document.createElement("button");
           quick.type = "button";
-          quick.className = "tg-tplans-quick heartbeateffect";
-          quick.textContent = "Customize & subscribe";
+          quick.className = "tg-tplans-quick tg-tplans-blob-rise";
+          quick.innerHTML =
+            '<span class="tg-tplans-blob-rise__circle" aria-hidden="true"></span>' +
+            '<span class="tg-tplans-blob-rise__label">Customize &amp; subscribe</span>';
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
