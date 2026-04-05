@@ -15,7 +15,7 @@
 <!-- Same Material Symbols URL as home-2026-hero-tags.html (variable wght/FILL). -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-<section id="tg-tplans-2026" class="tg-tplans" data-store-root="" aria-labelledby="tg-tplans-title">
+<section id="tg-tplans-2026" class="tg-tplans" data-store-root="" data-tg-pricing-ui="stitch-weekly-total" aria-labelledby="tg-tplans-title">
   <style>
     .elementor-widget-html:has(#tg-tplans-2026),
     .elementor-widget-html:has(#tg-tplans-2026) .elementor-widget-container,
@@ -554,7 +554,7 @@
       padding-top: 0.75rem;
       border-top: 1px solid rgba(240, 107, 26, 0.1);
       display: flex;
-      flex-direction: row-reverse;
+      flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
       gap: 1rem;
@@ -562,7 +562,7 @@
     .tg-tplans-total-main {
       flex: 1;
       min-width: 0;
-      text-align: right;
+      text-align: left;
     }
     .tg-tplans-total-label {
       display: block;
@@ -576,7 +576,7 @@
     .tg-tplans-total-val {
       font-family: var(--tp-font-display);
       font-size: 1.875rem;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--tp-on);
       letter-spacing: -0.025em;
       line-height: 1.1;
@@ -797,6 +797,11 @@
     }
     #tg-tplans-2026 button.tg-tplans-submit:disabled {
       color: #ffffff !important;
+    }
+
+    #tg-tplans-2026 .tg-tplans-total-val {
+      font-weight: 800 !important;
+      color: #1d1b19 !important;
     }
 
     #tg-tplans-2026 button.tg-tplans-pagebtn {
