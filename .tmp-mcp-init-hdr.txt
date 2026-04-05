@@ -1,0 +1,29 @@
+HTTP/1.1 200 OK
+Date: Sat, 28 Mar 2026 10:12:29 GMT
+Content-Type: application/json; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Powered-By: PHP/8.3.30
+X-DNS-Prefetch-Control: on
+set-cookie: _fbp=fb.1.1774692748685.1911972299.AQECAQIB; expires=Fri, 26 Jun 2026 10:12:28 GMT; Max-Age=7776000; path=/; domain=tiffingrab.ca; secure
+X-Robots-Tag: noindex
+Link: <https://tiffingrab.ca/wp-json/>; rel="https://api.w.org/"
+X-Content-Type-Options: nosniff
+Access-Control-Expose-Headers: X-WP-Total, X-WP-TotalPages, Link
+Access-Control-Allow-Headers: Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type
+Allow: POST, GET, DELETE
+Mcp-Session-Id: 4254b4cd-4d85-49be-a72b-3a73bdd692e8
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+X-LiteSpeed-Cache-Control: no-cache
+Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private
+platform: hostinger
+panel: hpanel
+Retry-After: 60
+Content-Security-Policy: upgrade-insecure-requests
+Server: hcdn
+alt-svc: h3=":443"; ma=86400
+x-hcdn-request-id: 76dee2d3ce63286a7de21c7006f61414-mum-edge9
+x-hcdn-cache-status: DYNAMIC
+x-hcdn-upstream-rt: 1.177
+

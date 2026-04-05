@@ -1,10 +1,8 @@
 # Secrets — do not commit
 .mcp.json
 
-# MCP / debug scratch files
-.tmp-*
-.tmp-hdr.txt
-.tmp-session.txt
+# MCP / Elementor .tmp-* JSON payloads are tracked on purpose (offline reference / faster reruns).
+# Do not put passwords or API keys into these files.
 
 # Wordpress - ignore core, configuration, examples, uploads and logs.
 # https://github.com/github/gitignore/blob/main/WordPress.gitignore

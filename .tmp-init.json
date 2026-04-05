@@ -1,0 +1,1 @@
+{"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-06-18","serverInfo":{"name":"MCP Tools for Elementor Server","version":"v1.4.3"},"capabilities":{"tools":{},"resources":{},"prompts":{},"logging":{},"completions":{}},"instructions":"Exposes Elementor data and design tools as MCP tools for AI agents."}}
