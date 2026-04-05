@@ -31,8 +31,8 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button {
   line-height: 1.25 !important;
   border: none !important;
   box-shadow: none !important;
-  /* room for 32px knob + 4px inset ≈ pe-12 */
-  padding: 6px 48px 6px 22px !important;
+  /* room for 40px knob + 4px inset — matches Shadcn h-12 / pe-14 magnetic pill */
+  padding: 4px 56px 4px 24px !important;
   transition: padding 0.5s ease !important;
 }
 selector .elementor-element[data-id="438c2085"] .elementor-button {
@@ -47,7 +47,7 @@ selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
 selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-  padding: 6px 22px 6px 48px !important;
+  padding: 4px 24px 4px 56px !important;
 }
 /* static = icon’s absolute ties to .elementor-button, not text-only width */
 selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
@@ -74,12 +74,12 @@ selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-but
   top: 50% !important;
   right: 4px !important;
   left: auto !important;
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
   margin: 0 !important;
   padding: 0 !important;
   flex: none !important;
@@ -99,12 +99,12 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   top: 50% !important;
   right: 4px !important;
   left: auto !important;
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
   margin: 0 !important;
   padding: 0 !important;
   flex: none !important;
@@ -120,12 +120,12 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
 }
 selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
 selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
-  right: calc(100% - 36px) !important;
+  right: calc(100% - 44px) !important;
   transform: translateY(-50%) rotate(45deg) !important;
 }
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
-  right: calc(100% - 36px) !important;
+  right: calc(100% - 44px) !important;
   transform: translateY(-50%) !important;
 }
 /* Inline SVG arrow (FA often missing in editor / lazy-loaded) */
@@ -192,7 +192,7 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
     /* Slightly smaller than 16–18px caps — still beats theme default on small screens */
     font-size: clamp(13.5px, 3.5vw, 16px) !important;
     line-height: 1.22 !important;
-    padding: 0.4rem 3.35rem 0.4rem 0.65rem !important;
+    padding: 0.35rem 3.25rem 0.35rem 1rem !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-content-wrapper {
@@ -208,15 +208,15 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
     text-overflow: clip !important;
     text-align: left !important;
   }
-  /* Identical white disc: orange + WhatsApp (same as .tg-faq-magnetic-knob mobile) */
+  /* 40px disc — same as .tg-h26-btn */
   selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
-    width: 2.35rem !important;
-    height: 2.35rem !important;
-    min-width: 2.35rem !important;
-    max-width: 2.35rem !important;
-    min-height: 2.35rem !important;
-    max-height: 2.35rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    min-width: 2.5rem !important;
+    max-width: 2.5rem !important;
+    min-height: 2.5rem !important;
+    max-height: 2.5rem !important;
     right: 0.2rem !important;
     top: 50% !important;
     left: auto !important;
@@ -238,12 +238,12 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
   selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
-    right: calc(100% - 2.55rem) !important;
+    right: calc(100% - 2.7rem) !important;
     transform: translateY(-50%) rotate(45deg) !important;
   }
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
-    right: calc(100% - 2.55rem) !important;
+    right: calc(100% - 2.7rem) !important;
     transform: translateY(-50%) !important;
   }
   /* Same inner glyph sizes as FAQ CTA (.tg-faq-magnetic--primary / --wa) */
@@ -264,7 +264,7 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-    padding: 0.4rem 0.65rem 0.4rem 3.35rem !important;
+    padding: 0.35rem 1rem 0.35rem 3.25rem !important;
   }
 }
 @media (max-width: 380px) {
@@ -276,12 +276,12 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   selector .elementor-element[data-id="438c2085"] .elementor-button,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button {
     font-size: clamp(13px, 3.35vw, 15px) !important;
-    padding: 0.4rem 3.2rem 0.4rem 0.5rem !important;
+    padding: 0.35rem 3.15rem 0.35rem 0.5rem !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
   selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-    padding: 0.4rem 0.5rem 0.4rem 3.2rem !important;
+    padding: 0.35rem 0.5rem 0.35rem 3.15rem !important;
   }
 }

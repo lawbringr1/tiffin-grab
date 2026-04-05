@@ -244,48 +244,6 @@
         outline-color: transparent;
         box-shadow: 0 8px 22px rgba(240, 107, 26, 0.28);
       }
-      /* Block-level flex + horizontal margins center the pill on narrow viewports */
-      #tg-perfect-for a.tg-aud-cta {
-        display: flex !important;
-        width: fit-content;
-        max-width: min(100%, 42rem);
-        margin-left: auto;
-        margin-right: auto;
-        min-height: 48px;
-        justify-content: flex-start !important;
-        padding: 0.4rem 3.35rem 0.4rem 0.65rem;
-        font-size: clamp(0.8rem, 3.2vw, 0.9rem);
-      }
-      #tg-perfect-for a.tg-aud-cta:hover,
-      #tg-perfect-for a.tg-aud-cta:focus-visible {
-        padding: 0.4rem 0.65rem 0.4rem 3.35rem;
-      }
-      #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob {
-        width: 2.35rem;
-        height: 2.35rem;
-        min-width: 2.35rem;
-        max-width: 2.35rem;
-        min-height: 2.35rem;
-        max-height: 2.35rem;
-        right: 0.2rem;
-      }
-      #tg-perfect-for a.tg-aud-cta:hover .tg-aud-cta-knob,
-      #tg-perfect-for a.tg-aud-cta:focus-visible .tg-aud-cta-knob {
-        right: calc(100% - 2.55rem);
-      }
-      #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob::before {
-        width: 16px;
-        height: 16px;
-      }
-    }
-    @media (max-width: 380px) {
-      #tg-perfect-for a.tg-aud-cta {
-        padding: 0.4rem 3.2rem 0.4rem 0.5rem;
-      }
-      #tg-perfect-for a.tg-aud-cta:hover,
-      #tg-perfect-for a.tg-aud-cta:focus-visible {
-        padding: 0.4rem 0.5rem 0.4rem 3.2rem;
-      }
     }
     .tg-aud-panels {
       position: relative;
@@ -360,97 +318,7 @@
       border-radius: 999px;
       padding: 0.25rem;
     }
-    /* Same pill as hero “Order Now” / Why Choose CTA: white disc + flying arrow */
-    #tg-perfect-for a.tg-aud-cta,
-    #tg-perfect-for a.tg-aud-cta:link,
-    #tg-perfect-for a.tg-aud-cta:visited {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: fit-content;
-      max-width: min(100%, 42rem);
-      min-height: 44px;
-      height: auto;
-      padding: 6px 48px 6px 22px;
-      border-radius: 999px;
-      background: #f06b1a !important;
-      background-color: #f06b1a !important;
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
-      line-height: 1.25;
-      text-decoration: none !important;
-      border: none;
-      box-shadow: none !important;
-      cursor: pointer;
-      box-sizing: border-box;
-      transition: padding 0.5s ease, background-color 0.22s ease;
-      -webkit-tap-highlight-color: transparent;
-      outline: none;
-    }
-    #tg-perfect-for a.tg-aud-cta:hover,
-    #tg-perfect-for a.tg-aud-cta:focus-visible {
-      padding: 6px 22px 6px 48px;
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-      background-color: #e85f0f !important;
-    }
-    #tg-perfect-for a.tg-aud-cta:focus-visible {
-      outline: 2px solid rgba(240, 107, 26, 0.65);
-      outline-offset: 3px;
-    }
-    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-label {
-      position: relative;
-      z-index: 2;
-      padding: 0;
-      margin: 0;
-      color: inherit;
-      white-space: nowrap;
-    }
-    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob {
-      position: absolute;
-      top: 50%;
-      right: 4px;
-      left: auto;
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      max-width: 32px;
-      min-height: 32px;
-      max-height: 32px;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: #ffffff;
-      transform: translateY(-50%) rotate(0deg);
-      transition: right 0.5s ease, transform 0.5s ease;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-      flex-shrink: 0;
-    }
-    #tg-perfect-for a.tg-aud-cta:hover .tg-aud-cta-knob,
-    #tg-perfect-for a.tg-aud-cta:focus-visible .tg-aud-cta-knob {
-      right: calc(100% - 36px);
-      transform: translateY(-50%) rotate(45deg);
-    }
-    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob::before {
-      content: "";
-      display: block;
-      width: 15px;
-      height: 15px;
-      flex-shrink: 0;
-      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
-        center / contain no-repeat;
-    }
+    /* Audience CTAs: shared .tg-h26-btn (home-2026-hero-tags.html) */
     .tg-aud-visual {
       position: relative;
       z-index: 0;
@@ -729,9 +597,9 @@
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> High-protein veg &amp; non-veg options</li>
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Flexible delivery to home or campus area</li>
             </ul>
-            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
-              <span class="tg-aud-cta-label">Learn more about Student Plans</span>
-              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-h26-btn__label">Learn more about Student Plans</span>
+              <span class="tg-h26-btn__knob" aria-hidden="true"></span>
             </a>
           </div>
           <div class="tg-aud-visual">
@@ -776,9 +644,9 @@
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Rotating weekly menu—no boredom</li>
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Portion sizes built for busy days</li>
             </ul>
-            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
-              <span class="tg-aud-cta-label">View plans for professionals</span>
-              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-h26-btn__label">View plans for professionals</span>
+              <span class="tg-h26-btn__knob" aria-hidden="true"></span>
             </a>
           </div>
           <div class="tg-aud-visual">
@@ -823,9 +691,9 @@
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Skip weeks when you travel</li>
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> One less thing on your evening list</li>
             </ul>
-            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
-              <span class="tg-aud-cta-label">Explore family-friendly plans</span>
-              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-h26-btn__label">Explore family-friendly plans</span>
+              <span class="tg-h26-btn__knob" aria-hidden="true"></span>
             </a>
           </div>
           <div class="tg-aud-visual">
@@ -870,9 +738,9 @@
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Predictable daily routine</li>
               <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Friendly support for dietary notes</li>
             </ul>
-            <a class="tg-aud-cta" href="https://tiffingrab.ca/contact/">
-              <span class="tg-aud-cta-label">Talk to us about your needs</span>
-              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/contact/">
+              <span class="tg-h26-btn__label">Talk to us about your needs</span>
+              <span class="tg-h26-btn__knob" aria-hidden="true"></span>
             </a>
           </div>
           <div class="tg-aud-visual">

@@ -350,125 +350,22 @@
       gap: 0.65rem;
       width: 100%;
     }
-    /* CTA pills: center label; white disc stays absolutely positioned on the right */
-    #tg-common-faq .tg-faq-cta-actions a.tg-faq-magnetic,
-    #tg-common-faq .tg-faq-cta-actions a.tg-faq-magnetic:link,
-    #tg-common-faq .tg-faq-cta-actions a.tg-faq-magnetic:visited {
-      justify-content: center;
-    }
-    #tg-common-faq .tg-faq-cta-actions .tg-faq-magnetic-label {
-      text-align: center;
-    }
-    /* Pill + sliding white disc (same idea as reference Button / hero), no Shadcn */
-    #tg-common-faq a.tg-faq-magnetic,
-    #tg-common-faq a.tg-faq-magnetic:link,
-    #tg-common-faq a.tg-faq-magnetic:visited {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: fit-content;
-      max-width: 100%;
-      min-height: 3rem;
-      height: 3rem;
-      padding: 0.25rem 3.5rem 0.25rem 1.5rem;
-      border-radius: 999px;
-      overflow: hidden;
-      text-decoration: none !important;
-      border: none;
-      cursor: pointer;
-      box-sizing: border-box;
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      line-height: 1.2;
-      transition: padding 0.5s ease, background-color 0.35s ease, filter 0.25s ease;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: none;
-    }
-    #tg-common-faq a.tg-faq-magnetic:hover,
-    #tg-common-faq a.tg-faq-magnetic:focus-visible {
-      padding: 0.25rem 1.5rem 0.25rem 3.5rem;
-    }
-    #tg-common-faq a.tg-faq-magnetic:focus-visible {
-      outline: 2px solid rgba(240, 107, 26, 0.55);
-      outline-offset: 3px;
-    }
-    #tg-common-faq a.tg-faq-magnetic--wa:focus-visible {
-      outline-color: color-mix(in srgb, var(--tg-brand-green) 65%, #0d3d22);
-    }
-    #tg-common-faq a.tg-faq-magnetic .tg-faq-magnetic-label {
-      position: relative;
-      z-index: 2;
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-      white-space: nowrap;
-    }
-    #tg-common-faq a.tg-faq-magnetic .tg-faq-magnetic-knob {
-      position: absolute;
-      top: 50%;
-      right: 0.25rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: #ffffff;
-      transform: translateY(-50%);
-      transition: right 0.5s ease, transform 0.5s ease;
-      z-index: 1;
-      pointer-events: none;
-      flex-shrink: 0;
-    }
-    #tg-common-faq a.tg-faq-magnetic:hover .tg-faq-magnetic-knob,
-    #tg-common-faq a.tg-faq-magnetic:focus-visible .tg-faq-magnetic-knob {
-      right: calc(100% - 2.75rem);
-    }
-    /* Arrow up-right (Lucide-style) on orange */
-    #tg-common-faq a.tg-faq-magnetic--primary .tg-faq-magnetic-knob::before {
-      content: "";
-      display: block;
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
-        center / contain no-repeat;
-    }
-    #tg-common-faq a.tg-faq-magnetic--primary:hover .tg-faq-magnetic-knob,
-    #tg-common-faq a.tg-faq-magnetic--primary:focus-visible .tg-faq-magnetic-knob {
-      transform: translateY(-50%) rotate(45deg);
-    }
-    /* WhatsApp glyph in disc; slide only (no 45° rotate) */
-    #tg-common-faq a.tg-faq-magnetic--wa .tg-faq-magnetic-knob::before {
-      content: "";
-      display: block;
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2325d366%22%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
-        center / contain no-repeat;
-    }
-    #tg-common-faq a.tg-faq-magnetic--primary {
+    /* Shared magnetic pill: .tg-h26-btn in home-2026-hero-tags.html (Shadcn-style) */
+    body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary {
       background: var(--faq-primary) !important;
       background-color: var(--faq-primary) !important;
-      color: #ffffff !important;
     }
     @media (hover: hover) {
-      #tg-common-faq a.tg-faq-magnetic--primary:hover {
+      body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary:hover {
         background-color: var(--faq-primary-mid) !important;
       }
     }
-    #tg-common-faq a.tg-faq-magnetic--wa {
+    body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--wa {
       background: var(--tg-brand-green) !important;
       background-color: var(--tg-brand-green) !important;
-      color: #ffffff !important;
     }
     @media (hover: hover) {
-      #tg-common-faq a.tg-faq-magnetic--wa:hover {
+      body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--wa:hover {
         background-color: color-mix(in srgb, var(--tg-brand-green) 88%, #063a1f) !important;
       }
     }
@@ -554,8 +451,7 @@
         margin-left: auto;
         margin-right: auto;
       }
-      /* Center label in pill; knob stays position:absolute on the right */
-      #tg-common-faq a.tg-faq-magnetic {
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn {
         display: flex !important;
         width: 100%;
         max-width: 22rem;
@@ -567,25 +463,22 @@
         padding: 0.35rem 3.25rem 0.35rem 1.15rem;
         font-size: clamp(0.78rem, 3vw, 0.875rem);
       }
-      #tg-common-faq a.tg-faq-magnetic .tg-faq-magnetic-label {
-        text-align: center;
-      }
-      #tg-common-faq a.tg-faq-magnetic:hover,
-      #tg-common-faq a.tg-faq-magnetic:focus-visible {
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:hover,
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:focus-visible {
         padding: 0.35rem 1.15rem 0.35rem 3.25rem;
       }
-      #tg-common-faq a.tg-faq-magnetic .tg-faq-magnetic-knob {
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn .tg-h26-btn__knob {
         width: 2.35rem;
         height: 2.35rem;
         right: 0.2rem;
       }
-      #tg-common-faq a.tg-faq-magnetic:hover .tg-faq-magnetic-knob,
-      #tg-common-faq a.tg-faq-magnetic:focus-visible .tg-faq-magnetic-knob {
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:hover .tg-h26-btn__knob,
+      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:focus-visible .tg-h26-btn__knob {
         right: calc(100% - 2.55rem);
       }
       @media (hover: hover) {
-        #tg-common-faq a.tg-faq-magnetic--primary:hover {
-          background-color: #e85f0f !important;
+        body.elementor-page-10016 #tg-common-faq a.tg-h26-btn--primary:hover {
+          background-color: var(--faq-primary-mid) !important;
         }
       }
     }
@@ -594,16 +487,16 @@
       .tg-faq-card-icon,
       .tg-faq-card-icon .material-symbols-outlined,
       .tg-faq-card-chev,
-      #tg-common-faq a.tg-faq-magnetic,
-      #tg-common-faq a.tg-faq-magnetic .tg-faq-magnetic-knob {
+      #tg-common-faq a.tg-h26-btn,
+      #tg-common-faq a.tg-h26-btn .tg-h26-btn__knob {
         transition: none !important;
       }
-      #tg-common-faq a.tg-faq-magnetic:hover,
-      #tg-common-faq a.tg-faq-magnetic:focus-visible {
+      #tg-common-faq a.tg-h26-btn:hover,
+      #tg-common-faq a.tg-h26-btn:focus-visible {
         padding: 0.25rem 3.5rem 0.25rem 1.5rem !important;
       }
-      #tg-common-faq a.tg-faq-magnetic:hover .tg-faq-magnetic-knob,
-      #tg-common-faq a.tg-faq-magnetic:focus-visible .tg-faq-magnetic-knob {
+      #tg-common-faq a.tg-h26-btn:hover .tg-h26-btn__knob,
+      #tg-common-faq a.tg-h26-btn:focus-visible .tg-h26-btn__knob {
         right: 0.25rem !important;
         transform: translateY(-50%) !important;
       }
@@ -730,18 +623,18 @@
           Ingredients, delivery windows, plans, or something custom&mdash;our kitchen team answers fast on contact or WhatsApp.
         </p>
         <div class="tg-faq-cta-actions">
-          <a class="tg-faq-magnetic tg-faq-magnetic--primary" href="https://tiffingrab.ca/contact/">
-            <span class="tg-faq-magnetic-label">Contact us</span>
-            <span class="tg-faq-magnetic-knob" aria-hidden="true"></span>
+          <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/contact/">
+            <span class="tg-h26-btn__label">Contact us</span>
+            <span class="tg-h26-btn__knob" aria-hidden="true"></span>
           </a>
           <a
-            class="tg-faq-magnetic tg-faq-magnetic--wa"
+            class="tg-h26-btn tg-h26-btn--wa"
             href="https://wa.me/message/ZHHBFQTZIN7MB1"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <span class="tg-faq-magnetic-label">Chat on WhatsApp</span>
-            <span class="tg-faq-magnetic-knob" aria-hidden="true"></span>
+            <span class="tg-h26-btn__label">Chat on WhatsApp</span>
+            <span class="tg-h26-btn__knob" aria-hidden="true"></span>
           </a>
         </div>
       </div>

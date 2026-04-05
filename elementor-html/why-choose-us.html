@@ -198,91 +198,7 @@
       justify-content: center;
       margin-top: clamp(2.5rem, 5vw, 3.5rem);
     }
-    /* Same pill as hero “Order Now” (container a2cdc57 primary): white disc + flying arrow */
-    #tg-why-choose a.tg-wcu-cta,
-    #tg-why-choose a.tg-wcu-cta:link,
-    #tg-why-choose a.tg-wcu-cta:visited {
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: fit-content;
-      max-width: min(100%, 42rem);
-      min-height: 44px;
-      height: auto;
-      padding: 6px 48px 6px 22px;
-      border-radius: 999px;
-      background: #f06b1a !important;
-      background-color: #f06b1a !important;
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
-      line-height: 1.25;
-      text-decoration: none !important;
-      border: none;
-      box-shadow: none !important;
-      cursor: pointer;
-      box-sizing: border-box;
-      transition: padding 0.5s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-    #tg-why-choose a.tg-wcu-cta:hover,
-    #tg-why-choose a.tg-wcu-cta:focus-visible {
-      padding: 6px 22px 6px 48px;
-      color: #ffffff !important;
-      -webkit-text-fill-color: #ffffff;
-    }
-    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-label {
-      position: relative;
-      z-index: 2;
-      padding: 0;
-      margin: 0;
-      color: inherit;
-      white-space: nowrap;
-    }
-    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob {
-      position: absolute;
-      top: 50%;
-      right: 4px;
-      left: auto;
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
-      max-width: 32px;
-      min-height: 32px;
-      max-height: 32px;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 0;
-      border-radius: 999px;
-      background: #ffffff;
-      transform: translateY(-50%) rotate(0deg);
-      transition: right 0.5s ease, transform 0.5s ease;
-      z-index: 1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    #tg-why-choose a.tg-wcu-cta:hover .tg-wcu-cta-knob,
-    #tg-why-choose a.tg-wcu-cta:focus-visible .tg-wcu-cta-knob {
-      right: calc(100% - 36px);
-      transform: translateY(-50%) rotate(45deg);
-    }
-    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob::before {
-      content: "";
-      display: block;
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.65%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
-        center center / contain no-repeat;
-    }
+    /* CTA: shared .tg-h26-btn in home-2026-hero-tags.html (Shadcn magnetic pill) */
     @media (max-width: 767px) {
       .tg-wcu {
         padding-left: max(1rem, env(safe-area-inset-left, 0px));
@@ -303,54 +219,11 @@
         padding: 0 0.25rem;
         box-sizing: border-box;
       }
-      /* Knob + padding match hero magnetic pills (home a2cdc57) on mobile */
-      #tg-why-choose a.tg-wcu-cta {
-        display: flex !important;
-        width: 100%;
-        max-width: 22rem;
-        margin-left: auto;
-        margin-right: auto;
-        min-height: 48px;
-        justify-content: flex-start !important;
-        padding: 0.4rem 3.35rem 0.4rem 0.65rem;
-        font-size: clamp(0.8rem, 3.2vw, 0.9rem);
-      }
-      #tg-why-choose a.tg-wcu-cta:hover,
-      #tg-why-choose a.tg-wcu-cta:focus-visible {
-        padding: 0.4rem 0.65rem 0.4rem 3.35rem;
-      }
-      #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob {
-        width: 2.35rem;
-        height: 2.35rem;
-        min-width: 2.35rem;
-        max-width: 2.35rem;
-        min-height: 2.35rem;
-        max-height: 2.35rem;
-        right: 0.2rem;
-      }
-      #tg-why-choose a.tg-wcu-cta:hover .tg-wcu-cta-knob,
-      #tg-why-choose a.tg-wcu-cta:focus-visible .tg-wcu-cta-knob {
-        right: calc(100% - 2.55rem);
-      }
-      #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob::before {
-        width: 16px;
-        height: 16px;
-        background-position: center center;
-      }
       .tg-wcu-features h3 {
         font-size: 1.05rem;
       }
       .tg-wcu-features p {
         font-size: 0.95rem;
-      }
-    }
-    @media (max-width: 380px) {
-      #tg-why-choose a.tg-wcu-cta {
-        padding: 0.4rem 3.2rem 0.4rem 0.5rem;
-      }
-      #tg-why-choose a.tg-wcu-cta:hover,
-      #tg-why-choose a.tg-wcu-cta:focus-visible {
-        padding: 0.4rem 0.5rem 0.4rem 3.2rem;
       }
     }
   </style>
@@ -420,9 +293,9 @@
       </div>
     </div>
     <div class="tg-wcu-cta-wrap">
-      <a class="tg-wcu-cta" href="https://tiffingrab.ca/tiffin-plans/">
-        <span class="tg-wcu-cta-label">Hurry! Order Now</span>
-        <span class="tg-wcu-cta-knob" aria-hidden="true"></span>
+      <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/tiffin-plans/">
+        <span class="tg-h26-btn__label">Hurry! Order Now</span>
+        <span class="tg-h26-btn__knob" aria-hidden="true"></span>
       </a>
     </div>
   </div>

@@ -242,56 +242,17 @@
       -webkit-text-fill-color: rgba(137, 114, 104, 0.65);
       text-transform: none;
     }
-    /* Scoped + explicit colors so Elementor/theme button rules (e.g. white hover text) don’t break contrast */
-    #tg-service-area .tg-sa-bar button {
+    /* Submit uses shared .tg-h26-btn (home-2026-hero-tags.html) on Home 2026 */
+    #tg-service-area .tg-sa-bar button.tg-h26-btn {
       flex: 0 0 auto;
-      border: 0;
-      cursor: pointer;
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-weight: 500;
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
-      text-transform: none;
-      color: #ffffff !important;
-      padding: 0.85rem 1.35rem;
-      border-radius: 999px;
-      background-color: #f06b1a !important;
       white-space: nowrap;
-      min-height: 48px;
-      box-shadow: 0 8px 20px rgba(10, 10, 10, 0.12);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
-      will-change: transform;
-      -webkit-tap-highlight-color: transparent;
     }
-    #tg-service-area .tg-sa-bar button:hover:not(:disabled) {
-      transform: translateY(-2px) scale(1.02);
-      background-color: #e85f0f !important;
-      color: #ffffff !important;
-      box-shadow: 0 14px 28px rgba(240, 107, 26, 0.34);
-    }
-    #tg-service-area .tg-sa-bar button:active:not(:disabled) {
-      transform: translateY(0) scale(0.99);
-      background-color: #d9560c !important;
-      color: #ffffff !important;
-    }
-    #tg-service-area .tg-sa-bar button:disabled {
-      opacity: 1 !important;
-      cursor: wait;
-      transform: none;
-      box-shadow: 0 4px 14px rgba(180, 75, 25, 0.22);
-      background-color: #a8460f !important;
-      color: #ffffff !important;
+    #tg-service-area .tg-sa-bar button.tg-h26-btn:disabled {
+      box-shadow: 0 4px 14px rgba(180, 75, 25, 0.18);
     }
     @media (max-width: 520px) {
       .tg-sa-bar { flex-wrap: wrap; border-radius: 1.5rem; padding: 0.5rem; }
-      .tg-sa-bar button { width: 100%; margin-top: 0.25rem; }
-    }
-    @media (max-width: 767px) {
-      #tg-service-area .tg-sa-bar button:hover:not(:disabled) {
-        transform: none;
-        background-color: #e85f0f !important;
-        color: #ffffff !important;
-      }
+      .tg-sa-bar button.tg-h26-btn { width: 100%; margin-top: 0.25rem; }
     }
     .tg-sa-result {
       max-width: 36rem;
@@ -551,7 +512,10 @@
         />
         <ul class="tg-sa-suggest" id="tg-sa-suggest-list" role="listbox" aria-label="Suggested postal codes" hidden></ul>
       </div>
-      <button type="submit" id="tg-sa-submit">Check Availability</button>
+      <button type="submit" id="tg-sa-submit" class="tg-h26-btn tg-h26-btn--primary">
+        <span class="tg-h26-btn__label">Check Availability</span>
+        <span class="tg-h26-btn__knob" aria-hidden="true"></span>
+      </button>
     </form>
     <div class="tg-sa-result" id="tg-sa-result" role="status" aria-live="polite"></div>
     <div class="tg-sa-grid" id="tg-sa-area-grid" aria-label="Areas we serve">
