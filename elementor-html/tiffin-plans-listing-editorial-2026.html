@@ -1486,9 +1486,10 @@
 
       function renderPager() {
         pager.innerHTML = "";
-        if (state.totalPages <= 1) return;
+        /* Always show pager (prev / page 1…n / next) so layout stays stable when a filter has ≤1 page. */
 
         function goToPage(num) {
+          if (num === state.page) return;
           state.page = num;
           state.openId = null;
           loadProducts();
