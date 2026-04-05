@@ -166,6 +166,67 @@
       box-shadow: 0 12px 28px var(--tp-orange-a22);
     }
 
+    /* Editorial “customization” pill — JotForm / post-order meal picks (matches Stitch pricing-panel band) */
+    .tg-tplans-custom-pill {
+      display: flex;
+      justify-content: center;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .tg-tplans-custom-pill-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 56rem;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 9999px;
+      background: var(--tp-pricing-panel);
+      border: 1px solid rgba(240, 107, 26, 0.22);
+      box-shadow: 0 1px 0 rgba(29, 27, 25, 0.04);
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .tg-tplans-custom-pill-inner {
+        flex-direction: row;
+        text-align: left;
+        padding: 1rem 2rem;
+        gap: 1.25rem;
+      }
+    }
+    .tg-tplans-custom-pill-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      background: var(--tp-orange-fill);
+    }
+    .tg-tplans-custom-pill-icon .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: var(--tp-primary);
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .tg-tplans-custom-pill-text {
+      min-width: 0;
+    }
+    .tg-tplans-custom-pill-heading {
+      font-family: var(--tp-font-display);
+      font-weight: 700;
+      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      line-height: 1.35;
+      color: var(--tp-on);
+      margin: 0 0 0.35rem;
+    }
+    .tg-tplans-custom-pill-body {
+      margin: 0;
+      font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+      line-height: 1.55;
+      color: var(--tp-muted);
+    }
+
     .tg-tplans-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -927,6 +988,22 @@
       <button type="button" class="tg-tplans-filter" data-filter="nonveg" aria-pressed="false">Non vegetarian</button>
       <button type="button" class="tg-tplans-filter" data-filter="healthy" aria-pressed="false">Healthy meals</button>
     </div>
+
+    <section class="tg-tplans-custom-pill" aria-labelledby="tg-tplans-custom-pill-title">
+      <div class="tg-tplans-custom-pill-inner">
+        <div class="tg-tplans-custom-pill-icon" aria-hidden="true">
+          <span class="material-symbols-outlined">auto_awesome</span>
+        </div>
+        <div class="tg-tplans-custom-pill-text">
+          <h2 id="tg-tplans-custom-pill-title" class="tg-tplans-custom-pill-heading">
+            Want to Customize Your Tiffin Plan?
+          </h2>
+          <p class="tg-tplans-custom-pill-body">
+            After placing your order, you’ll receive a JotForm link via WhatsApp or email. From there, you can easily select your preferred items for each day.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <div id="tg-tplans-mount" class="tg-tplans-grid" aria-live="polite"></div>
     <nav id="tg-tplans-pager" class="tg-tplans-pager" aria-label="Pagination"></nav>
