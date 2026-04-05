@@ -171,13 +171,77 @@
     }
 
     .tg-tplans-card {
+      position: relative;
+      min-height: 36.25rem;
+      perspective: 1100px;
+      -webkit-perspective: 1100px;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 16px;
+    }
+    .tg-tplans-flip {
+      position: relative;
+      width: 100%;
+      min-height: 36.25rem;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tg-tplans-flip {
+        transition: none;
+      }
+    }
+    .tg-tplans-card--flipped .tg-tplans-flip {
+      transform: rotateY(180deg);
+    }
+    .tg-tplans-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      min-height: 36.25rem;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       background: var(--tp-card);
       border-radius: 16px;
       box-shadow: var(--tp-shadow);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-      min-height: 100%;
+    }
+    .tg-tplans-face--front {
+      transform: rotateY(0deg) translateZ(1px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tg-tplans-face--back {
+      transform: rotateY(180deg) translateZ(1px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1.35rem 1.5rem 1.5rem;
+    }
+    .tg-tplans-face--front .tg-tplans-media {
+      flex-shrink: 0;
+    }
+    .tg-tplans-face--front .tg-tplans-body {
+      flex: 1;
+      min-height: 0;
+    }
+    .tg-tplans-back-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      margin-bottom: 1.1rem;
+    }
+    .tg-tplans-back-title {
+      font-family: var(--tp-font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+      line-height: 1.25;
     }
     .tg-tplans-media {
       position: relative;
@@ -292,19 +356,15 @@
       cursor: wait;
     }
 
-    .tg-tplans-config {
-      margin-top: 1.35rem;
-      padding-top: 1.5rem;
-      border-top: 1px dashed rgba(29, 27, 25, 0.16);
-      display: none;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .tg-tplans-card--open .tg-tplans-config {
+    .tg-tplans-face--back .tg-tplans-config {
       display: flex;
-    }
-    .tg-tplans-card--open .tg-tplans-quick-wrap {
-      display: none;
+      flex-direction: column;
+      gap: 1.35rem;
+      flex: 1;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
     }
 
     .tg-tplans-label {
@@ -487,19 +547,24 @@
     }
 
     .tg-tplans-close {
-      align-self: flex-end;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--tp-muted);
+      flex-shrink: 0;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--tp-font-body);
+      color: var(--tp-primary);
       background: none;
       border: none;
       cursor: pointer;
-      text-decoration: underline;
-      padding: 0.15rem 0;
-      margin: 0 0 0.5rem 0;
+      text-decoration: none;
+      padding: 0.25rem 0;
+      margin: 0;
+      white-space: nowrap;
     }
     .tg-tplans-close:hover {
-      color: var(--tp-primary);
+      text-decoration: underline;
+      color: var(--tp-primary-mid);
     }
 
     .tg-tplans-config-inner {
@@ -647,11 +712,11 @@
     }
 
     #tg-tplans-2026 button.tg-tplans-close {
-      color: #5c5854 !important;
+      color: #f06b1a !important;
       background: transparent !important;
     }
     #tg-tplans-2026 button.tg-tplans-close:hover {
-      color: #f06b1a !important;
+      color: #d3540f !important;
       background: transparent !important;
     }
 
@@ -825,7 +890,7 @@
         return schemaFetchInflight[permalink];
       }
 
-      /** Warm cache for visible cards so “Choose plan” often hits cache (no full-page fetch on click). */
+      /** Warm cache for visible cards so “Customize & subscribe” often hits cache (no full-page fetch on click). */
       function prefetchSchemasForProducts(products) {
         var q = [];
         products.forEach(function (p) {
@@ -1008,6 +1073,21 @@
         pager.appendChild(next);
       }
 
+      function syncFlipA11y(card) {
+        var flipped = card.classList.contains("tg-tplans-card--flipped");
+        var front = card.querySelector(".tg-tplans-face--front");
+        var back = card.querySelector(".tg-tplans-face--back");
+        card.setAttribute("aria-expanded", flipped ? "true" : "false");
+        if (front) {
+          front.setAttribute("aria-hidden", flipped ? "true" : "false");
+          if ("inert" in front) front.inert = flipped;
+        }
+        if (back) {
+          back.setAttribute("aria-hidden", flipped ? "false" : "true");
+          if ("inert" in back) back.inert = !flipped;
+        }
+      }
+
       function renderCards(products) {
         mount.innerHTML = "";
         if (!products.length) {
@@ -1019,6 +1099,16 @@
           var card = document.createElement("article");
           card.className = "tg-tplans-card";
           card.dataset.productId = String(p.id);
+          card.setAttribute("aria-expanded", "false");
+
+          var flip = document.createElement("div");
+          flip.className = "tg-tplans-flip";
+
+          var faceFront = document.createElement("div");
+          faceFront.className = "tg-tplans-face tg-tplans-face--front";
+
+          var faceBack = document.createElement("div");
+          faceBack.className = "tg-tplans-face tg-tplans-face--back";
 
           var imgUrl = p.images && p.images[0] ? p.images[0].src : "";
           var alt = (p.images && p.images[0] && p.images[0].alt) || p.name;
@@ -1101,17 +1191,44 @@
           var quick = document.createElement("button");
           quick.type = "button";
           quick.className = "tg-tplans-quick";
-          quick.textContent = "Choose plan";
+          quick.textContent = "Customize & subscribe";
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
-              state.openId.classList.remove("tg-tplans-card--open");
+              state.openId.classList.remove("tg-tplans-card--flipped");
+              syncFlipA11y(state.openId);
             }
-            card.classList.add("tg-tplans-card--open");
+            card.classList.add("tg-tplans-card--flipped");
             state.openId = card;
+            syncFlipA11y(card);
             populateConfig(card, p);
           });
           qw.appendChild(quick);
           actions.appendChild(qw);
+
+          body.appendChild(row);
+          body.appendChild(desc);
+          body.appendChild(readBtn);
+          body.appendChild(actions);
+
+          faceFront.appendChild(media);
+          faceFront.appendChild(body);
+
+          var backHeader = document.createElement("div");
+          backHeader.className = "tg-tplans-back-header";
+          var backTitle = document.createElement("h2");
+          backTitle.className = "tg-tplans-back-title";
+          backTitle.textContent = "Configure your plan";
+          var closeBtn = document.createElement("button");
+          closeBtn.type = "button";
+          closeBtn.className = "tg-tplans-close";
+          closeBtn.textContent = "Back to description";
+          closeBtn.addEventListener("click", function () {
+            card.classList.remove("tg-tplans-card--flipped");
+            if (state.openId === card) state.openId = null;
+            syncFlipA11y(card);
+          });
+          backHeader.appendChild(backTitle);
+          backHeader.appendChild(closeBtn);
 
           var config = document.createElement("div");
           config.className = "tg-tplans-config";
@@ -1120,29 +1237,19 @@
           config.dataset.currency = p.prices.currency_code || "CAD";
           config.dataset.symbol = p.prices.currency_symbol || "$";
 
-          var closeBtn = document.createElement("button");
-          closeBtn.type = "button";
-          closeBtn.className = "tg-tplans-close";
-          closeBtn.textContent = "Close";
-          closeBtn.addEventListener("click", function () {
-            card.classList.remove("tg-tplans-card--open");
-            if (state.openId === card) state.openId = null;
-          });
-          config.appendChild(closeBtn);
-
           var configMount = document.createElement("div");
           configMount.className = "tg-tplans-config-inner";
           config.appendChild(configMount);
 
-          actions.appendChild(config);
-          body.appendChild(row);
-          body.appendChild(desc);
-          body.appendChild(readBtn);
-          body.appendChild(actions);
+          faceBack.appendChild(backHeader);
+          faceBack.appendChild(config);
 
-          card.appendChild(media);
-          card.appendChild(body);
+          flip.appendChild(faceFront);
+          flip.appendChild(faceBack);
+          card.appendChild(flip);
           mount.appendChild(card);
+
+          syncFlipA11y(card);
         });
       }
 
@@ -1355,8 +1462,9 @@
               submit.disabled = false;
               if (r.ok) {
                 showToast(r.message);
-                card.classList.remove("tg-tplans-card--open");
+                card.classList.remove("tg-tplans-card--flipped");
                 if (state.openId === card) state.openId = null;
+                syncFlipA11y(card);
                 if (window.jQuery) {
                   window.jQuery(document.body).trigger("added_to_cart");
                 }
