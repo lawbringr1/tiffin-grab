@@ -117,6 +117,161 @@
       font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24 !important;
     }
 
+    /* Home 2026 magnetic CTA — same as .tg-h26-btn on Home (Shadcn-style pill), scoped to this listing */
+    #tg-tplans-2026 a.tg-h26-btn,
+    #tg-tplans-2026 a.tg-h26-btn:link,
+    #tg-tplans-2026 a.tg-h26-btn:visited,
+    #tg-tplans-2026 button.tg-h26-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: fit-content;
+      max-width: 100%;
+      min-height: 3rem;
+      height: 3rem;
+      padding: 0.25rem 3.5rem 0.25rem 1.5rem;
+      border-radius: 9999px;
+      overflow: hidden;
+      box-sizing: border-box;
+      font-family: var(--tp-font-display) !important;
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      text-decoration: none !important;
+      border: none;
+      cursor: pointer;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent;
+      transition: padding 0.5s ease, background-color 0.35s ease, filter 0.25s ease, transform 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #tg-tplans-2026 button.tg-h26-btn {
+      color: #fff !important;
+    }
+    #tg-tplans-2026 a.tg-h26-btn:hover,
+    #tg-tplans-2026 a.tg-h26-btn:focus-visible,
+    #tg-tplans-2026 button.tg-h26-btn:hover:not(:disabled),
+    #tg-tplans-2026 button.tg-h26-btn:focus-visible:not(:disabled) {
+      padding: 0.25rem 1.5rem 0.25rem 3.5rem;
+    }
+    #tg-tplans-2026 a.tg-h26-btn:active,
+    #tg-tplans-2026 button.tg-h26-btn:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+    #tg-tplans-2026 a.tg-h26-btn:focus-visible,
+    #tg-tplans-2026 button.tg-h26-btn:focus-visible {
+      outline: 2px solid rgba(240, 107, 26, 0.55);
+      outline-offset: 3px;
+    }
+    #tg-tplans-2026 a.tg-h26-btn .tg-h26-btn__label,
+    #tg-tplans-2026 button.tg-h26-btn .tg-h26-btn__label {
+      position: relative;
+      z-index: 2;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+      white-space: nowrap;
+      padding: 0;
+      margin: 0;
+    }
+    #tg-tplans-2026 a.tg-h26-btn .tg-h26-btn__knob,
+    #tg-tplans-2026 button.tg-h26-btn .tg-h26-btn__knob {
+      position: absolute;
+      top: 50%;
+      right: 0.25rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      background: #ffffff;
+      transform: translateY(-50%);
+      transition: right 0.5s ease, transform 0.5s ease;
+      z-index: 1;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    #tg-tplans-2026 a.tg-h26-btn:hover .tg-h26-btn__knob,
+    #tg-tplans-2026 a.tg-h26-btn:focus-visible .tg-h26-btn__knob,
+    #tg-tplans-2026 button.tg-h26-btn:hover:not(:disabled) .tg-h26-btn__knob,
+    #tg-tplans-2026 button.tg-h26-btn:focus-visible:not(:disabled) .tg-h26-btn__knob {
+      right: calc(100% - 2.75rem);
+    }
+    #tg-tplans-2026 a.tg-h26-btn--primary .tg-h26-btn__knob::before,
+    #tg-tplans-2026 button.tg-h26-btn--primary .tg-h26-btn__knob::before {
+      content: "";
+      display: block;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
+        center / contain no-repeat;
+    }
+    #tg-tplans-2026 a.tg-h26-btn--primary:hover .tg-h26-btn__knob,
+    #tg-tplans-2026 a.tg-h26-btn--primary:focus-visible .tg-h26-btn__knob,
+    #tg-tplans-2026 button.tg-h26-btn--primary:hover:not(:disabled) .tg-h26-btn__knob,
+    #tg-tplans-2026 button.tg-h26-btn--primary:focus-visible:not(:disabled) .tg-h26-btn__knob {
+      transform: translateY(-50%) rotate(45deg);
+    }
+    #tg-tplans-2026 a.tg-h26-btn--primary,
+    #tg-tplans-2026 button.tg-h26-btn--primary {
+      background: #f06b1a !important;
+      background-color: #f06b1a !important;
+      color: #ffffff !important;
+    }
+    @media (hover: hover) {
+      #tg-tplans-2026 a.tg-h26-btn--primary:hover,
+      #tg-tplans-2026 button.tg-h26-btn--primary:hover:not(:disabled) {
+        background-color: #e85f0f !important;
+      }
+    }
+    #tg-tplans-2026 button.tg-h26-btn:disabled {
+      opacity: 1;
+      cursor: wait;
+      transform: none;
+      filter: brightness(0.92);
+    }
+    #tg-tplans-2026 button.tg-h26-btn:disabled .tg-h26-btn__knob {
+      opacity: 0.85;
+    }
+    #tg-tplans-2026 .tg-tplans-quick-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick.tg-h26-btn {
+      width: 100%;
+      max-width: 100%;
+    }
+    @media (max-width: 520px) {
+      #tg-tplans-2026 .tg-tplans-breakdown-total {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      #tg-tplans-2026 .tg-tplans-breakdown-total .tg-tplans-submit.tg-h26-btn {
+        width: 100%;
+        align-self: stretch;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #tg-tplans-2026 a.tg-h26-btn,
+      #tg-tplans-2026 button.tg-h26-btn,
+      #tg-tplans-2026 a.tg-h26-btn .tg-h26-btn__knob,
+      #tg-tplans-2026 button.tg-h26-btn .tg-h26-btn__knob {
+        transition: none !important;
+      }
+      #tg-tplans-2026 a.tg-h26-btn:active,
+      #tg-tplans-2026 button.tg-h26-btn:active {
+        transform: none !important;
+      }
+    }
+
     .tg-tplans-hero {
       text-align: center;
       margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
@@ -404,28 +559,9 @@
       padding-top: 1.35rem;
       background: linear-gradient(to top, var(--tp-card) 70%, transparent);
     }
+    /* Primary CTA: .tg-h26-btn--primary (magnetic pill) + layout */
     .tg-tplans-quick {
       width: 100%;
-      padding: 0.95rem 1rem;
-      border-radius: 12px;
-      border: 1px solid var(--tp-orange-a22);
-      background: var(--tp-panel);
-      color: var(--tp-primary);
-      font-family: var(--tp-font-display);
-      font-weight: 700;
-      font-size: 0.9375rem;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
-    }
-    .tg-tplans-quick:hover {
-      background: var(--tp-primary);
-      color: var(--tp-on-primary);
-      border-color: var(--tp-primary-mid);
-      transform: scale(0.99);
-    }
-    .tg-tplans-quick:disabled {
-      opacity: 0.55;
-      cursor: wait;
     }
 
     .tg-tplans-face--back .tg-tplans-config {
@@ -633,6 +769,7 @@
       border-top: 1px solid rgba(240, 107, 26, 0.1);
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-end;
       gap: 1rem;
@@ -662,33 +799,7 @@
 
     .tg-tplans-submit {
       flex-shrink: 0;
-      width: auto;
-      max-width: none;
-      padding: 0.75rem 1.5rem;
-      border: none;
-      border-radius: 8px;
-      font-family: var(--tp-font-display);
-      font-weight: 700;
-      font-size: 0.875rem;
-      line-height: 1.2;
-      color: var(--tp-on-primary);
-      background: var(--tp-primary);
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(240, 107, 26, 0.2);
-      transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
-      white-space: nowrap;
       align-self: flex-end;
-    }
-    .tg-tplans-submit:hover:not(:disabled) {
-      filter: brightness(0.95);
-      box-shadow: 0 12px 28px rgba(240, 107, 26, 0.28);
-    }
-    .tg-tplans-submit:active {
-      transform: scale(0.98);
-    }
-    .tg-tplans-submit:disabled {
-      opacity: 0.55;
-      cursor: wait;
     }
 
     .tg-tplans-close {
@@ -788,19 +899,6 @@
       filter: brightness(1.06);
     }
 
-    #tg-tplans-2026 button.tg-tplans-quick {
-      color: #f06b1a !important;
-      background: #fff3e8 !important;
-    }
-    #tg-tplans-2026 button.tg-tplans-quick:hover:not(:disabled) {
-      color: #ffffff !important;
-      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
-      border-color: #d3540f !important;
-    }
-    #tg-tplans-2026 button.tg-tplans-quick:disabled {
-      color: #f06b1a !important;
-    }
-
     #tg-tplans-2026 button.tg-tplans-read {
       color: #f06b1a !important;
       background: transparent !important;
@@ -867,23 +965,6 @@
     }
     #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-ring {
       display: none !important;
-    }
-
-    #tg-tplans-2026 .tg-tplans-breakdown-total button.tg-tplans-submit {
-      width: auto !important;
-      max-width: none !important;
-    }
-    #tg-tplans-2026 button.tg-tplans-submit {
-      color: #ffffff !important;
-      background: #f06b1a !important;
-    }
-    #tg-tplans-2026 button.tg-tplans-submit:hover:not(:disabled) {
-      color: #ffffff !important;
-      background: #f06b1a !important;
-      filter: brightness(0.95) !important;
-    }
-    #tg-tplans-2026 button.tg-tplans-submit:disabled {
-      color: #ffffff !important;
     }
 
     #tg-tplans-2026 .tg-tplans-total-val {
@@ -1468,8 +1549,9 @@
           qw.className = "tg-tplans-quick-wrap";
           var quick = document.createElement("button");
           quick.type = "button";
-          quick.className = "tg-tplans-quick";
-          quick.textContent = "Customize & subscribe";
+          quick.className = "tg-tplans-quick tg-h26-btn tg-h26-btn--primary";
+          quick.innerHTML =
+            '<span class="tg-h26-btn__label">Customize &amp; subscribe</span><span class="tg-h26-btn__knob" aria-hidden="true"></span>';
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
@@ -1618,8 +1700,9 @@
         var totalRow = breakdown.querySelector(".tg-tplans-breakdown-total");
         var submit = document.createElement("button");
         submit.type = "button";
-        submit.className = "tg-tplans-submit";
-        submit.textContent = "Add to Cart";
+        submit.className = "tg-tplans-submit tg-h26-btn tg-h26-btn--primary";
+        submit.innerHTML =
+          '<span class="tg-h26-btn__label">Add to Cart</span><span class="tg-h26-btn__knob" aria-hidden="true"></span>';
         submit.disabled = true;
         totalRow.appendChild(submit);
         inner.appendChild(breakdown);
