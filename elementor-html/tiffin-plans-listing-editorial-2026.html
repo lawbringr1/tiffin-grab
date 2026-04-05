@@ -503,6 +503,7 @@
       color: var(--tp-muted);
     }
 
+    /* Live pricing panel — matches Stitch code.html (pricing-panel + total row). */
     .tg-tplans-breakdown {
       flex-shrink: 0;
       margin-top: auto;
@@ -520,10 +521,12 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.65rem;
-      margin-bottom: 0.25rem;
       line-height: 1.35;
     }
-    .tg-tplans-bd-row:nth-child(2) {
+    .tg-tplans-bd-row:first-child {
+      margin-bottom: 0.25rem;
+    }
+    .tg-tplans-bd-row:last-child {
       margin-bottom: 0.75rem;
     }
     .tg-tplans-bd-lbl {
@@ -549,12 +552,12 @@
     .tg-tplans-breakdown-total {
       margin-top: 0;
       padding-top: 0.75rem;
-      border-top: 1px dashed rgba(224, 192, 180, 0.45);
+      border-top: 1px solid rgba(240, 107, 26, 0.1);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 0.85rem;
+      gap: 1rem;
     }
     .tg-tplans-total-main {
       flex: 1;
@@ -564,41 +567,42 @@
       display: block;
       font-size: 0.625rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--tp-primary);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.125rem;
     }
     .tg-tplans-total-val {
       font-family: var(--tp-font-display);
-      font-size: clamp(1.75rem, 5vw, 1.875rem);
+      font-size: 1.875rem;
       font-weight: 700;
       color: var(--tp-on);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
     }
 
     .tg-tplans-submit {
       flex-shrink: 0;
       width: auto;
-      max-width: 48%;
-      padding: 0.75rem 1.35rem;
+      max-width: none;
+      padding: 0.75rem 1.5rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       font-family: var(--tp-font-display);
       font-weight: 700;
       font-size: 0.875rem;
+      line-height: 1.2;
       color: var(--tp-on-primary);
-      background: linear-gradient(180deg, var(--tp-primary), var(--tp-primary-mid));
+      background: var(--tp-primary);
       cursor: pointer;
-      box-shadow: 0 12px 28px rgba(240, 107, 26, 0.22);
-      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 10px 22px rgba(240, 107, 26, 0.2);
+      transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
       white-space: nowrap;
       align-self: flex-end;
     }
     .tg-tplans-submit:hover:not(:disabled) {
-      opacity: 0.95;
-      filter: brightness(1.03);
+      filter: brightness(0.95);
+      box-shadow: 0 12px 28px rgba(240, 107, 26, 0.28);
     }
     .tg-tplans-submit:active {
       transform: scale(0.98);
@@ -779,15 +783,16 @@
 
     #tg-tplans-2026 .tg-tplans-breakdown-total button.tg-tplans-submit {
       width: auto !important;
-      max-width: 48% !important;
+      max-width: none !important;
     }
     #tg-tplans-2026 button.tg-tplans-submit {
       color: #ffffff !important;
-      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+      background: #f06b1a !important;
     }
     #tg-tplans-2026 button.tg-tplans-submit:hover:not(:disabled) {
       color: #ffffff !important;
-      background: linear-gradient(180deg, #f06b1a, #d3540f) !important;
+      background: #f06b1a !important;
+      filter: brightness(0.95) !important;
     }
     #tg-tplans-2026 button.tg-tplans-submit:disabled {
       color: #ffffff !important;
