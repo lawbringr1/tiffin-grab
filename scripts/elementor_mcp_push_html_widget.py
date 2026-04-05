@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """
-Push raw HTML into an Elementor HTML widget via the site’s elementor-mcp server.
+Push Elementor widget settings via the site’s elementor-mcp server (HTML widget content or container custom_css).
 
 Equivalent to tmp-mcp-push-html-widget.ps1 — use this on macOS/Linux (no PowerShell).
 
 Requires: Python 3.8+, .cursor/mcp.json with mcpServers.elementor-mcp url + Authorization.
 
-Example:
+Examples:
   ./scripts/elementor_mcp_push_html_widget.py \\
     --post-id 10297 --element-id 24caf9c \\
     --html elementor-html/tiffin-plans-listing-editorial-2026.html
+
+  ./scripts/elementor_mcp_push_html_widget.py \\
+    --post-id 9825 --element-id a2cdc57 \\
+    --custom-css elementor-html/home-2026-hero-button-row.css
 """
 
 from __future__ import annotations
@@ -89,27 +93,19 @@ def mcp_initialize(base_url: str, auth: str) -> str:
     return sid
 
 
-def mcp_update_widget_html(
+def mcp_call_tool(
     base_url: str,
     auth: str,
     session_id: str,
     *,
-    post_id: int,
-    element_id: str,
-    html: str,
+    tool_name: str,
+    arguments: dict,
 ) -> dict:
     body = {
         "jsonrpc": "2.0",
         "id": 41,
         "method": "tools/call",
-        "params": {
-            "name": "elementor-mcp-update-widget",
-            "arguments": {
-                "post_id": post_id,
-                "element_id": element_id,
-                "settings": {"html": html},
-            },
-        },
+        "params": {"name": tool_name, "arguments": arguments},
     }
     _headers, raw = mcp_post(base_url, auth, body, session_id=session_id)
     try:
@@ -118,17 +114,57 @@ def mcp_update_widget_html(
         sys.exit(f"Non-JSON MCP response: {raw[:2000]}")
 
 
+def mcp_update_widget_settings(
+    base_url: str,
+    auth: str,
+    session_id: str,
+    *,
+    post_id: int,
+    element_id: str,
+    settings: dict,
+) -> dict:
+    return mcp_call_tool(
+        base_url,
+        auth,
+        session_id,
+        tool_name="elementor-mcp-update-widget",
+        arguments={"post_id": post_id, "element_id": element_id, "settings": settings},
+    )
+
+
+def mcp_update_container_settings(
+    base_url: str,
+    auth: str,
+    session_id: str,
+    *,
+    post_id: int,
+    element_id: str,
+    settings: dict,
+) -> dict:
+    return mcp_call_tool(
+        base_url,
+        auth,
+        session_id,
+        tool_name="elementor-mcp-update-container",
+        arguments={"post_id": post_id, "element_id": element_id, "settings": settings},
+    )
+
+
 def main() -> None:
     root = repo_root_from_script()
     default_mcp = root / ".cursor" / "mcp.json"
 
-    p = argparse.ArgumentParser(description="Push HTML to Elementor widget via elementor-mcp.")
+    p = argparse.ArgumentParser(description="Push Elementor widget settings via elementor-mcp.")
     p.add_argument("--post-id", type=int, required=True)
     p.add_argument("--element-id", required=True)
     p.add_argument(
         "--html",
-        required=True,
         help="Path to HTML file (relative to repo root or absolute).",
+    )
+    p.add_argument(
+        "--custom-css",
+        metavar="PATH",
+        help="Path to CSS file sent as Elementor custom_css (container button row, etc.).",
     )
     p.add_argument(
         "--mcp-json",
@@ -142,32 +178,60 @@ def main() -> None:
     if not mcp_path.is_file():
         sys.exit(f"MCP config not found: {mcp_path}")
 
-    html_path = Path(args.html).expanduser()
-    if not html_path.is_absolute():
-        html_path = (root / html_path).resolve()
-    if not html_path.is_file():
-        sys.exit(f"HTML file not found: {html_path}")
+    if bool(args.html) == bool(args.custom_css):
+        sys.exit("Provide exactly one of: --html PATH or --custom-css PATH")
+
+    if args.html:
+        file_path = Path(args.html).expanduser()
+        label = "html"
+        settings = {"html": None}
+    else:
+        file_path = Path(args.custom_css).expanduser()
+        label = "custom_css"
+        settings = {"custom_css": None}
+
+    if not file_path.is_absolute():
+        file_path = (root / file_path).resolve()
+    if not file_path.is_file():
+        sys.exit(f"File not found: {file_path}")
 
     base_url, auth = load_elementor_mcp_config(mcp_path)
-    html = html_path.read_text(encoding="utf-8")
+    text = file_path.read_text(encoding="utf-8")
+    if "html" in settings:
+        settings["html"] = text
+    else:
+        settings["custom_css"] = text
 
-    print(f"POSTing {html_path.relative_to(root)} -> post {args.post_id} element {args.element_id} ...")
-    session_id = mcp_initialize(base_url, auth)
-    out = mcp_update_widget_html(
-        base_url,
-        auth,
-        session_id,
-        post_id=args.post_id,
-        element_id=args.element_id,
-        html=html,
+    print(
+        f"POSTing {file_path.relative_to(root)} ({label}) -> post {args.post_id} element {args.element_id} ..."
     )
+    session_id = mcp_initialize(base_url, auth)
+    if label == "custom_css":
+        out = mcp_update_container_settings(
+            base_url,
+            auth,
+            session_id,
+            post_id=args.post_id,
+            element_id=args.element_id,
+            settings=settings,
+        )
+    else:
+        out = mcp_update_widget_settings(
+            base_url,
+            auth,
+            session_id,
+            post_id=args.post_id,
+            element_id=args.element_id,
+            settings=settings,
+        )
     print(json.dumps(out, indent=2, ensure_ascii=False))
 
     err = out.get("error")
     if err:
         sys.exit(1)
-    # tools/call wraps result; treat missing success as failure if structuredContent says otherwise
     result = out.get("result") or {}
+    if result.get("isError"):
+        sys.exit(1)
     structured = result.get("structuredContent") or {}
     if structured.get("success") is False:
         sys.exit(1)
