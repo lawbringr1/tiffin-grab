@@ -11,7 +11,7 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
 <!-- Same Material Symbols URL as home-2026-hero-tags.html (variable wght/FILL). -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
@@ -53,8 +53,8 @@
       --tp-orange-a35: rgba(240, 107, 26, 0.35);
       --tp-orange-a45: rgba(240, 107, 26, 0.45);
       --tp-orange-fill: rgba(240, 107, 26, 0.09);
-      --tp-font-display: "Sora", system-ui, sans-serif;
-      --tp-font-body: "DM Sans", system-ui, sans-serif;
+      --tp-font-display: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --tp-font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       font-family: var(--tp-font-body);
       color: var(--tp-on);
       background: var(--tp-surface);
@@ -74,6 +74,14 @@
     }
     .tg-tplans * {
       box-sizing: border-box;
+    }
+    /* Geist for the whole section (Elementor kit often forces theme fonts on controls). */
+    #tg-tplans-2026,
+    #tg-tplans-2026 button,
+    #tg-tplans-2026 input,
+    #tg-tplans-2026 select,
+    #tg-tplans-2026 textarea {
+      font-family: var(--tp-font-body) !important;
     }
     .tg-tplans-inner {
       max-width: 1200px;
