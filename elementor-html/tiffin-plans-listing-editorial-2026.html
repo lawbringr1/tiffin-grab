@@ -533,10 +533,10 @@
       gap: 0.65rem;
       line-height: 1.35;
     }
-    .tg-tplans-bd-row:first-child {
+    .tg-tplans-bd-row:first-of-type {
       margin-bottom: 0.25rem;
     }
-    .tg-tplans-bd-row:last-child {
+    .tg-tplans-bd-row:last-of-type {
       margin-bottom: 0.75rem;
     }
     .tg-tplans-bd-lbl {
@@ -558,6 +558,13 @@
       font-size: 0.875rem;
       color: #16a34a;
       white-space: nowrap;
+    }
+    .tg-tplans-bd-formula {
+      font-size: 0.6875rem;
+      line-height: 1.4;
+      color: var(--tp-muted);
+      opacity: 0.85;
+      margin: 0 0 0.35rem;
     }
     .tg-tplans-breakdown-total {
       margin-top: 0;
@@ -1382,9 +1389,38 @@
       function labelKey(txt) {
         var t = (txt || "").toLowerCase();
         if (t.indexOf("tiffin") !== -1) return "tiffins";
+        if (/\bmeals?\b/.test(t)) return "tiffins";
         if (t.indexOf("day") !== -1) return "days";
+        if (/\b(qty|quantity)\b/.test(t)) return "tiffins";
         if (t.indexOf("date") !== -1) return "date";
         return "other";
+      }
+
+      /** How many tiffins/meals the selected APO option represents (Woo values may be slugs or labels). */
+      function tiffinCountFromField(field, rawValue) {
+        if (!field) return 1;
+        if (rawValue === undefined || rawValue === "") return 1;
+        var s = String(rawValue).trim();
+        var n = parseInt(s, 10);
+        if (!isNaN(n) && n > 0) return n;
+        var lead = s.match(/^(\d+)/);
+        if (lead) {
+          var ln = parseInt(lead[1], 10);
+          if (!isNaN(ln) && ln > 0) return ln;
+        }
+        if (!field.options || !field.options.length) return 1;
+        var j;
+        for (j = 0; j < field.options.length; j++) {
+          if (String(field.options[j].value) !== s) continue;
+          var tx = String(field.options[j].text || "");
+          var m = tx.match(/(\d+)/);
+          if (m) {
+            var mn = parseInt(m[1], 10);
+            if (!isNaN(mn) && mn > 0) return mn;
+          }
+          return 1;
+        }
+        return 1;
       }
 
       function dayCountFromSchema(sch, values) {
@@ -1417,30 +1453,7 @@
         return false;
       }
 
-      /** UI order for “Number of tiffins” (must match Woo APO option values when present). */
-      var TIFFIN_CHOICE_ORDER = [1, 5, 10, 15, 20];
-
-      function tiffinSegOptionsFromSchema(allOptions) {
-        if (!allOptions || !allOptions.length) return [];
-        function findOpt(n) {
-          var sv = String(n);
-          var i;
-          for (i = 0; i < allOptions.length; i++) {
-            var v = String(allOptions[i].value).trim();
-            if (v === sv || parseInt(v, 10) === n) return allOptions[i];
-          }
-          return null;
-        }
-        var out = [];
-        var u;
-        for (u = 0; u < TIFFIN_CHOICE_ORDER.length; u++) {
-          var o = findOpt(TIFFIN_CHOICE_ORDER[u]);
-          if (o) out.push(o);
-        }
-        return out.length ? out : allOptions.slice();
-      }
-
-      /** Prefer value 1 within the segment list; else smallest numeric; else 0. */
+      /** Prefer Woo option value 1 when present; else smallest numeric; else first. */
       function defaultTiffinOptionIndex(options) {
         if (!options || !options.length) return 0;
         var k;
@@ -1517,21 +1530,22 @@
           if (sch && sch.apo) {
             sch.apo.forEach(function (f) {
               if (labelKey(f.label) === "tiffins") {
-                var v = values[f.name];
-                tiffins = parseInt(v, 10) || 1;
+                tiffins = tiffinCountFromField(f, values[f.name]);
               }
             });
           }
           var dc = dayCountFromSchema(sch, values);
           var hasDays = schemaHasDaysField(sch);
-          var daysMult = 1;
-          if (hasDays) {
-            daysMult = dc != null && dc > 0 ? dc : 5;
-          }
-          var totalMinor = Math.round(perMeal * tiffins * daysMult);
+          /* Weekly total = unit price × how many tiffins/meals in the plan; day pattern is schedule only. */
+          var totalMinor = Math.round(perMeal * tiffins);
           var subFormatted = money(String(totalMinor), curCode, curSym);
           var dayPart = hasDays && dc != null && dc > 0 ? " (" + dc + " days)" : "";
+          var perStr = money(String(perMeal), curCode, curSym);
+          var formula = perStr + " per meal × " + tiffins + " tiffins";
           rows.innerHTML =
+            '<p class="tg-tplans-bd-formula">' +
+            escapeHtml(formula) +
+            "</p>" +
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal' +
             dayPart +
             '</span><span class="tg-tplans-bd-val">' +
@@ -1567,12 +1581,11 @@
               if (key === "tiffins") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Number of tiffins</span><div class="tg-tplans-seg"></div>';
                 var seg = wrap.querySelector(".tg-tplans-seg");
-                var segOpts = tiffinSegOptionsFromSchema(field.options);
-                var tix = defaultTiffinOptionIndex(segOpts);
-                segOpts.forEach(function (opt, i) {
+                var tix = defaultTiffinOptionIndex(field.options);
+                field.options.forEach(function (opt, i) {
                   var b = document.createElement("button");
                   b.type = "button";
-                  b.textContent = String(opt.value).trim();
+                  b.textContent = opt.value;
                   b.setAttribute("aria-pressed", i === tix ? "true" : "false");
                   b.addEventListener("click", function () {
                     seg.querySelectorAll("button").forEach(function (x) {
@@ -1584,7 +1597,7 @@
                   });
                   seg.appendChild(b);
                 });
-                values[field.name] = segOpts.length ? segOpts[tix].value : field.options[0].value;
+                values[field.name] = field.options[tix].value;
               } else if (key === "days") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Preferred days</span><div class="tg-tplans-days"></div>';
                 var grid = wrap.querySelector(".tg-tplans-days");
