@@ -244,74 +244,75 @@
       display: flex;
       justify-content: center;
     }
-    #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-btn {
-      width: 100%;
-      max-width: 100%;
+    /*
+     * “Customize & subscribe” — Shadcn Button variant=destructive + heartbeateffect (shadcn-space button-04).
+     * Destructive palette matches shadcn/ui; pulse is a double-beat scale + soft ring.
+     */
+    @keyframes tg-tplans-heartbeat {
+      0%,
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+      }
+      12% {
+        transform: scale(1.045);
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.12);
+      }
+      22% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
+      }
+      34% {
+        transform: scale(1.045);
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.08);
+      }
+      48% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+      }
     }
-    /* “Customize & subscribe” — Shadcn-style outline + cursor-position fill (matches React ButtonDemo) */
-    #tg-tplans-2026 button.tg-tplans-fill-btn {
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      max-width: 100%;
       min-height: 3rem;
       padding: 0.75rem 1.5rem;
       border-radius: 9999px;
-      overflow: hidden;
       box-sizing: border-box;
-      border: 1px solid rgba(29, 27, 25, 0.14);
-      background: #ffffff;
+      border: 1px solid transparent;
+      background: #ef4444 !important;
+      background-color: #ef4444 !important;
       font-family: var(--tp-font-display) !important;
       font-size: 0.875rem;
       font-weight: 600;
       line-height: 1.25;
       letter-spacing: 0.02em;
-      color: var(--tp-on) !important;
+      color: #fafafa !important;
+      -webkit-text-fill-color: #fafafa;
+      text-align: center;
       cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
-      box-shadow: none !important;
       -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.3s ease, transform 0.2s ease;
+      transform-origin: center center;
+      animation: tg-tplans-heartbeat 1.85s ease-in-out infinite;
+      transition: background-color 0.2s ease, filter 0.2s ease;
     }
-    #tg-tplans-2026 button.tg-tplans-fill-btn:hover {
-      border-color: rgba(240, 107, 26, 0.45);
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:hover {
+      background: #dc2626 !important;
+      background-color: #dc2626 !important;
+      filter: brightness(1.03);
     }
-    #tg-tplans-2026 button.tg-tplans-fill-btn:focus-visible {
-      outline: 2px solid rgba(240, 107, 26, 0.55);
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:focus-visible {
+      outline: 2px solid rgba(239, 68, 68, 0.65);
       outline-offset: 3px;
     }
-    #tg-tplans-2026 button.tg-tplans-fill-btn:active {
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:active {
       transform: scale(0.98);
-    }
-    #tg-tplans-2026 .tg-tplans-fill-btn__blob {
-      position: absolute;
-      width: 2.5rem;
-      height: 2.5rem;
-      margin: 0;
-      border-radius: 9999px;
-      background: var(--tp-primary);
-      pointer-events: none;
-      transform: scale(0);
-      transform-origin: center center;
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 1;
-    }
-    #tg-tplans-2026 button.tg-tplans-fill-btn:hover .tg-tplans-fill-btn__blob,
-    #tg-tplans-2026 button.tg-tplans-fill-btn:focus-visible .tg-tplans-fill-btn__blob {
-      transform: scale(20);
-    }
-    #tg-tplans-2026 .tg-tplans-fill-btn__label {
-      position: relative;
-      z-index: 2;
-      pointer-events: none;
-      text-align: center;
-      width: 100%;
-      transition: color 0.5s ease;
-    }
-    #tg-tplans-2026 button.tg-tplans-fill-btn:hover .tg-tplans-fill-btn__label,
-    #tg-tplans-2026 button.tg-tplans-fill-btn:focus-visible .tg-tplans-fill-btn__label {
-      color: #ffffff !important;
+      animation: none;
     }
     @media (max-width: 520px) {
       #tg-tplans-2026 .tg-tplans-breakdown-total {
@@ -325,13 +326,9 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      #tg-tplans-2026 .tg-tplans-fill-btn__blob {
-        display: none !important;
-      }
-      #tg-tplans-2026 button.tg-tplans-fill-btn:hover,
-      #tg-tplans-2026 button.tg-tplans-fill-btn:focus-visible {
-        background: var(--tp-primary) !important;
-        border-color: var(--tp-primary) !important;
+      #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
+        animation: none !important;
+        box-shadow: none !important;
       }
       #tg-tplans-2026 a.tg-h26-btn,
       #tg-tplans-2026 button.tg-h26-btn,
@@ -341,7 +338,7 @@
       }
       #tg-tplans-2026 a.tg-h26-btn:active,
       #tg-tplans-2026 button.tg-h26-btn:active,
-      #tg-tplans-2026 button.tg-tplans-fill-btn:active {
+      #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:active {
         transform: none !important;
       }
     }
@@ -633,7 +630,7 @@
       padding-top: 1.35rem;
       background: linear-gradient(to top, var(--tp-card) 70%, transparent);
     }
-    /* Primary CTA: .tg-h26-btn--primary (magnetic pill) + layout */
+    /* Customize CTA: .heartbeateffect (destructive pulse); Add to cart: .tg-h26-btn */
     .tg-tplans-quick {
       width: 100%;
     }
@@ -973,6 +970,15 @@
       filter: brightness(1.06);
     }
 
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect {
+      color: #fafafa !important;
+      -webkit-text-fill-color: #fafafa !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-quick.heartbeateffect:hover {
+      color: #fafafa !important;
+      -webkit-text-fill-color: #fafafa !important;
+    }
+
     #tg-tplans-2026 button.tg-tplans-read {
       color: #f06b1a !important;
       background: transparent !important;
@@ -1220,36 +1226,6 @@
         } catch (e) {
           return new URL("/cart/", STORE).href;
         }
-      }
-
-      /** Outline pill with expanding primary fill from cursor (Shadcn-style; matches React ButtonDemo). */
-      function attachTplansFillBtn(btn) {
-        var blob = btn.querySelector(".tg-tplans-fill-btn__blob");
-        if (!blob) return;
-        function setBlobPos(clientX, clientY) {
-          var rect = btn.getBoundingClientRect();
-          var x = clientX - rect.left;
-          var y = clientY - rect.top;
-          blob.style.left = x - 20 + "px";
-          blob.style.top = y - 20 + "px";
-        }
-        function centerBlob() {
-          var rect = btn.getBoundingClientRect();
-          blob.style.left = Math.max(0, rect.width / 2 - 20) + "px";
-          blob.style.top = Math.max(0, rect.height / 2 - 20) + "px";
-        }
-        btn.addEventListener("mouseenter", function (e) {
-          setBlobPos(e.clientX, e.clientY);
-        });
-        btn.addEventListener("mousemove", function (e) {
-          setBlobPos(e.clientX, e.clientY);
-        });
-        btn.addEventListener("touchstart", function (e) {
-          if (e.touches && e.touches[0]) {
-            setBlobPos(e.touches[0].clientX, e.touches[0].clientY);
-          }
-        }, { passive: true });
-        btn.addEventListener("focus", centerBlob);
       }
 
       /** @param cartUrl optional — same-origin cart URL; shows a “View cart” link in the toast */
@@ -1653,11 +1629,8 @@
           qw.className = "tg-tplans-quick-wrap";
           var quick = document.createElement("button");
           quick.type = "button";
-          quick.className = "tg-tplans-quick tg-tplans-fill-btn";
-          quick.innerHTML =
-            '<span class="tg-tplans-fill-btn__blob" aria-hidden="true"></span>' +
-            '<span class="tg-tplans-fill-btn__label">Customize &amp; subscribe</span>';
-          attachTplansFillBtn(quick);
+          quick.className = "tg-tplans-quick heartbeateffect";
+          quick.textContent = "Customize & subscribe";
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
