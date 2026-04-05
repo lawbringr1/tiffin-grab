@@ -1,0 +1,429 @@
+<!--
+  TiffinGrab — "Why Choose Us" (Elementor HTML widget).
+  Home stack band 2 of 4: light strip #fff8f6 (alternates with peach #fdeae2). #f06b1a accents, Manrope / Work Sans.
+-->
+<!-- Fonts loaded once in home-2026-hero-tags.html (template 9825). -->
+<section class="tg-wcu" id="tg-why-choose" aria-labelledby="tg-wcu-title">
+  <style>
+    .elementor-widget-html:has(#tg-why-choose),
+    .elementor-widget-html:has(#tg-why-choose) .elementor-widget-container,
+    .elementor-widget-html-custom:has(#tg-why-choose),
+    .elementor-widget-html-custom:has(#tg-why-choose) .elementor-widget-container,
+    .elementor-widget-wrap:has(#tg-why-choose),
+    .elementor-column:has(#tg-why-choose),
+    .elementor-column-wrap:has(#tg-why-choose),
+    .elementor-section:has(#tg-why-choose),
+    .e-con:has(#tg-why-choose),
+    .e-con-inner:has(#tg-why-choose) {
+      overflow: visible !important;
+      max-width: none !important;
+      background-color: #fff8f6 !important;
+      background-image: none !important;
+    }
+    .tg-wcu {
+      --wcu-on: #231a15;
+      --wcu-muted: #564339;
+      --wcu-bg: #fff8f6;
+      --wcu-orange: #f06b1a;
+      --wcu-shadow: 0 28px 56px rgba(35, 26, 21, 0.06);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--wcu-on);
+      background: var(--wcu-bg);
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-top: 0;
+      padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 4vw, 2rem);
+      box-sizing: border-box;
+      overflow-x: clip;
+    }
+    @supports (width: 100dvw) {
+      .tg-wcu {
+        width: 100dvw;
+        margin-left: calc(50% - 50dvw);
+        margin-right: calc(50% - 50dvw);
+      }
+    }
+    .tg-wcu * {
+      box-sizing: border-box;
+    }
+    .tg-wcu .tg-wcu-icon {
+      font-family: "Material Symbols Outlined" !important;
+      font-weight: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      text-transform: none;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+      font-size: 1.75rem;
+      color: var(--wcu-orange);
+      line-height: 1;
+      display: inline-block;
+    }
+    .tg-wcu-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .tg-wcu-head {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    }
+    .tg-wcu-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--wcu-orange);
+      background: rgba(240, 107, 26, 0.06);
+      outline: 1px solid rgba(240, 107, 26, 0.28);
+      margin-bottom: 1.25rem;
+    }
+    .tg-wcu h2#tg-wcu-title {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      font-size: clamp(1.85rem, 4.2vw, 3.1rem);
+      margin: 0 0 1.25rem;
+      color: var(--wcu-on);
+      max-width: 52rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tg-wcu h2 .tg-wcu-accent {
+      color: var(--wcu-orange);
+      font-style: normal;
+    }
+    .tg-wcu-lede {
+      margin: 0 auto;
+      max-width: 42rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--wcu-muted);
+      font-weight: 400;
+    }
+    .tg-wcu-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(2.25rem, 5vw, 4rem);
+    }
+    @media (min-width: 1024px) {
+      .tg-wcu-grid {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(2.5rem, 4vw, 4.5rem);
+      }
+      .tg-wcu-col-media,
+      .tg-wcu-col-features {
+        flex: 1 1 0;
+        min-width: 0;
+        width: 100%;
+      }
+    }
+    .tg-wcu-figure {
+      margin: 0;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      box-shadow: var(--wcu-shadow);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: 1024px) {
+      .tg-wcu-figure {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: none;
+      }
+    }
+    .tg-wcu-figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tg-wcu-features {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.75rem, 3vw, 2.25rem);
+      width: 100%;
+      max-width: 34rem;
+    }
+    @media (min-width: 1024px) {
+      .tg-wcu-features {
+        max-width: none;
+      }
+    }
+    .tg-wcu-features li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .tg-wcu-features .tg-wcu-ico {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tg-wcu-features h3 {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      color: var(--wcu-on);
+    }
+    .tg-wcu-features p {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--wcu-muted);
+      font-weight: 400;
+    }
+    .tg-wcu-cta-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    }
+    /* Same pill as hero “Order Now” (container a2cdc57 primary): white disc + flying arrow */
+    #tg-why-choose a.tg-wcu-cta,
+    #tg-why-choose a.tg-wcu-cta:link,
+    #tg-why-choose a.tg-wcu-cta:visited {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: fit-content;
+      max-width: min(100%, 42rem);
+      min-height: 44px;
+      height: auto;
+      padding: 6px 48px 6px 22px;
+      border-radius: 999px;
+      background: #f06b1a !important;
+      background-color: #f06b1a !important;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      text-decoration: none !important;
+      border: none;
+      box-shadow: none !important;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: padding 0.5s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #tg-why-choose a.tg-wcu-cta:hover,
+    #tg-why-choose a.tg-wcu-cta:focus-visible {
+      padding: 6px 22px 6px 48px;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+    }
+    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-label {
+      position: relative;
+      z-index: 2;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+      white-space: nowrap;
+    }
+    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      left: auto;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      max-width: 32px;
+      min-height: 32px;
+      max-height: 32px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+      border-radius: 999px;
+      background: #ffffff;
+      transform: translateY(-50%) rotate(0deg);
+      transition: right 0.5s ease, transform 0.5s ease;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #tg-why-choose a.tg-wcu-cta:hover .tg-wcu-cta-knob,
+    #tg-why-choose a.tg-wcu-cta:focus-visible .tg-wcu-cta-knob {
+      right: calc(100% - 36px);
+      transform: translateY(-50%) rotate(45deg);
+    }
+    #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob::before {
+      content: "";
+      display: block;
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.65%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
+        center center / contain no-repeat;
+    }
+    @media (max-width: 767px) {
+      .tg-wcu {
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        -webkit-text-size-adjust: 100%;
+      }
+      .tg-wcu h2#tg-wcu-title {
+        font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+      }
+      .tg-wcu-lede {
+        font-size: 1rem;
+      }
+      .tg-wcu-figure {
+        border-radius: 1.25rem;
+      }
+      .tg-wcu-cta-wrap {
+        width: 100%;
+        padding: 0 0.25rem;
+        box-sizing: border-box;
+      }
+      /* Knob + padding match hero magnetic pills (home a2cdc57) on mobile */
+      #tg-why-choose a.tg-wcu-cta {
+        display: flex !important;
+        width: 100%;
+        max-width: 22rem;
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 48px;
+        justify-content: flex-start !important;
+        padding: 0.4rem 3.35rem 0.4rem 0.65rem;
+        font-size: clamp(0.8rem, 3.2vw, 0.9rem);
+      }
+      #tg-why-choose a.tg-wcu-cta:hover,
+      #tg-why-choose a.tg-wcu-cta:focus-visible {
+        padding: 0.4rem 0.65rem 0.4rem 3.35rem;
+      }
+      #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob {
+        width: 2.35rem;
+        height: 2.35rem;
+        min-width: 2.35rem;
+        max-width: 2.35rem;
+        min-height: 2.35rem;
+        max-height: 2.35rem;
+        right: 0.2rem;
+      }
+      #tg-why-choose a.tg-wcu-cta:hover .tg-wcu-cta-knob,
+      #tg-why-choose a.tg-wcu-cta:focus-visible .tg-wcu-cta-knob {
+        right: calc(100% - 2.55rem);
+      }
+      #tg-why-choose a.tg-wcu-cta .tg-wcu-cta-knob::before {
+        width: 16px;
+        height: 16px;
+        background-position: center center;
+      }
+      .tg-wcu-features h3 {
+        font-size: 1.05rem;
+      }
+      .tg-wcu-features p {
+        font-size: 0.95rem;
+      }
+    }
+    @media (max-width: 380px) {
+      #tg-why-choose a.tg-wcu-cta {
+        padding: 0.4rem 3.2rem 0.4rem 0.5rem;
+      }
+      #tg-why-choose a.tg-wcu-cta:hover,
+      #tg-why-choose a.tg-wcu-cta:focus-visible {
+        padding: 0.4rem 0.5rem 0.4rem 3.2rem;
+      }
+    }
+  </style>
+  <div class="tg-wcu-inner">
+    <header class="tg-wcu-head">
+      <span class="tg-wcu-badge">Our Promise</span>
+      <h2 id="tg-wcu-title">
+        Why Choose Our Tiffin Service In <span class="tg-wcu-accent">Toronto And Scarborough</span>?
+      </h2>
+      <p class="tg-wcu-lede">
+        Indulge your tastes and fuel your day with authentic Indian dishes. Our blend of home-style recipes,
+        fresh ingredients, and strict sanitation brings you real comfort with zero hassle.
+      </p>
+    </header>
+    <div class="tg-wcu-grid">
+      <div class="tg-wcu-col-media">
+        <figure class="tg-wcu-figure">
+          <img
+            src="https://tiffingrab.ca/wp-content/uploads/2025/02/Maharaja-Thali-Non-veg.webp"
+            alt="Authentic Indian tiffin — fresh thali-style meal from TiffinGrab"
+            width="800"
+            height="600"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </div>
+      <div class="tg-wcu-col-features">
+        <ul class="tg-wcu-features">
+          <li>
+            <div class="tg-wcu-ico" aria-hidden="true">
+              <span class="material-symbols-outlined tg-wcu-icon">workspace_premium</span>
+            </div>
+            <div>
+              <h3>Best Tiffin Brand</h3>
+              <p>Voted among the most reliable and delicious tiffin services in Toronto and the GTA.</p>
+            </div>
+          </li>
+          <li>
+            <div class="tg-wcu-ico" aria-hidden="true">
+              <span class="material-symbols-outlined tg-wcu-icon">sanitizer</span>
+            </div>
+            <div>
+              <h3>Hygienic Prep</h3>
+              <p>Food prepared in a HACCP-certified kitchen with strict adherence to hygiene protocols.</p>
+            </div>
+          </li>
+          <li>
+            <div class="tg-wcu-ico" aria-hidden="true">
+              <span class="material-symbols-outlined tg-wcu-icon">skillet</span>
+            </div>
+            <div>
+              <h3>Professional Chefs</h3>
+              <p>Prepared by professional chefs with years of authentic culinary experience.</p>
+            </div>
+          </li>
+          <li>
+            <div class="tg-wcu-ico" aria-hidden="true">
+              <span class="material-symbols-outlined tg-wcu-icon">schedule</span>
+            </div>
+            <div>
+              <h3>Timely Delivery</h3>
+              <p>Hot meals delivered on schedule every day—no delays for your lunch or dinner.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tg-wcu-cta-wrap">
+      <a class="tg-wcu-cta" href="https://tiffingrab.ca/tiffin-plans/">
+        <span class="tg-wcu-cta-label">Hurry! Order Now</span>
+        <span class="tg-wcu-cta-knob" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</section>

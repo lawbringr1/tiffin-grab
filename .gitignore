@@ -1,0 +1,7 @@
+# Secrets — do not commit
+.mcp.json
+
+# MCP / debug scratch files
+.tmp-*
+.tmp-hdr.txt
+.tmp-session.txt

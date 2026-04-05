@@ -1,0 +1,1025 @@
+<!--
+  TiffinGrab — "Who It's Perfect For" tabbed audience section (Elementor HTML widget).
+  Home stack band 3 of 4: peach strip #fdeae2 (alternates with #fff8f6). Brand green: Global Colors → "WhatsApp Green".
+-->
+<!-- Fonts loaded once in home-2026-hero-tags.html (template 9825). -->
+<section class="tg-aud" id="tg-perfect-for" aria-labelledby="tg-aud-title">
+  <style>
+    .elementor-widget-html:has(#tg-perfect-for),
+    .elementor-widget-html:has(#tg-perfect-for) .elementor-widget-container,
+    .elementor-widget-html-custom:has(#tg-perfect-for),
+    .elementor-widget-html-custom:has(#tg-perfect-for) .elementor-widget-container,
+    .elementor-widget-wrap:has(#tg-perfect-for),
+    .elementor-column:has(#tg-perfect-for),
+    .elementor-column-wrap:has(#tg-perfect-for),
+    .elementor-section:has(#tg-perfect-for),
+    .e-con:has(#tg-perfect-for),
+    .e-con-inner:has(#tg-perfect-for) {
+      overflow: visible !important;
+      background-color: #fdeae2 !important;
+      background-image: none !important;
+    }
+    .elementor-widget-html:has(#tg-perfect-for),
+    .elementor-widget-html:has(#tg-perfect-for) .elementor-widget-container {
+      max-width: none !important;
+    }
+    .tg-aud {
+      --tg-brand-green: var(--e-global-color-whatsapp, #25d366);
+      --aud-on: #231a15;
+      --aud-muted: #564339;
+      --aud-bg: #fdeae2;
+      --aud-orange: #f06b1a;
+      --aud-green-pill: var(--tg-brand-green);
+      --aud-green-pill-ink: #ffffff;
+      --aud-white: #ffffff;
+      --aud-shadow: 0 28px 56px rgba(35, 26, 21, 0.07);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--aud-on);
+      background: var(--aud-bg);
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 4vw, 2rem);
+      box-sizing: border-box;
+      overflow: visible;
+      overflow-x: clip;
+    }
+    @supports (width: 100dvw) {
+      .tg-aud {
+        width: 100dvw;
+        margin-left: calc(50% - 50dvw);
+        margin-right: calc(50% - 50dvw);
+      }
+    }
+    @media (max-width: 767px) {
+      /* hidden lets the tab strip scroll; clip was clipping the horizontal scrollport on some WebKit builds */
+      .tg-aud {
+        overflow-x: hidden;
+      }
+    }
+    .tg-aud * {
+      box-sizing: border-box;
+    }
+    .tg-aud .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+    }
+    .tg-aud-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      min-width: 0;
+    }
+    .tg-aud-head {
+      text-align: center;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    .tg-aud-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--aud-orange);
+      background: rgba(240, 107, 26, 0.07);
+      outline: 1px solid rgba(240, 107, 26, 0.28);
+      margin-bottom: 1.1rem;
+    }
+    .tg-aud h2#tg-aud-title {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.12;
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      margin: 0;
+      color: var(--aud-on);
+    }
+    .tg-aud-tabs-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: clamp(2.25rem, 4vw, 3.5rem);
+    }
+    .tg-aud-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.4rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      box-shadow: 0 12px 32px rgba(35, 26, 21, 0.06);
+      outline: 1px solid rgba(220, 193, 181, 0.18);
+      max-width: 100%;
+    }
+    .tg-aud-tabs button {
+      appearance: none;
+      -webkit-tap-highlight-color: transparent;
+      border: 0;
+      cursor: pointer;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      padding: 0.65rem 1.15rem;
+      border-radius: 999px;
+      background-color: transparent;
+      color: var(--aud-muted);
+      outline: none;
+      user-select: none;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+      will-change: transform;
+      box-shadow: none;
+    }
+    .tg-aud-tabs button:focus {
+      outline: none;
+    }
+    .tg-aud-tabs button:focus-visible {
+      outline: 2px solid rgba(240, 107, 26, 0.55);
+      outline-offset: 3px;
+    }
+    .tg-aud-tabs button[aria-selected="true"]:focus-visible {
+      outline-color: rgba(240, 107, 26, 0.85);
+      outline-offset: 3px;
+    }
+    @media (min-width: 640px) {
+      .tg-aud-tabs button {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.82rem;
+      }
+    }
+    .tg-aud-tabs button:not([aria-selected="true"]):hover {
+      color: var(--aud-orange);
+      background-color: rgba(240, 107, 26, 0.08);
+    }
+    .tg-aud-tabs button:not([aria-selected="true"]):active {
+      transform: scale(0.98);
+    }
+    .tg-aud-tabs button[aria-selected="true"] {
+      background-color: var(--aud-orange);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(10, 10, 10, 0.12);
+    }
+    .tg-aud-tabs button[aria-selected="true"]:hover {
+      background-color: #e85f0f;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 28px rgba(240, 107, 26, 0.34);
+    }
+    .tg-aud-tabs button[aria-selected="true"]:active {
+      transform: translateY(0) scale(0.99);
+    }
+    @media (max-width: 767px) {
+      .tg-aud-tabs button[aria-selected="true"]:hover {
+        transform: none;
+      }
+      .tg-aud {
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        -webkit-text-size-adjust: 100%;
+      }
+      .tg-aud h2#tg-aud-title {
+        font-size: clamp(1.55rem, 6.5vw, 2.1rem);
+      }
+      /* Full-bleed horizontal chip row: one pill per audience, swipe to see all */
+      .tg-aud-tabs-wrap {
+        justify-content: flex-start;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
+        overflow: visible;
+        min-width: 0;
+      }
+      @supports (width: 100dvw) {
+        .tg-aud-tabs-wrap {
+          width: 100dvw;
+          max-width: 100dvw;
+          margin-left: calc(50% - 50dvw);
+          margin-right: calc(50% - 50dvw);
+        }
+      }
+      .tg-aud-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: none;
+        padding: 0.35rem 0.35rem 0.65rem 0;
+        margin: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        overscroll-behavior-x: contain;
+        background: transparent;
+        box-shadow: none;
+        outline: none;
+        border-radius: 0;
+        scrollbar-width: none;
+      }
+      .tg-aud-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .tg-aud-tabs button {
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 0.55rem 1.1rem;
+        font-size: clamp(0.84rem, 3.4vw, 0.92rem);
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        background-color: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 4px 16px rgba(35, 26, 21, 0.07);
+        outline: 1px solid rgba(220, 193, 181, 0.45);
+      }
+      .tg-aud-tabs button:not([aria-selected="true"]):hover {
+        background-color: rgba(255, 255, 255, 1);
+        color: var(--aud-orange);
+      }
+      .tg-aud-tabs button[aria-selected="true"] {
+        outline-color: transparent;
+        box-shadow: 0 8px 22px rgba(240, 107, 26, 0.28);
+      }
+      /* Block-level flex + horizontal margins center the pill on narrow viewports */
+      #tg-perfect-for a.tg-aud-cta {
+        display: flex !important;
+        width: fit-content;
+        max-width: min(100%, 42rem);
+        margin-left: auto;
+        margin-right: auto;
+        min-height: 48px;
+        justify-content: flex-start !important;
+        padding: 0.4rem 3.35rem 0.4rem 0.65rem;
+        font-size: clamp(0.8rem, 3.2vw, 0.9rem);
+      }
+      #tg-perfect-for a.tg-aud-cta:hover,
+      #tg-perfect-for a.tg-aud-cta:focus-visible {
+        padding: 0.4rem 0.65rem 0.4rem 3.35rem;
+      }
+      #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob {
+        width: 2.35rem;
+        height: 2.35rem;
+        min-width: 2.35rem;
+        max-width: 2.35rem;
+        min-height: 2.35rem;
+        max-height: 2.35rem;
+        right: 0.2rem;
+      }
+      #tg-perfect-for a.tg-aud-cta:hover .tg-aud-cta-knob,
+      #tg-perfect-for a.tg-aud-cta:focus-visible .tg-aud-cta-knob {
+        right: calc(100% - 2.55rem);
+      }
+      #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob::before {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    @media (max-width: 380px) {
+      #tg-perfect-for a.tg-aud-cta {
+        padding: 0.4rem 3.2rem 0.4rem 0.5rem;
+      }
+      #tg-perfect-for a.tg-aud-cta:hover,
+      #tg-perfect-for a.tg-aud-cta:focus-visible {
+        padding: 0.4rem 0.5rem 0.4rem 3.2rem;
+      }
+    }
+    .tg-aud-panels {
+      position: relative;
+    }
+    .tg-aud-panel[hidden] {
+      display: none !important;
+    }
+    @keyframes tg-aud-panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .tg-aud-panel:not([hidden]) {
+        animation: tg-aud-panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+    }
+    .tg-aud-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .tg-aud-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 3.5rem;
+      }
+    }
+    .tg-aud-copy h3 {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      line-height: 1.2;
+      margin: 0 0 1rem;
+      color: var(--aud-on);
+    }
+    .tg-aud-copy > p.tg-aud-lede {
+      margin: 0 0 1.75rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--aud-muted);
+    }
+    .tg-aud-list {
+      list-style: none;
+      margin: 0 0 1.75rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .tg-aud-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      color: var(--aud-on);
+    }
+    .tg-aud-list .material-symbols-outlined {
+      flex-shrink: 0;
+      font-size: 1.35rem;
+      color: var(--aud-orange);
+      background: rgba(240, 107, 26, 0.1);
+      border-radius: 999px;
+      padding: 0.25rem;
+    }
+    /* Same pill as hero “Order Now” / Why Choose CTA: white disc + flying arrow */
+    #tg-perfect-for a.tg-aud-cta,
+    #tg-perfect-for a.tg-aud-cta:link,
+    #tg-perfect-for a.tg-aud-cta:visited {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: fit-content;
+      max-width: min(100%, 42rem);
+      min-height: 44px;
+      height: auto;
+      padding: 6px 48px 6px 22px;
+      border-radius: 999px;
+      background: #f06b1a !important;
+      background-color: #f06b1a !important;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      text-decoration: none !important;
+      border: none;
+      box-shadow: none !important;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: padding 0.5s ease, background-color 0.22s ease;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+    #tg-perfect-for a.tg-aud-cta:hover,
+    #tg-perfect-for a.tg-aud-cta:focus-visible {
+      padding: 6px 22px 6px 48px;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff;
+      background-color: #e85f0f !important;
+    }
+    #tg-perfect-for a.tg-aud-cta:focus-visible {
+      outline: 2px solid rgba(240, 107, 26, 0.65);
+      outline-offset: 3px;
+    }
+    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-label {
+      position: relative;
+      z-index: 2;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+      white-space: nowrap;
+    }
+    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob {
+      position: absolute;
+      top: 50%;
+      right: 4px;
+      left: auto;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      max-width: 32px;
+      min-height: 32px;
+      max-height: 32px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #ffffff;
+      transform: translateY(-50%) rotate(0deg);
+      transition: right 0.5s ease, transform 0.5s ease;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    #tg-perfect-for a.tg-aud-cta:hover .tg-aud-cta-knob,
+    #tg-perfect-for a.tg-aud-cta:focus-visible .tg-aud-cta-knob {
+      right: calc(100% - 36px);
+      transform: translateY(-50%) rotate(45deg);
+    }
+    #tg-perfect-for a.tg-aud-cta .tg-aud-cta-knob::before {
+      content: "";
+      display: block;
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
+        center / contain no-repeat;
+    }
+    .tg-aud-visual {
+      position: relative;
+      z-index: 0;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    @media (min-width: 1024px) {
+      .tg-aud-visual {
+        margin: 0;
+        max-width: none;
+      }
+    }
+    #tg-perfect-for .tg-aud-visual {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #tg-perfect-for .tg-aud-photo-inner,
+    #tg-perfect-for .tg-aud-quote,
+    #tg-perfect-for .tg-aud-float-badge {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+    }
+    @media (min-width: 768px) {
+      #tg-perfect-for .tg-aud-visual:hover {
+        transform: translateY(-8px);
+      }
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-photo-inner {
+        box-shadow: 0 34px 68px rgba(35, 26, 21, 0.11);
+      }
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-float-badge {
+        transform: rotate(5deg) translate3d(0, -4px, 0.02px);
+        box-shadow: 0 20px 44px color-mix(in srgb, var(--tg-brand-green) 38%, transparent);
+      }
+    }
+    @media (min-width: 768px) {
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-quote {
+        transform: translateY(-4px);
+        box-shadow: 0 28px 56px rgba(35, 26, 21, 0.13);
+      }
+    }
+    @media (min-width: 640px) and (max-width: 767px) {
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-quote {
+        transform: translateX(-50%) translateY(-4px);
+        box-shadow: 0 28px 56px rgba(35, 26, 21, 0.13);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #tg-perfect-for .tg-aud-visual,
+      #tg-perfect-for .tg-aud-photo-inner,
+      #tg-perfect-for .tg-aud-quote,
+      #tg-perfect-for .tg-aud-float-badge {
+        transition: none !important;
+      }
+      #tg-perfect-for .tg-aud-visual:hover {
+        transform: none !important;
+      }
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-photo-inner {
+        box-shadow: var(--aud-shadow) !important;
+      }
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-quote {
+        box-shadow: 0 24px 50px rgba(35, 26, 21, 0.12) !important;
+      }
+      #tg-perfect-for .tg-aud-visual:hover .tg-aud-float-badge {
+        transform: rotate(6deg) translate3d(0, 0, 0.02px) !important;
+        box-shadow: 0 16px 36px color-mix(in srgb, var(--tg-brand-green) 32%, transparent) !important;
+      }
+      @media (max-width: 767px) {
+        #tg-perfect-for .tg-aud-visual:hover .tg-aud-quote {
+          transform: translateX(-50%) !important;
+        }
+      }
+      @media (min-width: 768px) {
+        #tg-perfect-for .tg-aud-visual:hover .tg-aud-quote {
+          transform: none !important;
+        }
+      }
+      .tg-aud-panel:not([hidden]) {
+        animation: none !important;
+      }
+    }
+    /* Photo wrapper: no z-index — avoids WebKit/Elementor painting the image layer over the badge */
+    .tg-aud-photo {
+      position: relative;
+      overflow: visible;
+    }
+    .tg-aud-photo-inner {
+      position: relative;
+      z-index: 0;
+      isolation: isolate;
+      border-radius: 2.5rem;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      box-shadow: var(--aud-shadow);
+    }
+    .tg-aud-photo-inner img {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tg-aud-photo-inner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top right, rgba(0, 0, 0, 0.38), transparent 55%);
+      pointer-events: none;
+    }
+    .tg-aud-quote {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1.75rem;
+      width: calc(100% - 2rem);
+      max-width: 22rem;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 1.5rem;
+      padding: 1.25rem 1.35rem;
+      box-shadow: 0 24px 50px rgba(35, 26, 21, 0.12);
+      outline: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    @media (min-width: 768px) {
+      .tg-aud-quote {
+        left: -0.5rem;
+        transform: none;
+        bottom: -2rem;
+        width: 100%;
+        max-width: 22rem;
+      }
+    }
+    .tg-aud-quote-top {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+    .tg-aud-avatar {
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: 999px;
+      overflow: hidden;
+      flex-shrink: 0;
+      outline: 2px solid rgba(240, 107, 26, 0.2);
+      background: #f1dfd7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--aud-orange);
+    }
+    .tg-aud-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .tg-aud-quote-name {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      line-height: 1.2;
+      margin: 0;
+    }
+    .tg-aud-quote-role {
+      margin: 0.25rem 0 0;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--aud-orange);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    .tg-aud-quote-text {
+      margin: 0 0 0.65rem;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--aud-muted);
+      font-style: italic;
+    }
+    .tg-aud-stars {
+      display: flex;
+      gap: 0.15rem;
+      color: var(--aud-orange);
+    }
+    .tg-aud-stars .material-symbols-outlined {
+      font-size: 1rem;
+      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+      background: none;
+      padding: 0;
+    }
+    /* After .tg-aud-photo, before .tg-aud-quote; z-index above quote + photo */
+    .tg-aud-float-badge {
+      position: absolute;
+      z-index: 30 !important;
+      top: -0.75rem;
+      right: -0.5rem;
+      display: none;
+      background: var(--aud-green-pill);
+      color: var(--aud-green-pill-ink);
+      padding: 0.65rem 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 16px 36px color-mix(in srgb, var(--tg-brand-green) 35%, transparent);
+      outline: 3px solid #fff;
+      transform: rotate(6deg) translate3d(0, 0, 0.02px);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      align-items: center;
+      gap: 0.35rem;
+      pointer-events: none;
+    }
+    @media (min-width: 768px) {
+      .tg-aud-float-badge {
+        display: flex;
+      }
+    }
+    .tg-aud-float-badge .material-symbols-outlined {
+      font-size: 1.1rem;
+      color: var(--aud-green-pill-ink);
+      background: none;
+      padding: 0;
+    }
+    /* Force paint order: some themes set img { z-index: 1 } which bleeds stacking */
+    #tg-perfect-for .tg-aud-photo {
+      z-index: auto !important;
+    }
+    #tg-perfect-for .tg-aud-photo-inner {
+      z-index: 0 !important;
+      position: relative !important;
+    }
+    #tg-perfect-for .tg-aud-photo-inner img {
+      z-index: 0 !important;
+      position: relative !important;
+    }
+    #tg-perfect-for .tg-aud-photo-inner::after {
+      z-index: 1 !important;
+    }
+    #tg-perfect-for .tg-aud-quote {
+      z-index: 3 !important;
+    }
+    #tg-perfect-for .tg-aud-float-badge {
+      z-index: 50 !important;
+      position: absolute !important;
+      mix-blend-mode: normal !important;
+    }
+  </style>
+  <div class="tg-aud-inner">
+    <header class="tg-aud-head">
+      <span class="tg-aud-badge">Tailored Nutrition</span>
+      <h2 id="tg-aud-title">Who It&rsquo;s Perfect For</h2>
+    </header>
+    <div class="tg-aud-tabs-wrap">
+      <div class="tg-aud-tabs" role="tablist" aria-label="Audience">
+        <button type="button" role="tab" id="tg-tab-students" aria-controls="tg-panel-students" aria-selected="true" data-audience="students">Students</button>
+        <button type="button" role="tab" id="tg-tab-professionals" aria-controls="tg-panel-professionals" aria-selected="false" data-audience="professionals">Professionals</button>
+        <button type="button" role="tab" id="tg-tab-families" aria-controls="tg-panel-families" aria-selected="false" data-audience="families">Families</button>
+        <button type="button" role="tab" id="tg-tab-seniors" aria-controls="tg-panel-seniors" aria-selected="false" data-audience="seniors">Seniors</button>
+      </div>
+    </div>
+    <div class="tg-aud-panels" aria-live="polite">
+      <div class="tg-aud-panel" role="tabpanel" id="tg-panel-students" aria-labelledby="tg-tab-students">
+        <div class="tg-aud-grid">
+          <div class="tg-aud-copy">
+            <h3>Focus on your goals, leave the stove to us.</h3>
+            <p class="tg-aud-lede">
+              Reliable, budget-friendly nutrition for academic life. Balanced meals keep you fueled through classes and late study sessions—without draining your time or wallet.
+            </p>
+            <ul class="tg-aud-list">
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Affordable weekly &amp; monthly plans</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> High-protein veg &amp; non-veg options</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Flexible delivery to home or campus area</li>
+            </ul>
+            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-aud-cta-label">Learn more about Student Plans</span>
+              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="tg-aud-visual">
+            <div class="tg-aud-photo">
+              <div class="tg-aud-photo-inner">
+                <img src="https://tiffingrab.ca/wp-content/uploads/2025/02/Maharaja-Thali-Non-veg.webp" alt="Fresh Indian tiffin meal" width="800" height="600" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div class="tg-aud-float-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+              100% Fresh Daily
+            </div>
+            <div class="tg-aud-quote">
+              <div class="tg-aud-quote-top">
+                <div class="tg-aud-avatar" aria-hidden="true">RS</div>
+                <div>
+                  <p class="tg-aud-quote-name">Rahul S.</p>
+                  <p class="tg-aud-quote-role">CS Undergrad</p>
+                </div>
+              </div>
+              <p class="tg-aud-quote-text">&ldquo;Tastes like home when I can&rsquo;t be there. It&rsquo;s what gets me through exam season.&rdquo;</p>
+              <div class="tg-aud-stars" aria-label="5 out of 5 stars">
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tg-aud-panel" role="tabpanel" id="tg-panel-professionals" aria-labelledby="tg-tab-professionals" hidden>
+        <div class="tg-aud-grid">
+          <div class="tg-aud-copy">
+            <h3>Zero meal prep. Zero compromise on taste.</h3>
+            <p class="tg-aud-lede">
+              Whether you&rsquo;re at the office or working from home, get consistent, hygienic Indian meals so you can focus on your career—not what&rsquo;s for lunch.
+            </p>
+            <ul class="tg-aud-list">
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Monday&ndash;Friday delivery windows</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Rotating weekly menu—no boredom</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Portion sizes built for busy days</li>
+            </ul>
+            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-aud-cta-label">View plans for professionals</span>
+              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="tg-aud-visual">
+            <div class="tg-aud-photo">
+              <div class="tg-aud-photo-inner">
+                <img src="https://tiffingrab.ca/wp-content/uploads/2025/02/Maharaja-Thali-Non-veg.webp" alt="Indian tiffin for busy professionals" width="800" height="600" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div class="tg-aud-float-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+              100% Fresh Daily
+            </div>
+            <div class="tg-aud-quote">
+              <div class="tg-aud-quote-top">
+                <div class="tg-aud-avatar" aria-hidden="true">AK</div>
+                <div>
+                  <p class="tg-aud-quote-name">Anita K.</p>
+                  <p class="tg-aud-quote-role">Product Manager</p>
+                </div>
+              </div>
+              <p class="tg-aud-quote-text">&ldquo;Finally a tiffin I trust for both taste and timing. Game changer for my workweek.&rdquo;</p>
+              <div class="tg-aud-stars" aria-label="5 out of 5 stars">
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tg-aud-panel" role="tabpanel" id="tg-panel-families" aria-labelledby="tg-tab-families" hidden>
+        <div class="tg-aud-grid">
+          <div class="tg-aud-copy">
+            <h3>Homestyle food the whole table will enjoy.</h3>
+            <p class="tg-aud-lede">
+              Feed the family balanced veg and non-veg meals without the daily cooking marathon. Pause or adjust when life gets busy.
+            </p>
+            <ul class="tg-aud-list">
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Kid-friendly &amp; adult portions</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Skip weeks when you travel</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> One less thing on your evening list</li>
+            </ul>
+            <a class="tg-aud-cta" href="https://tiffingrab.ca/tiffin-plans/">
+              <span class="tg-aud-cta-label">Explore family-friendly plans</span>
+              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="tg-aud-visual">
+            <div class="tg-aud-photo">
+              <div class="tg-aud-photo-inner">
+                <img src="https://tiffingrab.ca/wp-content/uploads/2025/02/Maharaja-Thali-Non-veg.webp" alt="Family-style Indian meal" width="800" height="600" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div class="tg-aud-float-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+              100% Fresh Daily
+            </div>
+            <div class="tg-aud-quote">
+              <div class="tg-aud-quote-top">
+                <div class="tg-aud-avatar" aria-hidden="true">PM</div>
+                <div>
+                  <p class="tg-aud-quote-name">Priya M.</p>
+                  <p class="tg-aud-quote-role">Parent of two</p>
+                </div>
+              </div>
+              <p class="tg-aud-quote-text">&ldquo;We get variety without ordering takeout every night. The kids actually finish their plates.&rdquo;</p>
+              <div class="tg-aud-stars" aria-label="5 out of 5 stars">
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tg-aud-panel" role="tabpanel" id="tg-panel-seniors" aria-labelledby="tg-tab-seniors" hidden>
+        <div class="tg-aud-grid">
+          <div class="tg-aud-copy">
+            <h3>Nutritious, gentle, and delivered with care.</h3>
+            <p class="tg-aud-lede">
+              Simple, easy-to-digest homestyle cooking—so you enjoy familiar flavours without shopping, chopping, or standing at the stove.
+            </p>
+            <ul class="tg-aud-list">
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Hygienic, HACCP-minded kitchen</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Predictable daily routine</li>
+              <li><span class="material-symbols-outlined" aria-hidden="true">check_circle</span> Friendly support for dietary notes</li>
+            </ul>
+            <a class="tg-aud-cta" href="https://tiffingrab.ca/contact/">
+              <span class="tg-aud-cta-label">Talk to us about your needs</span>
+              <span class="tg-aud-cta-knob" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="tg-aud-visual">
+            <div class="tg-aud-photo">
+              <div class="tg-aud-photo-inner">
+                <img src="https://tiffingrab.ca/wp-content/uploads/2025/02/Maharaja-Thali-Non-veg.webp" alt="Wholesome homestyle Indian meal" width="800" height="600" loading="lazy" decoding="async" />
+              </div>
+            </div>
+            <div class="tg-aud-float-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+              100% Fresh Daily
+            </div>
+            <div class="tg-aud-quote">
+              <div class="tg-aud-quote-top">
+                <div class="tg-aud-avatar" aria-hidden="true">VR</div>
+                <div>
+                  <p class="tg-aud-quote-name">Vijay R.</p>
+                  <p class="tg-aud-quote-role">North York</p>
+                </div>
+              </div>
+              <p class="tg-aud-quote-text">&ldquo;Reliable, mild when I need it, and always on time. Feels like someone&rsquo;s looking after me.&rdquo;</p>
+              <div class="tg-aud-stars" aria-label="5 out of 5 stars">
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+                <span class="material-symbols-outlined">star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var root = document.getElementById("tg-perfect-for");
+      if (!root) return;
+      var tabs = root.querySelectorAll('.tg-aud-tabs [role="tab"]');
+      var panels = root.querySelectorAll(".tg-aud-panel");
+      var order = ["students", "professionals", "families", "seniors"];
+      var cur = 0;
+      var autoTimer = null;
+      var ROTATE_MS = 8000;
+      var hoverInside = false;
+      var motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function activate(key, opts) {
+        opts = opts || {};
+        var i = order.indexOf(key);
+        if (i >= 0) cur = i;
+        tabs.forEach(function (t) {
+          var on = t.getAttribute("data-audience") === key;
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+        });
+        panels.forEach(function (p) {
+          var id = p.id || "";
+          var match =
+            (key === "students" && id === "tg-panel-students") ||
+            (key === "professionals" && id === "tg-panel-professionals") ||
+            (key === "families" && id === "tg-panel-families") ||
+            (key === "seniors" && id === "tg-panel-seniors");
+          if (match) {
+            p.removeAttribute("hidden");
+          } else {
+            p.setAttribute("hidden", "");
+          }
+        });
+        if (opts.scrollTab && window.matchMedia("(max-width: 767px)").matches) {
+          var activeTab = root.querySelector('.tg-aud-tabs [data-audience="' + key + '"]');
+          if (activeTab) {
+            activeTab.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+          }
+        }
+      }
+
+      function stopAuto() {
+        if (autoTimer) {
+          clearInterval(autoTimer);
+          autoTimer = null;
+        }
+      }
+
+      function tick() {
+        if (!motionOk || document.hidden || hoverInside || root.contains(document.activeElement)) return;
+        cur = (cur + 1) % order.length;
+        activate(order[cur], { scrollTab: false });
+      }
+
+      function startAuto() {
+        stopAuto();
+        if (!motionOk || document.hidden) return;
+        autoTimer = setInterval(tick, ROTATE_MS);
+      }
+
+      function restartAutoAfterUser() {
+        stopAuto();
+        startAuto();
+      }
+
+      root.addEventListener("mouseenter", function () {
+        hoverInside = true;
+      });
+      root.addEventListener("mouseleave", function () {
+        hoverInside = false;
+      });
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) stopAuto();
+        else startAuto();
+      });
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activate(tab.getAttribute("data-audience"), { scrollTab: true });
+          restartAutoAfterUser();
+        });
+        tab.addEventListener("keydown", function (e) {
+          var i = order.indexOf(tab.getAttribute("data-audience"));
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            var n = (i + 1) % order.length;
+            activate(order[n], { scrollTab: true });
+            restartAutoAfterUser();
+            root.querySelector('[data-audience="' + order[n] + '"]').focus();
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            var p = (i - 1 + order.length) % order.length;
+            activate(order[p], { scrollTab: true });
+            restartAutoAfterUser();
+            root.querySelector('[data-audience="' + order[p] + '"]').focus();
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            activate(order[0], { scrollTab: true });
+            restartAutoAfterUser();
+            root.querySelector('[data-audience="' + order[0] + '"]').focus();
+          } else if (e.key === "End") {
+            e.preventDefault();
+            activate(order[order.length - 1], { scrollTab: true });
+            restartAutoAfterUser();
+            root.querySelector('[data-audience="' + order[order.length - 1] + '"]').focus();
+          }
+        });
+      });
+
+      activate("students", { scrollTab: false });
+      startAuto();
+    })();
+  </script>
+</section>

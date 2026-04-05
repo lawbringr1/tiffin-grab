@@ -1,0 +1,214 @@
+<!--
+  TiffinGrab — Hero “Chef’s Special” glass card (Elementor HTML widget, id 7349cd7).
+  Bottom-left, slightly outside the photo; pairs with image frame container 441d39d (36px radius, 12px pad → 24px img).
+-->
+<style>
+  /* Column must establish height (image widget); this widget stretches over it like an overlay layer */
+  .elementor-column:has(.home-2026-hero-card),
+  .elementor-column-wrap:has(.home-2026-hero-card) {
+    position: relative !important;
+    overflow: visible !important;
+  }
+  /* Out of flex flow so only the image sizes the frame — avoids extra “band” at bottom */
+  .e-con:has(.home-2026-hero-card) .elementor-widget-html:has(.home-2026-hero-card),
+  .e-con:has(.home-2026-hero-card) .elementor-widget-html-custom:has(.home-2026-hero-card),
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-html:has(.home-2026-hero-card),
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-html-custom:has(.home-2026-hero-card) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+  .elementor-widget-html:has(.home-2026-hero-card) .elementor-widget-container,
+  .elementor-widget-html-custom:has(.home-2026-hero-card) .elementor-widget-container {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+    pointer-events: none !important;
+  }
+  .elementor-widget-wrap:has(.home-2026-hero-card) {
+    overflow: visible !important;
+  }
+  /* Concentric rounding: outer frame 36px − 12px padding = 24px on the photo (even white ring on all sides) */
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image {
+    flex: 1 1 auto !important;
+    align-self: stretch !important;
+    min-height: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image .elementor-widget-container,
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image a.elementor-image,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image .elementor-widget-container,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image a.elementor-image {
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
+    margin: 0 !important;
+  }
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image figure,
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image .elementor-image,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image figure,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image .elementor-image {
+    margin: 0 !important;
+    line-height: 0 !important;
+  }
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image img,
+  .e-con:has(.home-2026-hero-card) .elementor-widget-image .elementor-image img,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image img,
+  .elementor-column:has(.home-2026-hero-card) .elementor-widget-image .elementor-image img {
+    border-radius: 24px !important;
+    display: block !important;
+  }
+  .home-2026-hero-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    pointer-events: none;
+  }
+  .home-2026-hero-blob {
+    position: absolute;
+    opacity: 0.55;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .home-2026-hero-blob.b1 {
+    width: 220px;
+    height: 220px;
+    right: -46px;
+    top: -40px;
+    /* Radial gradient = soft blob look without expensive CSS blur */
+    background: radial-gradient(
+      circle at center,
+      rgba(240, 107, 26, 0.32) 0%,
+      rgba(240, 107, 26, 0.14) 45%,
+      rgba(240, 107, 26, 0) 72%
+    );
+    border-radius: 999px;
+  }
+  .home-2026-hero-blob.b2 {
+    display: none;
+  }
+  .home-2026-hero-float {
+    position: absolute;
+    left: clamp(-22px, -1.8vw, -10px);
+    bottom: clamp(-20px, -1.6vw, -10px);
+    right: auto;
+    width: min(285px, calc(100% - 8px));
+    max-width: 285px;
+    z-index: 3;
+    pointer-events: auto;
+    /* Avoid backdrop-filter blur (causes slow first paint + flicker) */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 14px 35px rgba(20, 20, 20, 0.12);
+    padding: 16px 16px 14px;
+    box-sizing: border-box;
+  }
+  .home-2026-hero-float .hdr {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .home-2026-hero-float .ico {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(255, 219, 202, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex: 0 0 auto;
+  }
+  .home-2026-hero-float .t {
+    font-weight: 800;
+    font-size: 20px;
+    color: #231a15;
+    line-height: 1.05;
+  }
+  .home-2026-hero-float .d {
+    font-size: 14px;
+    color: #564339;
+    line-height: 1.3;
+    margin: 0 0 10px;
+  }
+  .home-2026-hero-float .btm {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .home-2026-hero-float .price {
+    font-weight: 800;
+    color: #f06b1a;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .home-2026-hero-float .badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(0, 109, 55, 0.1);
+    color: #006d37;
+    padding: 4px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  @media (max-width: 767px) {
+    .home-2026-hero-float {
+      left: 8px;
+      right: 8px;
+      bottom: 10px;
+      width: auto;
+      max-width: min(100%, calc(100vw - 24px));
+      box-sizing: border-box;
+    }
+    @supports (width: 100dvw) {
+      .home-2026-hero-float {
+        max-width: min(100%, calc(100dvw - 24px));
+      }
+    }
+    .home-2026-hero-float {
+      padding: 12px;
+    }
+    .home-2026-hero-float .btm {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .home-2026-hero-float .t {
+      font-size: 17px;
+    }
+    .home-2026-hero-float .d {
+      font-size: 13px;
+    }
+  }
+</style>
+<div class="home-2026-hero-card">
+  <div class="home-2026-hero-blob b1" aria-hidden="true"></div>
+  <div class="home-2026-hero-float">
+    <div class="hdr">
+      <div class="ico" aria-hidden="true">🍽️</div>
+      <div class="t">Chef's Special</div>
+    </div>
+    <p class="d">Maharaja Thali (Non-veg) - Combination of 7 items</p>
+    <div class="btm">
+      <div class="price">From $15.00 CAD</div>
+      <div class="badge">High Protein</div>
+    </div>
+  </div>
+</div>

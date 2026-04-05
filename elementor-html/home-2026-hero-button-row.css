@@ -1,0 +1,287 @@
+/* Home 2026 Hero — button row a2cdc57 (post 9825).
+   Shadcn-style pill. IMPORTANT: icon must NOT be position:relative on .elementor-button-content-wrapper
+   or the absolute icon anchors to text-width and covers the label. */
+selector {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 14px !important;
+  align-items: center !important;
+  margin-top: 10px !important;
+  width: 100% !important;
+}
+selector .elementor-element[data-id="438c2085"],
+selector .elementor-element[data-id="149cf5bc"] {
+  flex: 0 0 auto !important;
+}
+/* Only the <a> is the positioning context for the flying icon */
+selector .elementor-element[data-id="438c2085"] .elementor-button,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button {
+  position: relative !important;
+  overflow: hidden !important;
+  width: fit-content !important;
+  max-width: none !important;
+  min-height: 44px !important;
+  height: auto !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+  line-height: 1.25 !important;
+  border: none !important;
+  box-shadow: none !important;
+  /* room for 32px knob + 4px inset ≈ pe-12 */
+  padding: 6px 48px 6px 22px !important;
+  transition: padding 0.5s ease !important;
+}
+selector .elementor-element[data-id="438c2085"] .elementor-button {
+  background: #f06b1a !important;
+  color: #fff !important;
+}
+selector .elementor-element[data-id="149cf5bc"] .elementor-button {
+  background: #25d366 !important;
+  color: #fff !important;
+}
+selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
+selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
+  padding: 6px 22px 6px 48px !important;
+}
+/* static = icon’s absolute ties to .elementor-button, not text-only width */
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-content-wrapper {
+  position: static !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  width: auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+}
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-text,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-text {
+  position: relative !important;
+  z-index: 2 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+}
+/* Primary: white circle behind arrow */
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon {
+  position: absolute !important;
+  top: 50% !important;
+  right: 4px !important;
+  left: auto !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  transform: translateY(-50%) rotate(0deg) !important;
+  transition: right 0.5s ease, transform 0.5s ease !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
+/* WhatsApp: same white disc as primary, green glyph inside */
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
+  position: absolute !important;
+  top: 50% !important;
+  right: 4px !important;
+  left: auto !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  transform: translateY(-50%) !important;
+  transition: right 0.5s ease, transform 0.5s ease !important;
+  z-index: 1 !important;
+  overflow: hidden !important;
+}
+selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
+selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
+  right: calc(100% - 36px) !important;
+  transform: translateY(-50%) rotate(45deg) !important;
+}
+selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
+  right: calc(100% - 36px) !important;
+  transform: translateY(-50%) !important;
+}
+/* Inline SVG arrow (FA often missing in editor / lazy-loaded) */
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon i,
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon svg {
+  display: none !important;
+}
+selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon::before {
+  content: "" !important;
+  display: block !important;
+  width: 15px !important;
+  height: 15px !important;
+  flex-shrink: 0 !important;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+}
+/* WhatsApp glyph (brand green on white disc) */
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon i,
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon svg {
+  display: none !important;
+}
+selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon::before {
+  content: "" !important;
+  display: block !important;
+  width: 17px !important;
+  height: 17px !important;
+  flex-shrink: 0 !important;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2325d366%22%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
+    center / contain no-repeat !important;
+}
+@media (max-width: 767px) {
+  /*
+    One row on mobile: two equal columns, full-width bar (inset). Knobs match FAQ CTA (2.35rem).
+    Slightly tighter horizontal padding than stacked layout so labels fit beside the disc.
+  */
+  selector {
+    flex-direction: row !important;
+    align-items: stretch !important;
+    flex-wrap: nowrap !important;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: max(0px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(0px, env(safe-area-inset-right, 0px)) !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+  }
+  selector .elementor-element[data-id="438c2085"],
+  selector .elementor-element[data-id="149cf5bc"] {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+    height: auto !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    /* Slightly smaller than 16–18px caps — still beats theme default on small screens */
+    font-size: clamp(13.5px, 3.5vw, 16px) !important;
+    line-height: 1.22 !important;
+    padding: 0.4rem 3.35rem 0.4rem 0.65rem !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-content-wrapper {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-text,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-text {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    text-align: left !important;
+  }
+  /* Identical white disc: orange + WhatsApp (same as .tg-faq-magnetic-knob mobile) */
+  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
+    width: 2.35rem !important;
+    height: 2.35rem !important;
+    min-width: 2.35rem !important;
+    max-width: 2.35rem !important;
+    min-height: 2.35rem !important;
+    max-height: 2.35rem !important;
+    right: 0.2rem !important;
+    top: 50% !important;
+    left: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0 !important;
+    border-radius: 999px !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon {
+    transform: translateY(-50%) rotate(0deg) !important;
+  }
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
+    transform: translateY(-50%) !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
+    right: calc(100% - 2.55rem) !important;
+    transform: translateY(-50%) rotate(45deg) !important;
+  }
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
+    right: calc(100% - 2.55rem) !important;
+    transform: translateY(-50%) !important;
+  }
+  /* Same inner glyph sizes as FAQ CTA (.tg-faq-magnetic--primary / --wa) */
+  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon::before,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon::before {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+  }
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon::before {
+    width: 17px !important;
+    height: 17px !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
+    padding: 0.4rem 0.65rem 0.4rem 3.35rem !important;
+  }
+}
+@media (max-width: 380px) {
+  selector {
+    width: calc(100% - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    gap: 8px !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button {
+    font-size: clamp(13px, 3.35vw, 15px) !important;
+    padding: 0.4rem 3.2rem 0.4rem 0.5rem !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
+    padding: 0.4rem 0.5rem 0.4rem 3.2rem !important;
+  }
+}

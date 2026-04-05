@@ -1,0 +1,311 @@
+<!--
+  TiffinGrab — Home 2026 hero top tags (Elementor HTML widget on template "Home 2026 Hero", id 4fd2df8).
+  Boxes the hero section: max-width + horizontal margin auto + padding (no max-width:none on .e-con — that was breaking inset).
+  Social proof row only (no “Freshly cooked daily” pill).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Single Google Fonts import for Home 2026 (Geist everywhere). -->
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --tg-hero-gutter: clamp(1.5rem, 6vw, 3.5rem);
+  --tg-hero-max: 1320px;
+  --tg-font: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+/* Pinch-zoom on iOS: classic vw is wider than the *visual* viewport, so gaps show as white. Clip X + page canvas + dvw caps below. */
+body.elementor-page-10016 {
+  --tg-page-canvas: #fff8f6;
+}
+
+/* Force Geist across the whole Home 2026 page (Elementor kit/theme overrides included). */
+body.elementor-page-10016,
+body.elementor-page-10016 button,
+body.elementor-page-10016 input,
+body.elementor-page-10016 select,
+body.elementor-page-10016 textarea,
+body.elementor-page-10016 .elementor,
+body.elementor-page-10016 .elementor-widget,
+body.elementor-page-10016 .e-con,
+body.elementor-page-10016 .e-con-inner,
+body.elementor-page-10016 .elementor-heading-title {
+  font-family: var(--tg-font) !important;
+}
+@media (max-width: 767px) {
+  html:has(body.elementor-page-10016),
+  body.elementor-page-10016 {
+    background-color: var(--tg-page-canvas) !important;
+  }
+  html:has(body.elementor-page-10016) {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  body.elementor-page-10016 {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    overscroll-behavior-x: none;
+  }
+}
+.elementor-widget-html:has(#tg-hero-tags),
+.elementor-widget-html-custom:has(#tg-hero-tags),
+.elementor-widget-wrap:has(#tg-hero-tags),
+.elementor-column:has(#tg-hero-tags),
+.elementor-column-wrap:has(#tg-hero-tags) {
+  overflow: visible !important;
+  background-color: #fff8f6 !important;
+}
+.elementor-widget-html:has(#tg-hero-tags) .elementor-widget-container,
+.elementor-widget-html-custom:has(#tg-hero-tags) .elementor-widget-container {
+  overflow: visible !important;
+  background-color: #fff8f6 !important;
+  text-align: left !important;
+}
+.elementor-section:has(#tg-hero-tags):not(.elementor-inner-section) {
+  width: 100% !important;
+  max-width: min(var(--tg-hero-max), calc(100vw - 2 * var(--tg-hero-gutter))) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--tg-hero-gutter) !important;
+  padding-right: var(--tg-hero-gutter) !important;
+  box-sizing: border-box !important;
+  background-color: #fff8f6 !important;
+}
+.elementor-section:has(#tg-hero-tags):not(.elementor-inner-section) > .e-con.e-parent,
+.elementor-section:has(#tg-hero-tags):not(.elementor-inner-section) > .elementor-container {
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.elementor-section:has(#tg-hero-tags) > .elementor-container {
+  box-sizing: border-box !important;
+}
+.elementor:not(:has(> .elementor-section:has(#tg-hero-tags))) > .e-con.e-parent:has(#tg-hero-tags) {
+  width: 100% !important;
+  max-width: min(var(--tg-hero-max), calc(100vw - 2 * var(--tg-hero-gutter))) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--tg-hero-gutter) !important;
+  padding-right: var(--tg-hero-gutter) !important;
+  box-sizing: border-box !important;
+  background-color: #fff8f6 !important;
+}
+.tg-hero-tags-align {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(0.65rem, 2vw, 1.1rem);
+  max-width: 1180px;
+  margin-left: 0;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+.home-2026-tags {
+  width: 100%;
+}
+.home-2026-social-pill {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(35, 26, 21, 0.1);
+  border-radius: 999px;
+  padding: 7px 16px 7px 7px;
+  box-shadow: 0 1px 2px rgba(35, 26, 21, 0.05), 0 6px 20px rgba(35, 26, 21, 0.06);
+  box-sizing: border-box;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+@media (hover: hover) {
+  .home-2026-social-pill:hover {
+    border-color: rgba(240, 107, 26, 0.22);
+    box-shadow: 0 4px 14px rgba(35, 26, 21, 0.08), 0 12px 32px rgba(240, 107, 26, 0.12);
+  }
+}
+.home-2026-social-avatars {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 2px 0 1px;
+}
+.home-2026-social-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+  margin-left: -9px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background-color: #e8e4e0;
+  box-shadow: 0 0 0 1px rgba(35, 26, 21, 0.06);
+  transform: translateZ(0);
+  transition: transform 0.4s cubic-bezier(0.34, 1.45, 0.64, 1);
+  transition-delay: 0ms;
+  will-change: transform;
+}
+.home-2026-social-av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+}
+.home-2026-social-av:first-child {
+  margin-left: 0;
+  z-index: 4;
+}
+.home-2026-social-av:nth-child(2) {
+  z-index: 3;
+}
+.home-2026-social-av:nth-child(3) {
+  z-index: 2;
+}
+.home-2026-social-av:nth-child(4) {
+  z-index: 1;
+}
+@media (hover: hover) {
+  .home-2026-social-pill:hover .home-2026-social-av:nth-child(1) {
+    transform: translateY(-6px) scale(1.07);
+    transition-delay: 0ms;
+  }
+  .home-2026-social-pill:hover .home-2026-social-av:nth-child(2) {
+    transform: translateY(-6px) scale(1.07);
+    transition-delay: 55ms;
+  }
+  .home-2026-social-pill:hover .home-2026-social-av:nth-child(3) {
+    transform: translateY(-6px) scale(1.07);
+    transition-delay: 110ms;
+  }
+  .home-2026-social-pill:hover .home-2026-social-av:nth-child(4) {
+    transform: translateY(-6px) scale(1.07);
+    transition-delay: 165ms;
+  }
+  .home-2026-social-av:hover {
+    z-index: 30 !important;
+    transform: translateY(-9px) scale(1.14) !important;
+    transition-delay: 0ms !important;
+    box-shadow: 0 8px 20px rgba(240, 107, 26, 0.25);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-2026-social-pill,
+  .home-2026-social-av {
+    transition: none !important;
+  }
+  .home-2026-social-pill:hover .home-2026-social-av,
+  .home-2026-social-av:hover {
+    transform: none !important;
+    box-shadow: 0 0 0 1px rgba(35, 26, 21, 0.06) !important;
+  }
+  .home-2026-social-pill:hover {
+    box-shadow: 0 1px 2px rgba(35, 26, 21, 0.05), 0 6px 20px rgba(35, 26, 21, 0.06) !important;
+    border-color: rgba(35, 26, 21, 0.1) !important;
+  }
+}
+.home-2026-social-text {
+  margin: 0;
+  padding: 0 6px 0 11px;
+  font-family: var(--tg-font);
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: #6b5e56;
+  letter-spacing: 0.01em;
+}
+.home-2026-social-text strong {
+  font-weight: 800;
+  color: #231a15;
+  font-size: 1.08em;
+  letter-spacing: -0.02em;
+}
+@media (max-width: 767px) {
+  :root {
+    --tg-hero-gutter: clamp(1rem, 4.5vw, 1.75rem);
+  }
+  .elementor-section:has(#tg-hero-tags):not(.elementor-inner-section),
+  .elementor:not(:has(> .elementor-section:has(#tg-hero-tags))) > .e-con.e-parent:has(#tg-hero-tags) {
+    padding-left: max(var(--tg-hero-gutter), env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(var(--tg-hero-gutter), env(safe-area-inset-right, 0px)) !important;
+  }
+  .tg-hero-tags-align {
+    max-width: 100%;
+  }
+  .home-2026-social-pill {
+    max-width: 100%;
+    padding: 8px 12px 8px 7px;
+  }
+  .home-2026-social-text {
+    font-size: 14px;
+    line-height: 1.4;
+    padding-left: 9px;
+    word-wrap: break-word;
+  }
+  .home-2026-social-av {
+    width: 30px;
+    height: 30px;
+    margin-left: -8px;
+  }
+  @supports (width: 100dvw) {
+    .elementor-section:has(#tg-hero-tags):not(.elementor-inner-section),
+    .elementor:not(:has(> .elementor-section:has(#tg-hero-tags))) > .e-con.e-parent:has(#tg-hero-tags) {
+      max-width: min(var(--tg-hero-max), calc(100dvw - 2 * var(--tg-hero-gutter))) !important;
+    }
+  }
+}
+</style>
+<div class="home-2026-tags" id="tg-hero-tags">
+  <div class="tg-hero-tags-align">
+    <div class="home-2026-social-pill" role="group" aria-label="Social proof">
+      <div class="home-2026-social-avatars" aria-hidden="true">
+        <span class="home-2026-social-av">
+          <img
+            src="https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png"
+            alt=""
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        <span class="home-2026-social-av">
+          <img
+            src="https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-6.png"
+            alt=""
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        <span class="home-2026-social-av">
+          <img
+            src="https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png"
+            alt=""
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        <span class="home-2026-social-av">
+          <img
+            src="https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-16.png"
+            alt=""
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </div>
+      <p class="home-2026-social-text">Loved by <strong>20K+</strong> happy foodies.</p>
+    </div>
+  </div>
+</div>

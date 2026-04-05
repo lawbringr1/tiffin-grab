@@ -1,0 +1,1120 @@
+<!--
+  TiffinGrab — "Are we in your area?" section (paste into Elementor HTML widget).
+  Home stack band 1 (after hero): peach strip #fdeae2 — reads clearly darker than hero #fff8f6; alternates with #fff8f6 sections.
+  Elementor hosts match this band to avoid white seams.
+  Requires: wordpress/tiffingrab-delivery-ajax-config.php (or equivalent) so window.tiffinGrabDelivery.nonce exists.
+  Brand green: Elementor Site Settings → Global Colors → "WhatsApp Green" (--e-global-color-whatsapp).
+-->
+<!-- Fonts loaded once in home-2026-hero-tags.html (template 9825). -->
+<section class="tg-sa" id="tg-service-area" aria-labelledby="tg-sa-title">
+  <style>
+    /* Pinch-zoom / iOS visual viewport: reinforce root clip + canvas (in case hero-tags widget order differs). */
+    @media (max-width: 767px) {
+      html:has(body.elementor-page-10016),
+      body.elementor-page-10016 {
+        background-color: #fff8f6 !important;
+      }
+      html:has(body.elementor-page-10016) {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+      }
+      body.elementor-page-10016 {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        position: relative;
+        overscroll-behavior-x: none;
+      }
+    }
+    /* Full-bleed + kill Elementor default white behind the band so sections meet cleanly */
+    .elementor-widget-html:has(#tg-service-area),
+    .elementor-widget-html:has(#tg-service-area) .elementor-widget-container,
+    .elementor-widget-html-custom:has(#tg-service-area),
+    .elementor-widget-html-custom:has(#tg-service-area) .elementor-widget-container,
+    .elementor-widget-wrap:has(#tg-service-area),
+    .elementor-column:has(#tg-service-area),
+    .elementor-column-wrap:has(#tg-service-area),
+    .elementor-section:has(#tg-service-area),
+    .e-con:has(#tg-service-area),
+    .e-con-inner:has(#tg-service-area) {
+      overflow: visible !important;
+      max-width: none !important;
+      background-color: #fdeae2 !important;
+      background-image: none !important;
+    }
+    /* Full-bleed band: breaks out of Elementor’s boxed column so peach meets the hero edge-to-edge */
+    .tg-sa {
+      --tg-brand-green: var(--e-global-color-whatsapp, #25d366);
+      --tg-on-surface: #231a15;
+      --tg-on-variant: #564339;
+      --tg-surface-low: #fdeae2;
+      --tg-surface-lowest: #ffffff;
+      --tg-orange: #f06b1a;
+      --tg-orange-mid: #e37b3e;
+      --tg-orange-deep: #c55a10;
+      --tg-secondary: var(--tg-brand-green);
+      --tg-page: #fff8f6;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--tg-on-surface);
+      background: var(--tg-surface-low);
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-top: 0;
+      border-radius: 0;
+      padding: clamp(2.75rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 2rem)
+        clamp(3rem, 6vw, 5rem);
+      position: relative;
+      z-index: 1;
+      /* Soft top edge + lift so the band separates from hero (#fff8f6) without a hard rule */
+      box-shadow: inset 0 1px 0 rgba(137, 114, 104, 0.12);
+      overflow-x: clip;
+    }
+    @supports (width: 100dvw) {
+      .tg-sa {
+        width: 100dvw;
+        margin-left: calc(50% - 50dvw);
+        margin-right: calc(50% - 50dvw);
+      }
+    }
+    .tg-sa * { box-sizing: border-box; }
+    .tg-sa .screen-reader-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .tg-sa-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .tg-sa-head {
+      margin-bottom: 0;
+    }
+    .tg-sa-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--tg-orange);
+      background: rgba(240, 107, 26, 0.07);
+      outline: 1px solid rgba(240, 107, 26, 0.28);
+      margin: 0 0 1.1rem;
+    }
+    .tg-sa h2#tg-sa-title {
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4.5vw, 3.15rem);
+      line-height: 1.12;
+      margin: 0 0 1rem;
+      color: var(--tg-on-surface);
+      min-height: 2.35em;
+    }
+    .tg-sa-lede {
+      margin: 0 auto 2.25rem;
+      max-width: 42rem;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--tg-on-variant);
+      font-weight: 400;
+    }
+    .tg-sa-bar {
+      display: flex;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      gap: 0;
+      max-width: 36rem;
+      margin: 0 auto 3rem;
+      padding: 0.35rem;
+      background: var(--tg-surface-lowest);
+      border-radius: 999px;
+      box-shadow: 0 24px 40px rgba(35, 26, 21, 0.07);
+      outline: 1px solid rgba(220, 193, 181, 0.15);
+      transition: box-shadow 0.2s ease, outline-color 0.2s ease;
+      overflow: visible !important;
+    }
+    .tg-sa-bar:focus-within {
+      outline-color: rgba(240, 107, 26, 0.28);
+      box-shadow: 0 28px 48px rgba(240, 107, 26, 0.12);
+    }
+    .tg-sa-bar svg.pin {
+      flex: 0 0 auto;
+      width: 1.35rem;
+      height: 1.35rem;
+      margin: auto 0.35rem auto 1rem;
+      color: rgba(240, 107, 26, 0.72);
+    }
+    .tg-sa-input-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      overflow: visible !important;
+    }
+    #tg-service-area .tg-sa-bar input[type="text"] {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      background: transparent !important;
+      padding: 0.85rem 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #231a15 !important;
+      -webkit-text-fill-color: #231a15 !important;
+      outline: none;
+      text-transform: uppercase;
+    }
+    #tg-service-area .tg-sa-bar input[type="text"]:-webkit-autofill,
+    #tg-service-area .tg-sa-bar input[type="text"]:-webkit-autofill:hover,
+    #tg-service-area .tg-sa-bar input[type="text"]:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 40px #ffffff inset !important;
+      box-shadow: 0 0 0 40px #ffffff inset !important;
+      -webkit-text-fill-color: #231a15 !important;
+    }
+    .tg-sa-suggest {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      max-height: min(50vh, 280px);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+      background: var(--tg-surface-lowest);
+      border-radius: 1rem;
+      box-shadow: 0 20px 44px rgba(35, 26, 21, 0.14);
+      outline: 1px solid rgba(220, 193, 181, 0.22);
+      z-index: 50;
+      text-align: left;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+      scrollbar-gutter: stable;
+    }
+    .tg-sa-suggest[hidden] {
+      display: none !important;
+    }
+    .tg-sa-suggest li {
+      margin: 0;
+      padding: 10px 12px;
+      border-radius: 0.65rem;
+      cursor: pointer;
+      font-size: 0.88rem;
+      line-height: 1.25;
+      color: var(--tg-on-surface);
+    }
+    .tg-sa-suggest li[aria-selected="true"],
+    .tg-sa-suggest li:hover {
+      background: rgba(240, 107, 26, 0.1);
+    }
+    .tg-sa-suggest li .tg-sa-code {
+      font-weight: 700;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--tg-orange);
+      letter-spacing: 0.04em;
+    }
+    .tg-sa-suggest li .tg-sa-hint {
+      display: block;
+      margin-top: 3px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--tg-on-variant);
+      opacity: 0.88;
+      letter-spacing: 0.02em;
+    }
+    #tg-service-area .tg-sa-bar input::placeholder {
+      color: rgba(137, 114, 104, 0.65);
+      -webkit-text-fill-color: rgba(137, 114, 104, 0.65);
+      text-transform: none;
+    }
+    /* Scoped + explicit colors so Elementor/theme button rules (e.g. white hover text) don’t break contrast */
+    #tg-service-area .tg-sa-bar button {
+      flex: 0 0 auto;
+      border: 0;
+      cursor: pointer;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      color: #ffffff !important;
+      padding: 0.85rem 1.35rem;
+      border-radius: 999px;
+      background-color: #f06b1a !important;
+      white-space: nowrap;
+      min-height: 48px;
+      box-shadow: 0 8px 20px rgba(10, 10, 10, 0.12);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+      will-change: transform;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #tg-service-area .tg-sa-bar button:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      background-color: #e85f0f !important;
+      color: #ffffff !important;
+      box-shadow: 0 14px 28px rgba(240, 107, 26, 0.34);
+    }
+    #tg-service-area .tg-sa-bar button:active:not(:disabled) {
+      transform: translateY(0) scale(0.99);
+      background-color: #d9560c !important;
+      color: #ffffff !important;
+    }
+    #tg-service-area .tg-sa-bar button:disabled {
+      opacity: 1 !important;
+      cursor: wait;
+      transform: none;
+      box-shadow: 0 4px 14px rgba(180, 75, 25, 0.22);
+      background-color: #a8460f !important;
+      color: #ffffff !important;
+    }
+    @media (max-width: 520px) {
+      .tg-sa-bar { flex-wrap: wrap; border-radius: 1.5rem; padding: 0.5rem; }
+      .tg-sa-bar button { width: 100%; margin-top: 0.25rem; }
+    }
+    @media (max-width: 767px) {
+      #tg-service-area .tg-sa-bar button:hover:not(:disabled) {
+        transform: none;
+        background-color: #e85f0f !important;
+        color: #ffffff !important;
+      }
+    }
+    .tg-sa-result {
+      max-width: 36rem;
+      margin: -2rem auto 2.5rem;
+      min-height: 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--tg-on-variant);
+    }
+    .tg-sa-result.tg-ok {
+      color: var(--tg-on-variant);
+      text-align: left;
+    }
+    .tg-sa-result.tg-ok .tg-sa-slot-title {
+      display: block;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-weight: 800;
+      color: var(--tg-secondary);
+      margin-bottom: 0.35rem;
+      text-align: center;
+    }
+    .tg-sa-result.tg-ok .tg-sa-slot-area {
+      display: block;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--tg-on-surface);
+      margin: 0 0 0.65rem;
+      line-height: 1.35;
+    }
+    .tg-sa-result.tg-ok ul.tg-sa-slots {
+      margin: 0.5rem auto 0;
+      padding: 0 0 0 1.15rem;
+      max-width: 28rem;
+      color: var(--tg-on-surface);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .tg-sa-result.tg-err { color: #b45309; }
+    .tg-sa-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+    @media (min-width: 640px) { .tg-sa-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px) { .tg-sa-grid { grid-template-columns: repeat(5, 1fr); } }
+    .tg-sa-card {
+      background: var(--tg-surface-lowest);
+      border-radius: 1.25rem;
+      padding: 1.35rem 1rem;
+      box-shadow: 0 18px 36px rgba(35, 26, 21, 0.055);
+      outline: 1px solid rgba(220, 193, 181, 0.12);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .tg-sa-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 44px rgba(240, 107, 26, 0.1);
+      outline-color: rgba(240, 107, 26, 0.22);
+    }
+    .tg-sa-card strong {
+      display: block;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--tg-orange);
+      margin-bottom: 0.35rem;
+    }
+    .tg-sa-card span {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(86, 67, 57, 0.55);
+    }
+    @media (max-width: 767px) {
+      /* Compact area list: one pill per city (tap uses data-postal), not full-width cards */
+      .tg-sa-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.45rem;
+        max-width: 100%;
+      }
+      .tg-sa-card {
+        flex: 0 1 auto;
+        width: auto;
+        max-width: 100%;
+        margin: 0;
+        padding: 0.42rem 0.95rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow: 0 4px 14px rgba(35, 26, 21, 0.06);
+        transition: transform 0.15s ease, box-shadow 0.2s ease, outline-color 0.2s ease;
+      }
+      .tg-sa-card:active {
+        transform: scale(0.98);
+      }
+      .tg-sa-card strong {
+        margin: 0;
+        font-size: 0.78rem;
+        font-weight: 800;
+        display: inline;
+        line-height: 1.2;
+      }
+      .tg-sa-card span,
+      .tg-sa-card .tg-sa-card-pins {
+        display: none !important;
+      }
+    }
+    .tg-sa-card-pins {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      align-items: center;
+    }
+    #tg-service-area .tg-sa-pin-pill {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid rgba(240, 107, 26, 0.35);
+      cursor: pointer;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #a34a0d !important;
+      background-color: #fff5ef !important;
+      padding: 0.42rem 0.75rem;
+      border-radius: 999px;
+      outline: none;
+      box-shadow: none;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.18s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #tg-service-area .tg-sa-pin-pill:hover {
+      color: #ffffff !important;
+      background-color: #f06b1a !important;
+      border-color: #f06b1a;
+      box-shadow: 0 6px 18px rgba(240, 107, 26, 0.28);
+    }
+    #tg-service-area .tg-sa-pin-pill:active {
+      transform: scale(0.96);
+      color: #ffffff !important;
+      background-color: #c25312 !important;
+      border-color: #c25312;
+    }
+    #tg-service-area .tg-sa-pin-pill:focus {
+      outline: none;
+    }
+    #tg-service-area .tg-sa-pin-pill:focus-visible {
+      outline: 2px solid #f06b1a;
+      outline-offset: 3px;
+    }
+    .tg-sa-foot {
+      margin-top: 2.75rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--tg-on-variant);
+      font-size: 0.9rem;
+      font-weight: 500;
+      max-width: 34rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+    .tg-sa-foot svg {
+      flex-shrink: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.1rem;
+    }
+    .tg-sa-foot a {
+      color: var(--tg-orange);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .tg-sa-foot a:hover {
+      color: var(--tg-orange-deep);
+    }
+    @media (max-width: 767px) {
+      .tg-sa {
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1rem, env(safe-area-inset-right, 0px));
+        -webkit-text-size-adjust: 100%;
+      }
+      .tg-sa h2#tg-sa-title {
+        font-size: clamp(1.6rem, 7vw, 2.35rem);
+        hyphens: auto;
+      }
+      .tg-sa-lede {
+        font-size: 1rem;
+        margin-bottom: 1.75rem;
+      }
+      #tg-service-area .tg-sa-bar input[type="text"] {
+        font-size: 16px;
+      }
+      .tg-sa-suggest li {
+        min-height: 44px;
+        box-sizing: border-box;
+      }
+      .tg-sa-grid {
+        /* flex pill layout from block above when ≤767px */
+        gap: 0.45rem;
+      }
+      #tg-service-area .tg-sa-bar button {
+        min-height: 48px;
+      }
+    }
+    @media (max-width: 480px) {
+      .tg-sa-pin-pill {
+        min-height: 44px;
+        padding: 0.5rem 0.85rem;
+      }
+    }
+  </style>
+  <div class="tg-sa-inner">
+    <header class="tg-sa-head">
+      <span class="tg-sa-badge">Delivery coverage</span>
+      <h2 id="tg-sa-title">Are we in your area?</h2>
+    </header>
+    <p class="tg-sa-lede">
+      We currently serve residents and offices across the Greater Toronto Area. Enter your postal code to see if
+      TiffinGrab is cooking in your neighborhood today.
+    </p>
+    <form class="tg-sa-bar" id="tg-sa-form" novalidate>
+      <svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10z" />
+        <circle cx="12" cy="11" r="2.5" fill="currentColor" stroke="none" />
+      </svg>
+      <label class="screen-reader-text" for="tg-sa-input">Postal code</label>
+      <div class="tg-sa-input-wrap">
+        <input
+          id="tg-sa-input"
+          name="postal-code"
+          type="text"
+          inputmode="text"
+          autocomplete="postal-code"
+          autocapitalize="characters"
+          spellcheck="false"
+          aria-autocomplete="list"
+          aria-controls="tg-sa-suggest-list"
+          aria-expanded="false"
+          placeholder="Start typing a postal code (e.g., M5V)"
+          maxlength="8"
+        />
+        <ul class="tg-sa-suggest" id="tg-sa-suggest-list" role="listbox" aria-label="Suggested postal codes" hidden></ul>
+      </div>
+      <button type="submit" id="tg-sa-submit">Check Availability</button>
+    </form>
+    <div class="tg-sa-result" id="tg-sa-result" role="status" aria-live="polite"></div>
+    <div class="tg-sa-grid" id="tg-sa-area-grid" aria-label="Areas we serve">
+      <div class="tg-sa-card" data-postal="M5V 1J2" role="button" tabindex="0">
+        <strong>Toronto</strong><span>Downtown Core</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="M5V 1J2" aria-label="Check delivery for M5V 1J2, Toronto">M5V 1J2</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="M1B 3B5" role="button" tabindex="0">
+        <strong>Scarborough</strong><span>East GTA</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="M1B 3B5" aria-label="Check delivery for M1B 3B5, Scarborough">M1B 3B5</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L6Y 4R2" role="button" tabindex="0">
+        <strong>Brampton</strong><span>West GTA</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L6Y 4R2" aria-label="Check delivery for L6Y 4R2, Brampton">L6Y 4R2</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L5B 1M2" role="button" tabindex="0">
+        <strong>Mississauga</strong><span>West GTA</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L5B 1M2" aria-label="Check delivery for L5B 1M2, Mississauga">L5B 1M2</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="M8V 1A1" role="button" tabindex="0">
+        <strong>Etobicoke</strong><span>West GTA</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="M8V 1A1" aria-label="Check delivery for M8V 1A1, Etobicoke">M8V 1A1</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="M2N 6K1" role="button" tabindex="0">
+        <strong>North York</strong><span>Central GTA</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="M2N 6K1" aria-label="Check delivery for M2N 6K1, North York">M2N 6K1</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L3R 0G1" role="button" tabindex="0">
+        <strong>Markham</strong><span>York Region</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L3R 0G1" aria-label="Check delivery for L3R 0G1, Markham">L3R 0G1</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L4K 4M2" role="button" tabindex="0">
+        <strong>Vaughan</strong><span>York Region</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L4K 4M2" aria-label="Check delivery for L4K 4M2, Vaughan">L4K 4M2</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L6K 3R8" role="button" tabindex="0">
+        <strong>Oakville</strong><span>Halton Region</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L6K 3R8" aria-label="Check delivery for L6K 3R8, Oakville">L6K 3R8</button>
+        </div>
+      </div>
+      <div class="tg-sa-card" data-postal="L6E 1A1" role="button" tabindex="0">
+        <strong>Richmond Hill</strong><span>York Region</span>
+        <div class="tg-sa-card-pins">
+          <button type="button" class="tg-sa-pin-pill" data-postal="L6E 1A1" aria-label="Check delivery for L6E 1A1, Richmond Hill">L6E 1A1</button>
+        </div>
+      </div>
+    </div>
+    <div class="tg-sa-foot">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" fill="var(--e-global-color-whatsapp, #25d366)" />
+        <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="Geist,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif">i</text>
+      </svg>
+      <p>
+        Don’t see your city? We’re expanding rapidly.
+        <a href="/contact/">Join the waitlist</a>.
+      </p>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var form = document.getElementById("tg-sa-form");
+      var input = document.getElementById("tg-sa-input");
+      var btn = document.getElementById("tg-sa-submit");
+      var out = document.getElementById("tg-sa-result");
+      var listEl = document.getElementById("tg-sa-suggest-list");
+      var areaGrid = document.getElementById("tg-sa-area-grid");
+      if (!form || !input || !btn || !out || !listEl) return;
+
+      /* Keep focus on input when interacting with the list (incl. scrollbar) so blur doesn’t close before scroll */
+      listEl.addEventListener("mousedown", function (e) {
+        e.preventDefault();
+      });
+
+      /* Keep wheel scroll inside the dropdown when it has overflow */
+      listEl.addEventListener(
+        "wheel",
+        function (e) {
+          if (listEl.hidden) return;
+          var top = listEl.scrollTop;
+          var max = listEl.scrollHeight - listEl.clientHeight;
+          var dy = e.deltaY;
+          if ((dy < 0 && top > 0) || (dy > 0 && top < max - 0.5)) {
+            e.stopPropagation();
+          }
+        },
+        { passive: true }
+      );
+
+      /** GTA-focused examples; filters as the user types (not every valid code). */
+      var POSTAL_SUGGEST = [
+        ["M5V 1J2", "Toronto — Downtown"],
+        ["M5H 2N2", "Toronto — Financial District"],
+        ["M5G 1M2", "Toronto — Hospital Row"],
+        ["M4W 1J5", "Toronto — Yorkville"],
+        ["M4Y 1B4", "Toronto — Church–Wellesley"],
+        ["M6J 1J6", "Toronto — Trinity-Bellwoods"],
+        ["M6K 3E9", "Toronto — Liberty Village"],
+        ["M5A 1A1", "Toronto — Distillery / East"],
+        ["M4M 2Y8", "Toronto — Leslieville"],
+        ["M8V 1A1", "Etobicoke — Lakeshore"],
+        ["M8W 4M5", "Etobicoke — Alderwood"],
+        ["M8X 1B2", "Etobicoke — The Kingsway"],
+        ["M9C 1B8", "Etobicoke — Central"],
+        ["M9B 2K4", "Etobicoke — Islington"],
+        ["M9W 1J5", "Etobicoke — Rexdale"],
+        ["M3C 0C1", "North York — Don Mills"],
+        ["M2J 1V8", "North York — Fairview"],
+        ["M2N 6K1", "North York — Yonge & Sheppard"],
+        ["M6A 2T9", "North York — Lawrence"],
+        ["M2R 2N1", "North York — Bayview Village"],
+        ["M1P 2W3", "Scarborough — Agincourt"],
+        ["M1V 2T4", "Scarborough — Milliken"],
+        ["M1B 3B5", "Scarborough — Malvern"],
+        ["M1K 2R1", "Scarborough — Kennedy"],
+        ["M1N 2T7", "Scarborough — Cliffside"],
+        ["L4T 1A1", "Mississauga — Airport"],
+        ["L5B 1M2", "Mississauga — Square One"],
+        ["L5A 3K2", "Mississauga — Cooksville"],
+        ["L5V 2N6", "Mississauga — Erin Mills"],
+        ["L5N 7Y9", "Mississauga — Meadowvale"],
+        ["L4W 2M8", "Mississauga — Dixie"],
+        ["L6Y 4R2", "Brampton — Downtown"],
+        ["L6X 1A8", "Brampton — West"],
+        ["L6T 4M8", "Brampton — East"],
+        ["L6Z 3Y9", "Brampton — North"],
+        ["L6R 3K5", "Brampton — Sandalwood"],
+        ["L3R 0G1", "Markham — Downtown"],
+        ["L3T 7T6", "Markham — Thornhill"],
+        ["L6C 0C9", "Markham — Cornell"],
+        ["L6B 1A8", "Markham — Berczy"],
+        ["L4J 8X9", "Vaughan — Thornhill"],
+        ["L4K 4M2", "Vaughan — Concord"],
+        ["L6A 4K3", "Vaughan — Maple"],
+        ["L4H 0G6", "Vaughan — Woodbridge"],
+        ["L6E 1A1", "Richmond Hill — Langstaff"],
+        ["L4C 9M7", "Richmond Hill — Oak Ridges"],
+        ["L4B 4M8", "Richmond Hill — Hillcrest"],
+        ["L6G 1A3", "Markham — Unionville"],
+        ["L6H 6P5", "Oakville — Uptown"],
+        ["L6L 5M1", "Oakville — Bronte"],
+        ["L6M 3J3", "Oakville — River Oaks"],
+        ["L6K 3R8", "Oakville — Downtown"],
+        ["M7A 1A1", "Toronto — Queen’s Park"],
+        ["M5J 2T9", "Toronto — Waterfront"],
+        ["M5B 1S2", "Toronto — Ryerson / Dundas"],
+        ["M4T 1W5", "Toronto — Summerhill"],
+        ["M4S 1B6", "Toronto — Davisville"],
+        ["M6G 1M6", "Toronto — Christie Pits"],
+        ["M6H 1K5", "Toronto — Dufferin Grove"],
+        ["M6P 1A6", "Toronto — High Park"],
+        ["M6S 4K6", "Toronto — Bloor West"],
+        ["M8Z 3B9", "Etobicoke — Mimico"],
+        ["L5M 6J3", "Mississauga — Streetsville"],
+        ["L5J 2M4", "Mississauga — Lakeview"],
+        ["L4Z 2H6", "Mississauga — City Centre"],
+        ["L6W 3W8", "Brampton — Bramalea"],
+        ["L3S 4R7", "Markham — South"],
+        ["L4E 4K1", "Richmond Hill — North"],
+        ["L4G 6H4", "Aurora — Central"],
+        ["L1S 7K9", "Ajax — Central"],
+        ["L1J 2K5", "Pickering — Town Centre"],
+        ["L1H 7K4", "Oshawa — Downtown"],
+        ["M9V 1B6", "Etobicoke — Humberwood"],
+        ["M9L 2X6", "North York — Steeles West"],
+        ["M9M 2W6", "North York — Weston"],
+      ];
+
+      var suggestTimer = null;
+      var activeIdx = -1;
+      var filtered = [];
+
+      function compact(s) {
+        return String(s || "")
+          .toUpperCase()
+          .replace(/[^A-Z0-9]/g, "");
+      }
+
+      function areaNameFromApiPayload(d) {
+        if (!d || typeof d !== "object") return "";
+        var keys = ["area_name", "areaName", "area", "location", "zone", "region", "city_area", "neighborhood"];
+        for (var k = 0; k < keys.length; k++) {
+          var v = d[keys[k]];
+          if (typeof v === "string" && v.trim()) return v.trim();
+        }
+        return "";
+      }
+
+      /** Match full postal or FSA to GTA hint list for a human-readable area label. */
+      function areaNameFromPostal(norm) {
+        var n = compact(norm);
+        if (n.length < 6) return "";
+        var i;
+        for (i = 0; i < POSTAL_SUGGEST.length; i++) {
+          if (compact(POSTAL_SUGGEST[i][0]) === n) return POSTAL_SUGGEST[i][1];
+        }
+        var fsa = n.slice(0, 3);
+        for (i = 0; i < POSTAL_SUGGEST.length; i++) {
+          if (compact(POSTAL_SUGGEST[i][0]).slice(0, 3) === fsa) return POSTAL_SUGGEST[i][1];
+        }
+        return "";
+      }
+
+      function formatSlotListItem(line) {
+        if (line != null && typeof line === "object") {
+          var time =
+            line.time ||
+            line.slot ||
+            line.label ||
+            line.text ||
+            line.title ||
+            line.name ||
+            "";
+          var ar =
+            (typeof line.area === "string" && line.area.trim()) ||
+            (typeof line.area_name === "string" && line.area_name.trim()) ||
+            (typeof line.areaName === "string" && line.areaName.trim()) ||
+            "";
+          if (time && ar) return String(time) + " — " + String(ar);
+          if (time) return String(time);
+          try {
+            return JSON.stringify(line);
+          } catch (e) {
+            return "";
+          }
+        }
+        return String(line);
+      }
+
+      function setListOpen(open) {
+        listEl.hidden = !open;
+        input.setAttribute("aria-expanded", open ? "true" : "false");
+        if (!open) {
+          activeIdx = -1;
+          listEl.innerHTML = "";
+          filtered = [];
+        }
+      }
+
+      function renderSuggestions(items) {
+        listEl.innerHTML = "";
+        filtered = items.slice(0, 40);
+        activeIdx = filtered.length ? 0 : -1;
+        listEl.scrollTop = 0;
+        filtered.forEach(function (row, i) {
+          var code = row[0];
+          var hint = row[1];
+          var li = document.createElement("li");
+          li.setAttribute("role", "option");
+          li.setAttribute("id", "tg-sa-opt-" + i);
+          li.setAttribute("aria-selected", "false");
+          var c = document.createElement("span");
+          c.className = "tg-sa-code";
+          c.textContent = code;
+          li.appendChild(c);
+          var h = document.createElement("span");
+          h.className = "tg-sa-hint";
+          h.textContent = hint;
+          li.appendChild(h);
+          li.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            pickSuggestion(code);
+          });
+          listEl.appendChild(li);
+        });
+        listEl.hidden = filtered.length === 0;
+        input.setAttribute("aria-expanded", filtered.length ? "true" : "false");
+        highlightActive();
+      }
+
+      function pickSuggestion(code) {
+        var n = compact(code);
+        input.value = n.length === 6 ? n.slice(0, 3) + " " + n.slice(3) : code;
+        setListOpen(false);
+        input.focus();
+      }
+
+      function filterSuggestions() {
+        var q = compact(input.value);
+        if (q.length < 1 || q.length >= 6) {
+          setListOpen(false);
+          return;
+        }
+        var scored = [];
+        for (var i = 0; i < POSTAL_SUGGEST.length; i++) {
+          var code = POSTAL_SUGGEST[i][0];
+          var hint = POSTAL_SUGGEST[i][1];
+          var c = compact(code);
+          var fsa = c.slice(0, 3);
+          if (c.indexOf(q) === 0) {
+            scored.push({ row: [code, hint], rank: 0 });
+          } else if (q.length <= 3 && fsa.indexOf(q) === 0) {
+            scored.push({ row: [code, hint], rank: 1 });
+          }
+        }
+        scored.sort(function (a, b) {
+          if (a.rank !== b.rank) return a.rank - b.rank;
+          return compact(a.row[0]).localeCompare(compact(b.row[0]));
+        });
+        var rows = scored.map(function (s) {
+          return s.row;
+        });
+        if (!rows.length) {
+          setListOpen(false);
+          return;
+        }
+        renderSuggestions(rows);
+      }
+
+      function scheduleFilter() {
+        clearTimeout(suggestTimer);
+        suggestTimer = setTimeout(filterSuggestions, 100);
+      }
+
+      /** Scroll only the dropdown (not the page) so keyboard selection stays visible. */
+      function scrollActiveOptionIntoView(li) {
+        if (!li || listEl.hidden) return;
+        var pad = 6;
+        var lr = listEl.getBoundingClientRect();
+        var ir = li.getBoundingClientRect();
+        if (ir.top < lr.top + pad) {
+          listEl.scrollTop -= lr.top + pad - ir.top;
+        } else if (ir.bottom > lr.bottom - pad) {
+          listEl.scrollTop += ir.bottom - (lr.bottom - pad);
+        }
+      }
+
+      function highlightActive() {
+        var lis = listEl.querySelectorAll("li");
+        for (var i = 0; i < lis.length; i++) {
+          lis[i].setAttribute("aria-selected", i === activeIdx ? "true" : "false");
+        }
+        if (activeIdx >= 0 && lis[activeIdx]) {
+          scrollActiveOptionIntoView(lis[activeIdx]);
+        }
+      }
+
+      input.addEventListener("input", function () {
+        scheduleFilter();
+      });
+
+      input.addEventListener("focus", function () {
+        if (compact(input.value).length >= 1 && compact(input.value).length < 6) {
+          scheduleFilter();
+        }
+      });
+
+      input.addEventListener("blur", function () {
+        setTimeout(function () {
+          setListOpen(false);
+        }, 180);
+      });
+
+      input.addEventListener("keydown", function (e) {
+        if (listEl.hidden || !filtered.length) {
+          if (e.key === "Escape") setListOpen(false);
+          return;
+        }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          if (activeIdx < filtered.length - 1) {
+            activeIdx++;
+            highlightActive();
+          } else {
+            var maxScroll = listEl.scrollHeight - listEl.clientHeight;
+            var step = Math.min(56, Math.max(32, Math.floor(listEl.clientHeight * 0.22)));
+            listEl.scrollTop = Math.min(maxScroll, listEl.scrollTop + step);
+          }
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (activeIdx > 0) {
+            activeIdx--;
+            highlightActive();
+          } else {
+            var step = Math.min(56, Math.max(32, Math.floor(listEl.clientHeight * 0.22)));
+            listEl.scrollTop = Math.max(0, listEl.scrollTop - step);
+          }
+        } else if (e.key === "Enter" && activeIdx >= 0) {
+          e.preventDefault();
+          pickSuggestion(filtered[activeIdx][0]);
+        } else if (e.key === "Escape") {
+          setListOpen(false);
+        }
+      });
+
+      /** Theme exposes `deliverySlots` (hello-elementor-child-v2 delivery-slots-frontend). */
+      function ajaxConfig() {
+        var custom = window.tiffinGrabDelivery || {};
+        var theme = window.deliverySlots || {};
+        return {
+          ajaxUrl: custom.ajaxUrl || theme.ajaxUrl || "/wp-admin/admin-ajax.php",
+          nonce: custom.nonce || theme.nonce || "",
+        };
+      }
+
+      function normalizePin(raw) {
+        return String(raw || "")
+          .toUpperCase()
+          .replace(/[^A-Z0-9]/g, "")
+          .slice(0, 6);
+      }
+
+      function formatDisplayFromNormalized(n) {
+        if (n.length <= 3) return n;
+        return n.slice(0, 3) + " " + n.slice(3);
+      }
+
+      function parseResponseText(t) {
+        try {
+          return JSON.parse(t);
+        } catch (e) {
+          return t;
+        }
+      }
+
+      function runDeliveryCheckFromInput() {
+        setListOpen(false);
+        out.textContent = "";
+        out.className = "tg-sa-result";
+
+        var norm = normalizePin(input.value);
+        if (norm.length < 6) {
+          out.classList.add("tg-err");
+          out.textContent = "Please enter a valid Canadian postal code.";
+          return;
+        }
+        input.value = formatDisplayFromNormalized(norm);
+
+        var c = ajaxConfig();
+        var ajaxUrl = c.ajaxUrl;
+        var nonce = c.nonce;
+        if (!nonce) {
+          out.classList.add("tg-err");
+          out.textContent =
+            "Delivery check needs a security nonce. Add wordpress/tiffingrab-delivery-ajax-config.php to your child theme, or ensure the theme’s delivery script loads on this page.";
+          return;
+        }
+
+        btn.disabled = true;
+        out.textContent = "Checking…";
+
+        var body = new URLSearchParams();
+        body.set("action", "check_delivery_slot");
+        body.set("nonce", nonce);
+        body.set("pincode", formatDisplayFromNormalized(norm).replace(/\s+/g, "+"));
+
+        fetch(ajaxUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          body: body.toString(),
+          credentials: "same-origin",
+        })
+          .then(function (r) {
+            return r.text();
+          })
+          .then(function (text) {
+            var data = parseResponseText(text);
+            if (data && typeof data === "object" && typeof data.success === "boolean") {
+              if (data.success === false && data.data) {
+                out.classList.add("tg-err");
+                out.textContent =
+                  typeof data.data === "string" ? data.data : data.data.message || "We couldn’t verify that postal code.";
+                return;
+              }
+              if (data.success === true && data.data) {
+                out.classList.add("tg-ok");
+                if (data.data.slots && Array.isArray(data.data.slots) && data.data.slots.length) {
+                  out.replaceChildren();
+                  var st = document.createElement("span");
+                  st.className = "tg-sa-slot-title";
+                  st.textContent = "Delivery timings";
+                  out.appendChild(st);
+                  var areaLine =
+                    areaNameFromApiPayload(data.data) || areaNameFromPostal(norm);
+                  if (areaLine) {
+                    var sn = document.createElement("span");
+                    sn.className = "tg-sa-slot-area";
+                    sn.textContent = areaLine;
+                    out.appendChild(sn);
+                  }
+                  var ul = document.createElement("ul");
+                  ul.className = "tg-sa-slots";
+                  data.data.slots.forEach(function (line) {
+                    var li = document.createElement("li");
+                    li.textContent = formatSlotListItem(line);
+                    ul.appendChild(li);
+                  });
+                  out.appendChild(ul);
+                  return;
+                }
+                out.textContent =
+                  typeof data.data === "string" ? data.data : data.data.message || "You’re in our delivery area.";
+                return;
+              }
+            }
+            if (typeof data === "string" && data.trim()) {
+              var el = document.createElement("div");
+              el.innerHTML = data;
+              var t = el.textContent || el.innerText || data;
+              out.classList.add(t.length < 400 ? "tg-ok" : "tg-sa-result");
+              out.textContent = t.replace(/\s+/g, " ").trim().slice(0, 800);
+              return;
+            }
+            out.classList.add("tg-err");
+            out.textContent = "Something went wrong. Please try again or contact us.";
+          })
+          .catch(function () {
+            out.classList.add("tg-err");
+            out.textContent = "Network error. Check your connection and try again.";
+          })
+          .finally(function () {
+            btn.disabled = false;
+          });
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        runDeliveryCheckFromInput();
+      });
+
+      if (areaGrid) {
+        function activateAreaFromEvent(e) {
+          var pill = e.target && e.target.closest ? e.target.closest(".tg-sa-pin-pill") : null;
+          var card = e.target && e.target.closest ? e.target.closest(".tg-sa-card[data-postal]") : null;
+          var el = pill || card;
+          if (!el || !areaGrid.contains(el)) return;
+          var postal = el.getAttribute("data-postal");
+          if (!postal) return;
+          e.preventDefault();
+          input.value = postal;
+          runDeliveryCheckFromInput();
+          try {
+            out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          } catch (err) {}
+        }
+        areaGrid.addEventListener("click", activateAreaFromEvent);
+        areaGrid.addEventListener("keydown", function (e) {
+          if (e.key !== "Enter" && e.key !== " ") return;
+          var card = e.target && e.target.closest ? e.target.closest(".tg-sa-card[data-postal]") : null;
+          if (!card || !areaGrid.contains(card)) return;
+          e.preventDefault();
+          activateAreaFromEvent(e);
+        });
+      }
+    })();
+  </script>
+</section>
