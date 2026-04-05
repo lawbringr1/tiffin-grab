@@ -1398,6 +1398,7 @@
             if (f.options[j].value !== sel) continue;
             var tx = (f.options[j].text || "").toLowerCase();
             if (/alternat/i.test(tx)) return null;
+            if (/mon[^\n]*wed[^\n]*fri|mwf|\b3\s*-?\s*day/i.test(tx)) return 3;
             if (/mon[^\n]*sun|7\s*-?\s*day|every\s*day|full\s*week/i.test(tx)) return 7;
             if (/sat/.test(tx) && !/sun/.test(tx)) return 6;
             if (/fri/.test(tx) && !/sat|sun/.test(tx)) return 5;
@@ -1406,6 +1407,34 @@
           }
         }
         return null;
+      }
+
+      function schemaHasDaysField(sch) {
+        if (!sch || !sch.apo) return false;
+        for (var i = 0; i < sch.apo.length; i++) {
+          if (labelKey(sch.apo[i].label) === "days") return true;
+        }
+        return false;
+      }
+
+      /** Prefer option value 1; else smallest numeric option; else first. */
+      function defaultTiffinOptionIndex(options) {
+        if (!options || !options.length) return 0;
+        var k;
+        for (k = 0; k < options.length; k++) {
+          var v = String(options[k].value).trim();
+          if (v === "1" || parseInt(v, 10) === 1) return k;
+        }
+        var minIdx = 0;
+        var minVal = Infinity;
+        for (k = 0; k < options.length; k++) {
+          var n = parseInt(String(options[k].value).trim(), 10);
+          if (!isNaN(n) && n < minVal) {
+            minVal = n;
+            minIdx = k;
+          }
+        }
+        return minVal !== Infinity ? minIdx : 0;
       }
 
       function populateConfig(card, product) {
@@ -1470,10 +1499,15 @@
               }
             });
           }
-          var totalMinor = perMeal * tiffins;
-          var subFormatted = money(String(totalMinor), curCode, curSym);
           var dc = dayCountFromSchema(sch, values);
-          var dayPart = dc ? " (" + dc + " days)" : "";
+          var hasDays = schemaHasDaysField(sch);
+          var daysMult = 1;
+          if (hasDays) {
+            daysMult = dc != null && dc > 0 ? dc : 5;
+          }
+          var totalMinor = Math.round(perMeal * tiffins * daysMult);
+          var subFormatted = money(String(totalMinor), curCode, curSym);
+          var dayPart = hasDays && dc != null && dc > 0 ? " (" + dc + " days)" : "";
           rows.innerHTML =
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal' +
             dayPart +
@@ -1510,11 +1544,12 @@
               if (key === "tiffins") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Number of tiffins</span><div class="tg-tplans-seg"></div>';
                 var seg = wrap.querySelector(".tg-tplans-seg");
+                var tix = defaultTiffinOptionIndex(field.options);
                 field.options.forEach(function (opt, i) {
                   var b = document.createElement("button");
                   b.type = "button";
                   b.textContent = opt.value;
-                  b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+                  b.setAttribute("aria-pressed", i === tix ? "true" : "false");
                   b.addEventListener("click", function () {
                     seg.querySelectorAll("button").forEach(function (x) {
                       x.setAttribute("aria-pressed", "false");
@@ -1525,7 +1560,7 @@
                   });
                   seg.appendChild(b);
                 });
-                values[field.name] = field.options[0].value;
+                values[field.name] = field.options[tix].value;
               } else if (key === "days") {
                 wrap.innerHTML = '<span class="tg-tplans-label">Preferred days</span><div class="tg-tplans-days"></div>';
                 var grid = wrap.querySelector(".tg-tplans-days");
