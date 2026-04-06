@@ -1175,7 +1175,7 @@
     .tg-tplans-config-inner {
       display: flex;
       flex-direction: column;
-      gap: 0;
+      gap: 1.5rem;
       flex: 1;
       min-height: 0;
       overflow: hidden;
@@ -1193,7 +1193,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      margin-bottom: 0.65rem;
     }
     #tg-tplans-2026 .tg-tplans-options-slot > div:has(> .tg-tplans-cal-field) > .tg-tplans-label {
       margin-bottom: 0;
@@ -2202,6 +2201,17 @@
           }, 280);
         }
 
+        var scrollReanchorPending = false;
+        function onScrollReanchor() {
+          if (!popoverOpen) return;
+          if (scrollReanchorPending) return;
+          scrollReanchorPending = true;
+          requestAnimationFrame(function () {
+            scrollReanchorPending = false;
+            if (popoverOpen) positionPopoverPanel();
+          });
+        }
+
         function setPopoverOpen(open) {
           if (open === popoverOpen) return;
           popoverOpen = open;
@@ -2217,10 +2227,15 @@
             document.body.appendChild(popover);
             positionPopoverPanel();
             window.addEventListener("resize", onWinResize);
+            document.addEventListener("scroll", onScrollReanchor, true);
+            if (window.visualViewport) {
+              window.visualViewport.addEventListener("scroll", onScrollReanchor);
+            }
             document.addEventListener("mousedown", onDocDown, true);
             document.addEventListener("keydown", onDocKey);
           } else {
             if (resizeDebounce) clearTimeout(resizeDebounce);
+            scrollReanchorPending = false;
             if (popover.parentNode === document.body) {
               wrap.appendChild(popover);
             }
@@ -2229,6 +2244,10 @@
             popover.style.width = "";
             popover.style.maxWidth = "";
             window.removeEventListener("resize", onWinResize);
+            document.removeEventListener("scroll", onScrollReanchor, true);
+            if (window.visualViewport) {
+              window.visualViewport.removeEventListener("scroll", onScrollReanchor);
+            }
             document.removeEventListener("mousedown", onDocDown, true);
             document.removeEventListener("keydown", onDocKey);
           }
