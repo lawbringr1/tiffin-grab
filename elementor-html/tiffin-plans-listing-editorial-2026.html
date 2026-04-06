@@ -614,12 +614,33 @@
       color: var(--tp-primary);
       white-space: nowrap;
     }
+    /* Fixed “textarea” slot so every card uses the same vertical space; CTA sits below. */
+    .tg-tplans-desc-shell {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-top: 0.2rem;
+      margin-bottom: 0.5rem;
+    }
     .tg-tplans-desc {
       font-size: 0.875rem;
       color: var(--tp-muted);
       line-height: 1.55;
-      margin-bottom: 0.6rem;
-      margin-top: 0.2rem;
+      margin: 0;
+      height: 4.75rem;
+      min-height: 4.75rem;
+      max-height: 4.75rem;
+      overflow: hidden;
+      padding: 0.35rem 0.45rem;
+      border-radius: 10px;
+      border: 1px solid rgba(29, 27, 25, 0.08);
+      background: rgba(248, 243, 238, 0.45);
+      box-sizing: border-box;
+    }
+    .tg-tplans-desc.tg-tplans-desc--open {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     .tg-tplans-read {
       align-self: flex-start;
@@ -634,7 +655,7 @@
       font-weight: 700;
       color: var(--tp-primary);
       cursor: pointer;
-      margin-bottom: 1.1rem;
+      margin: 0;
     }
     .tg-tplans-read:hover {
       text-decoration: underline;
@@ -1965,6 +1986,23 @@
        * IMPORTANT: Do not use body.offsetHeight/scrollHeight for the front — with a fixed flip height the body
        * flex-grows and those values include empty flex space (feedback loop → huge cards on flip).
        */
+      /**
+       * margin-top:auto resolves to pixels in getComputedStyle — those values are flex-distributed
+       * empty space, not intrinsic content. Skip top margin for elements that use auto in CSS.
+       */
+      function intrinsicMarginTopForHeight(el) {
+        if (!el || !el.classList) return 0;
+        if (
+          el.classList.contains("tg-tplans-actions") ||
+          el.classList.contains("tg-tplans-breakdown")
+        ) {
+          return 0;
+        }
+        var ms = window.getComputedStyle(el);
+        if (ms.marginTop === "auto") return 0;
+        return parseFloat(ms.marginTop) || 0;
+      }
+
       function sumFlexColumnContentHeight(el) {
         if (!el) return 0;
         var cs = window.getComputedStyle(el);
@@ -1978,7 +2016,7 @@
           var ch = kids[k];
           var h = ch.offsetHeight;
           var ms = window.getComputedStyle(ch);
-          var mt = ms.marginTop === "auto" ? 0 : parseFloat(ms.marginTop) || 0;
+          var mt = intrinsicMarginTopForHeight(ch);
           var mb = ms.marginBottom === "auto" ? 0 : parseFloat(ms.marginBottom) || 0;
           sum += h + mt + mb;
         }
@@ -2139,8 +2177,13 @@
           var shortLen = 110;
           var short = fullDesc.length > shortLen ? fullDesc.slice(0, shortLen).trim() + "…" : fullDesc;
 
+          var descShell = document.createElement("div");
+          descShell.className = "tg-tplans-desc-shell";
+
           var desc = document.createElement("div");
           desc.className = "tg-tplans-desc";
+          desc.setAttribute("role", "region");
+          desc.setAttribute("aria-label", "Plan description");
           var spanShort = document.createElement("span");
           spanShort.className = "tg-tplans-snippet";
           spanShort.textContent = short;
@@ -2163,8 +2206,12 @@
             spanFull.hidden = open;
             readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
             readBtn.setAttribute("data-open", open ? "0" : "1");
+            desc.classList.toggle("tg-tplans-desc--open", readBtn.getAttribute("data-open") === "1");
             scheduleSyncAllHeights();
           });
+
+          descShell.appendChild(desc);
+          descShell.appendChild(readBtn);
 
           var actions = document.createElement("div");
           actions.className = "tg-tplans-actions";
@@ -2193,8 +2240,7 @@
           actions.appendChild(qw);
 
           body.appendChild(row);
-          body.appendChild(desc);
-          body.appendChild(readBtn);
+          body.appendChild(descShell);
           body.appendChild(actions);
 
           faceFront.appendChild(media);
