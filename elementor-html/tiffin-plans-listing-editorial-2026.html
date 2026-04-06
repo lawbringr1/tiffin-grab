@@ -849,14 +849,16 @@
     .tg-tplans-cal-popover {
       display: none;
       position: fixed;
-      z-index: 10000;
+      z-index: 99998;
       max-width: calc(100vw - 1rem);
       border-radius: 0.375rem;
       border: 1px solid var(--tp-outline-variant);
       background: var(--tp-card);
       box-shadow: 0 20px 48px rgba(29, 27, 25, 0.12);
+      overflow: visible;
+      box-sizing: border-box;
     }
-    .tg-tplans-cal-field--open .tg-tplans-cal-popover {
+    .tg-tplans-cal-popover.tg-tplans-cal-popover--open {
       display: block;
     }
     .tg-tplans-cal-popover .tg-tplans-cal {
@@ -864,6 +866,8 @@
       box-shadow: none;
       margin: 0;
       max-width: none;
+      overflow: visible;
+      max-height: none;
     }
 
     .tg-tplans-cal {
@@ -2070,7 +2074,8 @@
         }
 
         function onDocDown(e) {
-          if (!wrap.contains(e.target)) setPopoverOpen(false);
+          if (wrap.contains(e.target) || popover.contains(e.target)) return;
+          setPopoverOpen(false);
         }
 
         function onDocKey(e) {
@@ -2079,21 +2084,48 @@
 
         function positionPopoverPanel() {
           var r = trigger.getBoundingClientRect();
-          var w = Math.min(r.width, window.innerWidth - 16);
+          var minW = 280;
+          var w = Math.min(Math.max(r.width, minW), window.innerWidth - 16);
           var left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
           popover.style.left = left + "px";
-          popover.style.top = r.bottom + 6 + "px";
           popover.style.width = w + "px";
+          popover.style.right = "auto";
+          popover.style.maxHeight = "";
+          popover.style.margin = "0";
+
+          popover.style.visibility = "hidden";
+          var h = popover.offsetHeight;
+          popover.style.visibility = "";
+
+          var margin = 6;
+          var pad = 8;
+          var spaceBelow = window.innerHeight - r.bottom - margin - pad;
+          var spaceAbove = r.top - margin - pad;
+          var topBelow = r.bottom + margin;
+          var topAbove = r.top - margin - h;
+
+          if (h > spaceBelow && spaceAbove > spaceBelow && topAbove >= 8) {
+            popover.style.top = topAbove + "px";
+          } else {
+            popover.style.top = topBelow + "px";
+          }
         }
 
+        var repositionRaf = null;
         function onWinReposition() {
-          if (popoverOpen) positionPopoverPanel();
+          if (!popoverOpen) return;
+          if (repositionRaf) cancelAnimationFrame(repositionRaf);
+          repositionRaf = requestAnimationFrame(function () {
+            repositionRaf = null;
+            positionPopoverPanel();
+          });
         }
 
         function setPopoverOpen(open) {
           if (open === popoverOpen) return;
           popoverOpen = open;
           wrap.classList.toggle("tg-tplans-cal-field--open", open);
+          popover.classList.toggle("tg-tplans-cal-popover--open", open);
           trigger.setAttribute("aria-expanded", open ? "true" : "false");
           if (open) {
             if (selectedYmd) {
@@ -2101,14 +2133,25 @@
               if (sd) view = new Date(sd.getFullYear(), sd.getMonth(), 1);
             }
             render();
+            document.body.appendChild(popover);
             positionPopoverPanel();
-            window.addEventListener("scroll", onWinReposition, true);
             window.addEventListener("resize", onWinReposition);
+            if (window.visualViewport) {
+              window.visualViewport.addEventListener("resize", onWinReposition);
+            }
             document.addEventListener("mousedown", onDocDown, true);
             document.addEventListener("keydown", onDocKey);
           } else {
-            window.removeEventListener("scroll", onWinReposition, true);
+            if (popover.parentNode === document.body) {
+              wrap.appendChild(popover);
+            }
+            popover.style.top = "";
+            popover.style.left = "";
+            popover.style.width = "";
             window.removeEventListener("resize", onWinReposition);
+            if (window.visualViewport) {
+              window.visualViewport.removeEventListener("resize", onWinReposition);
+            }
             document.removeEventListener("mousedown", onDocDown, true);
             document.removeEventListener("keydown", onDocKey);
           }
@@ -2249,11 +2292,13 @@
           if (!canGoPrev()) return;
           view.setMonth(view.getMonth() - 1);
           render();
+          if (popoverOpen) requestAnimationFrame(positionPopoverPanel);
         });
         nextBtn.addEventListener("click", function (e) {
           e.stopPropagation();
           view.setMonth(view.getMonth() + 1);
           render();
+          if (popoverOpen) requestAnimationFrame(positionPopoverPanel);
         });
 
         popover.addEventListener("click", function (e) {
