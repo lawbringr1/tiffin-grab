@@ -473,7 +473,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(1.5rem, 3vw, 2rem);
-      align-items: start;
+      align-items: stretch;
     }
     @media (min-width: 640px) {
       .tg-tplans-grid {
@@ -1957,75 +1957,70 @@
       }
 
       /**
-       * Flip faces are position:absolute; the flip box needs an explicit height. Front: sum media + body;
-       * back: header + config + padding. Clears to CSS min-height then syncFrontHeight when returning.
+       * Listing: every card uses the same height = max(natural front heights, and flipped back height if any).
+       * Absolute faces need the flip box height set explicitly so nothing clips.
        */
-      function syncFrontHeight(card) {
-        if (!card || card.classList.contains("tg-tplans-card--flipped")) return;
-        var flip = card.querySelector(".tg-tplans-flip");
+      function measureCardFrontHeight(card) {
         var front = card.querySelector(".tg-tplans-face--front");
-        if (!flip || !front) return;
+        if (!front) return 0;
         var media = front.querySelector(".tg-tplans-media");
         var body = front.querySelector(".tg-tplans-body");
         var mh = media ? media.offsetHeight : 0;
-        /* offsetHeight can be 0 / too small on first frame; scrollHeight includes full body column (CTA). */
         var bh = 0;
         if (body) {
           bh = Math.max(body.scrollHeight, body.offsetHeight);
         }
-        var h = Math.ceil(mh + bh + 12);
-        /* Floor ~22rem so we never clip image+text+Customize when measurement is briefly wrong. */
-        h = Math.max(h, 352);
-        flip.style.minHeight = h + "px";
-        flip.style.height = h + "px";
-        card.style.minHeight = h + "px";
-        card.style.height = "";
+        return mh + bh + 16;
       }
 
-      function scheduleFrontHeight(card) {
-        if (!card || card.classList.contains("tg-tplans-card--flipped")) return;
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            syncFrontHeight(card);
-          });
-        });
-      }
-
-      function syncFlipHeight(card) {
-        var flip = card.querySelector(".tg-tplans-flip");
+      function measureCardBackHeight(card) {
         var back = card.querySelector(".tg-tplans-face--back");
-        if (!flip || !back) return;
-
-        if (!card.classList.contains("tg-tplans-card--flipped")) {
-          flip.style.minHeight = "";
-          flip.style.height = "";
-          card.style.minHeight = "";
-          card.style.height = "";
-          scheduleFrontHeight(card);
-          return;
-        }
-
+        if (!back) return 0;
         var hdr = back.querySelector(".tg-tplans-back-header");
         var cfg = back.querySelector(".tg-tplans-config");
         var fs = window.getComputedStyle(back);
         var padY = (parseFloat(fs.paddingTop) || 0) + (parseFloat(fs.paddingBottom) || 0);
-        var contentH = (hdr ? hdr.offsetHeight : 0) + (cfg ? cfg.offsetHeight : 0);
-        var h = Math.max(Math.ceil(contentH + padY), 240);
-
-        flip.style.minHeight = h + "px";
-        flip.style.height = h + "px";
-        card.style.minHeight = h + "px";
-        card.style.height = "";
+        return (hdr ? hdr.offsetHeight : 0) + (cfg ? cfg.offsetHeight : 0) + padY + 16;
       }
 
-      function scheduleFlipHeight(card) {
-        if (!card || !card.classList.contains("tg-tplans-card--flipped")) return;
+      function syncAllPlanCardHeights() {
+        var cards = mount.querySelectorAll(".tg-tplans-card");
+        if (!cards.length) return;
+        var maxH = 0;
+        for (var i = 0; i < cards.length; i++) {
+          maxH = Math.max(maxH, measureCardFrontHeight(cards[i]));
+        }
+        if (state.openId && state.openId.classList.contains("tg-tplans-card--flipped")) {
+          maxH = Math.max(maxH, measureCardBackHeight(state.openId));
+        }
+        maxH = Math.max(Math.ceil(maxH), 400);
+        for (var j = 0; j < cards.length; j++) {
+          var c = cards[j];
+          var flip = c.querySelector(".tg-tplans-flip");
+          if (!flip) continue;
+          flip.style.minHeight = maxH + "px";
+          flip.style.height = maxH + "px";
+          c.style.minHeight = maxH + "px";
+          c.style.height = "";
+        }
+      }
+
+      function scheduleSyncAllHeights() {
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
-            syncFlipHeight(card);
+            syncAllPlanCardHeights();
           });
         });
       }
+
+      var planHeightsResizeTimer = null;
+      window.addEventListener("resize", function () {
+        if (planHeightsResizeTimer) clearTimeout(planHeightsResizeTimer);
+        planHeightsResizeTimer = setTimeout(function () {
+          planHeightsResizeTimer = null;
+          scheduleSyncAllHeights();
+        }, 200);
+      });
 
       function renderCards(products) {
         mount.innerHTML = "";
@@ -2066,7 +2061,7 @@
             im.alt = alt;
             im.loading = "lazy";
             im.addEventListener("load", function () {
-              scheduleFrontHeight(card);
+              scheduleSyncAllHeights();
             });
             media.appendChild(im);
           } else {
@@ -2124,7 +2119,7 @@
             spanFull.hidden = open;
             readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
             readBtn.setAttribute("data-open", open ? "0" : "1");
-            scheduleFrontHeight(card);
+            scheduleSyncAllHeights();
           });
 
           var actions = document.createElement("div");
@@ -2141,13 +2136,14 @@
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
-              syncFlipHeight(state.openId);
+              scheduleSyncAllHeights();
               syncFlipA11y(state.openId);
             }
             card.classList.add("tg-tplans-card--flipped");
             state.openId = card;
             syncFlipA11y(card);
             populateConfig(card, p);
+            scheduleSyncAllHeights();
           });
           qw.appendChild(quick);
           actions.appendChild(qw);
@@ -2172,7 +2168,7 @@
           closeBtn.addEventListener("click", function () {
             card.classList.remove("tg-tplans-card--flipped");
             if (state.openId === card) state.openId = null;
-            syncFlipHeight(card);
+            scheduleSyncAllHeights();
             syncFlipA11y(card);
           });
           backHeader.appendChild(backTitle);
@@ -2198,11 +2194,11 @@
           mount.appendChild(card);
 
           syncFlipA11y(card);
-          scheduleFrontHeight(card);
-          setTimeout(function () {
-            scheduleFrontHeight(card);
-          }, 200);
         });
+        scheduleSyncAllHeights();
+        setTimeout(function () {
+          scheduleSyncAllHeights();
+        }, 200);
       }
 
       function labelKey(txt) {
@@ -2707,11 +2703,10 @@
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
           totalVal.textContent = subFormatted;
           totalVal.style.opacity = "1";
-          scheduleFlipHeight(card);
+          scheduleSyncAllHeights();
         }
 
         paintBreakdownPartial();
-        scheduleFlipHeight(card);
 
         function applySchema(schema) {
           optionsSlot.innerHTML = "";
@@ -2725,7 +2720,7 @@
               product.permalink +
               '">Open product page</a></p>';
             submit.disabled = true;
-            scheduleFlipHeight(card);
+            scheduleSyncAllHeights();
             return;
           }
 
@@ -2843,7 +2838,7 @@
                   showToast(r.message, r.cartUrl);
                   card.classList.remove("tg-tplans-card--flipped");
                   if (state.openId === card) state.openId = null;
-                  syncFlipHeight(card);
+                  scheduleSyncAllHeights();
                   syncFlipA11y(card);
                   if (window.jQuery) {
                     window.jQuery(document.body).trigger("added_to_cart");
