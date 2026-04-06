@@ -2263,6 +2263,13 @@
             var expanded = readBtn.getAttribute("data-open") === "1";
             readBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
             desc.classList.toggle("tg-tplans-desc--open", expanded);
+            if (expanded && state.openId && state.openId !== card) {
+              collapsePlanDescRead(state.openId);
+              state.openId.classList.remove("tg-tplans-card--flipped");
+              var flippedOther = state.openId;
+              state.openId = null;
+              syncFlipA11y(flippedOther);
+            }
             scheduleSyncAllHeights();
           });
 
