@@ -537,7 +537,8 @@
     }
     .tg-tplans-face--front .tg-tplans-body {
       flex: 0 1 auto;
-      min-height: 0;
+      flex-shrink: 0;
+      min-height: min-content;
     }
     .tg-tplans-back-header {
       display: flex;
@@ -643,6 +644,7 @@
       margin-top: 0.85rem;
       padding-top: 0;
       background: none;
+      flex-shrink: 0;
     }
     /* Customize CTA: .tg-tplans-fill-cursor (orange outline + cursor fill); Add to cart: .tg-h26-btn */
     .tg-tplans-quick {
@@ -1965,8 +1967,15 @@
         if (!flip || !front) return;
         var media = front.querySelector(".tg-tplans-media");
         var body = front.querySelector(".tg-tplans-body");
-        var h = (media ? media.offsetHeight : 0) + (body ? body.offsetHeight : 0);
-        h = Math.max(Math.ceil(h), 260);
+        var mh = media ? media.offsetHeight : 0;
+        /* offsetHeight can be 0 / too small on first frame; scrollHeight includes full body column (CTA). */
+        var bh = 0;
+        if (body) {
+          bh = Math.max(body.scrollHeight, body.offsetHeight);
+        }
+        var h = Math.ceil(mh + bh + 12);
+        /* Floor ~22rem so we never clip image+text+Customize when measurement is briefly wrong. */
+        h = Math.max(h, 352);
         flip.style.minHeight = h + "px";
         flip.style.height = h + "px";
         card.style.minHeight = h + "px";
@@ -2190,6 +2199,9 @@
 
           syncFlipA11y(card);
           scheduleFrontHeight(card);
+          setTimeout(function () {
+            scheduleFrontHeight(card);
+          }, 200);
         });
       }
 
