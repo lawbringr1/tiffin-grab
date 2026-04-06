@@ -598,13 +598,24 @@
       margin-bottom: 0.65rem;
       margin-top: 0.15rem;
     }
+    /* Always reserve two lines for the title; long names clamp. Scales with clamp() font size. */
+    .tg-tplans-title-slot {
+      flex: 1;
+      min-width: 0;
+    }
     .tg-tplans-name {
       font-family: var(--tp-font-display);
       font-weight: 700;
-      font-size: 1.125rem;
+      font-size: clamp(0.95rem, 2.2vw, 1.125rem);
       letter-spacing: -0.02em;
       line-height: 1.25;
       margin: 0;
+      min-height: calc(2 * 1.25em);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
     }
     .tg-tplans-price {
       font-family: var(--tp-font-display);
@@ -614,7 +625,7 @@
       color: var(--tp-primary);
       white-space: nowrap;
     }
-    /* Fixed “textarea” slot so every card uses the same vertical space; CTA sits below. */
+    /* Description + Read more; collapsed height follows line-clamp (viewport-based). Open = natural height. */
     .tg-tplans-desc-shell {
       flex-shrink: 0;
       display: flex;
@@ -624,23 +635,45 @@
       margin-bottom: 0.5rem;
     }
     .tg-tplans-desc {
-      font-size: 0.875rem;
+      --tg-desc-lh: 1.55;
+      --tg-desc-fs: clamp(0.8125rem, 2vw, 0.875rem);
+      font-size: var(--tg-desc-fs);
       color: var(--tp-muted);
-      line-height: 1.55;
+      line-height: var(--tg-desc-lh);
       margin: 0;
-      height: 4.75rem;
-      min-height: 4.75rem;
-      max-height: 4.75rem;
-      overflow: hidden;
       padding: 0.35rem 0.45rem;
       border-radius: 10px;
       border: 1px solid rgba(29, 27, 25, 0.08);
       background: rgba(248, 243, 238, 0.45);
       box-sizing: border-box;
     }
+    /* Collapsed: line-clamp + reserved block height (em tracks clamp() font size). */
+    .tg-tplans-desc:not(.tg-tplans-desc--open) {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      min-height: calc(2 * 1.55em + 0.7rem);
+      max-height: calc(2 * 1.55em + 0.7rem);
+    }
+    @media (min-width: 480px) {
+      .tg-tplans-desc:not(.tg-tplans-desc--open) {
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        min-height: calc(3 * 1.55em + 0.7rem);
+        max-height: calc(3 * 1.55em + 0.7rem);
+      }
+    }
+    /* Expanded: grow with full copy; card height sync picks this up. */
     .tg-tplans-desc.tg-tplans-desc--open {
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      display: block;
+      -webkit-line-clamp: unset;
+      line-clamp: unset;
+      overflow: visible;
+      min-height: 0;
+      max-height: none;
+      height: auto;
     }
     .tg-tplans-read {
       align-self: flex-start;
@@ -2164,13 +2197,16 @@
 
           var row = document.createElement("div");
           row.className = "tg-tplans-row";
+          var titleSlot = document.createElement("div");
+          titleSlot.className = "tg-tplans-title-slot";
           var h = document.createElement("h2");
           h.className = "tg-tplans-name";
           h.textContent = p.name;
+          titleSlot.appendChild(h);
           var price = document.createElement("span");
           price.className = "tg-tplans-price";
           price.textContent = money(p.prices.price, p.prices.currency_code, p.prices.currency_symbol);
-          row.appendChild(h);
+          row.appendChild(titleSlot);
           row.appendChild(price);
 
           var fullDesc = excerptFromProduct(p);
@@ -2198,6 +2234,7 @@
           readBtn.type = "button";
           readBtn.className = "tg-tplans-read";
           readBtn.setAttribute("data-open", "0");
+          readBtn.setAttribute("aria-expanded", "false");
           readBtn.innerHTML =
             '<span class="tg-tplans-read-label">Read more</span><span class="material-symbols-outlined tg-tplans-icon" aria-hidden="true">expand_more</span>';
           readBtn.addEventListener("click", function () {
@@ -2206,7 +2243,9 @@
             spanFull.hidden = open;
             readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
             readBtn.setAttribute("data-open", open ? "0" : "1");
-            desc.classList.toggle("tg-tplans-desc--open", readBtn.getAttribute("data-open") === "1");
+            var expanded = readBtn.getAttribute("data-open") === "1";
+            readBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
+            desc.classList.toggle("tg-tplans-desc--open", expanded);
             scheduleSyncAllHeights();
           });
 
