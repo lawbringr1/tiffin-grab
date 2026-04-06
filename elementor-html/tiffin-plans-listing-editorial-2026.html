@@ -785,66 +785,62 @@
       outline-offset: 1px;
     }
 
-    /* Date-only popover (shadcn-style: trigger + panel), no time fields */
+    /* Date-only: shadcn DatePickerDemo (outline Button + PopoverContent p-0 + Calendar) */
     .tg-tplans-cal-field {
       position: relative;
       width: 100%;
     }
-    .tg-tplans-cal-trigger {
-      display: flex;
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger {
+      display: inline-flex;
       align-items: center;
-      width: 100%;
+      justify-content: flex-start;
+      width: 280px;
+      max-width: 100%;
       min-height: 2.5rem;
-      padding: 0.5rem 0.65rem;
-      gap: 0.45rem;
-      border-radius: 12px;
-      border: 1px solid var(--tp-ghost);
-      background: var(--tp-panel-2);
+      padding: 0.5rem 0.75rem;
+      gap: 0.5rem;
+      border-radius: 0.375rem;
+      border: 1px solid rgba(29, 27, 25, 0.14);
+      background: #ffffff;
+      background: var(--tp-card, #ffffff);
       font-family: var(--tp-font-body);
       font-size: 0.875rem;
-      font-weight: 500;
+      font-weight: 400;
+      line-height: 1.25;
       color: var(--tp-on);
       cursor: pointer;
       text-align: left;
-      transition: background 0.15s ease, border-color 0.15s ease;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
       -webkit-tap-highlight-color: transparent;
     }
-    .tg-tplans-cal-trigger:hover {
-      background: rgba(29, 27, 25, 0.035);
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger:hover {
+      background: rgba(29, 27, 25, 0.03);
     }
-    .tg-tplans-cal-trigger:focus-visible {
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger:focus-visible {
       outline: 2px solid var(--tp-orange-a35);
-      outline-offset: 1px;
+      outline-offset: 2px;
     }
-    .tg-tplans-cal-trigger--placeholder .tg-tplans-cal-trigger__label {
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger[data-empty="true"] {
       color: var(--tp-muted);
-      font-weight: 500;
     }
-    .tg-tplans-cal-trigger__icon {
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger[data-empty="true"] .tg-tplans-cal-trigger__icon {
+      opacity: 0.55;
+    }
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger .tg-tplans-cal-trigger__icon {
       flex-shrink: 0;
-      opacity: 0.72;
+      opacity: 0.85;
       font-size: 1.125rem !important;
     }
-    .tg-tplans-cal-trigger__label {
+    .tg-tplans-cal-trigger.tg-tplans-dp-trigger .tg-tplans-cal-trigger__label {
       flex: 1;
       min-width: 0;
       line-height: 1.35;
     }
-    .tg-tplans-cal-trigger__chev {
-      flex-shrink: 0;
-      opacity: 0.48;
-      font-size: 1.125rem !important;
-      transition: transform 0.2s ease;
-    }
-    .tg-tplans-cal-field--open .tg-tplans-cal-trigger__chev {
-      transform: rotate(180deg);
-    }
-    .tg-tplans-face--back .tg-tplans-cal-trigger {
-      border: none;
-      border-radius: 10px;
-      background: var(--tp-surface-highest);
-      padding: 0.75rem 0.85rem;
-      font-weight: 700;
+    .tg-tplans-face--back .tg-tplans-cal-trigger.tg-tplans-dp-trigger {
+      border: 1px solid rgba(29, 27, 25, 0.12);
+      background: #ffffff;
+      background: var(--tp-card, #ffffff);
+      font-weight: 400;
     }
     /*
       Popover is moved under document.body while open; it no longer inherits
@@ -867,12 +863,12 @@
       position: fixed;
       z-index: 99998;
       max-width: calc(100vw - 1rem);
-      border-radius: 0.375rem;
-      border: 1px solid var(--tp-outline-variant);
-      background-color: #ffffff;
-      background-color: var(--tp-card);
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
       color: var(--tp-on);
-      box-shadow: 0 20px 48px rgba(29, 27, 25, 0.16);
       overflow: visible;
       box-sizing: border-box;
       opacity: 1;
@@ -887,15 +883,20 @@
       font-family: "Material Symbols Outlined" !important;
       font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
     }
+    /* PopoverContent p-0; Calendar = rounded-md border (shadcn) */
     .tg-tplans-cal-popover .tg-tplans-cal {
-      border: none;
-      box-shadow: none;
+      width: auto;
+      min-width: 17.5rem;
       margin: 0;
       max-width: none;
       overflow: visible;
       max-height: none;
+      padding: 0.65rem 0.75rem 0.75rem;
+      border-radius: 0.375rem;
+      border: 1px solid var(--tp-outline-variant);
       background-color: #ffffff;
       background-color: var(--tp-card);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
     }
 
     .tg-tplans-cal {
@@ -2058,11 +2059,11 @@
         return new Date(y, mo, d);
       }
 
+      /** Matches date-fns `format(d, "PPP")` (localized long date, no weekday). */
       function formatLongDateFromYMD(ymd) {
         var d = parseLocalYMD(ymd);
         if (!d) return "";
         return d.toLocaleDateString(undefined, {
-          weekday: "long",
           month: "long",
           day: "numeric",
           year: "numeric",
@@ -2095,10 +2096,10 @@
         function updateTriggerLabel() {
           if (selectedYmd) {
             labelEl.textContent = formatLongDateFromYMD(selectedYmd);
-            trigger.classList.remove("tg-tplans-cal-trigger--placeholder");
+            trigger.setAttribute("data-empty", "false");
           } else {
-            labelEl.textContent = "Select a date";
-            trigger.classList.add("tg-tplans-cal-trigger--placeholder");
+            labelEl.textContent = "Pick a date";
+            trigger.setAttribute("data-empty", "true");
           }
         }
 
@@ -2113,21 +2114,24 @@
 
         function positionPopoverPanel() {
           var r = trigger.getBoundingClientRect();
-          var minW = 280;
-          var w = Math.min(Math.max(r.width, minW), window.innerWidth - 16);
-          var left = Math.min(Math.max(8, r.left), window.innerWidth - w - 8);
-          popover.style.left = left + "px";
-          popover.style.width = w + "px";
+          popover.style.width = "auto";
           popover.style.right = "auto";
           popover.style.maxHeight = "";
           popover.style.margin = "0";
+          popover.style.maxWidth = "calc(100vw - 16px)";
 
           popover.style.visibility = "hidden";
+          popover.style.left = "-9999px";
           var h = popover.offsetHeight;
+          var pw = popover.offsetWidth;
           popover.style.visibility = "";
 
           var margin = 6;
           var pad = 8;
+          var maxLeft = window.innerWidth - pw - pad;
+          var left = Math.min(Math.max(pad, r.left), Math.max(pad, maxLeft));
+          popover.style.left = left + "px";
+
           var spaceBelow = window.innerHeight - r.bottom - margin - pad;
           var spaceAbove = r.top - margin - pad;
           var topBelow = r.bottom + margin;
@@ -2175,6 +2179,7 @@
             popover.style.top = "";
             popover.style.left = "";
             popover.style.width = "";
+            popover.style.maxWidth = "";
             window.removeEventListener("resize", onWinResize);
             document.removeEventListener("mousedown", onDocDown, true);
             document.removeEventListener("keydown", onDocKey);
@@ -2183,7 +2188,8 @@
 
         var trigger = document.createElement("button");
         trigger.type = "button";
-        trigger.className = "tg-tplans-cal-trigger tg-tplans-cal-trigger--placeholder";
+        trigger.className = "tg-tplans-cal-trigger tg-tplans-dp-trigger";
+        trigger.setAttribute("data-empty", "true");
         trigger.setAttribute("aria-haspopup", "dialog");
         trigger.setAttribute("aria-expanded", "false");
         var calIcon = document.createElement("span");
@@ -2192,13 +2198,8 @@
         calIcon.textContent = "calendar_month";
         var labelEl = document.createElement("span");
         labelEl.className = "tg-tplans-cal-trigger__label";
-        var chev = document.createElement("span");
-        chev.className = "material-symbols-outlined tg-tplans-cal-trigger__chev";
-        chev.setAttribute("aria-hidden", "true");
-        chev.textContent = "expand_more";
         trigger.appendChild(calIcon);
         trigger.appendChild(labelEl);
-        trigger.appendChild(chev);
         trigger.addEventListener("click", function (e) {
           e.stopPropagation();
           setPopoverOpen(!popoverOpen);
