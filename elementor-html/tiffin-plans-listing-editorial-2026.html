@@ -535,10 +535,10 @@
     .tg-tplans-face--front .tg-tplans-media {
       flex-shrink: 0;
     }
+    /* Fill space under the image so “Customize & subscribe” can sit on a common baseline across the row. */
     .tg-tplans-face--front .tg-tplans-body {
-      flex: 0 1 auto;
-      flex-shrink: 0;
-      min-height: min-content;
+      flex: 1 1 auto;
+      min-height: 0;
     }
     .tg-tplans-back-header {
       display: flex;
@@ -641,8 +641,8 @@
     }
 
     .tg-tplans-actions {
-      margin-top: 0.85rem;
-      padding-top: 0;
+      margin-top: auto;
+      padding-top: 0.65rem;
       background: none;
       flex-shrink: 0;
     }
