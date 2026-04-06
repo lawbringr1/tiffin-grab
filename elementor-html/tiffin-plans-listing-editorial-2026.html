@@ -846,20 +846,46 @@
       padding: 0.75rem 0.85rem;
       font-weight: 700;
     }
+    /*
+      Popover is moved under document.body while open; it no longer inherits
+      --tp-* from #tg-tplans-2026, so define tokens here or backgrounds go transparent.
+    */
     .tg-tplans-cal-popover {
+      --tp-card: #ffffff;
+      --tp-on: #1d1b19;
+      --tp-on-primary: #ffffff;
+      --tp-primary: #f06b1a;
+      --tp-primary-mid: #d3540f;
+      --tp-muted: #5c5854;
+      --tp-surface-low: #f8f3ee;
+      --tp-panel: #fff3e8;
+      --tp-orange-fill: rgba(240, 107, 26, 0.09);
+      --tp-outline-variant: #e0c0b4;
+      --tp-font-display: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --tp-font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       display: none;
       position: fixed;
       z-index: 99998;
       max-width: calc(100vw - 1rem);
       border-radius: 0.375rem;
       border: 1px solid var(--tp-outline-variant);
-      background: var(--tp-card);
-      box-shadow: 0 20px 48px rgba(29, 27, 25, 0.12);
+      background-color: #ffffff;
+      background-color: var(--tp-card);
+      color: var(--tp-on);
+      box-shadow: 0 20px 48px rgba(29, 27, 25, 0.16);
       overflow: visible;
       box-sizing: border-box;
+      opacity: 1;
+      isolation: isolate;
+      pointer-events: auto;
+      -webkit-font-smoothing: antialiased;
     }
     .tg-tplans-cal-popover.tg-tplans-cal-popover--open {
       display: block;
+    }
+    .tg-tplans-cal-popover .material-symbols-outlined {
+      font-family: "Material Symbols Outlined" !important;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
     }
     .tg-tplans-cal-popover .tg-tplans-cal {
       border: none;
@@ -868,6 +894,8 @@
       max-width: none;
       overflow: visible;
       max-height: none;
+      background-color: #ffffff;
+      background-color: var(--tp-card);
     }
 
     .tg-tplans-cal {
@@ -1118,6 +1146,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
+      margin-bottom: 0.65rem;
     }
     #tg-tplans-2026 .tg-tplans-options-slot > div:has(> .tg-tplans-cal-field) > .tg-tplans-label {
       margin-bottom: 0;
@@ -2111,14 +2140,14 @@
           }
         }
 
-        var repositionRaf = null;
-        function onWinReposition() {
+        var resizeDebounce = null;
+        function onWinResize() {
           if (!popoverOpen) return;
-          if (repositionRaf) cancelAnimationFrame(repositionRaf);
-          repositionRaf = requestAnimationFrame(function () {
-            repositionRaf = null;
+          if (resizeDebounce) clearTimeout(resizeDebounce);
+          resizeDebounce = setTimeout(function () {
+            resizeDebounce = null;
             positionPopoverPanel();
-          });
+          }, 280);
         }
 
         function setPopoverOpen(open) {
@@ -2135,23 +2164,18 @@
             render();
             document.body.appendChild(popover);
             positionPopoverPanel();
-            window.addEventListener("resize", onWinReposition);
-            if (window.visualViewport) {
-              window.visualViewport.addEventListener("resize", onWinReposition);
-            }
+            window.addEventListener("resize", onWinResize);
             document.addEventListener("mousedown", onDocDown, true);
             document.addEventListener("keydown", onDocKey);
           } else {
+            if (resizeDebounce) clearTimeout(resizeDebounce);
             if (popover.parentNode === document.body) {
               wrap.appendChild(popover);
             }
             popover.style.top = "";
             popover.style.left = "";
             popover.style.width = "";
-            window.removeEventListener("resize", onWinReposition);
-            if (window.visualViewport) {
-              window.visualViewport.removeEventListener("resize", onWinReposition);
-            }
+            window.removeEventListener("resize", onWinResize);
             document.removeEventListener("mousedown", onDocDown, true);
             document.removeEventListener("keydown", onDocKey);
           }
