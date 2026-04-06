@@ -507,16 +507,16 @@
         transition: none;
       }
     }
-    /* Configure panel is taller than the front; grow the flip box instead of scrolling inside. */
+    /* Configure panel needs a bit more than the front; keep close to front card height — margin-top:auto on .tg-tplans-breakdown was the main gap. */
     .tg-tplans-card--flipped {
-      min-height: 48rem;
+      min-height: 39rem;
     }
     .tg-tplans-card--flipped .tg-tplans-flip {
       transform: rotateY(180deg);
-      min-height: 48rem;
+      min-height: 39rem;
     }
     .tg-tplans-card--flipped .tg-tplans-face {
-      min-height: 48rem;
+      min-height: 39rem;
     }
     .tg-tplans-face {
       position: absolute;
@@ -1223,6 +1223,7 @@
     #tg-tplans-2026 .tg-tplans-config-inner > .tg-tplans-breakdown {
       position: relative;
       z-index: 1;
+      margin-top: 0;
     }
 
     .tg-tplans-pager {
