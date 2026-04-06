@@ -473,6 +473,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(1.5rem, 3vw, 2rem);
+      align-items: start;
     }
     @media (min-width: 640px) {
       .tg-tplans-grid {
@@ -1965,6 +1966,47 @@
         }
       }
 
+      /**
+       * While the flip uses absolutely positioned faces + min-height 36.25rem, the back form is often
+       * shorter — leaving a white band. When flipped, size the card/flip to the measured back content;
+       * clear inline sizes when returning to the front (CSS min-height applies again).
+       */
+      function syncFlipHeight(card) {
+        var flip = card.querySelector(".tg-tplans-flip");
+        var front = card.querySelector(".tg-tplans-face--front");
+        var back = card.querySelector(".tg-tplans-face--back");
+        if (!flip || !back) return;
+
+        if (!card.classList.contains("tg-tplans-card--flipped")) {
+          flip.style.minHeight = "";
+          flip.style.height = "";
+          card.style.minHeight = "";
+          card.style.height = "";
+          return;
+        }
+
+        var hdr = back.querySelector(".tg-tplans-back-header");
+        var cfg = back.querySelector(".tg-tplans-config");
+        var fs = window.getComputedStyle(back);
+        var padY = (parseFloat(fs.paddingTop) || 0) + (parseFloat(fs.paddingBottom) || 0);
+        var contentH = (hdr ? hdr.offsetHeight : 0) + (cfg ? cfg.offsetHeight : 0);
+        var h = Math.max(Math.ceil(contentH + padY), 280);
+
+        flip.style.minHeight = h + "px";
+        flip.style.height = h + "px";
+        card.style.minHeight = h + "px";
+        card.style.height = "";
+      }
+
+      function scheduleFlipHeight(card) {
+        if (!card || !card.classList.contains("tg-tplans-card--flipped")) return;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            syncFlipHeight(card);
+          });
+        });
+      }
+
       function renderCards(products) {
         mount.innerHTML = "";
         if (!products.length) {
@@ -2075,6 +2117,7 @@
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
               state.openId.classList.remove("tg-tplans-card--flipped");
+              syncFlipHeight(state.openId);
               syncFlipA11y(state.openId);
             }
             card.classList.add("tg-tplans-card--flipped");
@@ -2105,6 +2148,7 @@
           closeBtn.addEventListener("click", function () {
             card.classList.remove("tg-tplans-card--flipped");
             if (state.openId === card) state.openId = null;
+            syncFlipHeight(card);
             syncFlipA11y(card);
           });
           backHeader.appendChild(backTitle);
@@ -2635,9 +2679,11 @@
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
           totalVal.textContent = subFormatted;
           totalVal.style.opacity = "1";
+          scheduleFlipHeight(card);
         }
 
         paintBreakdownPartial();
+        scheduleFlipHeight(card);
 
         function applySchema(schema) {
           optionsSlot.innerHTML = "";
@@ -2651,6 +2697,7 @@
               product.permalink +
               '">Open product page</a></p>';
             submit.disabled = true;
+            scheduleFlipHeight(card);
             return;
           }
 
@@ -2768,6 +2815,7 @@
                   showToast(r.message, r.cartUrl);
                   card.classList.remove("tg-tplans-card--flipped");
                   if (state.openId === card) state.openId = null;
+                  syncFlipHeight(card);
                   syncFlipA11y(card);
                   if (window.jQuery) {
                     window.jQuery(document.body).trigger("added_to_cart");
