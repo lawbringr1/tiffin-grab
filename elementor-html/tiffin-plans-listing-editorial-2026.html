@@ -2120,6 +2120,27 @@
         return 1;
       }
 
+      /** Collapse Read more on every card in the same grid row (sibling elongation cleared before flip). */
+      function collapsePlanDescReadInRow(anchorCard) {
+        var cards = mount.querySelectorAll(".tg-tplans-card");
+        if (!cards.length || !anchorCard) return;
+        var cols = getTplansGridColumns();
+        var idx = -1;
+        var i;
+        for (i = 0; i < cards.length; i++) {
+          if (cards[i] === anchorCard) {
+            idx = i;
+            break;
+          }
+        }
+        if (idx < 0) return;
+        var rowStart = Math.floor(idx / cols) * cols;
+        var rowEnd = Math.min(rowStart + cols, cards.length);
+        for (i = rowStart; i < rowEnd; i++) {
+          collapsePlanDescRead(cards[i]);
+        }
+      }
+
       function syncAllPlanCardHeights() {
         var cards = mount.querySelectorAll(".tg-tplans-card");
         if (!cards.length) return;
@@ -2309,7 +2330,7 @@
               scheduleSyncAllHeights();
               syncFlipA11y(state.openId);
             }
-            collapsePlanDescRead(card);
+            collapsePlanDescReadInRow(card);
             card.classList.add("tg-tplans-card--flipped");
             state.openId = card;
             syncFlipA11y(card);
