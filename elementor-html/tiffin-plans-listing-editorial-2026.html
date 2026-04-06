@@ -473,7 +473,8 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(1.5rem, 3vw, 2rem);
-      align-items: stretch;
+      /* start: when one card is flipped tall, others keep front-only height (no stretch to row). */
+      align-items: start;
     }
     @media (min-width: 640px) {
       .tg-tplans-grid {
@@ -1957,7 +1958,8 @@
       }
 
       /**
-       * Listing: every card uses the same height = max(natural front heights, and flipped back height if any).
+       * Listing: all cards share max(natural front heights) so CTAs line up.
+       * Only the opened (flipped) card may grow taller to fit the configure face — others stay at that front max.
        * Absolute faces need the flip box height set explicitly so nothing clips.
        */
       function measureCardFrontHeight(card) {
@@ -1986,21 +1988,24 @@
       function syncAllPlanCardHeights() {
         var cards = mount.querySelectorAll(".tg-tplans-card");
         if (!cards.length) return;
-        var maxH = 0;
+        var maxFrontH = 0;
         for (var i = 0; i < cards.length; i++) {
-          maxH = Math.max(maxH, measureCardFrontHeight(cards[i]));
+          maxFrontH = Math.max(maxFrontH, measureCardFrontHeight(cards[i]));
         }
-        if (state.openId && state.openId.classList.contains("tg-tplans-card--flipped")) {
-          maxH = Math.max(maxH, measureCardBackHeight(state.openId));
-        }
-        maxH = Math.max(Math.ceil(maxH), 400);
+        maxFrontH = Math.max(Math.ceil(maxFrontH), 400);
+        var openFlipped =
+          state.openId && state.openId.classList.contains("tg-tplans-card--flipped");
         for (var j = 0; j < cards.length; j++) {
           var c = cards[j];
           var flip = c.querySelector(".tg-tplans-flip");
           if (!flip) continue;
-          flip.style.minHeight = maxH + "px";
-          flip.style.height = maxH + "px";
-          c.style.minHeight = maxH + "px";
+          var h = maxFrontH;
+          if (openFlipped && c === state.openId) {
+            h = Math.max(maxFrontH, Math.ceil(measureCardBackHeight(c)));
+          }
+          flip.style.minHeight = h + "px";
+          flip.style.height = h + "px";
+          c.style.minHeight = h + "px";
           c.style.height = "";
         }
       }
