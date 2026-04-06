@@ -789,6 +789,7 @@
     .tg-tplans-cal-field {
       position: relative;
       width: 100%;
+      min-height: 2.75rem;
     }
     .tg-tplans-cal-trigger.tg-tplans-dp-trigger {
       display: inline-flex;
@@ -1343,6 +1344,53 @@
     }
     #tg-tplans-2026 button.tg-tplans-daybtn[aria-pressed="true"] .tg-tplans-day-ring {
       display: none !important;
+    }
+
+    /*
+      Date picker trigger: Hello/Elementor often set button { color:#fff !important } or strip
+      padding/height — the field looked like a hairline border with invisible label.
+    */
+    #tg-tplans-2026 button.tg-tplans-cal-trigger.tg-tplans-dp-trigger {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      box-sizing: border-box !important;
+      min-height: 2.5rem !important;
+      height: auto !important;
+      padding: 0.5rem 0.75rem !important;
+      width: 280px !important;
+      max-width: 100% !important;
+      background-color: var(--tp-card, #ffffff) !important;
+      color: var(--tp-on, #1d1b19) !important;
+      -webkit-text-fill-color: var(--tp-on, #1d1b19) !important;
+      border: 1px solid rgba(29, 27, 25, 0.14) !important;
+      border-radius: 0.375rem !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      font-size: 0.875rem !important;
+      font-weight: 400 !important;
+      line-height: 1.25 !important;
+      cursor: pointer !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-cal-trigger.tg-tplans-dp-trigger[data-empty="true"] {
+      color: var(--tp-muted, #5c5854) !important;
+      -webkit-text-fill-color: var(--tp-muted, #5c5854) !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-cal-trigger.tg-tplans-dp-trigger:hover {
+      background-color: rgba(29, 27, 25, 0.03) !important;
+      color: #1d1b19 !important;
+      -webkit-text-fill-color: #1d1b19 !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-cal-trigger.tg-tplans-dp-trigger[data-empty="true"]:hover {
+      color: var(--tp-muted, #5c5854) !important;
+      -webkit-text-fill-color: var(--tp-muted, #5c5854) !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-cal-trigger.tg-tplans-dp-trigger .tg-tplans-cal-trigger__label {
+      color: inherit !important;
+      -webkit-text-fill-color: inherit !important;
+      font-size: inherit !important;
     }
 
     #tg-tplans-2026 .tg-tplans-total-val {
