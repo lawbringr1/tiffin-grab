@@ -2011,6 +2011,23 @@
         }
       }
 
+      /** Collapse “Read more” so front height matches the clamped description before flipping to configure. */
+      function collapsePlanDescRead(card) {
+        if (!card) return;
+        var desc = card.querySelector(".tg-tplans-desc");
+        var readBtn = card.querySelector(".tg-tplans-read");
+        if (!desc || !readBtn) return;
+        readBtn.setAttribute("data-open", "0");
+        readBtn.setAttribute("aria-expanded", "false");
+        desc.classList.remove("tg-tplans-desc--open");
+        var spanShort = desc.querySelector(".tg-tplans-snippet");
+        var spanFull = desc.querySelector(".tg-tplans-full");
+        if (spanShort) spanShort.hidden = false;
+        if (spanFull) spanFull.hidden = true;
+        var lbl = readBtn.querySelector(".tg-tplans-read-label");
+        if (lbl) lbl.textContent = "Read more";
+      }
+
       /**
        * Listing: all cards share max(natural front heights) so CTAs line up.
        * Only the opened (flipped) card may grow taller to fit the configure face — others stay at that front max.
@@ -2265,10 +2282,12 @@
           attachTplansFillCursor(quick);
           quick.addEventListener("click", function () {
             if (state.openId && state.openId !== card) {
+              collapsePlanDescRead(state.openId);
               state.openId.classList.remove("tg-tplans-card--flipped");
               scheduleSyncAllHeights();
               syncFlipA11y(state.openId);
             }
+            collapsePlanDescRead(card);
             card.classList.add("tg-tplans-card--flipped");
             state.openId = card;
             syncFlipA11y(card);
