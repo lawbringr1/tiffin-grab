@@ -507,16 +507,8 @@
         transition: none;
       }
     }
-    /* Configure panel needs a bit more than the front; keep close to front card height — margin-top:auto on .tg-tplans-breakdown was the main gap. */
-    .tg-tplans-card--flipped {
-      min-height: 39rem;
-    }
     .tg-tplans-card--flipped .tg-tplans-flip {
       transform: rotateY(180deg);
-      min-height: 39rem;
-    }
-    .tg-tplans-card--flipped .tg-tplans-face {
-      min-height: 39rem;
     }
     .tg-tplans-face {
       position: absolute;
@@ -540,7 +532,8 @@
     .tg-tplans-face--back {
       transform: rotateY(180deg) translateZ(1px);
       overflow-x: hidden;
-      overflow-y: visible;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       padding: 1.25rem 1.5rem 1.35rem;
     }
     .tg-tplans-face--front .tg-tplans-media {
