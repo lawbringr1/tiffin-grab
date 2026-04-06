@@ -2029,8 +2029,8 @@
       }
 
       /**
-       * Listing: all cards share max(natural front heights) so CTAs line up.
-       * Only the opened (flipped) card may grow taller to fit the configure face — others stay at that front max.
+       * Listing: cards in each grid row share max(natural front heights) so CTAs line up in that row.
+       * Only the opened (flipped) card may grow taller to fit the configure face — others in that row stay at that row’s front max.
        * Absolute faces need the flip box height set explicitly so nothing clips.
        *
        * IMPORTANT: Do not use body.offsetHeight/scrollHeight for the front — with a fixed flip height the body
@@ -2112,28 +2112,43 @@
         return padY + hdrBlock + cfgBlock + 16;
       }
 
+      /** Match .tg-tplans-grid breakpoints so row grouping matches the visual grid. */
+      function getTplansGridColumns() {
+        var w = window.innerWidth;
+        if (w >= 1024) return 3;
+        if (w >= 640) return 2;
+        return 1;
+      }
+
       function syncAllPlanCardHeights() {
         var cards = mount.querySelectorAll(".tg-tplans-card");
         if (!cards.length) return;
-        var maxFrontH = 0;
-        for (var i = 0; i < cards.length; i++) {
-          maxFrontH = Math.max(maxFrontH, measureCardFrontHeight(cards[i]));
-        }
-        maxFrontH = Math.max(Math.ceil(maxFrontH), 400);
+        var cols = getTplansGridColumns();
+        var n = cards.length;
+        var totalRows = Math.ceil(n / cols);
         var openFlipped =
           state.openId && state.openId.classList.contains("tg-tplans-card--flipped");
-        for (var j = 0; j < cards.length; j++) {
-          var c = cards[j];
-          var flip = c.querySelector(".tg-tplans-flip");
-          if (!flip) continue;
-          var h = maxFrontH;
-          if (openFlipped && c === state.openId) {
-            h = Math.max(maxFrontH, Math.ceil(measureCardBackHeight(c)));
+        var row, start, idx, maxFrontH, j, c, flip, h;
+        for (row = 0; row < totalRows; row++) {
+          start = row * cols;
+          maxFrontH = 0;
+          for (idx = start; idx < start + cols && idx < n; idx++) {
+            maxFrontH = Math.max(maxFrontH, measureCardFrontHeight(cards[idx]));
           }
-          flip.style.minHeight = h + "px";
-          flip.style.height = h + "px";
-          c.style.minHeight = h + "px";
-          c.style.height = "";
+          maxFrontH = Math.max(Math.ceil(maxFrontH), 400);
+          for (j = start; j < start + cols && j < n; j++) {
+            c = cards[j];
+            flip = c.querySelector(".tg-tplans-flip");
+            if (!flip) continue;
+            h = maxFrontH;
+            if (openFlipped && c === state.openId) {
+              h = Math.max(maxFrontH, Math.ceil(measureCardBackHeight(c)));
+            }
+            flip.style.minHeight = h + "px";
+            flip.style.height = h + "px";
+            c.style.minHeight = h + "px";
+            c.style.height = "";
+          }
         }
       }
 
