@@ -532,8 +532,7 @@
     .tg-tplans-face--back {
       transform: rotateY(180deg) translateZ(1px);
       overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow-y: hidden;
       padding: 1.25rem 1.5rem 1.35rem;
     }
     .tg-tplans-face--front .tg-tplans-media {
@@ -657,12 +656,14 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      flex: 0 1 auto;
-      min-height: min-content;
+      flex: 1 1 auto;
+      min-height: 0;
       margin: 0;
       padding: 0;
       border: none;
-      overflow: visible;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .tg-tplans-label {
@@ -799,7 +800,7 @@
       position: relative;
       width: 100%;
       flex-shrink: 0;
-      min-height: 2.75rem;
+      min-height: 2.5rem;
     }
     .tg-tplans-date-picker-wrap .tg-tplans-cal-trigger__svg {
       position: absolute;
@@ -820,10 +821,10 @@
       display: block;
       width: 100%;
       max-width: 280px;
-      min-height: 2.5rem;
-      height: 2.5rem;
+      min-height: 2.35rem;
+      height: 2.35rem;
       margin: 0;
-      padding: 0.5rem 0.75rem 0.5rem 2.35rem;
+      padding: 0.4rem 0.65rem 0.4rem 2.15rem;
       box-sizing: border-box;
       border-radius: 0.375rem;
       border: 1px solid rgba(29, 27, 25, 0.22);
@@ -1219,6 +1220,41 @@
       margin-top: 0;
     }
 
+    /* Flip back: keep card height fixed; scroll inside .tg-tplans-config only — hide scrollbar (trackpad/touch still works). */
+    #tg-tplans-2026 .tg-tplans-face--back .tg-tplans-config {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #tg-tplans-2026 .tg-tplans-face--back .tg-tplans-config::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    #tg-tplans-2026 .tg-tplans-face--back {
+      padding: 0.8rem 1.1rem 0.85rem;
+    }
+    #tg-tplans-2026 .tg-tplans-back-header {
+      margin-bottom: 0.55rem;
+    }
+    #tg-tplans-2026 .tg-tplans-config-inner {
+      gap: 0.85rem;
+    }
+    #tg-tplans-2026 .tg-tplans-options-slot {
+      gap: 0.85rem;
+    }
+    #tg-tplans-2026 .tg-tplans-face--back .tg-tplans-label {
+      margin-bottom: 0.35rem;
+    }
+    #tg-tplans-2026 .tg-tplans-days {
+      gap: 0.45rem;
+    }
+    #tg-tplans-2026 .tg-tplans-breakdown {
+      padding: 0.85rem 0.95rem;
+    }
+    #tg-tplans-2026 .tg-tplans-breakdown-total {
+      padding-top: 0.5rem;
+    }
+
     .tg-tplans-pager {
       display: flex;
       flex-wrap: wrap;
@@ -1305,6 +1341,7 @@
       border: 2px solid transparent !important;
       -webkit-appearance: none;
       appearance: none;
+      padding: 0.5rem 0.3rem !important;
     }
     #tg-tplans-2026 .tg-tplans-seg > button:hover:not([aria-pressed="true"]) {
       color: #1d1b19 !important;
@@ -1324,6 +1361,7 @@
       -webkit-appearance: none;
       appearance: none;
       border: 2px solid transparent !important;
+      padding: 0.5rem 0.55rem !important;
     }
     #tg-tplans-2026 button.tg-tplans-daybtn:hover:not([aria-pressed="true"]) {
       background: #f2ede8 !important;
@@ -1365,9 +1403,9 @@
       visibility: visible !important;
       opacity: 1 !important;
       box-sizing: border-box !important;
-      min-height: 2.5rem !important;
-      height: 2.5rem !important;
-      padding: 0.5rem 0.75rem 0.5rem 2.35rem !important;
+      min-height: 2.35rem !important;
+      height: 2.35rem !important;
+      padding: 0.4rem 0.65rem 0.4rem 2.15rem !important;
       width: 100% !important;
       max-width: 280px !important;
       min-width: 240px !important;
@@ -2215,11 +2253,11 @@
           trigger.style.setProperty("display", "block", "important");
           trigger.style.setProperty("visibility", "visible", "important");
           trigger.style.setProperty("opacity", "1", "important");
-          trigger.style.setProperty("min-height", "2.5rem", "important");
-          trigger.style.setProperty("height", "2.5rem", "important");
-          trigger.style.setProperty("line-height", "1.25rem", "important");
-          trigger.style.setProperty("padding", "0.5rem 0.75rem", "important");
-          trigger.style.setProperty("padding-left", "2.35rem", "important");
+          trigger.style.setProperty("min-height", "2.35rem", "important");
+          trigger.style.setProperty("height", "2.35rem", "important");
+          trigger.style.setProperty("line-height", "1.2rem", "important");
+          trigger.style.setProperty("padding", "0.4rem 0.65rem", "important");
+          trigger.style.setProperty("padding-left", "2.15rem", "important");
           trigger.style.setProperty("width", "100%", "important");
           trigger.style.setProperty("max-width", "280px", "important");
           trigger.style.setProperty("min-width", "240px", "important");
