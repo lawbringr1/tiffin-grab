@@ -1109,6 +1109,24 @@
       min-height: 0;
       overflow: hidden;
     }
+    /* Start date: space between label (“Select a start date”) and the trigger */
+    #tg-tplans-2026 .tg-tplans-options-slot > div:has(> .tg-tplans-cal-field) {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    #tg-tplans-2026 .tg-tplans-options-slot > div:has(> .tg-tplans-cal-field) > .tg-tplans-label {
+      margin-bottom: 0;
+    }
+    /* Options column above the total card so the date popover isn’t covered */
+    #tg-tplans-2026 .tg-tplans-config-inner > .tg-tplans-options-slot {
+      position: relative;
+      z-index: 3;
+    }
+    #tg-tplans-2026 .tg-tplans-config-inner > .tg-tplans-breakdown {
+      position: relative;
+      z-index: 1;
+    }
 
     .tg-tplans-pager {
       display: flex;
