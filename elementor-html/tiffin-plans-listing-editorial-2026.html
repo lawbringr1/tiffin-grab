@@ -1961,17 +1961,40 @@
        * Listing: all cards share max(natural front heights) so CTAs line up.
        * Only the opened (flipped) card may grow taller to fit the configure face — others stay at that front max.
        * Absolute faces need the flip box height set explicitly so nothing clips.
+       *
+       * IMPORTANT: Do not use body.offsetHeight/scrollHeight for the front — with a fixed flip height the body
+       * flex-grows and those values include empty flex space (feedback loop → huge cards on flip).
        */
+      function sumFlexColumnContentHeight(el) {
+        if (!el) return 0;
+        var cs = window.getComputedStyle(el);
+        var padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+        var gapStr = cs.rowGap || cs.columnGap || cs.gap || "0px";
+        var gap = parseFloat(gapStr) || 0;
+        var kids = el.children;
+        var k;
+        var sum = 0;
+        for (k = 0; k < kids.length; k++) {
+          var ch = kids[k];
+          var h = ch.offsetHeight;
+          var ms = window.getComputedStyle(ch);
+          var mt = ms.marginTop === "auto" ? 0 : parseFloat(ms.marginTop) || 0;
+          var mb = ms.marginBottom === "auto" ? 0 : parseFloat(ms.marginBottom) || 0;
+          sum += h + mt + mb;
+        }
+        if (kids.length > 1) {
+          sum += gap * (kids.length - 1);
+        }
+        return padY + sum;
+      }
+
       function measureCardFrontHeight(card) {
         var front = card.querySelector(".tg-tplans-face--front");
         if (!front) return 0;
         var media = front.querySelector(".tg-tplans-media");
         var body = front.querySelector(".tg-tplans-body");
         var mh = media ? media.offsetHeight : 0;
-        var bh = 0;
-        if (body) {
-          bh = Math.max(body.scrollHeight, body.offsetHeight);
-        }
+        var bh = body ? sumFlexColumnContentHeight(body) : 0;
         return mh + bh + 16;
       }
 
@@ -1982,7 +2005,23 @@
         var cfg = back.querySelector(".tg-tplans-config");
         var fs = window.getComputedStyle(back);
         var padY = (parseFloat(fs.paddingTop) || 0) + (parseFloat(fs.paddingBottom) || 0);
-        return (hdr ? hdr.offsetHeight : 0) + (cfg ? cfg.offsetHeight : 0) + padY + 16;
+        var hdrBlock = 0;
+        if (hdr) {
+          hdrBlock = hdr.offsetHeight;
+          var hms = window.getComputedStyle(hdr);
+          hdrBlock += hms.marginTop === "auto" ? 0 : parseFloat(hms.marginTop) || 0;
+          hdrBlock += hms.marginBottom === "auto" ? 0 : parseFloat(hms.marginBottom) || 0;
+        }
+        var cfgBlock = 0;
+        if (cfg) {
+          var inner = cfg.querySelector(".tg-tplans-config-inner");
+          if (inner && inner.children.length) {
+            cfgBlock = sumFlexColumnContentHeight(inner);
+          } else {
+            cfgBlock = cfg.offsetHeight;
+          }
+        }
+        return padY + hdrBlock + cfgBlock + 16;
       }
 
       function syncAllPlanCardHeights() {
