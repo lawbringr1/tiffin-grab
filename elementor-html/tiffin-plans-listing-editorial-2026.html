@@ -784,6 +784,123 @@
       outline: 2px solid var(--tp-orange-a35);
       outline-offset: 1px;
     }
+
+    /* Multi-select start date (shadcn-style calendar, vanilla) */
+    .tg-tplans-cal {
+      width: 100%;
+      max-width: 20rem;
+      margin: 0 auto;
+      padding: 0.65rem 0.75rem 0.75rem;
+      border-radius: 0.375rem;
+      border: 1px solid var(--tp-outline-variant);
+      background: var(--tp-card);
+      box-shadow: 0 1px 2px rgba(29, 27, 25, 0.04);
+    }
+    .tg-tplans-cal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+    .tg-tplans-cal-title {
+      font-family: var(--tp-font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--tp-on);
+      flex: 1;
+      text-align: center;
+    }
+    .tg-tplans-cal-nav {
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 0.375rem;
+      background: var(--tp-surface-low);
+      color: var(--tp-on);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .tg-tplans-cal-nav:hover:not(:disabled) {
+      background: var(--tp-panel);
+    }
+    .tg-tplans-cal-nav:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+    .tg-tplans-cal-nav .material-symbols-outlined {
+      font-size: 1.125rem !important;
+    }
+    .tg-tplans-cal-dow {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.15rem;
+      margin-bottom: 0.25rem;
+    }
+    .tg-tplans-cal-dow span {
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--tp-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .tg-tplans-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.2rem;
+    }
+    .tg-tplans-cal-day {
+      aspect-ratio: 1;
+      min-height: 2.1rem;
+      max-height: 2.35rem;
+      border: none;
+      border-radius: 0.375rem;
+      background: transparent;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--tp-on);
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease;
+    }
+    .tg-tplans-cal-day:hover:not(:disabled):not(.tg-tplans-cal-day--muted) {
+      background: var(--tp-orange-fill);
+    }
+    .tg-tplans-cal-day--muted {
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .tg-tplans-cal-day--outside {
+      color: var(--tp-muted);
+      font-weight: 500;
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+    .tg-tplans-cal-day:disabled:not(.tg-tplans-cal-day--muted) {
+      opacity: 0.35;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    .tg-tplans-cal-day[aria-pressed="true"] {
+      background: var(--tp-primary);
+      color: var(--tp-on-primary);
+    }
+    .tg-tplans-cal-day[aria-pressed="true"]:hover:not(:disabled) {
+      background: var(--tp-primary-mid);
+      color: var(--tp-on-primary);
+    }
+    .tg-tplans-cal-hint {
+      margin: 0.65rem 0 0;
+      font-size: 0.6875rem;
+      line-height: 1.4;
+      color: var(--tp-muted);
+      text-align: center;
+    }
     .tg-tplans-field-wrap {
       position: relative;
     }
@@ -1327,6 +1444,8 @@
               if (v === "" || v === null) return;
               entry.options.push({ value: v, text: (opt.textContent || "").trim() });
             });
+          } else if (entry.tag === "input") {
+            entry.inputType = (el.getAttribute("type") || "text").toLowerCase();
           }
           apo.push(entry);
         });
@@ -1801,6 +1920,157 @@
         return minVal !== Infinity ? minIdx : 0;
       }
 
+      function formatLocalYMD(d) {
+        var y = d.getFullYear();
+        var m = d.getMonth() + 1;
+        var day = d.getDate();
+        return y + "-" + (m < 10 ? "0" : "") + m + "-" + (day < 10 ? "0" : "") + day;
+      }
+
+      function localDayStart(d) {
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      }
+
+      /**
+       * Multi-select month grid (like shadcn Calendar mode="multiple").
+       * WooCommerce receives one YYYY-MM-DD: the earliest selected date.
+       * Only future calendar days are selectable (earliest = tomorrow local time).
+       */
+      function mountPreferredStartCalendar(field, values, updateBreakdown) {
+        var wrap = document.createElement("div");
+        wrap.className = "tg-tplans-cal";
+        var selected = Object.create(null);
+        var view = new Date();
+        view.setDate(1);
+
+        function minSelectableDay() {
+          var t = new Date();
+          return new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
+        }
+
+        function syncValue() {
+          var keys = Object.keys(selected).sort();
+          values[field.name] = keys.length ? keys[0] : "";
+          if (updateBreakdown) updateBreakdown();
+        }
+
+        var head = document.createElement("div");
+        head.className = "tg-tplans-cal-head";
+        var prevBtn = document.createElement("button");
+        prevBtn.type = "button";
+        prevBtn.className = "tg-tplans-cal-nav";
+        prevBtn.setAttribute("aria-label", "Previous month");
+        prevBtn.innerHTML =
+          '<span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>';
+        var titleEl = document.createElement("div");
+        titleEl.className = "tg-tplans-cal-title";
+        titleEl.setAttribute("aria-live", "polite");
+        var nextBtn = document.createElement("button");
+        nextBtn.type = "button";
+        nextBtn.className = "tg-tplans-cal-nav";
+        nextBtn.setAttribute("aria-label", "Next month");
+        nextBtn.innerHTML =
+          '<span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>';
+        head.appendChild(prevBtn);
+        head.appendChild(titleEl);
+        head.appendChild(nextBtn);
+
+        var dowRow = document.createElement("div");
+        dowRow.className = "tg-tplans-cal-dow";
+        ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].forEach(function (abbr) {
+          var s = document.createElement("span");
+          s.textContent = abbr;
+          dowRow.appendChild(s);
+        });
+
+        var gridWrap = document.createElement("div");
+        gridWrap.className = "tg-tplans-cal-grid";
+
+        var hint = document.createElement("p");
+        hint.className = "tg-tplans-cal-hint";
+        hint.textContent =
+          "Choose any future dates that work for you. Your earliest pick is sent as the start date.";
+
+        wrap.appendChild(head);
+        wrap.appendChild(dowRow);
+        wrap.appendChild(gridWrap);
+        wrap.appendChild(hint);
+
+        function monthStart(d) {
+          return new Date(d.getFullYear(), d.getMonth(), 1);
+        }
+
+        function canGoPrev() {
+          var curMonthStart = monthStart(new Date());
+          var viewMonthStart = monthStart(view);
+          return viewMonthStart.getTime() > curMonthStart.getTime();
+        }
+
+        function render() {
+          var y = view.getFullYear();
+          var m = view.getMonth();
+          titleEl.textContent = view.toLocaleString(undefined, { month: "long", year: "numeric" });
+          prevBtn.disabled = !canGoPrev();
+          gridWrap.innerHTML = "";
+
+          var minT = localDayStart(minSelectableDay()).getTime();
+          var first = new Date(y, m, 1);
+          var startPad = first.getDay();
+          var dim = new Date(y, m + 1, 0).getDate();
+          var totalCells = Math.ceil((startPad + dim) / 7) * 7;
+
+          var c;
+          for (c = 0; c < totalCells; c++) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "tg-tplans-cal-day";
+
+            if (c < startPad || c >= startPad + dim) {
+              btn.classList.add("tg-tplans-cal-day--muted");
+              btn.tabIndex = -1;
+              gridWrap.appendChild(btn);
+              continue;
+            }
+
+            var dayNum = c - startPad + 1;
+            var cellDate = new Date(y, m, dayNum);
+            var ymd = formatLocalYMD(cellDate);
+            btn.textContent = String(dayNum);
+            var cellT = localDayStart(cellDate).getTime();
+            if (cellT < minT) {
+              btn.disabled = true;
+            } else {
+              btn.setAttribute("aria-pressed", selected[ymd] ? "true" : "false");
+              btn.dataset.ymd = ymd;
+              btn.addEventListener("click", function () {
+                var k = this.dataset.ymd;
+                if (!k) return;
+                if (selected[k]) delete selected[k];
+                else selected[k] = true;
+                syncValue();
+                render();
+              });
+            }
+            gridWrap.appendChild(btn);
+          }
+        }
+
+        prevBtn.addEventListener("click", function () {
+          if (!canGoPrev()) return;
+          view.setMonth(view.getMonth() - 1);
+          render();
+        });
+        nextBtn.addEventListener("click", function () {
+          view.setMonth(view.getMonth() + 1);
+          render();
+        });
+
+        values[field.name] = "";
+        syncValue();
+        render();
+        return wrap;
+      }
+
       function populateConfig(card, product) {
         var inner = card.querySelector(".tg-tplans-config-inner");
         var cfgEl = card.querySelector(".tg-tplans-config");
@@ -1973,14 +2243,21 @@
               }
             } else {
               wrap.innerHTML = '<span class="tg-tplans-label">' + escapeHtml(field.label) + "</span>";
-              var inp = document.createElement("input");
-              inp.className = "tg-tplans-date";
-              inp.type = "date";
-              inp.required = !!field.required;
-              inp.addEventListener("change", function () {
-                values[field.name] = inp.value;
-              });
-              wrap.appendChild(inp);
+              var inpType = field.inputType || (key === "date" ? "date" : "text");
+              var isDateField = field.tag === "input" && (inpType === "date" || key === "date");
+              if (isDateField) {
+                wrap.appendChild(mountPreferredStartCalendar(field, values, updateBreakdown));
+              } else {
+                var inp = document.createElement("input");
+                inp.className = "tg-tplans-date";
+                inp.type = inpType || "text";
+                inp.required = !!field.required;
+                inp.addEventListener("change", function () {
+                  values[field.name] = inp.value;
+                  updateBreakdown();
+                });
+                wrap.appendChild(inp);
+              }
             }
             optionsSlot.appendChild(wrap);
           });
