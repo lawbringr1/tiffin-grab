@@ -488,7 +488,7 @@
 
     .tg-tplans-card {
       position: relative;
-      min-height: 36.25rem;
+      min-height: 22rem;
       perspective: 1100px;
       -webkit-perspective: 1100px;
       background: transparent;
@@ -498,7 +498,7 @@
     .tg-tplans-flip {
       position: relative;
       width: 100%;
-      min-height: 36.25rem;
+      min-height: 22rem;
       height: 100%;
       transform-style: preserve-3d;
       transition: transform 0.65s cubic-bezier(0.33, 1, 0.68, 1);
@@ -515,7 +515,7 @@
       position: absolute;
       inset: 0;
       width: 100%;
-      min-height: 36.25rem;
+      min-height: 22rem;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       background: var(--tp-card);
@@ -541,7 +541,7 @@
       flex-shrink: 0;
     }
     .tg-tplans-face--front .tg-tplans-body {
-      flex: 1;
+      flex: 0 1 auto;
       min-height: 0;
     }
     .tg-tplans-back-header {
@@ -587,10 +587,10 @@
       font-family: var(--tp-font-display);
     }
     .tg-tplans-body {
-      padding: 1.35rem 1.5rem 1.65rem;
+      padding: 1.15rem 1.5rem 1.25rem;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      flex: 0 1 auto;
       gap: 0.2rem;
     }
     .tg-tplans-row {
@@ -645,9 +645,9 @@
     }
 
     .tg-tplans-actions {
-      margin-top: auto;
-      padding-top: 1.35rem;
-      background: linear-gradient(to top, var(--tp-card) 70%, transparent);
+      margin-top: 0.85rem;
+      padding-top: 0;
+      background: none;
     }
     /* Customize CTA: .tg-tplans-fill-cursor (orange outline + cursor fill); Add to cart: .tg-h26-btn */
     .tg-tplans-quick {
@@ -1967,13 +1967,35 @@
       }
 
       /**
-       * While the flip uses absolutely positioned faces + min-height 36.25rem, the back form is often
-       * shorter — leaving a white band. When flipped, size the card/flip to the measured back content;
-       * clear inline sizes when returning to the front (CSS min-height applies again).
+       * Flip faces are position:absolute; the flip box needs an explicit height. Front: sum media + body;
+       * back: header + config + padding. Clears to CSS min-height then syncFrontHeight when returning.
        */
-      function syncFlipHeight(card) {
+      function syncFrontHeight(card) {
+        if (!card || card.classList.contains("tg-tplans-card--flipped")) return;
         var flip = card.querySelector(".tg-tplans-flip");
         var front = card.querySelector(".tg-tplans-face--front");
+        if (!flip || !front) return;
+        var media = front.querySelector(".tg-tplans-media");
+        var body = front.querySelector(".tg-tplans-body");
+        var h = (media ? media.offsetHeight : 0) + (body ? body.offsetHeight : 0);
+        h = Math.max(Math.ceil(h), 260);
+        flip.style.minHeight = h + "px";
+        flip.style.height = h + "px";
+        card.style.minHeight = h + "px";
+        card.style.height = "";
+      }
+
+      function scheduleFrontHeight(card) {
+        if (!card || card.classList.contains("tg-tplans-card--flipped")) return;
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            syncFrontHeight(card);
+          });
+        });
+      }
+
+      function syncFlipHeight(card) {
+        var flip = card.querySelector(".tg-tplans-flip");
         var back = card.querySelector(".tg-tplans-face--back");
         if (!flip || !back) return;
 
@@ -1982,6 +2004,7 @@
           flip.style.height = "";
           card.style.minHeight = "";
           card.style.height = "";
+          scheduleFrontHeight(card);
           return;
         }
 
@@ -1990,7 +2013,7 @@
         var fs = window.getComputedStyle(back);
         var padY = (parseFloat(fs.paddingTop) || 0) + (parseFloat(fs.paddingBottom) || 0);
         var contentH = (hdr ? hdr.offsetHeight : 0) + (cfg ? cfg.offsetHeight : 0);
-        var h = Math.max(Math.ceil(contentH + padY), 280);
+        var h = Math.max(Math.ceil(contentH + padY), 240);
 
         flip.style.minHeight = h + "px";
         flip.style.height = h + "px";
@@ -2045,6 +2068,9 @@
             im.src = imgUrl;
             im.alt = alt;
             im.loading = "lazy";
+            im.addEventListener("load", function () {
+              scheduleFrontHeight(card);
+            });
             media.appendChild(im);
           } else {
             var ph = document.createElement("span");
@@ -2101,6 +2127,7 @@
             spanFull.hidden = open;
             readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
             readBtn.setAttribute("data-open", open ? "0" : "1");
+            scheduleFrontHeight(card);
           });
 
           var actions = document.createElement("div");
@@ -2174,6 +2201,7 @@
           mount.appendChild(card);
 
           syncFlipA11y(card);
+          scheduleFrontHeight(card);
         });
       }
 
