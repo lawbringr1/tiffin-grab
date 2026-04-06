@@ -527,14 +527,9 @@
     }
     .tg-tplans-face--front {
       transform: rotateY(0deg) translateZ(1px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
     .tg-tplans-face--back {
       transform: rotateY(180deg) translateZ(1px);
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       padding: 1.25rem 1.5rem 1.35rem;
     }
     .tg-tplans-face--front .tg-tplans-media {
@@ -1220,16 +1215,9 @@
       margin-top: 0;
     }
 
-    /* Flip back: no flex-grow on config (was leaving a dead band under the pricing block). Scroll the whole face if needed; hide scrollbar. */
+    /* Tighter padding on configure face (no card scroll — clip via .tg-tplans-face overflow:hidden). */
     #tg-tplans-2026 .tg-tplans-face--back {
       padding: 0.8rem 1.1rem 0.75rem;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    #tg-tplans-2026 .tg-tplans-face--back::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      height: 0;
     }
     #tg-tplans-2026 .tg-tplans-back-header {
       margin-bottom: 0.55rem;
