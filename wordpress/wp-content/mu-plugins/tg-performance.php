@@ -75,8 +75,10 @@ add_action(
 		}
 		echo '<link rel="preconnect" href="https://fonts.googleapis.com" />' . "\n";
 		echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />' . "\n";
-		echo '<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />' . "\n";
-		echo '<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />' . "\n";
+		// Preserve in HTML output: LiteSpeed/QUIC may strip or defer external font CSS, which makes
+		// variable weights (Geist 100–900) inconsistent vs a warm font cache (typical vs incognito).
+		echo '<link data-no-optimize="1" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />' . "\n";
+		echo '<link data-no-optimize="1" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />' . "\n";
 	},
 	2
 );
