@@ -7,9 +7,7 @@
   so styles apply even if the WordPress page ID is not 10016, as long as this hero widget (id tg-hero-tags) is on the page.
   Same pattern as Shadcn Button + ArrowUpRight. Keep this widget on Home 2026 so downstream sections pick up button CSS.
 -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<!-- Geist + Material Symbols load from Elementor Site Settings → Custom CSS (Default Kit). See elementor-kit-global-custom-css.css -->
+<!-- Geist + Material Symbols + font preloads: load once in site <head> via WPCode (elementor-head-geist-preload-snippet.html). Do not duplicate <link> tags here — they run in the body and repeat preconnect/preload. -->
 <style>
 :root {
   --tg-hero-gutter: clamp(1.5rem, 6vw, 3.5rem);
@@ -33,6 +31,16 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .e-con,
 body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .e-con-inner,
 body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-heading-title {
   font-family: var(--tg-font) !important;
+}
+/* Match kit: bold Geist (700) for headings on Home 2026 — wins over widget #id rules on h2/h3. */
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h1,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h2,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h3,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h4,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h5,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) h6,
+body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-heading-title {
+  font-weight: 700 !important;
 }
 @media (max-width: 767px) {
   html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)),
@@ -222,7 +230,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   letter-spacing: 0.01em;
 }
 .home-2026-social-text strong {
-  font-weight: 800;
+  font-weight: 700;
   color: #231a15;
   font-size: 1.08em;
   letter-spacing: -0.02em;
