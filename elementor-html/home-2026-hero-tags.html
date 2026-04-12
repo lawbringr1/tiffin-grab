@@ -9,9 +9,7 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<!-- Single Google Fonts import for Home 2026 (Geist everywhere). data-no-optimize: keep links when page HTML is processed by LiteSpeed/QUIC. -->
-<link data-no-optimize="1" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
-<link data-no-optimize="1" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<!-- Geist + Material Symbols load from Elementor Site Settings → Custom CSS (Default Kit). See elementor-kit-global-custom-css.css -->
 <style>
 :root {
   --tg-hero-gutter: clamp(1.5rem, 6vw, 3.5rem);
@@ -21,8 +19,6 @@
 /* Pinch-zoom on iOS: classic vw is wider than the *visual* viewport, so gaps show as white. Clip X + page canvas + dvw caps below. */
 body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
   --tg-page-canvas: #fff8f6;
-  /* Geist Regular (400) baseline for Home 2026 — lives in Elementor HTML, not MU plugin */
-  font-weight: 400 !important;
 }
 
 /* Force Geist across the whole Home 2026 page (Elementor kit/theme overrides included). */

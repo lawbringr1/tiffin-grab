@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "elementor-mcp": {
+      "type": "http",
+      "url": "https://tiffingrab.ca/wp-json/mcp/elementor-mcp-server",
+      "headers": {
+        "Authorization": "Basic YOUR_BASE64_USERNAME_COLON_APP_PASSWORD"
+      }
+    }
+  }
+}
