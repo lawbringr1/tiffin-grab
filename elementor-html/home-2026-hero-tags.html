@@ -21,6 +21,8 @@
 /* Pinch-zoom on iOS: classic vw is wider than the *visual* viewport, so gaps show as white. Clip X + page canvas + dvw caps below. */
 body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
   --tg-page-canvas: #fff8f6;
+  /* Geist Regular (400) baseline for Home 2026 — lives in Elementor HTML, not MU plugin */
+  font-weight: 400 !important;
 }
 
 /* Force Geist across the whole Home 2026 page (Elementor kit/theme overrides included). */
