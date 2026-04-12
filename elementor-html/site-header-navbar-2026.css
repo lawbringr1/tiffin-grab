@@ -1,0 +1,423 @@
+/*
+  TiffinGrab — compact floating pill navbar (navbar-06 style: centered, not full-bleed)
+
+  TEMPLATE 1863
+  • Pill width: content-sized, capped by --tg-nav-pill-max (floating with side margins).
+  • Frosted glass + transparent PNG logo (header-nav-logo-snippet.html).
+*/
+
+:root {
+  --tg-font: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --tg-bg: #ffffff;
+  /* Frosted bar */
+  --tg-glass-fill: rgba(255, 255, 255, 0.58);
+  --tg-glass-border: rgba(255, 255, 255, 0.55);
+  --tg-glass-edge: rgba(15, 23, 42, 0.08);
+  --tg-glass-blur: 18px;
+  --tg-canvas: transparent;
+  --tg-muted: hsl(220 14% 96%);
+  --tg-foreground: hsl(222 47% 11%);
+  --tg-navlink: #1d5c32;
+  --tg-muted-foreground: hsl(220 9% 46%);
+  --tg-border: hsl(220 13% 91%);
+  --tg-cta: #0a0a0a;
+  --tg-cta-text: #fafafa;
+  /* Compact floating pill — tweak rem up/down to taste (48rem ≈ 768px) */
+  --tg-nav-pill-max: min(48rem, calc(100vw - 2.5rem));
+}
+
+/* --- Header: transparent; stack rows as centered floating pills --- */
+.elementor-location-header.elementor-1863,
+header.elementor.elementor-1863.elementor-location-header {
+  font-family: var(--tg-font);
+  background: transparent !important;
+  border-bottom: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-top: 0.75rem !important;
+  padding-left: clamp(0.75rem, 3vw, 1.5rem) !important;
+  padding-right: clamp(0.75rem, 3vw, 1.5rem) !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.elementor-location-header > .elementor-section {
+  background: transparent !important;
+}
+
+/* Non-pill rows: no extra max-width strip rules */
+.elementor-location-header .e-con.e-parent:not(.elementor-element-ef53437):not(.elementor-element-67924b6) {
+  background: transparent !important;
+}
+
+/* ========== Unified pill: desktop header row (ef53437) — narrow, centered ========== */
+.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+.elementor-location-header .elementor-element.elementor-element-ef53437.e-con.e-parent {
+  position: relative !important;
+  z-index: 2 !important;
+  box-sizing: border-box !important;
+  width: fit-content !important;
+  max-width: var(--tg-nav-pill-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+  padding-left: 0.85rem !important;
+  padding-right: 0.85rem !important;
+  background-color: var(--tg-glass-fill) !important;
+  background-image: none !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: var(--tg-glass-edge) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07), inset 0 1px 0 var(--tg-glass-border) !important;
+  backdrop-filter: blur(var(--tg-glass-blur)) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(var(--tg-glass-blur)) saturate(1.2) !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.65rem 1rem !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Columns: logo | nav (center) | actions */
+.elementor-1863 .elementor-element-ef53437 .e-con.e-child {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-element-4fa470e {
+  flex: 0 0 auto !important;
+}
+
+/* --- Logo lockup: transparent PNG + optional wordmark (reference: icon + brand name) --- */
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.5rem !important;
+  flex-shrink: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark .tg-nav-logo-img {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: min(44px, 11vw) !important;
+  max-height: min(44px, 11vw) !important;
+  display: block !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-wordmark {
+  font-family: var(--tg-font) !important;
+  font-weight: 700 !important;
+  font-size: clamp(0.95rem, 2.5vw, 1.05rem) !important;
+  letter-spacing: -0.03em !important;
+  color: #1d5c32 !important;
+  white-space: nowrap !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark svg {
+  width: 44px !important;
+  height: 44px !important;
+  display: block !important;
+}
+
+@media (max-width: 520px) {
+  .elementor-1863 .elementor-element-ef53437 .tg-nav-logo-wordmark {
+    display: none !important;
+  }
+}
+
+/* Hide old text logo heading if you still have both: add class tg-nav-hide-heading to Heading widget */
+.elementor-1863 .elementor-element-ef53437 .tg-nav-hide-heading {
+  display: none !important;
+}
+
+/* ========== Unlimited Elements: ul.ue-menu (flat slate links in white pill) ========== */
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.15rem 0.35rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu > li,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li {
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.28rem !important;
+  font-family: var(--tg-font) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  color: var(--tg-navlink) !important;
+  padding: 0.4rem 0.65rem !important;
+  border-radius: 0.5rem !important;
+  text-decoration: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a:hover,
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a:focus-visible,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a:hover,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a:focus-visible {
+  color: var(--tg-foreground) !important;
+  background: rgba(15, 23, 42, 0.05) !important;
+}
+
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu li.current-menu-item > a,
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu li.current_page_item > a,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu li.current-menu-item > a,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu li.current_page_item > a {
+  color: var(--tg-foreground) !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Dropdown parent: chevron */
+.elementor-1863 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li.menu-item-has-children > a::after,
+.elementor-location-header .elementor-widget-ucaddon_nav_menu ul.ue-menu > li.menu-item-has-children > a::after {
+  content: "" !important;
+  display: inline-block !important;
+  width: 0.65rem !important;
+  height: 0.65rem !important;
+  margin-left: 0.1rem !important;
+  border-right: 1.5px solid currentColor !important;
+  border-bottom: 1.5px solid currentColor !important;
+  transform: rotate(45deg) translateY(-1px) !important;
+  opacity: 0.45 !important;
+}
+
+/* UC mobile toggle inside pill */
+.elementor-location-header .elementor-widget-ucaddon_nav_menu .ue-nav-menu-mobile,
+.elementor-1863 .elementor-widget-ucaddon_nav_menu .ue-nav-menu-mobile {
+  border-radius: 9999px !important;
+  border: 1px solid var(--tg-glass-edge) !important;
+  background: var(--tg-glass-fill) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* ========== Native Elementor Nav Menu + tg-shadcn-nav (optional) ========== */
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.15rem 0.35rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu > li {
+  margin: 0 !important;
+}
+
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu a {
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: var(--tg-font) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: var(--tg-navlink) !important;
+  padding: 0.4rem 0.65rem !important;
+  border-radius: 0.5rem !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu a:hover,
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu a:focus-visible {
+  color: var(--tg-foreground) !important;
+  background: rgba(15, 23, 42, 0.05) !important;
+}
+
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu .current-menu-item > a,
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu .current_page_item > a {
+  color: var(--tg-foreground) !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+}
+
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu--dropdown {
+  margin-top: 0.5rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid var(--tg-border) !important;
+  background: var(--tg-bg) !important;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1) !important;
+  padding: 0.25rem !important;
+}
+
+/* ========== CTA: Sign In / account — class tg-nav-signin on Button widget ========== */
+.elementor-location-header .tg-nav-signin .elementor-button,
+.elementor-1863 .tg-nav-signin .elementor-button {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--tg-font) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.2 !important;
+  color: var(--tg-cta-text) !important;
+  background: var(--tg-cta) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 0.45rem 1.15rem !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+.elementor-location-header .tg-nav-signin .elementor-button::after,
+.elementor-1863 .tg-nav-signin .elementor-button::after {
+  content: none !important;
+  display: none !important;
+}
+
+.elementor-location-header .tg-nav-signin .elementor-button:hover,
+.elementor-1863 .tg-nav-signin .elementor-button:focus-visible {
+  background: #171717 !important;
+  color: var(--tg-cta-text) !important;
+}
+
+/* Legacy: “Let’s Collaborate” with arrow — keep if still used */
+.elementor-location-header .tg-shadcn-cta:not(.tg-nav-signin) .elementor-button {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  font-family: var(--tg-font) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: var(--tg-cta-text) !important;
+  background: var(--tg-cta) !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 0.25rem 0.25rem 0.25rem 1.25rem !important;
+  padding-right: 3rem !important;
+  min-height: 2.5rem !important;
+  overflow: hidden !important;
+}
+
+.elementor-location-header .tg-shadcn-cta:not(.tg-nav-signin) .elementor-button::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  right: 0.25rem !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 9999px !important;
+  background: var(--tg-bg) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h10v10'/%3E%3Cpath d='M7 17 17 7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  pointer-events: none !important;
+}
+
+/* Menu item CTA (tg-nav-cta) — native menu only */
+.elementor-location-header .tg-shadcn-nav .elementor-nav-menu > li.tg-nav-cta > a {
+  color: var(--tg-cta-text) !important;
+  background: var(--tg-cta) !important;
+  border-radius: 9999px !important;
+  padding: 0.45rem 1rem !important;
+}
+
+/* ========== Nested Elementor menu ========== */
+.elementor-location-header .e-n-menu-wrapper {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.elementor-location-header .e-n-menu-title-text {
+  font-family: var(--tg-font) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: var(--tg-navlink) !important;
+}
+
+/* ========== Mobile row (67924b6): same compact centered frosted pill ========== */
+.elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
+  box-sizing: border-box !important;
+  width: fit-content !important;
+  max-width: var(--tg-nav-pill-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0 !important;
+  padding: 0.35rem 0.75rem !important;
+  background-color: var(--tg-glass-fill) !important;
+  border: 1px solid var(--tg-glass-edge) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.07), inset 0 1px 0 var(--tg-glass-border) !important;
+  backdrop-filter: blur(var(--tg-glass-blur)) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(var(--tg-glass-blur)) saturate(1.2) !important;
+}
+
+/* ========== Misc ========== */
+.elementor-location-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.elementor-location-header .elementor-menu-toggle {
+  border-radius: 9999px !important;
+  border: 1px solid var(--tg-glass-edge) !important;
+  background: var(--tg-glass-fill) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+@media (max-width: 767px) {
+  .elementor-location-header .tg-shadcn-nav .elementor-nav-menu {
+    justify-content: flex-start !important;
+  }
+}
