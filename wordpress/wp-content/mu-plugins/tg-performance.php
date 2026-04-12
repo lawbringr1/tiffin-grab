@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TiffinGrab Performance (MU)
  * Description: Front-end tweaks for Lighthouse: Elementor eicons font-display, LCP hero img hints, optional emoji removal.
- * Version: 1.0.2
+ * Version: 1.0.3
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -81,6 +81,23 @@ add_action(
 		echo '<link data-no-optimize="1" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />' . "\n";
 	},
 	2
+);
+
+/**
+ * Geist baseline: Regular (400) as the default inherited weight so copy is not “light” unless a widget sets its own weight.
+ * Headings and Elementor typography still win via their own rules (often 600–800).
+ */
+add_action(
+	'wp_head',
+	static function () {
+		if ( is_admin() ) {
+			return;
+		}
+		echo '<style id="tg-geist-weight-default">' . "\n";
+		echo 'body{font-family:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif!important;font-weight:400!important;}' . "\n";
+		echo '</style>' . "\n";
+	},
+	15
 );
 
 /**
