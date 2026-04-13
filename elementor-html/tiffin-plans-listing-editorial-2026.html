@@ -8,15 +8,11 @@
         (Prefered Days, Number Of Tiffins, Start Date) when present — same as single product pages.
 
   Optional: set data-store-root on #tg-tplans-2026 if the widget is tested off-domain (defaults to location.origin).
--->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="font" type="font/woff2" crossorigin fetchpriority="high" href="https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFWNOITd.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWNOITddY4.woff2" />
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=optional" rel="stylesheet" />
-<!-- Same Material Symbols URL as home-2026-hero-tags.html (variable wght/FILL). -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
+  Fonts: Geist (variable wght 100–900) + Material Symbols load once in <head> via WPCode
+  (elementor-head-geist-preload-snippet.html). Do not duplicate preconnect / stylesheet / font preloads here —
+  body widgets add extra requests and Lighthouse noise; fall back to system-ui if head snippet is absent.
+-->
 <section id="tg-tplans-2026" class="tg-tplans" data-store-root="" data-tg-pricing-ui="stitch-weekly-total" aria-labelledby="tg-tplans-title">
   <style>
     .elementor-widget-html:has(#tg-tplans-2026),
@@ -55,9 +51,11 @@
       --tp-orange-a22: rgba(240, 107, 26, 0.22);
       --tp-orange-a35: rgba(240, 107, 26, 0.35);
       --tp-orange-fill: rgba(240, 107, 26, 0.09);
-      --tp-font-display: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      --tp-font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --tp-font-display: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --tp-font-body: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       font-family: var(--tp-font-body);
+      font-optical-sizing: auto;
+      font-synthesis: none;
       color: var(--tp-on);
       background: var(--tp-surface);
       width: 100vw;
@@ -84,6 +82,16 @@
     #tg-tplans-2026 select,
     #tg-tplans-2026 textarea {
       font-family: var(--tp-font-body) !important;
+      font-optical-sizing: auto;
+    }
+    /* Match Elementor kit: bold Geist for headings inside this widget */
+    #tg-tplans-2026 h1,
+    #tg-tplans-2026 h2,
+    #tg-tplans-2026 h3 {
+      font-family: var(--tp-font-display) !important;
+      font-optical-sizing: auto;
+      font-weight: 700 !important;
+      font-synthesis: none;
     }
     .tg-tplans-inner {
       max-width: 1200px;
@@ -361,7 +369,7 @@
     }
     .tg-tplans-hero h1#tg-tplans-title {
       font-family: var(--tp-font-display);
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: -0.02em;
       font-size: clamp(2.25rem, 4.5vw, 3rem);
       line-height: 1.1;
@@ -373,6 +381,7 @@
       color: var(--tp-muted);
       font-size: 1.05rem;
       line-height: 1.55;
+      font-weight: 400;
     }
 
     .tg-tplans-filters {
@@ -570,7 +579,7 @@
       top: 1rem;
       left: 1rem;
       font-size: 0.625rem;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       padding: 0.35rem 0.75rem;
@@ -615,7 +624,7 @@
     }
     .tg-tplans-price {
       font-family: var(--tp-font-display);
-      font-weight: 800;
+      font-weight: 700;
       font-size: 1.25rem;
       letter-spacing: -0.02em;
       color: var(--tp-primary);
@@ -917,8 +926,8 @@
       --tp-panel: #fff3e8;
       --tp-orange-fill: rgba(240, 107, 26, 0.09);
       --tp-outline-variant: #e0c0b4;
-      --tp-font-display: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      --tp-font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --tp-font-display: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --tp-font-body: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       display: none;
       position: fixed;
       z-index: 99998;
@@ -941,7 +950,10 @@
     }
     .tg-tplans-cal-popover .material-symbols-outlined {
       font-family: "Material Symbols Outlined" !important;
+      font-weight: normal !important;
+      font-style: normal !important;
       font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      -webkit-font-smoothing: antialiased;
     }
     /* PopoverContent p-0; inner Calendar compact (~shadcn default, ~280px) */
     .tg-tplans-cal-popover .tg-tplans-cal {
@@ -1199,7 +1211,7 @@
     .tg-tplans-total-val {
       font-family: var(--tp-font-display);
       font-size: 1.875rem;
-      font-weight: 800;
+      font-weight: 700;
       color: var(--tp-on);
       letter-spacing: -0.025em;
       line-height: 1.1;
@@ -1494,7 +1506,7 @@
     }
 
     #tg-tplans-2026 .tg-tplans-total-val {
-      font-weight: 800 !important;
+      font-weight: 700 !important;
       color: #1d1b19 !important;
     }
 
