@@ -43,3 +43,71 @@ html body .material-symbols-outlined {
 	font-style: normal !important;
 	-webkit-font-smoothing: antialiased;
 }
+
+/*
+  Section overline pills (Delivery coverage, Our Promise, Tailored Nutrition, Support Center):
+  shine sweep on hover — same idea as Shadcn “button shine” (linear-gradient + background-position).
+*/
+html body .tg-sa-badge,
+html body .tg-wcu-badge,
+html body .tg-faq-overline,
+html body .tg-aud-badge {
+	position: relative;
+	overflow: hidden;
+}
+
+html body .tg-sa-badge::before,
+html body .tg-wcu-badge::before,
+html body .tg-faq-overline::before,
+html body .tg-aud-badge::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	background-image: linear-gradient(
+		45deg,
+		transparent 25%,
+		rgba(255, 255, 255, 0.7) 50%,
+		transparent 75%,
+		transparent 100%
+	);
+	background-size: 250% 250%;
+	background-position: 200% 0;
+	background-repeat: no-repeat;
+	transition: background-position 1s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+	html body .tg-sa-badge::before,
+	html body .tg-wcu-badge::before,
+	html body .tg-faq-overline::before,
+	html body .tg-aud-badge::before {
+		background-image: linear-gradient(
+			45deg,
+			transparent 25%,
+			rgba(255, 255, 255, 0.5) 50%,
+			transparent 75%,
+			transparent 100%
+		);
+	}
+}
+
+@media (hover: hover) {
+	html body .tg-sa-badge:hover::before,
+	html body .tg-wcu-badge:hover::before,
+	html body .tg-faq-overline:hover::before,
+	html body .tg-aud-badge:hover::before {
+		background-position: -100% 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html body .tg-sa-badge::before,
+	html body .tg-wcu-badge::before,
+	html body .tg-faq-overline::before,
+	html body .tg-aud-badge::before {
+		transition: none;
+		background-image: none;
+	}
+}
