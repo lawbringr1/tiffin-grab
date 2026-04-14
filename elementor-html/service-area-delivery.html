@@ -122,13 +122,19 @@
       color: var(--tg-on-surface);
       min-height: 2.35em;
     }
-    .tg-sa-lede {
+    .tg-sa-lede-wrap {
       margin: 0 auto 2.25rem;
       max-width: 42rem;
+    }
+    .tg-sa-lede-wrap .tg-sa-lede {
+      margin: 0;
       font-size: 1.05rem;
       line-height: 1.65;
       color: var(--tg-on-variant);
       font-weight: 400;
+    }
+    .tg-sa-lede-wrap .tg-sa-lede + .tg-sa-lede {
+      margin-top: 0.75rem;
     }
     .tg-sa-bar {
       display: flex;
@@ -450,9 +456,11 @@
         font-size: clamp(1.6rem, 7vw, 2.35rem);
         hyphens: auto;
       }
-      .tg-sa-lede {
+      .tg-sa-lede-wrap {
+        margin: 0 auto 1.75rem;
+      }
+      .tg-sa-lede-wrap .tg-sa-lede {
         font-size: 1rem;
-        margin-bottom: 1.75rem;
       }
       /* Stack: pin + input on first row; Check Availability on its own row, centered (not stuck to the side). */
       #tg-service-area .tg-sa-bar {
@@ -508,11 +516,15 @@
       <span class="tg-sa-badge">Delivery coverage</span>
       <h2 id="tg-sa-title">Are we in your area?</h2>
     </header>
-    <p class="tg-sa-lede">
-      We deliver to Ajax, Brampton, East York, Etobicoke, Markham, Mississauga, North York, Oakville, Oshawa, Pickering,
-      Richmond Hill, Scarborough, Toronto, Vaughan, and Whitby. Below are quick samples — enter your postal code to
-      confirm we serve your neighborhood today.
-    </p>
+    <div class="tg-sa-lede-wrap">
+      <p class="tg-sa-lede">
+        Enjoy fresh, homemade meals delivered across the Greater Toronto Area — including Mississauga, Brampton, Toronto,
+        and surrounding cities.
+      </p>
+      <p class="tg-sa-lede">
+        Enter your postal code below to instantly check availability in your neighborhood.
+      </p>
+    </div>
     <form class="tg-sa-bar" id="tg-sa-form" novalidate>
       <svg class="pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10z" />
