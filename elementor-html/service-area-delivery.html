@@ -250,10 +250,6 @@
     #tg-service-area .tg-sa-bar button.tg-h26-btn:disabled {
       box-shadow: 0 4px 14px rgba(180, 75, 25, 0.18);
     }
-    @media (max-width: 520px) {
-      .tg-sa-bar { flex-wrap: wrap; border-radius: 1.5rem; padding: 0.5rem; }
-      .tg-sa-bar button.tg-h26-btn { width: 100%; margin-top: 0.25rem; }
-    }
     .tg-sa-result {
       max-width: 36rem;
       margin: -2rem auto 2.5rem;
@@ -458,8 +454,38 @@
         font-size: 1rem;
         margin-bottom: 1.75rem;
       }
+      /* Stack: pin + input on first row; Check Availability on its own row, centered (not stuck to the side). */
+      #tg-service-area .tg-sa-bar {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        border-radius: 1.5rem;
+        padding: 0.6rem 0.65rem;
+        gap: 0.5rem;
+        row-gap: 0.65rem;
+      }
+      #tg-service-area .tg-sa-bar svg.pin {
+        flex: 0 0 auto;
+        margin: 0.25rem 0.35rem 0 0.5rem;
+        align-self: center;
+      }
+      #tg-service-area .tg-sa-bar .tg-sa-input-wrap {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
       #tg-service-area .tg-sa-bar input[type="text"] {
         font-size: 16px;
+      }
+      #tg-service-area .tg-sa-bar button.tg-h26-btn {
+        flex-basis: 100%;
+        width: 100%;
+        max-width: min(22rem, 100%);
+        min-height: 48px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 0.15rem;
+        justify-content: center;
       }
       .tg-sa-suggest li {
         min-height: 44px;
@@ -468,9 +494,6 @@
       .tg-sa-grid {
         /* flex pill layout from block above when ≤767px */
         gap: 0.45rem;
-      }
-      #tg-service-area .tg-sa-bar button {
-        min-height: 48px;
       }
     }
     @media (max-width: 480px) {
