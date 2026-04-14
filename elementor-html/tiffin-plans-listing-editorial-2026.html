@@ -1597,7 +1597,7 @@
     <header class="tg-tplans-hero">
       <h1 id="tg-tplans-title">Tiffin plans</h1>
       <p>
-        Explore veg, non-veg, and healthy meal plans for Toronto and the GTA. Configure days, tiffin count, and start date here — same options as on each product page — then add to cart.
+        Explore vegetarian and non-vegetarian meal plans for Toronto and the GTA. Configure days, tiffin count, and start date here — same options as on each product page — then add to cart.
       </p>
     </header>
 
@@ -1605,7 +1605,6 @@
       <button type="button" class="tg-tplans-filter" data-filter="all" aria-pressed="true">All</button>
       <button type="button" class="tg-tplans-filter" data-filter="veg" aria-pressed="false">Vegetarian</button>
       <button type="button" class="tg-tplans-filter" data-filter="nonveg" aria-pressed="false">Non vegetarian</button>
-      <button type="button" class="tg-tplans-filter" data-filter="healthy" aria-pressed="false">Healthy meals</button>
     </div>
 
     <section class="tg-tplans-custom-pill" aria-labelledby="tg-tplans-custom-pill-title">
@@ -1638,7 +1637,7 @@
       var STORE = (root.getAttribute("data-store-root") || "").trim() || window.location.origin;
       var API = STORE + "/wp-json/wc/store/v1/products";
       var PER_PAGE = 9;
-      var CAT = { all: null, veg: 15, nonveg: 30, healthy: 50 };
+      var CAT = { all: null, veg: 15, nonveg: 30 };
 
       var state = {
         filter: "all",
