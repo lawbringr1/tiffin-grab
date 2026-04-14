@@ -651,34 +651,46 @@
       border: 1px solid rgba(29, 27, 25, 0.08);
       background: rgba(248, 243, 238, 0.45);
       box-sizing: border-box;
-    }
-    /* Collapsed: line-clamp + reserved block height (em tracks clamp() font size). */
-    .tg-tplans-desc:not(.tg-tplans-desc--open) {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      min-height: calc(2 * 1.55em + 0.7rem);
-      max-height: calc(2 * 1.55em + 0.7rem);
-    }
-    @media (min-width: 480px) {
-      .tg-tplans-desc:not(.tg-tplans-desc--open) {
-        -webkit-line-clamp: 3;
-        line-clamp: 3;
-        min-height: calc(3 * 1.55em + 0.7rem);
-        max-height: calc(3 * 1.55em + 0.7rem);
-      }
-    }
-    /* Expanded: grow with full copy; card height sync picks this up. */
-    .tg-tplans-desc.tg-tplans-desc--open {
       display: block;
-      -webkit-line-clamp: unset;
-      line-clamp: unset;
       overflow: visible;
       min-height: 0;
+    }
+    /* Rich text (lists, paragraphs) from WooCommerce: clip inner body when collapsed. */
+    .tg-tplans-desc-body {
+      margin: 0;
+      min-width: 0;
+    }
+    .tg-tplans-desc-body p {
+      margin: 0 0 0.45em;
+    }
+    .tg-tplans-desc-body p:last-child {
+      margin-bottom: 0;
+    }
+    .tg-tplans-desc-body ul,
+    .tg-tplans-desc-body ol {
+      margin: 0.35em 0 0.5em;
+      padding-left: 1.2em;
+    }
+    .tg-tplans-desc-body li {
+      margin: 0.12em 0;
+    }
+    .tg-tplans-desc-body > *:first-child {
+      margin-top: 0;
+    }
+    /* Collapsed: max-height (~2 lines mobile, ~3 lines ≥480px) — works with ul/li (line-clamp does not). */
+    .tg-tplans-desc:not(.tg-tplans-desc--open) .tg-tplans-desc-body {
+      overflow: hidden;
+      max-height: calc(2 * var(--tg-desc-lh) * 1em);
+    }
+    @media (min-width: 480px) {
+      .tg-tplans-desc:not(.tg-tplans-desc--open) .tg-tplans-desc-body {
+        max-height: calc(3 * var(--tg-desc-lh) * 1em);
+      }
+    }
+    /* Expanded: full HTML from product editor */
+    .tg-tplans-desc.tg-tplans-desc--open .tg-tplans-desc-body {
       max-height: none;
-      height: auto;
+      overflow: visible;
     }
     .tg-tplans-read {
       align-self: flex-start;
@@ -1669,10 +1681,57 @@
         return (d.textContent || "").replace(/\s+/g, " ").trim();
       }
 
+      /** Allow safe markup from WooCommerce (lists, paragraphs) — scripts/events stripped. */
+      function sanitizeDescriptionHtml(html) {
+        if (!html || typeof html !== "string") return "";
+        var wrap = document.createElement("div");
+        wrap.innerHTML = html;
+        var allowed = { P: 1, DIV: 1, BR: 1, UL: 1, OL: 1, LI: 1, STRONG: 1, B: 1, EM: 1, I: 1, SPAN: 1, A: 1 };
+        function sanitizeNode(node, parent) {
+          var i;
+          var nodes = parent.childNodes;
+          for (i = nodes.length - 1; i >= 0; i--) {
+            var n = nodes[i];
+            if (n.nodeType === 8) {
+              parent.removeChild(n);
+              continue;
+            }
+            if (n.nodeType === 3) continue;
+            if (n.nodeType !== 1) {
+              parent.removeChild(n);
+              continue;
+            }
+            if (!allowed[n.tagName]) {
+              while (n.firstChild) parent.insertBefore(n.firstChild, n);
+              parent.removeChild(n);
+              continue;
+            }
+            if (n.tagName === "A") {
+              var href = n.getAttribute("href");
+              if (!href || /^\s*javascript:/i.test(href)) n.removeAttribute("href");
+              else if (!/^(https?:|\/|mailto:|tel:|#)/i.test(href.trim())) n.removeAttribute("href");
+            }
+            var attrs = n.attributes;
+            for (var j = attrs.length - 1; j >= 0; j--) {
+              if (attrs[j].name === "href" && n.tagName === "A") continue;
+              n.removeAttribute(attrs[j].name);
+            }
+            sanitizeNode(null, n);
+          }
+        }
+        sanitizeNode(null, wrap);
+        return (wrap.innerHTML || "").trim();
+      }
+
+      /** Plain text for empty checks / length heuristics. */
       function excerptFromProduct(p) {
-        var t = stripHtml(p.short_description);
-        if (!t) t = stripHtml(p.description);
-        return t;
+        var raw = (p.short_description && String(p.short_description).trim()) || (p.description && String(p.description).trim()) || "";
+        return stripHtml(raw);
+      }
+
+      function descriptionHtmlFromProduct(p) {
+        var raw = (p.short_description && String(p.short_description).trim()) || (p.description && String(p.description).trim()) || "";
+        return sanitizeDescriptionHtml(raw);
       }
 
       function safeCartHref(href) {
@@ -2017,21 +2076,33 @@
         }
       }
 
+      /** Whether collapsed description body overflows (needs Read more). */
+      function syncDescReadButtonVisibility(descShell) {
+        var desc = descShell.querySelector(".tg-tplans-desc");
+        var inner = descShell.querySelector(".tg-tplans-desc-body");
+        var btn = descShell.querySelector(".tg-tplans-read");
+        if (!desc || !inner || !btn) return;
+        var wasOpen = desc.classList.contains("tg-tplans-desc--open");
+        if (wasOpen) desc.classList.remove("tg-tplans-desc--open");
+        void inner.offsetHeight;
+        var needs = inner.scrollHeight > inner.clientHeight + 2;
+        if (wasOpen) desc.classList.add("tg-tplans-desc--open");
+        btn.hidden = !needs;
+      }
+
       /** Collapse “Read more” so front height matches the clamped description before flipping to configure. */
       function collapsePlanDescRead(card) {
         if (!card) return;
+        var descShell = card.querySelector(".tg-tplans-desc-shell");
         var desc = card.querySelector(".tg-tplans-desc");
         var readBtn = card.querySelector(".tg-tplans-read");
         if (!desc || !readBtn) return;
         readBtn.setAttribute("data-open", "0");
         readBtn.setAttribute("aria-expanded", "false");
         desc.classList.remove("tg-tplans-desc--open");
-        var spanShort = desc.querySelector(".tg-tplans-snippet");
-        var spanFull = desc.querySelector(".tg-tplans-full");
-        if (spanShort) spanShort.hidden = false;
-        if (spanFull) spanFull.hidden = true;
         var lbl = readBtn.querySelector(".tg-tplans-read-label");
         if (lbl) lbl.textContent = "Read more";
+        if (descShell) syncDescReadButtonVisibility(descShell);
       }
 
       /**
@@ -2185,6 +2256,9 @@
         if (planHeightsResizeTimer) clearTimeout(planHeightsResizeTimer);
         planHeightsResizeTimer = setTimeout(function () {
           planHeightsResizeTimer = null;
+          var shells = mount.querySelectorAll(".tg-tplans-desc-shell");
+          var si;
+          for (si = 0; si < shells.length; si++) syncDescReadButtonVisibility(shells[si]);
           scheduleSyncAllHeights();
         }, 200);
       });
@@ -2261,9 +2335,8 @@
           row.appendChild(titleSlot);
           row.appendChild(price);
 
-          var fullDesc = excerptFromProduct(p);
-          var shortLen = 110;
-          var short = fullDesc.length > shortLen ? fullDesc.slice(0, shortLen).trim() + "…" : fullDesc;
+          var descHtml = descriptionHtmlFromProduct(p);
+          var descPlain = excerptFromProduct(p);
 
           var descShell = document.createElement("div");
           descShell.className = "tg-tplans-desc-shell";
@@ -2272,15 +2345,14 @@
           desc.className = "tg-tplans-desc";
           desc.setAttribute("role", "region");
           desc.setAttribute("aria-label", "Plan description");
-          var spanShort = document.createElement("span");
-          spanShort.className = "tg-tplans-snippet";
-          spanShort.textContent = short;
-          var spanFull = document.createElement("span");
-          spanFull.className = "tg-tplans-full";
-          spanFull.hidden = true;
-          spanFull.textContent = fullDesc;
-          desc.appendChild(spanShort);
-          desc.appendChild(spanFull);
+          var descBody = document.createElement("div");
+          descBody.className = "tg-tplans-desc-body";
+          if (descHtml) {
+            descBody.innerHTML = descHtml;
+          } else {
+            descBody.textContent = "";
+          }
+          desc.appendChild(descBody);
 
           var readBtn = document.createElement("button");
           readBtn.type = "button";
@@ -2291,12 +2363,10 @@
             '<span class="tg-tplans-read-label">Read more</span><span class="material-symbols-outlined tg-tplans-icon" aria-hidden="true">expand_more</span>';
           readBtn.addEventListener("click", function () {
             var open = readBtn.getAttribute("data-open") === "1";
-            spanShort.hidden = !open;
-            spanFull.hidden = open;
-            readBtn.querySelector(".tg-tplans-read-label").textContent = open ? "Read more" : "Show less";
-            readBtn.setAttribute("data-open", open ? "0" : "1");
-            var expanded = readBtn.getAttribute("data-open") === "1";
+            var expanded = !open;
+            readBtn.setAttribute("data-open", expanded ? "1" : "0");
             readBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
+            readBtn.querySelector(".tg-tplans-read-label").textContent = expanded ? "Show less" : "Read more";
             desc.classList.toggle("tg-tplans-desc--open", expanded);
             if (expanded && state.openId && state.openId !== card) {
               collapsePlanDescRead(state.openId);
@@ -2310,6 +2380,14 @@
 
           descShell.appendChild(desc);
           descShell.appendChild(readBtn);
+          if (!descPlain) {
+            descShell.style.display = "none";
+          } else {
+            requestAnimationFrame(function () {
+              syncDescReadButtonVisibility(descShell);
+              scheduleSyncAllHeights();
+            });
+          }
 
           var actions = document.createElement("div");
           actions.className = "tg-tplans-actions";
