@@ -25,7 +25,7 @@
       --faq-card: #ffffff;
       --faq-surface-low: #fff1eb;
       --faq-surface: #fdeae2;
-      --faq-primary: #9b4507;
+      --faq-primary: #f06b1a;
       --faq-primary-mid: #e37b3e;
       --faq-secondary: #006d37;
       --faq-ghost: rgba(220, 193, 181, 0.16);
@@ -51,7 +51,7 @@
     }
     #tg-common-faq * { box-sizing: border-box; }
     #tg-common-faq .material-symbols-outlined {
-      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
       display: block;
       line-height: 1;
     }
@@ -136,18 +136,17 @@
     }
     #tg-common-faq .tg-faq-card--large { padding: clamp(1.15rem, 2vw, 1.45rem); }
     #tg-common-faq .tg-faq-icon-wrap {
-      width: 3.1rem;
-      height: 3.1rem;
+      width: 2.5rem;
+      height: 2.5rem;
       border-radius: 999px;
-      background: linear-gradient(165deg, var(--faq-primary), color-mix(in srgb, var(--faq-primary) 78%, #5c2a05));
-      color: #ffffff;
+      background: transparent;
+      color: var(--faq-primary);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 10px 22px -14px rgba(155, 69, 7, 0.55);
     }
-    #tg-common-faq .tg-faq-card .material-symbols-outlined { font-size: 1.45rem; }
+    #tg-common-faq .tg-faq-card .material-symbols-outlined { font-size: 1.18rem; }
     #tg-common-faq .tg-faq-large-body {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
