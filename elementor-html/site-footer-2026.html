@@ -169,22 +169,42 @@
       color: var(--tg-muted);
       outline: none;
       border-radius: 2px;
-      transition: color 0.2s ease, opacity 0.2s ease;
+      filter: none;
+      transition: color 0.25s ease, filter 0.25s ease;
     }
-    #tg-site-footer .tg-footer__social a:hover {
-      color: var(--tg-orange);
+    #tg-site-footer .tg-footer__social a.tg-footer__social--ig:hover,
+    #tg-site-footer .tg-footer__social a.tg-footer__social--ig:focus-visible {
+      color: #e4405f;
+      filter: drop-shadow(0 0 3px rgba(228, 64, 95, 0.95))
+        drop-shadow(0 0 10px rgba(225, 48, 108, 0.55))
+        drop-shadow(0 0 18px rgba(193, 53, 132, 0.4))
+        drop-shadow(0 0 26px rgba(131, 58, 180, 0.25));
     }
-    #tg-site-footer .tg-footer__social a:focus-visible {
-      color: var(--tg-orange);
-      outline: 2px solid var(--tg-orange);
+    #tg-site-footer .tg-footer__social a.tg-footer__social--ig:focus-visible {
+      outline: 2px solid #e4405f;
       outline-offset: 3px;
     }
-    #tg-site-footer .tg-footer__social a.tg-footer__social--wa:hover {
-      color: var(--tg-whatsapp);
+    #tg-site-footer .tg-footer__social a.tg-footer__social--fb:hover,
+    #tg-site-footer .tg-footer__social a.tg-footer__social--fb:focus-visible {
+      color: #1877f2;
+      filter: drop-shadow(0 0 3px rgba(24, 119, 242, 0.95))
+        drop-shadow(0 0 10px rgba(24, 119, 242, 0.55))
+        drop-shadow(0 0 18px rgba(24, 119, 242, 0.3));
     }
+    #tg-site-footer .tg-footer__social a.tg-footer__social--fb:focus-visible {
+      outline: 2px solid #1877f2;
+      outline-offset: 3px;
+    }
+    #tg-site-footer .tg-footer__social a.tg-footer__social--wa:hover,
     #tg-site-footer .tg-footer__social a.tg-footer__social--wa:focus-visible {
       color: var(--tg-whatsapp);
-      outline-color: var(--tg-whatsapp);
+      filter: drop-shadow(0 0 3px rgba(37, 211, 102, 0.95))
+        drop-shadow(0 0 10px rgba(37, 211, 102, 0.55))
+        drop-shadow(0 0 18px rgba(37, 211, 102, 0.35));
+    }
+    #tg-site-footer .tg-footer__social a.tg-footer__social--wa:focus-visible {
+      outline: 2px solid var(--tg-whatsapp);
+      outline-offset: 3px;
     }
     #tg-site-footer .tg-footer__social svg {
       width: 22px;
@@ -275,6 +295,14 @@
       #tg-site-footer .tg-footer__social a {
         transition: none;
       }
+      #tg-site-footer .tg-footer__social a.tg-footer__social--ig:hover,
+      #tg-site-footer .tg-footer__social a.tg-footer__social--ig:focus-visible,
+      #tg-site-footer .tg-footer__social a.tg-footer__social--fb:hover,
+      #tg-site-footer .tg-footer__social a.tg-footer__social--fb:focus-visible,
+      #tg-site-footer .tg-footer__social a.tg-footer__social--wa:hover,
+      #tg-site-footer .tg-footer__social a.tg-footer__social--wa:focus-visible {
+        filter: none;
+      }
     }
   </style>
 
@@ -288,14 +316,26 @@
           Fresh, home-style meals delivered across the GTA. Built for comfort, consistency, and taste.
         </p>
         <div class="tg-footer__social">
-          <a href="https://www.instagram.com/tiffingrab/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a
+            class="tg-footer__social--ig"
+            href="https://www.instagram.com/tiffingrab/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <rect x="2.75" y="2.75" width="18.5" height="18.5" rx="4.5" ry="4.5" />
               <circle cx="12" cy="12" r="3.75" />
               <circle class="tg-footer__ig-dot" cx="17.25" cy="6.75" r="1.05" />
             </svg>
           </a>
-          <a href="https://www.facebook.com/profile.php?id=61576506192711" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <a
+            class="tg-footer__social--fb"
+            href="https://www.facebook.com/profile.php?id=61576506192711"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path
                 d="M18 2.75h-2.75a4.25 4.25 0 0 0-4.25 4.25v2.5H8.25v3h2.75v7.75h3.25v-7.75h2.75l.85-3h-3.6V7.35c0-.45.35-.85.85-.85H18V2.75Z"
