@@ -155,47 +155,51 @@
     #tg-site-footer .tg-footer__social {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.65rem;
+      align-items: center;
+      gap: 1rem;
       margin-top: 0.25rem;
     }
     #tg-site-footer .tg-footer__social a {
-      width: 2.35rem;
-      height: 2.35rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 999px;
-      background: #ffffff;
-      color: var(--tg-orange);
-      outline: 1px solid rgba(240, 107, 26, 0.35);
-      transition: color 0.2s ease, transform 0.2s ease, outline-color 0.2s ease, background-color 0.2s ease;
+      padding: 0.2rem;
+      margin: -0.2rem;
+      background: transparent;
+      color: var(--tg-muted);
+      outline: none;
+      border-radius: 2px;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
-    #tg-site-footer .tg-footer__social a:hover,
+    #tg-site-footer .tg-footer__social a:hover {
+      color: var(--tg-orange);
+    }
     #tg-site-footer .tg-footer__social a:focus-visible {
       color: var(--tg-orange);
-      outline-color: rgba(240, 107, 26, 0.55);
-      background: rgba(240, 107, 26, 0.06);
-      transform: translateY(-2px);
+      outline: 2px solid var(--tg-orange);
+      outline-offset: 3px;
     }
-    #tg-site-footer .tg-footer__social a.tg-footer__social--wa {
+    #tg-site-footer .tg-footer__social a.tg-footer__social--wa:hover {
       color: var(--tg-whatsapp);
-      outline-color: color-mix(in srgb, var(--tg-whatsapp) 45%, transparent);
     }
-    #tg-site-footer .tg-footer__social a.tg-footer__social--wa:hover,
     #tg-site-footer .tg-footer__social a.tg-footer__social--wa:focus-visible {
-      outline-color: color-mix(in srgb, var(--tg-whatsapp) 65%, transparent);
-      background: rgba(37, 211, 102, 0.08);
+      color: var(--tg-whatsapp);
+      outline-color: var(--tg-whatsapp);
     }
     #tg-site-footer .tg-footer__social svg {
-      width: 19px;
-      height: 19px;
+      width: 22px;
+      height: 22px;
       display: block;
       flex-shrink: 0;
       fill: none;
       stroke: currentColor;
-      stroke-width: 1.6;
+      stroke-width: 1.5;
       stroke-linecap: round;
       stroke-linejoin: round;
+    }
+    #tg-site-footer .tg-footer__social svg .tg-footer__ig-dot {
+      fill: currentColor;
+      stroke: none;
     }
     #tg-site-footer .tg-footer__contact p {
       margin: 0 0 0.35rem;
@@ -288,7 +292,7 @@
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <rect x="2.75" y="2.75" width="18.5" height="18.5" rx="4.5" ry="4.5" />
               <circle cx="12" cy="12" r="3.75" />
-              <circle cx="17.25" cy="6.75" r="1.05" />
+              <circle class="tg-footer__ig-dot" cx="17.25" cy="6.75" r="1.05" />
             </svg>
           </a>
           <a href="https://www.facebook.com/profile.php?id=61576506192711" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
