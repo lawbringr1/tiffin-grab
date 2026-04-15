@@ -127,6 +127,31 @@
     #tg-site-footer .tg-footer__links a:focus-visible {
       color: var(--tg-orange);
     }
+    #tg-site-footer .tg-footer__areas {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #tg-site-footer .tg-footer__areas li {
+      margin: 0 0 0.5rem;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-weight: 400;
+      color: var(--tg-muted);
+    }
+    #tg-site-footer .tg-footer__areas li:last-child {
+      margin-bottom: 0;
+    }
+    #tg-site-footer .tg-footer__areas a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    #tg-site-footer .tg-footer__areas a:hover,
+    #tg-site-footer .tg-footer__areas a:focus-visible {
+      color: var(--tg-orange);
+    }
     #tg-site-footer .tg-footer__social {
       display: flex;
       flex-wrap: wrap;
@@ -266,15 +291,17 @@
         </div>
       </nav>
 
-      <div>
-        <h3 class="tg-footer__title">Service areas</h3>
-        <div class="tg-footer__links">
-          <a href="https://tiffingrab.ca/#tg-service-area">GTA delivery coverage</a>
-          <span class="tg-footer__lede" style="display:block;margin:0.5rem 0 0;font-size:0.88rem;max-width:none">
-            Mississauga, Brampton, North York, Markham, Etobicoke, Scarborough, and more.
-          </span>
-        </div>
-      </div>
+      <nav class="tg-footer__service" aria-label="Service areas">
+        <h3 class="tg-footer__title">Service Areas</h3>
+        <ul class="tg-footer__areas">
+          <li><a href="https://tiffingrab.ca/#tg-service-area">Mississauga</a></li>
+          <li><a href="https://tiffingrab.ca/#tg-service-area">Brampton</a></li>
+          <li><a href="https://tiffingrab.ca/#tg-service-area">North York</a></li>
+          <li><a href="https://tiffingrab.ca/#tg-service-area">Markham</a></li>
+          <li><a href="https://tiffingrab.ca/#tg-service-area">Etobicoke</a></li>
+          <li><a href="https://tiffingrab.ca/#tg-service-area">Scarborough</a></li>
+        </ul>
+      </nav>
 
       <div class="tg-footer__contact">
         <h3 class="tg-footer__title">Contact</h3>
