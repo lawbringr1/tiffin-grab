@@ -1,8 +1,3 @@
-<!--
-  TiffinGrab — "Common Questions" FAQ grid + CTA (Elementor HTML widget).
-  Home stack band 4 of 4: light strip #fff8f6 (alternates with peach #fdeae2). CTA: peach/orange card, brand glow, magnetic pills. Orange #f06b1a, WhatsApp global.
--->
-<!-- Fonts loaded once in home-2026-hero-tags.html (template 9825). -->
 <section class="tg-faq" id="tg-common-faq" aria-labelledby="tg-faq-title">
   <style>
     .elementor-widget-html:has(#tg-common-faq),
@@ -23,461 +18,398 @@
     .elementor-widget-html:has(#tg-common-faq) .elementor-widget-container {
       max-width: none !important;
     }
-    .tg-faq {
-      --tg-brand-green: var(--e-global-color-whatsapp, #25d366);
+    #tg-common-faq.tg-faq {
       --faq-on: #231a15;
       --faq-muted: #564339;
       --faq-bg: #fff8f6;
-      --faq-surface: #fdeae2;
-      --faq-surface-low: #fff1eb;
       --faq-card: #ffffff;
-      --faq-primary: #f06b1a;
-      /* Same mid/hover as hero + service-area CTAs (no coral shift) */
-      --faq-primary-mid: #e85f0f;
-      --faq-primary-bright: #ff9348;
+      --faq-surface-low: #fff1eb;
+      --faq-surface: #fdeae2;
+      --faq-primary: #9b4507;
+      --faq-primary-mid: #e37b3e;
       --faq-secondary: #006d37;
-      --faq-outline: rgba(220, 193, 181, 0.15);
-      --faq-shadow: 0 24px 32px -12px rgba(35, 26, 21, 0.06);
-      --faq-shadow-hover: 0 32px 48px -16px rgba(240, 107, 26, 0.12);
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      --faq-ghost: rgba(220, 193, 181, 0.16);
+      --faq-shadow: 0 24px 34px -18px rgba(35, 26, 21, 0.06);
+      --faq-shadow-hover: 0 30px 48px -24px rgba(35, 26, 21, 0.1);
+      font-family: "Geist", "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--faq-on);
       background: var(--faq-bg);
       width: 100vw;
       max-width: none;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: clamp(3.5rem, 7vw, 6rem) clamp(1.25rem, 4vw, 2rem);
-      box-sizing: border-box;
+      padding: clamp(3.6rem, 7vw, 6.25rem) clamp(1.25rem, 4vw, 2rem);
       overflow-x: clip;
+      box-sizing: border-box;
     }
     @supports (width: 100dvw) {
-      .tg-faq {
+      #tg-common-faq.tg-faq {
         width: 100dvw;
         margin-left: calc(50% - 50dvw);
         margin-right: calc(50% - 50dvw);
       }
     }
-    .tg-faq * {
-      box-sizing: border-box;
+    #tg-common-faq * { box-sizing: border-box; }
+    #tg-common-faq .material-symbols-outlined {
+      font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+      display: block;
+      line-height: 1;
     }
-    .tg-faq .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-    }
-    .tg-faq-inner {
+    #tg-common-faq .tg-faq-inner {
       max-width: 1180px;
       margin: 0 auto;
     }
-    .tg-faq-head {
+    #tg-common-faq .tg-faq-head {
       text-align: center;
-      max-width: 42rem;
-      margin: 0 auto clamp(2.75rem, 5vw, 4rem);
+      margin: 0 auto clamp(2.4rem, 5vw, 3.6rem);
+      max-width: 44rem;
     }
-    .tg-faq-overline {
+    #tg-common-faq .tg-faq-overline {
       display: inline-block;
+      margin: 0 0 0.95rem;
+      color: var(--faq-primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       padding: 0.35rem 1rem;
       border-radius: 999px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--faq-primary);
-      background: rgba(240, 107, 26, 0.07);
-      outline: 1px solid rgba(240, 107, 26, 0.28);
-      margin: 0 0 1.1rem;
+      background: rgba(155, 69, 7, 0.08);
+      outline: 1px solid rgba(155, 69, 7, 0.2);
     }
-    .tg-faq h2#tg-faq-title {
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    #tg-common-faq h2#tg-faq-title {
+      margin: 0 0 1rem;
+      font-size: clamp(2rem, 4.8vw, 3.55rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.12;
-      font-size: clamp(1.85rem, 4vw, 3rem);
-      margin: 0 0 1.25rem;
       color: var(--faq-on);
     }
-    .tg-faq-sub {
-      margin: 0;
-      font-size: clamp(1rem, 1.2vw, 1.125rem);
-      line-height: 1.65;
+    #tg-common-faq .tg-faq-sub {
+      margin: 0 auto;
+      font-size: clamp(1rem, 1.2vw, 1.12rem);
       color: var(--faq-muted);
+      line-height: 1.6;
+      max-width: 42rem;
     }
-    .tg-faq-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(1.25rem, 2.5vw, 2rem);
-      margin: 0;
-      padding: 0;
+    /* Single 2-column grid: same wide card style for every FAQ (5 rows × 2 on desktop) */
+    #tg-common-faq .tg-faq-grid {
       list-style: none;
-    }
-    @media (min-width: 640px) {
-      .tg-faq-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (min-width: 1024px) {
-      .tg-faq-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .tg-faq-card {
-      position: relative;
-      margin: 0;
-      padding: clamp(1.75rem, 3vw, 2rem);
-      background: var(--faq-card);
-      border-radius: 1rem;
-      box-shadow: var(--faq-shadow);
-      outline: 1px solid var(--faq-outline);
-      outline-offset: 0;
-      border: 1px solid transparent;
-      transition: box-shadow 0.3s ease, outline-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      min-width: 0;
-    }
-    @media (hover: hover) {
-      .tg-faq-card:hover {
-        box-shadow: var(--faq-shadow-hover);
-        outline-color: rgba(240, 107, 26, 0.22);
-        border-color: rgba(240, 107, 26, 0.24);
-        transform: translateY(-2px);
-      }
-    }
-    .tg-faq-card-q {
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: clamp(1.04rem, 1.4vw, 1.16rem);
-      font-weight: 750;
-      line-height: 1.35;
       margin: 0;
       padding: 0;
-      min-width: 0;
-      color: var(--faq-on);
-      max-width: 33ch;
+      display: grid;
+      gap: clamp(0.95rem, 2vw, 1.15rem);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-    .tg-faq-card-answer {
-      margin: 0;
-      font-size: 0.96rem;
-      line-height: 1.62;
-      color: var(--faq-muted);
-      max-width: 56ch;
-    }
-    /* CTA: peach band (#fdeae2 family) + warm orange glow — matches service-area / page alternation */
-    .tg-faq-cta {
-      margin-top: clamp(3rem, 6vw, 5rem);
+    #tg-common-faq .tg-faq-card {
       position: relative;
-      isolation: isolate;
-      min-height: clamp(18rem, 52vw, 26rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 2.5rem);
-      border-radius: 1.5rem;
-      background: linear-gradient(
-        165deg,
-        var(--faq-surface) 0%,
-        color-mix(in srgb, var(--faq-primary) 16%, var(--faq-surface)) 48%,
-        color-mix(in srgb, var(--faq-primary) 22%, var(--faq-surface-low)) 100%
-      );
-      border: 1px solid rgba(240, 107, 26, 0.22);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        0 20px 44px -24px rgba(240, 107, 26, 0.18),
-        0 12px 32px -20px rgba(35, 26, 21, 0.08);
-      text-align: center;
+      margin: 0;
+      border-radius: 1.55rem;
+      background: var(--faq-card);
+      box-shadow: var(--faq-shadow);
+      outline: 1px solid var(--faq-ghost);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, outline-color 0.25s ease;
       overflow: hidden;
     }
-    .tg-faq-cta::before {
+    #tg-common-faq .tg-faq-card::before {
       content: "";
       position: absolute;
-      left: 50%;
-      top: clamp(3.5rem, 12vw, 6rem);
-      transform: translateX(-50%);
-      width: 135%;
-      height: min(78%, 22rem);
-      max-width: 56rem;
-      border-radius: 50%;
-      z-index: 0;
+      inset: 0;
+      border-radius: inherit;
       pointer-events: none;
-      background: linear-gradient(
-        90deg,
-        rgba(240, 107, 26, 0.2) 0%,
-        rgba(255, 248, 246, 0.75) 38%,
-        rgba(255, 241, 235, 0.65) 55%,
-        color-mix(in srgb, var(--tg-brand-green) 12%, transparent) 72%,
-        rgba(240, 107, 26, 0.16) 100%
-      );
-      filter: blur(46px);
+      background: linear-gradient(155deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0) 42%);
     }
-    .tg-faq-cta-inner {
+    @media (hover: hover) {
+      #tg-common-faq .tg-faq-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--faq-shadow-hover);
+        outline-color: rgba(155, 69, 7, 0.22);
+      }
+    }
+    #tg-common-faq .tg-faq-card-inner {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
+      gap: 0.72rem;
+      min-height: 100%;
+    }
+    #tg-common-faq .tg-faq-card--large { padding: clamp(1.15rem, 2vw, 1.45rem); }
+    #tg-common-faq .tg-faq-icon-wrap {
+      width: 3.1rem;
+      height: 3.1rem;
+      border-radius: 999px;
+      background: linear-gradient(165deg, var(--faq-primary), color-mix(in srgb, var(--faq-primary) 78%, #5c2a05));
+      color: #ffffff;
+      display: inline-flex;
       align-items: center;
-      gap: clamp(1.25rem, 3vw, 1.75rem);
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px -14px rgba(155, 69, 7, 0.55);
+    }
+    #tg-common-faq .tg-faq-card .material-symbols-outlined { font-size: 1.45rem; }
+    #tg-common-faq .tg-faq-large-body {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      gap: 0.95rem 1rem;
+      min-height: 100%;
+    }
+    #tg-common-faq .tg-faq-card-q {
+      margin: 0 0 0.35rem;
+      color: var(--faq-on);
+      font-size: clamp(1.02rem, 1.35vw, 1.22rem);
+      line-height: 1.28;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+    #tg-common-faq .tg-faq-card-answer {
+      margin: 0;
+      color: var(--faq-muted);
+      line-height: 1.55;
+      max-width: 52ch;
+      font-size: 0.94rem;
+    }
+    #tg-common-faq .tg-faq-card-answer strong {
+      color: var(--faq-on);
+      font-weight: 700;
+    }
+    #tg-common-faq .tg-faq-cta {
+      margin-top: clamp(2.25rem, 5.5vw, 4rem);
+      position: relative;
+      background: var(--faq-surface);
+      border-radius: clamp(1.55rem, 3vw, 2rem);
+      padding: clamp(2rem, 5vw, 3rem) clamp(1.2rem, 4vw, 2rem);
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 26px 40px -28px rgba(35, 26, 21, 0.08);
+    }
+    #tg-common-faq .tg-faq-cta::before,
+    #tg-common-faq .tg-faq-cta::after {
+      content: "";
+      position: absolute;
+      width: 14rem;
+      height: 14rem;
+      border-radius: 50%;
+      filter: blur(34px);
+      opacity: 0.32;
+      pointer-events: none;
+    }
+    #tg-common-faq .tg-faq-cta::before {
+      right: -3rem;
+      top: -2.5rem;
+      background: rgba(155, 69, 7, 0.22);
+    }
+    #tg-common-faq .tg-faq-cta::after {
+      left: -3rem;
+      bottom: -2.8rem;
+      background: rgba(0, 109, 55, 0.14);
+    }
+    #tg-common-faq .tg-faq-cta-inner {
+      position: relative;
+      z-index: 1;
       max-width: 42rem;
       margin: 0 auto;
     }
-    .tg-faq-cta .tg-faq-cta-heading {
-      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: clamp(1.85rem, 4.5vw, 3.05rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
+    #tg-common-faq .tg-faq-cta-heading {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.05rem);
       line-height: 1.12;
-      margin: 0;
-      color: var(--faq-on);
-    }
-    .tg-faq-cta .tg-faq-cta-heading .tg-faq-cta-accent {
-      color: var(--faq-primary);
+      letter-spacing: -0.03em;
       font-weight: 800;
-      font-style: normal;
-    }
-    .tg-faq-cta .tg-faq-cta-lede {
-      margin: 0;
-      max-width: 36rem;
-      font-size: clamp(1rem, 1.15vw, 1.125rem);
-      line-height: 1.65;
       color: var(--faq-on);
-      font-weight: 500;
-      opacity: 0.88;
     }
-    .tg-faq-cta-actions {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+    #tg-common-faq .tg-faq-cta-lede {
+      margin: 0.92rem auto 1.45rem;
+      color: var(--faq-muted);
+      line-height: 1.6;
+      max-width: 38rem;
+      font-size: 1.03rem;
+    }
+    #tg-common-faq .tg-faq-cta-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      padding: 0.32rem;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 12px 28px -18px rgba(35, 26, 21, 0.12);
+      outline: 1px solid rgba(220, 193, 181, 0.25);
+    }
+    #tg-common-faq .tg-faq-cta-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.65rem;
-      width: 100%;
+      min-height: 2.8rem;
+      padding: 0.72rem 1.6rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+      border: 0;
     }
-    /* Shared magnetic pill: .tg-h26-btn in home-2026-hero-tags.html (Shadcn-style) */
-    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary {
-      background: var(--faq-primary) !important;
-      background-color: var(--faq-primary) !important;
+    #tg-common-faq .tg-faq-cta-btn:focus-visible {
+      outline: 2px solid var(--faq-primary-mid);
+      outline-offset: 2px;
+    }
+    #tg-common-faq .tg-faq-cta-btn--primary {
+      color: #ffffff !important;
+      background: linear-gradient(160deg, var(--faq-primary), var(--faq-primary-mid));
+      box-shadow: 0 14px 24px -16px rgba(155, 69, 7, 0.45);
+    }
+    #tg-common-faq .tg-faq-cta-btn--secondary {
+      color: var(--faq-primary) !important;
+      background: transparent;
     }
     @media (hover: hover) {
-      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary:hover {
-        background-color: var(--faq-primary-mid) !important;
-      }
-    }
-    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--wa {
-      background: var(--tg-brand-green) !important;
-      background-color: var(--tg-brand-green) !important;
-    }
-    @media (hover: hover) {
-      body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--wa:hover {
-        background-color: color-mix(in srgb, var(--tg-brand-green) 88%, #063a1f) !important;
-      }
+      #tg-common-faq .tg-faq-cta-btn:hover { transform: translateY(-1px); }
+      #tg-common-faq .tg-faq-cta-btn--primary:hover { opacity: 0.95; }
+      #tg-common-faq .tg-faq-cta-btn--secondary:hover { background: rgba(155, 69, 7, 0.08); }
     }
     @media (max-width: 767px) {
-      /*
-        Full-bleed uses margin-left: calc(50% - 50vw). That 50% is the *parent* width, not the
-        viewport, so inside Elementor columns the whole band (and peach CTA) shifts sideways—often right.
-        On small screens stay in-flow so the section and CTA stay centered.
-      */
       #tg-common-faq.tg-faq {
         width: 100% !important;
         max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
-      }
-      .tg-faq {
         padding-left: max(1rem, env(safe-area-inset-left, 0px));
         padding-right: max(1rem, env(safe-area-inset-right, 0px));
-        -webkit-text-size-adjust: 100%;
       }
-      /* Center section title + subcopy (theme/Elementor often forces left align) */
-      #tg-common-faq .tg-faq-inner {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      #tg-common-faq .tg-faq-head {
-        text-align: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        width: 100%;
-        max-width: 42rem;
-      }
-      #tg-common-faq h2#tg-faq-title,
-      #tg-common-faq .tg-faq-head .tg-faq-sub {
-        text-align: center !important;
-      }
-      .tg-faq h2#tg-faq-title {
-        font-size: clamp(1.55rem, 6.5vw, 2.2rem);
-      }
-      .tg-faq-sub {
-        font-size: 1rem;
-      }
-      .tg-faq-grid {
-        grid-template-columns: 1fr !important;
-      }
-      .tg-faq-card {
-        padding: 1.35rem 1.15rem;
-      }
-      .tg-faq-card-q {
-        font-size: 1.05rem;
-      }
-      #tg-common-faq .tg-faq-cta {
-        width: 100%;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
-      }
-      .tg-faq-cta {
-        border-radius: 1.25rem;
-        min-height: 17rem;
-        padding: clamp(2rem, 6vw, 3rem) 1.15rem;
-      }
-      /* Narrower glow so it doesn’t visually pull the block off-center on small widths */
-      .tg-faq-cta::before {
-        top: 3rem;
-        width: 120%;
-        max-width: 100%;
-        filter: blur(40px);
-      }
-      #tg-common-faq .tg-faq-cta-inner {
-        width: 100%;
-        max-width: 42rem;
-        margin-left: auto;
-        margin-right: auto;
-        align-items: center;
-      }
-      .tg-faq-cta-actions {
+      #tg-common-faq .tg-faq-head { margin-bottom: 2rem; }
+      #tg-common-faq .tg-faq-grid { grid-template-columns: 1fr; }
+      #tg-common-faq .tg-faq-card--large { padding: 1.05rem 0.95rem; }
+      #tg-common-faq .tg-faq-large-body { gap: 0.85rem; }
+      #tg-common-faq .tg-faq-card-q { font-size: 1.02rem; }
+      #tg-common-faq .tg-faq-card-answer { font-size: 0.9rem; line-height: 1.5; max-width: none; }
+      #tg-common-faq .tg-faq-cta-actions {
+        display: flex;
         flex-direction: column;
-        align-items: center;
-        align-self: center;
-        justify-content: center;
+        gap: 0.35rem;
         width: 100%;
-        max-width: 22rem;
-        margin-left: auto;
-        margin-right: auto;
+        max-width: 17rem;
+        margin: 0 auto;
       }
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn {
-        display: flex !important;
-        width: 100%;
-        max-width: 22rem;
-        margin-left: auto;
-        margin-right: auto;
-        justify-content: center !important;
-        min-height: 48px;
-        height: auto;
-        padding: 0.35rem 3.25rem 0.35rem 1.15rem;
-        font-size: clamp(0.78rem, 3vw, 0.875rem);
-      }
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:hover,
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:focus-visible {
-        padding: 0.35rem 1.15rem 0.35rem 3.25rem;
-      }
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn .tg-h26-btn__knob {
-        width: 2.35rem;
-        height: 2.35rem;
-        right: 0.2rem;
-      }
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:hover .tg-h26-btn__knob,
-      #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn:focus-visible .tg-h26-btn__knob {
-        right: calc(100% - 2.55rem);
-      }
-      @media (hover: hover) {
-        body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) #tg-common-faq a.tg-h26-btn--primary:hover {
-          background-color: var(--faq-primary-mid) !important;
-        }
-      }
+      #tg-common-faq .tg-faq-cta-btn { width: 100%; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .tg-faq-card,
-      #tg-common-faq a.tg-h26-btn,
-      #tg-common-faq a.tg-h26-btn .tg-h26-btn__knob {
-        transition: none !important;
-      }
-      #tg-common-faq a.tg-h26-btn:hover,
-      #tg-common-faq a.tg-h26-btn:focus-visible {
-        padding: 0.25rem 3.5rem 0.25rem 1.5rem !important;
-      }
-      #tg-common-faq a.tg-h26-btn:hover .tg-h26-btn__knob,
-      #tg-common-faq a.tg-h26-btn:focus-visible .tg-h26-btn__knob {
-        right: 0.25rem !important;
-        transform: translateY(-50%) !important;
-      }
+      #tg-common-faq .tg-faq-card,
+      #tg-common-faq .tg-faq-cta-btn { transition: none !important; }
     }
   </style>
   <div class="tg-faq-inner">
     <header class="tg-faq-head">
       <span class="tg-faq-overline">Support Center</span>
       <h2 id="tg-faq-title">Common Questions We Get</h2>
-      <p class="tg-faq-sub">
-        Answers to the most common questions we receive &mdash; everything you need to know!
-      </p>
+      <p class="tg-faq-sub">Answers to the Most Common Questions We Receive - Everything You Need to Know!</p>
     </header>
+
     <ul class="tg-faq-grid">
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">How can I pause my tiffin?</h3>
-        <p class="tg-faq-card-answer">You can pause your tiffin deliveries by informing us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong> to your scheduled delivery.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">pause_circle</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">How can I pause my tiffin?</h3>
+            <p class="tg-faq-card-answer">You can pause your tiffin deliveries by informing us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong> to your scheduled delivery.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">How do I change my delivery address?</h3>
-        <p class="tg-faq-card-answer">To change your delivery address, please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>, and we will update it accordingly.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">How do I change my delivery address?</h3>
+            <p class="tg-faq-card-answer">To change your delivery address, please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>, and we will update it accordingly.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">How will I receive my tracking link?</h3>
-        <p class="tg-faq-card-answer">Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">sms</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">How will I receive my tracking link?</h3>
+            <p class="tg-faq-card-answer">Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Can I choose specific delivery days instead of daily tiffin?</h3>
-        <p class="tg-faq-card-answer">Yes, you can choose your preferred delivery days. Please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">calendar_month</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Can I choose specific delivery days?</h3>
+            <p class="tg-faq-card-answer">Yes, you can choose your preferred delivery days. Please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Can I customize my tiffin plan?</h3>
-        <p class="tg-faq-card-answer">Yes, you can customize your tiffin plan based on your preferences. Contact us on <strong>WhatsApp</strong> and our team will assist you.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">edit_note</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Can I customize my tiffin plan?</h3>
+            <p class="tg-faq-card-answer">Yes, you can customize your tiffin plan based on your preferences. Contact us on <strong>WhatsApp</strong> and our team will assist you.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Is the chicken halal?</h3>
-        <p class="tg-faq-card-answer">Yes, we use halal-certified chicken in all our non-vegetarian meals.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">verified</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Is the chicken halal?</h3>
+            <p class="tg-faq-card-answer">Yes, we use halal-certified chicken in all our non-vegetarian meals.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Are there any delivery charges?</h3>
-        <p class="tg-faq-card-answer">We provide <strong>free delivery</strong>. However, upstairs delivery is charged at $1 per delivery.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_shipping</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Are there any delivery charges?</h3>
+            <p class="tg-faq-card-answer">We provide <strong>free delivery</strong>. However, upstairs delivery is charged at $1 per delivery.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Can I select veg meals on specific days under a non-veg plan?</h3>
-        <p class="tg-faq-card-answer">Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">restaurant</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Can I select veg on non-veg plans?</h3>
+            <p class="tg-faq-card-answer">Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">What is the spice level of the food?</h3>
-        <p class="tg-faq-card-answer">Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_fire_department</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">What is the spice level of food?</h3>
+            <p class="tg-faq-card-answer">Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on.</p>
+          </div>
+        </div>
       </li>
-      <li class="tg-faq-card">
-        <h3 class="tg-faq-card-q">Does the menu remain the same?</h3>
-        <p class="tg-faq-card-answer">No, our menu changes every week to ensure variety, freshness, and a better dining experience.</p>
+      <li class="tg-faq-card tg-faq-card--large">
+        <div class="tg-faq-card-inner tg-faq-large-body">
+          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">menu_book</span></div>
+          <div>
+            <h3 class="tg-faq-card-q">Does the menu remain the same?</h3>
+            <p class="tg-faq-card-answer">No, our menu changes every week to ensure variety, freshness, and a better dining experience.</p>
+          </div>
+        </div>
       </li>
     </ul>
+
     <div class="tg-faq-cta">
       <div class="tg-faq-cta-inner">
-        <h2 class="tg-faq-cta-heading">
-          Got a question? <span class="tg-faq-cta-accent">We&rsquo;re one message away.</span>
-        </h2>
-        <p class="tg-faq-cta-lede">
-          Ingredients, delivery windows, plans, or something custom&mdash;our kitchen team answers fast on contact or WhatsApp.
-        </p>
+        <h2 class="tg-faq-cta-heading">Still have a question?</h2>
+        <p class="tg-faq-cta-lede">Our kitchen experts are always here to help. Whether it's about a specific ingredient or your delivery route, we're just a message away.</p>
         <div class="tg-faq-cta-actions">
-          <a class="tg-h26-btn tg-h26-btn--primary" href="https://tiffingrab.ca/contact/">
-            <span class="tg-h26-btn__label">Contact us</span>
-            <span class="tg-h26-btn__knob" aria-hidden="true"></span>
-          </a>
-          <a
-            class="tg-h26-btn tg-h26-btn--wa"
-            href="https://wa.me/message/ZHHBFQTZIN7MB1"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span class="tg-h26-btn__label">Chat on WhatsApp</span>
-            <span class="tg-h26-btn__knob" aria-hidden="true"></span>
-          </a>
+          <a class="tg-faq-cta-btn tg-faq-cta-btn--primary" href="https://tiffingrab.ca/contact/">Contact Support</a>
+          <a class="tg-faq-cta-btn tg-faq-cta-btn--secondary" href="https://wa.me/message/ZHHBFQTZIN7MB1" target="_blank" rel="noopener noreferrer">Live Chat</a>
         </div>
       </div>
     </div>
   </div>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -536,7 +468,7 @@
           "name": "Are there any delivery charges?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Delivery is free of cost. However, upstairs delivery is charged at $1 per delivery."
+            "text": "We provide free delivery. However, upstairs delivery is charged at $1 per delivery."
           }
         },
         {
