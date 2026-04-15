@@ -104,6 +104,9 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: clamp(1.25rem, 2.5vw, 2rem);
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
     @media (min-width: 640px) {
       .tg-faq-grid {
@@ -115,8 +118,7 @@
         grid-template-columns: repeat(3, 1fr);
       }
     }
-    /* <details> FAQ: mobile = tap to expand; desktop = grid + forced open via script */
-    details.tg-faq-card {
+    .tg-faq-card {
       position: relative;
       margin: 0;
       padding: clamp(1.75rem, 3vw, 2rem);
@@ -125,141 +127,39 @@
       box-shadow: var(--faq-shadow);
       outline: 1px solid var(--faq-outline);
       outline-offset: 0;
-      border: none;
-      transition: box-shadow 0.3s ease, outline-color 0.3s ease;
+      border: 1px solid transparent;
+      transition: box-shadow 0.3s ease, outline-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      min-width: 0;
     }
     @media (hover: hover) {
-      details.tg-faq-card:hover {
+      .tg-faq-card:hover {
         box-shadow: var(--faq-shadow-hover);
         outline-color: rgba(240, 107, 26, 0.22);
-      }
-    }
-    details.tg-faq-card > summary {
-      list-style: none;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    details.tg-faq-card > summary::-webkit-details-marker {
-      display: none;
-    }
-    details.tg-faq-card > summary::marker {
-      content: "";
-    }
-    .tg-faq-card-icon {
-      color: color-mix(in srgb, var(--faq-primary) 22%, transparent);
-      pointer-events: none;
-      transform-origin: center;
-      transition: color 0.35s ease, transform 0.35s ease, filter 0.35s ease;
-      flex-shrink: 0;
-    }
-    .tg-faq-card-icon .material-symbols-outlined {
-      display: block;
-      transition: inherit;
-    }
-    @media (hover: hover) {
-      details.tg-faq-card:hover .tg-faq-card-icon {
-        color: var(--faq-primary-bright);
-        filter: brightness(1.12) saturate(1.25);
-        transform: scale(1.08);
+        border-color: rgba(240, 107, 26, 0.24);
+        transform: translateY(-2px);
       }
     }
     .tg-faq-card-q {
       font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1.3;
+      font-size: clamp(1.04rem, 1.4vw, 1.16rem);
+      font-weight: 750;
+      line-height: 1.35;
       margin: 0;
       padding: 0;
       min-width: 0;
       color: var(--faq-on);
+      max-width: 33ch;
     }
-    .tg-faq-card-chev {
-      flex-shrink: 0;
-      margin-left: auto;
-      font-size: 1.5rem !important;
+    .tg-faq-card-answer {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.62;
       color: var(--faq-muted);
-      transition: transform 0.25s ease;
-    }
-    details.tg-faq-card[open] .tg-faq-card-chev {
-      transform: rotate(180deg);
-      color: var(--faq-primary);
-    }
-    .tg-faq-card-answer p {
-      margin: 0 0 1.25rem;
-      font-size: 0.98rem;
-      line-height: 1.65;
-      color: var(--faq-muted);
-    }
-    .tg-faq-card-answer .tg-faq-tag {
-      display: inline-block;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--faq-primary);
-    }
-    @media (min-width: 768px) {
-      details.tg-faq-card {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        grid-template-rows: auto auto auto;
-        column-gap: 0.65rem;
-        align-items: start;
-        text-align: left;
-      }
-      details.tg-faq-card > summary {
-        display: contents;
-        cursor: default;
-        pointer-events: none;
-      }
-      details.tg-faq-card > summary .tg-faq-card-icon {
-        grid-column: 2;
-        grid-row: 1;
-        justify-self: end;
-        align-self: start;
-      }
-      details.tg-faq-card > summary .tg-faq-card-q {
-        grid-column: 1;
-        grid-row: 1;
-        margin: 0 0 0.85rem;
-      }
-      details.tg-faq-card > summary .tg-faq-card-chev {
-        display: none !important;
-      }
-      details.tg-faq-card > .tg-faq-card-answer {
-        display: contents;
-      }
-      details.tg-faq-card > .tg-faq-card-answer > p {
-        grid-column: 1 / -1;
-        grid-row: 2;
-      }
-      details.tg-faq-card > .tg-faq-card-answer > .tg-faq-tag {
-        grid-column: 1 / -1;
-        grid-row: 3;
-        margin-top: 0;
-        align-self: start;
-      }
-    }
-    @media (max-width: 767px) {
-      details.tg-faq-card > summary {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.65rem;
-        text-align: left;
-      }
-      details.tg-faq-card > summary .tg-faq-card-q {
-        flex: 1;
-        min-width: 0;
-        font-size: 1.05rem;
-      }
-      details.tg-faq-card > .tg-faq-card-answer {
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(220, 193, 181, 0.35);
-      }
-      details.tg-faq-card > .tg-faq-card-answer p {
-        margin-bottom: 1rem;
-      }
+      max-width: 56ch;
     }
     /* CTA: peach band (#fdeae2 family) + warm orange glow — matches service-area / page alternation */
     .tg-faq-cta {
@@ -409,10 +309,13 @@
       .tg-faq-sub {
         font-size: 1rem;
       }
-      details.tg-faq-card {
+      .tg-faq-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .tg-faq-card {
         padding: 1.35rem 1.15rem;
       }
-      details.tg-faq-card > summary .tg-faq-card-q {
+      .tg-faq-card-q {
         font-size: 1.05rem;
       }
       #tg-common-faq .tg-faq-cta {
@@ -483,10 +386,7 @@
       }
     }
     @media (prefers-reduced-motion: reduce) {
-      details.tg-faq-card,
-      .tg-faq-card-icon,
-      .tg-faq-card-icon .material-symbols-outlined,
-      .tg-faq-card-chev,
+      .tg-faq-card,
       #tg-common-faq a.tg-h26-btn,
       #tg-common-faq a.tg-h26-btn .tg-h26-btn__knob {
         transition: none !important;
@@ -500,13 +400,6 @@
         right: 0.25rem !important;
         transform: translateY(-50%) !important;
       }
-      @media (hover: hover) {
-        details.tg-faq-card:hover .tg-faq-card-icon {
-          transform: none;
-          filter: none;
-          color: var(--faq-primary);
-        }
-      }
     }
   </style>
   <div class="tg-faq-inner">
@@ -517,103 +410,48 @@
         Answers to the most common questions we receive &mdash; everything you need to know!
       </p>
     </header>
-    <div class="tg-faq-grid" role="list">
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">inventory_2</span>
-          </div>
-          <span class="tg-faq-card-q">How are the ingredients sourced?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            We work with trusted local suppliers and prioritize fresh produce and quality ingredients. Everything is selected with care before it
-            reaches your tiffin.
-          </p>
-          <span class="tg-faq-tag">Ingredient sourcing</span>
-        </div>
-      </details>
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">delivery_dining</span>
-          </div>
-          <span class="tg-faq-card-q">What time are tiffins usually delivered?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            Tiffin delivery times: Mississauga &amp; Brampton: 12 PM &ndash; 2 PM; Downtown Toronto, Scarborough, North York, Etobicoke: 8 AM &ndash; 10
-            AM; Markham: 11 AM &ndash; 1 PM; Ajax, Oshawa, Pickering: 2 PM &ndash; 4 PM.
-          </p>
-          <span class="tg-faq-tag">Logistics</span>
-        </div>
-      </details>
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">health_and_safety</span>
-          </div>
-          <span class="tg-faq-card-q">Do you cater to specific dietary needs?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            Yes. We offer vegetarian and non-vegetarian options and can often accommodate special requests (including vegan where available). Tell us
-            your needs when you order and we&rsquo;ll guide you to the best plan.
-          </p>
-          <span class="tg-faq-tag">Dietary</span>
-        </div>
-      </details>
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">restaurant</span>
-          </div>
-          <span class="tg-faq-card-q">Can I customize my weekly subscription?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            Absolutely. You can adjust your plan, swap meals where available, and coordinate pauses with our team &mdash; reach out before your delivery
-            window so we can help.
-          </p>
-          <span class="tg-faq-tag">Flexibility</span>
-        </div>
-      </details>
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">eco</span>
-          </div>
-          <span class="tg-faq-card-q">Is the packaging eco-friendly?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            Sustainability matters to us. We use food-safe packaging and reusable stainless steel tiffins where offered, plus compostable materials when
-            that fits your route.
-          </p>
-          <span class="tg-faq-tag">Environment</span>
-        </div>
-      </details>
-      <details class="tg-faq-card" role="listitem">
-        <summary>
-          <div class="tg-faq-card-icon" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 1.85rem">pause_circle</span>
-          </div>
-          <span class="tg-faq-card-q">Can I skip a week or pause my subscription?</span>
-          <span class="material-symbols-outlined tg-faq-card-chev" aria-hidden="true">expand_more</span>
-        </summary>
-        <div class="tg-faq-card-answer">
-          <p>
-            Yes. You can skip a week or pause your subscription &mdash; just let our team know in advance and we&rsquo;ll adjust your schedule.
-          </p>
-          <span class="tg-faq-tag">Subscriptions</span>
-        </div>
-      </details>
-    </div>
+    <ul class="tg-faq-grid">
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">How can I pause my tiffin?</h3>
+        <p class="tg-faq-card-answer">You can pause your tiffin deliveries by informing us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong> to your scheduled delivery.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">How do I change my delivery address?</h3>
+        <p class="tg-faq-card-answer">To change your delivery address, please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>, and we will update it accordingly.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">How will I receive my tracking link?</h3>
+        <p class="tg-faq-card-answer">Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Can I choose specific delivery days instead of daily tiffin?</h3>
+        <p class="tg-faq-card-answer">Yes, you can choose your preferred delivery days. Please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Can I customize my tiffin plan?</h3>
+        <p class="tg-faq-card-answer">Yes, you can customize your tiffin plan based on your preferences. Contact us on <strong>WhatsApp</strong> and our team will assist you.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Is the chicken halal?</h3>
+        <p class="tg-faq-card-answer">Yes, we use halal-certified chicken in all our non-vegetarian meals.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Are there any delivery charges?</h3>
+        <p class="tg-faq-card-answer">We provide <strong>free delivery</strong>. However, upstairs delivery is charged at $1 per delivery.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Can I select veg meals on specific days under a non-veg plan?</h3>
+        <p class="tg-faq-card-answer">Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">What is the spice level of the food?</h3>
+        <p class="tg-faq-card-answer">Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on.</p>
+      </li>
+      <li class="tg-faq-card">
+        <h3 class="tg-faq-card-q">Does the menu remain the same?</h3>
+        <p class="tg-faq-card-answer">No, our menu changes every week to ensure variety, freshness, and a better dining experience.</p>
+      </li>
+    </ul>
     <div class="tg-faq-cta">
       <div class="tg-faq-cta-inner">
         <h2 class="tg-faq-cta-heading">
@@ -640,25 +478,92 @@
       </div>
     </div>
   </div>
-  <script>
-    (function () {
-      var root = document.getElementById("tg-common-faq");
-      if (!root) return;
-      var cards = root.querySelectorAll("details.tg-faq-card");
-      if (!cards.length) return;
-      var mq = window.matchMedia("(min-width: 768px)");
-      function syncOpen() {
-        var open = mq.matches;
-        cards.forEach(function (d) {
-          d.open = open;
-        });
-      }
-      syncOpen();
-      if (typeof mq.addEventListener === "function") {
-        mq.addEventListener("change", syncOpen);
-      } else if (typeof mq.addListener === "function") {
-        mq.addListener(syncOpen);
-      }
-    })();
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How can I pause my tiffin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can pause your tiffin deliveries by informing us on WhatsApp before 7:00 PM, one day prior to your scheduled delivery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I change my delivery address?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To change your delivery address, please inform us on WhatsApp before 7:00 PM, one day prior, and we will update it accordingly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How will I receive my tracking link?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I choose specific delivery days instead of daily tiffin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can choose your preferred delivery days. Please inform us on WhatsApp before 7:00 PM, one day prior."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I customize my tiffin plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can customize your tiffin plan based on your preferences. Contact us on WhatsApp and our team will assist you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the chicken halal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we use halal-certified chicken in all our non-vegetarian meals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are there any delivery charges?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Delivery is free of cost. However, upstairs delivery is charged at $1 per delivery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I select veg meals on specific days under a non-veg plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the spice level of the food?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the menu remain the same?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, our menu changes every week to ensure variety, freshness, and a better dining experience."
+          }
+        }
+      ]
+    }
   </script>
 </section>
