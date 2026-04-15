@@ -289,8 +289,19 @@
         width: 100%;
         max-width: 17rem;
         margin: 0 auto;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        outline: none;
       }
-      #tg-common-faq .tg-faq-cta-btn { width: 100%; }
+      #tg-common-faq .tg-faq-cta-btn {
+        width: 100%;
+        min-height: 2.9rem;
+      }
+      #tg-common-faq .tg-faq-cta-btn--secondary {
+        background: #ffffff;
+        outline: 1px solid rgba(220, 193, 181, 0.4);
+      }
     }
     @media (prefers-reduced-motion: reduce) {
       #tg-common-faq .tg-faq-card,
