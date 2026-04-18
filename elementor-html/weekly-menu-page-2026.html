@@ -21,8 +21,16 @@
   body:has(#tg-weekly-menu-2026) {
     overflow-x: hidden;
   }
-  body:has(#tg-weekly-menu-2026) .elementor,
-  body:has(#tg-weekly-menu-2026) #page,
+  /* Do not set .elementor or #page — they wrap the header; that turned the nav bar peach. */
+  body:has(#tg-weekly-menu-2026) .elementor-location-header,
+  body:has(#tg-weekly-menu-2026) [class*="elementor-location-header"] {
+    background-color: #ffffff !important;
+    background-image: none !important;
+  }
+  body:has(#tg-weekly-menu-2026) .elementor-location-body,
+  body:has(#tg-weekly-menu-2026) [class*="elementor-location-body"] {
+    background-color: #fff8f6 !important;
+  }
   body:has(#tg-weekly-menu-2026) .site-content,
   body:has(#tg-weekly-menu-2026) #content,
   body:has(#tg-weekly-menu-2026) #main,
