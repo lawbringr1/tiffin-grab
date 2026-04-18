@@ -100,7 +100,7 @@
       gap: clamp(1.5rem, 4vw, 2.5rem);
       max-width: 72rem;
       margin: 0 auto;
-      align-items: stretch;
+      align-items: start;
     }
     @media (min-width: 1024px) {
       #tg-contact-2026 .tg-c-grid {
@@ -108,7 +108,6 @@
       }
     }
     #tg-contact-2026 .tg-c-card {
-      height: 100%;
       background: var(--c-surface);
       border: 1px solid var(--c-outline);
       border-radius: 12px;
@@ -247,97 +246,27 @@
       border: 1px solid rgba(186, 26, 26, 0.35);
       color: #5c1010;
     }
-    #tg-contact-2026 .tg-c-map-shell {
-      height: 100%;
-      min-height: clamp(22rem, 48vh, 36rem);
-      display: flex;
-      flex-direction: column;
-      border-radius: 14px;
-      padding: 6px;
-      box-sizing: border-box;
-      background: linear-gradient(165deg, #141210 0%, #0a0908 55%, #060504 100%);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.04),
-        0 12px 40px rgba(0, 0, 0, 0.35);
-    }
-    @media (min-width: 1024px) {
-      #tg-contact-2026 .tg-c-map-shell {
-        min-height: 100%;
-      }
-    }
     #tg-contact-2026 .tg-c-map {
       position: relative;
-      flex: 1 1 auto;
-      min-height: clamp(20rem, 42vh, 32rem);
-      border-radius: 10px;
+      min-height: 28rem;
+      border-radius: 12px;
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: #080706;
-    }
-    @media (min-width: 1024px) {
-      #tg-contact-2026 .tg-c-map {
-        min-height: 0;
-      }
+      border: 1px solid var(--c-outline);
+      background: var(--c-peach-mid);
     }
     #tg-contact-2026 .tg-c-map-embed-wrap {
       position: absolute;
       inset: 0;
       z-index: 0;
-      background: #080706;
-      overflow: hidden;
+      background: var(--c-peach-mid);
     }
     #tg-contact-2026 .tg-c-map-iframe {
       position: absolute;
-      left: 50%;
-      top: 50%;
+      left: 0;
+      top: 0;
       width: 100%;
       height: 100%;
-      min-width: 100%;
-      min-height: 100%;
       border: 0;
-      transform: translate(-50%, -50%) scale(1.06);
-      transform-origin: center center;
-      filter: brightness(0.68) contrast(1.12) saturate(0.78);
-    }
-    #tg-contact-2026 .tg-c-map-shade {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: linear-gradient(
-        180deg,
-        rgba(5, 4, 3, 0.72) 0%,
-        rgba(5, 4, 3, 0.18) 42%,
-        rgba(5, 4, 3, 0.68) 100%
-      );
-    }
-    #tg-contact-2026 .tg-c-map-card {
-      position: absolute;
-      left: 1rem;
-      right: 1rem;
-      bottom: 1rem;
-      max-width: 22rem;
-      z-index: 2;
-      padding: 1.1rem 1.15rem;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(8px);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    }
-    #tg-contact-2026 .tg-c-map-card h4 {
-      margin: 0 0 0.35rem;
-      font-family: "Manrope", sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--c-on);
-    }
-    #tg-contact-2026 .tg-c-map-card p {
-      margin: 0;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      color: var(--c-muted);
     }
     #tg-contact-2026 .tg-c-info {
       display: grid;
@@ -479,23 +408,16 @@
       </form>
     </div>
 
-    <div class="tg-c-map-shell">
-      <div class="tg-c-map" aria-label="Kitchen location">
-        <div class="tg-c-map-embed-wrap">
-          <iframe
-            class="tg-c-map-iframe"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.7728254560107!2d-79.60462128760241!3d43.73604594694709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3a557fd1b7ef%3A0x83b4ddaa1b8352a0!2s130%20Westmore%20Dr%2C%20Etobicoke%2C%20ON%20M9V%205E2%2C%20Canada!5e0!3m2!1sen!2sin!4v1776550021977!5m2!1sen!2sin"
-            title="Map: 130 Westmore Drive, Etobicoke"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div class="tg-c-map-shade" aria-hidden="true"></div>
-        <div class="tg-c-map-card">
-          <h4>Our kitchen HQ</h4>
-          <p>130 Westmore Drive<br />Etobicoke, Ontario M9V 5E2<br />Canada</p>
-        </div>
+    <div class="tg-c-map" aria-label="Map: kitchen location at 130 Westmore Drive, Etobicoke">
+      <div class="tg-c-map-embed-wrap">
+        <iframe
+          class="tg-c-map-iframe"
+          src="https://www.google.com/maps?q=43.7360459,-79.6046213&amp;z=16&amp;hl=en&amp;output=embed"
+          title="Map: 130 Westmore Drive, Etobicoke"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </section>
