@@ -17,7 +17,7 @@ After `scripts/setup_weekly_menu_page_2026.py`, the public **`/menu/`** page (**
 | `lede` | First long `text-editor` (intro under “Our Weekly Menu”) |
 | `heading_raw` / `date_line` | `heading` widget whose title matches “Weekly Menu …” |
 | `image_url` | **`image` widget URL(s)** first (the weekly graphic); avoids Woo product thumbs from the UE grid |
-| `pdf_url` | First `.pdf` link in buttons or HTML on the data page; if none, **`TIFFINGRAB_WEEKLY_MENU_DEFAULT_PDF_URL`** in `tiffingrab-weekly-menu-rest.php` (currently [Tiffingrab-Menu.pdf](https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf)) |
+| `pdf_url` | First `.pdf` link in buttons or HTML on the data page (optional; the public menu HTML hardcodes [Tiffingrab-Menu.pdf](https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf) for the download button) |
 | `plans_title` | Heading matching “Explore … Tiffin … Plans” |
 | `plans_lede` | Second `text-editor` or copy matching plan/lifestyle keywords |
 | `plans_cta_url` / `plans_cta_label` | First non-PDF Elementor **button** (e.g. View All Plans), else `/tiffin-plans/` |

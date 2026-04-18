@@ -337,7 +337,15 @@
         <h3 id="tg-wm-date">Loading dates&hellip;</h3>
         <p>Includes breakfast, lunch, and dinner options for all subscription plans.</p>
       </div>
-      <a class="tg-wm-cta" id="tg-wm-download" href="#" tabindex="0">
+      <a
+        class="tg-wm-cta"
+        id="tg-wm-download"
+        href="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        download
+        tabindex="0"
+      >
         <span class="material-symbols-outlined" aria-hidden="true">download</span>
         Download Menu PDF
       </a>
@@ -389,6 +397,8 @@
         "Our weekly menu is crafted to offer variety and freshness—no repeated items, just a new selection of delicious Indian dishes every day. Enjoy balanced meals with different flavors throughout the week.";
       var plansLedeFallback =
         "Choose from our most popular tiffin plans, crafted to suit every lifestyle. Whether you’re a student, a busy professional, or feeding your family, our homestyle meals bring authentic Indian flavours straight to your table—fresh, delicious, and hassle-free.";
+      /** Weekly menu PDF (update href above when the file changes). */
+      var MENU_PDF = "https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf";
 
       var base =
         (window.TIFFINGRAB_WEEKLY_MENU && window.TIFFINGRAB_WEEKLY_MENU.url) ||
@@ -426,7 +436,6 @@
         setDateLine(dateLine, "");
 
         var img = (data && data.image_url) || "";
-        var pdf = (data && data.pdf_url) || "";
         var alt = (data && data.image_alt) || "Current weekly menu";
 
         if (img && imgEl && fig) {
@@ -449,27 +458,12 @@
 
         if (dl) {
           dl.removeAttribute("aria-disabled");
-          if (pdf) {
-            dl.href = pdf;
-            dl.setAttribute("download", "");
-            dl.target = "_blank";
-            dl.rel = "noopener noreferrer";
-            dl.innerHTML =
-              '<span class="material-symbols-outlined" aria-hidden="true">download</span> Download Menu PDF';
-          } else if (img) {
-            dl.href = img;
-            dl.removeAttribute("download");
-            dl.target = "_blank";
-            dl.rel = "noopener noreferrer";
-            dl.innerHTML =
-              '<span class="material-symbols-outlined" aria-hidden="true">open_in_new</span> View full menu';
-          } else {
-            dl.href = "#";
-            dl.removeAttribute("download");
-            dl.removeAttribute("target");
-            dl.removeAttribute("rel");
-            dl.setAttribute("aria-disabled", "true");
-          }
+          dl.href = MENU_PDF;
+          dl.setAttribute("download", "");
+          dl.target = "_blank";
+          dl.rel = "noopener noreferrer";
+          dl.innerHTML =
+            '<span class="material-symbols-outlined" aria-hidden="true">download</span> Download Menu PDF';
         }
       }
 
@@ -493,12 +487,12 @@
           if (fig) fig.classList.add("is-loaded");
           if (dl) {
             dl.removeAttribute("aria-disabled");
-            dl.href = "/menu/";
-            dl.target = "_self";
-            dl.removeAttribute("download");
-            dl.removeAttribute("rel");
+            dl.href = MENU_PDF;
+            dl.setAttribute("download", "");
+            dl.target = "_blank";
+            dl.rel = "noopener noreferrer";
             dl.innerHTML =
-              '<span class="material-symbols-outlined" aria-hidden="true">restaurant_menu</span> Open weekly menu page';
+              '<span class="material-symbols-outlined" aria-hidden="true">download</span> Download Menu PDF';
           }
         });
     })();
