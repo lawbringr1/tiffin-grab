@@ -3,8 +3,15 @@
 .cursor/mcp.json
 .codex/config.toml
 
-# MCP / Elementor .tmp-* JSON payloads are tracked on purpose (offline reference / faster reruns).
-# Do not put passwords or API keys into these files.
+# MCP / Elementor debug payloads (do not commit)
+.tmp-*
+tmp-mcp-*.ps1
+tmp-mcp-*.sh
+tmp-update-*.ps1
+tmp-debug-auth.ps1
+
+# Local email lists / scratch (may contain PII)
+elementor-html/emails.txt
 
 # Wordpress - ignore core, configuration, examples, uploads and logs.
 # https://github.com/github/gitignore/blob/main/WordPress.gitignore

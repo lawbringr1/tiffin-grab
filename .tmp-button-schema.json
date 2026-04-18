@@ -1,1 +1,0 @@
-{"jsonrpc":"2.0","id":40,"result":{"content":[{"type":"text","text":"Ability \"elementor-mcp\/get-widget-schema\" has invalid input. Reason: widget_type is a required property of input."}],"isError":true}}

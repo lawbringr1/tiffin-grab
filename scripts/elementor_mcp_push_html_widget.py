@@ -2,7 +2,7 @@
 """
 Push Elementor widget settings via the site’s elementor-mcp server (HTML widget content or container custom_css).
 
-Equivalent to tmp-mcp-push-html-widget.ps1 — use this on macOS/Linux (no PowerShell).
+Cross-platform Elementor MCP HTML/CSS pusher (replaces legacy PowerShell one-offs).
 
 Requires: Python 3.8+, .cursor/mcp.json with mcpServers.elementor-mcp url + Authorization.
 
