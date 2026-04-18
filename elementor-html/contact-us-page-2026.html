@@ -252,33 +252,33 @@
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--c-outline);
-      background: linear-gradient(145deg, #2a2420 0%, #1a1614 50%, #231a15 100%);
+      background: #1a1614;
     }
-    #tg-contact-2026 .tg-c-map-grid {
+    #tg-contact-2026 .tg-c-map-embed-wrap {
       position: absolute;
       inset: 0;
-      opacity: 0.35;
-      background-image: linear-gradient(rgba(227, 123, 62, 0.35) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(227, 123, 62, 0.35) 1px, transparent 1px);
-      background-size: 48px 48px;
+      z-index: 0;
+      background: #1a1614;
     }
-    #tg-contact-2026 .tg-c-map-pin {
+    #tg-contact-2026 .tg-c-map-iframe {
       position: absolute;
-      left: 50%;
-      top: 42%;
-      transform: translate(-50%, -50%);
-      width: 4.5rem;
-      height: 4.5rem;
-      border-radius: 50%;
-      background: var(--c-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 12px 40px rgba(227, 123, 62, 0.55);
-      color: #fff;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
-    #tg-contact-2026 .tg-c-map-pin .material-symbols-outlined {
-      font-size: 2.5rem;
+    #tg-contact-2026 .tg-c-map-shade {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(15, 12, 10, 0.5) 0%,
+        rgba(15, 12, 10, 0.12) 40%,
+        rgba(15, 12, 10, 0.45) 100%
+      );
     }
     #tg-contact-2026 .tg-c-map-card {
       position: absolute;
@@ -286,6 +286,7 @@
       right: 1rem;
       bottom: 1rem;
       max-width: 22rem;
+      z-index: 2;
       padding: 1.1rem 1.15rem;
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(8px);
@@ -447,10 +448,17 @@
     </div>
 
     <div class="tg-c-map" aria-label="Kitchen location">
-      <div class="tg-c-map-grid" aria-hidden="true"></div>
-      <div class="tg-c-map-pin" aria-hidden="true">
-        <span class="material-symbols-outlined">location_on</span>
+      <div class="tg-c-map-embed-wrap">
+        <iframe
+          class="tg-c-map-iframe"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2882.7728254560107!2d-79.60462128760241!3d43.73604594694709!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b3a557fd1b7ef%3A0x83b4ddaa1b8352a0!2s130%20Westmore%20Dr%2C%20Etobicoke%2C%20ON%20M9V%205E2%2C%20Canada!5e0!3m2!1sen!2sin!4v1776550021977!5m2!1sen!2sin"
+          title="Map: 130 Westmore Drive, Etobicoke"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
       </div>
+      <div class="tg-c-map-shade" aria-hidden="true"></div>
       <div class="tg-c-map-card">
         <h4>Our kitchen HQ</h4>
         <p>130 Westmore Drive<br />Etobicoke, Ontario M9V 5E2<br />Canada</p>
