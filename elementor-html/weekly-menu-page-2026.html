@@ -397,8 +397,8 @@
         "Our weekly menu is crafted to offer variety and freshness—no repeated items, just a new selection of delicious Indian dishes every day. Enjoy balanced meals with different flavors throughout the week.";
       var plansLedeFallback =
         "Choose from our most popular tiffin plans, crafted to suit every lifestyle. Whether you’re a student, a busy professional, or feeding your family, our homestyle meals bring authentic Indian flavours straight to your table—fresh, delicious, and hassle-free.";
-      /** Weekly menu PDF (update href above when the file changes). */
-      var MENU_PDF = "https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf";
+      /** Resolved from the download link’s href (edit the <a href> above when the PDF changes). */
+      var MENU_PDF = dl && dl.href ? dl.href.split("#")[0] : "";
 
       var base =
         (window.TIFFINGRAB_WEEKLY_MENU && window.TIFFINGRAB_WEEKLY_MENU.url) ||
