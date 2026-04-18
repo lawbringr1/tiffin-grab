@@ -231,8 +231,13 @@ header.elementor.elementor-1863.elementor-location-header {
   font-weight: 700 !important;
   font-size: clamp(0.95rem, 2.5vw, 1.05rem) !important;
   letter-spacing: -0.03em !important;
-  color: var(--tg-navlink) !important;
   white-space: nowrap !important;
+}
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-wordmark .tg-brand-tiffin {
+  color: #fb801c !important;
+}
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-wordmark .tg-brand-grab {
+  color: #185936 !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark svg {

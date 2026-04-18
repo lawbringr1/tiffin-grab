@@ -75,11 +75,11 @@
       white-space: nowrap;
       pointer-events: none;
       user-select: none;
-      background: linear-gradient(90deg, var(--tg-orange), var(--tg-orange-mid));
+      background: linear-gradient(90deg, #fb801c 0%, #185936 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      opacity: 0.07;
+      opacity: 0.08;
       z-index: 0;
     }
     #tg-site-footer .tg-footer__inner {
@@ -94,16 +94,37 @@
       gap: clamp(1.75rem, 4vw, 2.5rem);
       align-items: start;
     }
-    #tg-site-footer .tg-footer__brand-title {
+    #tg-site-footer .tg-footer__brand-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.65rem;
       margin: 0 0 0.65rem;
+      flex-wrap: wrap;
+    }
+    #tg-site-footer .tg-footer__brand-logo {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      object-fit: contain;
+      display: block;
+    }
+    #tg-site-footer .tg-footer__brand-title {
+      margin: 0;
       font-size: clamp(1.5rem, 3.5vw, 1.75rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.15;
-      background: linear-gradient(90deg, var(--tg-orange), var(--tg-orange-mid));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+    }
+    #tg-site-footer .tg-brand-tiffin {
+      color: #fb801c;
+    }
+    #tg-site-footer .tg-brand-grab {
+      color: #185936;
+    }
+    #tg-site-footer .tg-footer__bottom .tg-brand-tiffin,
+    #tg-site-footer .tg-footer__bottom .tg-brand-grab {
+      font-weight: 700;
     }
     #tg-site-footer .tg-footer__lede {
       margin: 0 0 1.1rem;
@@ -316,7 +337,20 @@
   <div class="tg-footer__inner">
     <div class="tg-footer__grid">
       <div>
-        <h2 class="tg-footer__brand-title" id="tg-footer-brand">TiffinGrab</h2>
+        <div class="tg-footer__brand-row">
+          <img
+            class="tg-footer__brand-logo"
+            src="https://tiffingrab.ca/wp-content/uploads/2026/04/tiffin-grab-logo.svg"
+            width="48"
+            height="48"
+            alt=""
+            decoding="async"
+            loading="lazy"
+          />
+          <h2 class="tg-footer__brand-title" id="tg-footer-brand">
+            <span class="tg-brand-tiffin">Tiffin</span><span class="tg-brand-grab">Grab</span>
+          </h2>
+        </div>
         <p class="tg-footer__lede">
           Fresh, home-style meals delivered across the GTA. Built for comfort, consistency, and taste.
         </p>
@@ -395,7 +429,10 @@
     </div>
 
     <div class="tg-footer__bottom">
-      <span>&copy; <span id="tg-footer-year">2026</span> TiffinGrab. All rights reserved.</span>
+      <span>
+        &copy; <span id="tg-footer-year">2026</span>
+        <span class="tg-brand-tiffin">Tiffin</span><span class="tg-brand-grab">Grab</span>. All rights reserved.
+      </span>
       <span class="tg-footer__bottom-sep">·</span>
       <a href="https://tiffingrab.ca/legal/">Legal</a>
       <span class="tg-footer__bottom-sep">·</span>
