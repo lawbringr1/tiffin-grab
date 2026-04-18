@@ -15,10 +15,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
+
+# Prepended only when pushing (not saved to disk). Changes the stored CSS so Elementor cache busts;
+# full-page HTML may still be edge-cached until you purge LiteSpeed / Hostinger CDN.
+_BUILD_STAMP_RE = re.compile(r"^\s*/\* tg-header-build:[^\n]+?\*/\s*\n?")
 
 
 def repo_root() -> Path:
@@ -66,6 +72,13 @@ def mcp_initialize(base_url: str, auth: str) -> str:
     if not sid:
         sys.exit("MCP initialize did not return Mcp-Session-Id header.")
     return sid.strip()
+
+
+def with_push_build_stamp(css: str) -> str:
+    """Strip any previous stamp and prepend UTC ISO time (in-memory only)."""
+    stripped = _BUILD_STAMP_RE.sub("", css, count=1)
+    stamp = f"/* tg-header-build: {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')} */\n"
+    return stamp + stripped.lstrip("\n")
 
 
 def mcp_add_custom_css(
@@ -119,7 +132,7 @@ def main() -> None:
     if not mcp_path.is_file():
         sys.exit(f"MCP config not found: {mcp_path}")
 
-    css = css_path.read_text(encoding="utf-8")
+    css = with_push_build_stamp(css_path.read_text(encoding="utf-8"))
     base_url, auth = load_mcp(mcp_path)
     session_id = mcp_initialize(base_url, auth)
 
@@ -139,6 +152,16 @@ def main() -> None:
     result = out.get("result") or {}
     if result.get("isError"):
         sys.exit(1)
+
+    print(
+        "\nIf the navbar still looks old in a new browser, the HTML is likely served from "
+        "Hostinger/LiteSpeed full-page cache (incognito does not bypass the CDN).\n"
+        "Purge after each header deploy:\n"
+        "  • WP Admin → LiteSpeed Cache → Toolbox → Purge → Purge All\n"
+        "  • Hostinger hPanel → your site → Performance / Cache → Purge (if shown)\n"
+        "  • Elementor → Tools → Regenerate CSS & Data\n"
+        "Verify: View Source or Network → search for tg-header-build (UTC stamp on each push).\n"
+    )
 
 
 if __name__ == "__main__":
