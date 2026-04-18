@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-Push `elementor-html/site-header-navbar-2026.css` to an Elementor header template via
-`elementor-mcp-add-custom-css` (page-level custom CSS; requires Elementor Pro on the site).
+Push header navbar CSS via `elementor-mcp-add-custom-css`.
+
+**Why two targets:** On the live site, `post-1863.css` (Theme Builder header) is generated but
+**not linked** on full-width pages — only `post-591.css` (Elementor Default Kit) is enqueued.
+So the navbar rules must live in **Site Settings → Custom CSS** (kit post **591**) to apply
+on the front end. We still push navbar-only CSS to the header template (**1863**) so the
+library post stays in sync when editing in Elementor.
 
 Requires `.cursor/mcp.json` with `mcpServers.elementor-mcp` url + Authorization.
 
 Examples:
   ./scripts/elementor_mcp_push_header_css.py
-  ./scripts/elementor_mcp_push_header_css.py --post-id 721
-  ./scripts/elementor_mcp_push_header_css.py --css path/to/other.css
+  ./scripts/elementor_mcp_push_header_css.py --kit-post-id 591 --header-post-id 1863
 """
 
 from __future__ import annotations
@@ -89,10 +93,11 @@ def mcp_add_custom_css(
     post_id: int,
     css: str,
     replace: bool,
+    rpc_id: int = 2,
 ) -> dict:
     body = {
         "jsonrpc": "2.0",
-        "id": 2,
+        "id": rpc_id,
         "method": "tools/call",
         "params": {
             "name": "elementor-mcp-add-custom-css",
@@ -103,64 +108,105 @@ def mcp_add_custom_css(
     return json.loads(raw)
 
 
+KIT_NAV_BANNER = """
+/*
+  --- Header navbar (source: elementor-html/site-header-navbar-2026.css) ---
+  Included in the Default Kit so rules load via post-591.css (enqueued sitewide). Theme Builder
+  header post 1863 does not enqueue post-1863.css on many front-end pages.
+*/
+"""
+
+
 def main() -> None:
     root = repo_root()
-    default_css = root / "elementor-html" / "site-header-navbar-2026.css"
+    default_nav = root / "elementor-html" / "site-header-navbar-2026.css"
+    default_kit = root / "elementor-html" / "elementor-kit-global-custom-css.css"
     default_mcp = root / ".cursor" / "mcp.json"
 
-    p = argparse.ArgumentParser(description="Push header navbar CSS via elementor-mcp-add-custom-css.")
+    p = argparse.ArgumentParser(description="Push kit + header navbar CSS via elementor-mcp-add-custom-css.")
+    p.add_argument("--nav-css", type=Path, default=default_nav, help="Navbar CSS (default: elementor-html/site-header-navbar-2026.css)")
+    p.add_argument("--kit-css", type=Path, default=default_kit, help="Elementor Default Kit custom CSS (default: elementor-html/elementor-kit-global-custom-css.css)")
     p.add_argument(
-        "--post-id",
+        "--kit-post-id",
+        type=int,
+        default=591,
+        help="Elementor Default Kit post ID (default: 591).",
+    )
+    p.add_argument(
+        "--header-post-id",
         type=int,
         default=1863,
-        help='Elementor Theme Builder header template post ID (default: 1863 “New Header”, shortcode [elementor-template id="1863"]).',
+        help='Theme Builder header template post ID (default: 1863). Use 0 to skip.',
     )
-    p.add_argument("--css", type=Path, default=default_css, help="CSS file path (default: elementor-html/site-header-navbar-2026.css)")
     p.add_argument(
         "--append",
         action="store_true",
-        help="Append to existing page custom CSS instead of replacing (default: replace).",
+        help="Append to existing custom CSS instead of replacing (default: replace).",
     )
     p.add_argument("--mcp-json", type=Path, default=default_mcp, help="Path to Cursor MCP config")
     args = p.parse_args()
 
-    css_path = args.css.expanduser().resolve()
-    if not css_path.is_file():
-        sys.exit(f"CSS file not found: {css_path}")
+    nav_path = args.nav_css.expanduser().resolve()
+    kit_path = args.kit_css.expanduser().resolve()
+    if not nav_path.is_file():
+        sys.exit(f"Navbar CSS not found: {nav_path}")
+    if not kit_path.is_file():
+        sys.exit(f"Kit CSS not found: {kit_path}")
 
     mcp_path = args.mcp_json.expanduser().resolve()
     if not mcp_path.is_file():
         sys.exit(f"MCP config not found: {mcp_path}")
 
-    css = with_push_build_stamp(css_path.read_text(encoding="utf-8"))
+    nav_stamped = with_push_build_stamp(nav_path.read_text(encoding="utf-8"))
+    kit_text = kit_path.read_text(encoding="utf-8").rstrip() + "\n"
+    combined_kit = kit_text + KIT_NAV_BANNER + "\n" + nav_stamped + "\n"
+
     base_url, auth = load_mcp(mcp_path)
     session_id = mcp_initialize(base_url, auth)
+    replace = not args.append
+    rpc = 2
 
-    print(f"Pushing {css_path.relative_to(root)} → post_id={args.post_id} (replace={not args.append}) ...")
-    out = mcp_add_custom_css(
+    print(f"Pushing {kit_path.relative_to(root)} + {nav_path.relative_to(root)} → kit post_id={args.kit_post_id} (replace={replace}) ...")
+    out_kit = mcp_add_custom_css(
         base_url,
         auth,
         session_id,
-        post_id=args.post_id,
-        css=css,
-        replace=not args.append,
+        post_id=args.kit_post_id,
+        css=combined_kit,
+        replace=replace,
+        rpc_id=rpc,
     )
-    print(json.dumps(out, indent=2, ensure_ascii=False))
+    print(json.dumps(out_kit, indent=2, ensure_ascii=False))
+    if out_kit.get("error"):
+        sys.exit(1)
+    if (out_kit.get("result") or {}).get("isError"):
+        sys.exit(1)
 
-    if out.get("error"):
-        sys.exit(1)
-    result = out.get("result") or {}
-    if result.get("isError"):
-        sys.exit(1)
+    rpc += 1
+    if args.header_post_id:
+        print(f"Pushing {nav_path.relative_to(root)} → header template post_id={args.header_post_id} (replace={replace}) ...")
+        out_hdr = mcp_add_custom_css(
+            base_url,
+            auth,
+            session_id,
+            post_id=args.header_post_id,
+            css=nav_stamped,
+            replace=replace,
+            rpc_id=rpc,
+        )
+        print(json.dumps(out_hdr, indent=2, ensure_ascii=False))
+        if out_hdr.get("error"):
+            sys.exit(1)
+        if (out_hdr.get("result") or {}).get("isError"):
+            sys.exit(1)
 
     print(
-        "\nIf the navbar still looks old in a new browser, the HTML is likely served from "
-        "Hostinger/LiteSpeed full-page cache (incognito does not bypass the CDN).\n"
-        "Purge after each header deploy:\n"
+        "\nNavbar CSS is now in the Default Kit (post-591.css is enqueued on the homepage). "
+        "Purge caches so HTML/CSS pick up the new post-591 version:\n"
         "  • WP Admin → LiteSpeed Cache → Toolbox → Purge → Purge All\n"
-        "  • Hostinger hPanel → your site → Performance / Cache → Purge (if shown)\n"
+        "  • Hostinger hPanel → Performance / Cache → Purge (if shown)\n"
         "  • Elementor → Tools → Regenerate CSS & Data\n"
-        "Verify: View Source or Network → search for tg-header-build (UTC stamp on each push).\n"
+        "Verify: fetch post-591.css and search for tg-header-build or Ghar Jaisa.\n"
     )
 
 
