@@ -1,0 +1,26 @@
+{
+  "legal_hub": {
+    "post_id": 11032,
+    "html_widget": "0bac053"
+  },
+  "terms": {
+    "post_id": 552,
+    "shell_widget": "43510d3",
+    "content_widget": "bf085b3"
+  },
+  "privacy": {
+    "post_id": 511,
+    "shell_widget": "e20b2d1",
+    "content_widget": "9fd677b"
+  },
+  "refund": {
+    "post_id": 11034,
+    "shell_widget": "c00ee5d",
+    "content_widget": "a5ce09e"
+  },
+  "delivery": {
+    "post_id": 11036,
+    "shell_widget": "70873c4",
+    "content_widget": "b4bd034"
+  }
+}

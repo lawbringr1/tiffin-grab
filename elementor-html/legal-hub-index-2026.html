@@ -1,0 +1,160 @@
+<div id="tg-legal-hub" class="tg-legal-hub">
+  <style>
+    #tg-legal-hub.tg-legal-hub {
+      --h-on: #231a15;
+      --h-muted: #564339;
+      --h-surface: #fff8f6;
+      --h-card: #ffffff;
+      --h-orange: #f06b1a;
+      --h-orange-mid: #e37b3e;
+      --h-orange-soft: #fdeae2;
+      --h-outline: rgba(137, 114, 104, 0.22);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--h-on);
+      max-width: 960px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+      box-sizing: border-box;
+    }
+    #tg-legal-hub * {
+      box-sizing: border-box;
+    }
+    #tg-legal-hub .material-symbols-outlined {
+      font-family: "Material Symbols Outlined", sans-serif !important;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-size: 1.5rem;
+      color: var(--h-orange);
+    }
+    #tg-legal-hub .tg-legal-hub__eyebrow {
+      margin: 0 0 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #006d37;
+    }
+    #tg-legal-hub .tg-legal-hub__title {
+      margin: 0 0 0.75rem;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+    }
+    #tg-legal-hub .tg-legal-hub__title span {
+      color: var(--h-orange);
+    }
+    #tg-legal-hub .tg-legal-hub__lede {
+      margin: 0 0 2rem;
+      max-width: 52ch;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--h-muted);
+    }
+    #tg-legal-hub .tg-legal-hub__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    #tg-legal-hub .tg-legal-hub__card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.35rem 1.25rem;
+      border-radius: 1rem;
+      background: var(--h-card);
+      border: 1px solid var(--h-outline);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    #tg-legal-hub .tg-legal-hub__card:hover {
+      border-color: color-mix(in srgb, var(--h-orange) 45%, var(--h-outline));
+      box-shadow: 0 8px 28px rgba(35, 26, 21, 0.06);
+      transform: translateY(-2px);
+    }
+    #tg-legal-hub .tg-legal-hub__card h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--h-on);
+    }
+    #tg-legal-hub .tg-legal-hub__card p {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--h-muted);
+      flex: 1;
+    }
+    #tg-legal-hub .tg-legal-hub__card-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    #tg-legal-hub .tg-legal-hub__link {
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--h-orange);
+    }
+    #tg-legal-hub .tg-legal-hub__foot {
+      margin-top: 2.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--h-outline);
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--h-muted);
+    }
+    #tg-legal-hub .tg-legal-hub__foot a {
+      color: var(--h-orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    #tg-legal-hub .tg-legal-hub__foot a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <p class="tg-legal-hub__eyebrow">Legal · TiffinGrab</p>
+  <h1 class="tg-legal-hub__title">Policies &amp; <span>disclosures</span></h1>
+  <p class="tg-legal-hub__lede">
+    Review our terms of service, privacy practices, refund rules, and delivery standards. Each document is maintained for customers in Ontario, Canada.
+  </p>
+  <div class="tg-legal-hub__grid">
+    <a class="tg-legal-hub__card" href="https://tiffingrab.ca/terms-and-conditions/">
+      <div class="tg-legal-hub__card-row">
+        <span class="material-symbols-outlined" aria-hidden="true">description</span>
+        <h2>Terms of Service</h2>
+      </div>
+      <p>Eligibility, billing, subscriptions, allergens, acceptable use, liability, and governing law.</p>
+      <span class="tg-legal-hub__link">Read terms →</span>
+    </a>
+    <a class="tg-legal-hub__card" href="https://tiffingrab.ca/privacy-policy/">
+      <div class="tg-legal-hub__card-row">
+        <span class="material-symbols-outlined" aria-hidden="true">shield</span>
+        <h2>Privacy Policy</h2>
+      </div>
+      <p>What we collect, how we use it, PIPEDA rights, security, retention, and cookies.</p>
+      <span class="tg-legal-hub__link">Read privacy →</span>
+    </a>
+    <a class="tg-legal-hub__card" href="https://tiffingrab.ca/refund-policy/">
+      <div class="tg-legal-hub__card-row">
+        <span class="material-symbols-outlined" aria-hidden="true">currency_exchange</span>
+        <h2>Refund Policy</h2>
+      </div>
+      <p>Trial, weekly, and monthly plans; quality claims; processing times; non-refundable cases.</p>
+      <span class="tg-legal-hub__link">Read refunds →</span>
+    </a>
+    <a class="tg-legal-hub__card" href="https://tiffingrab.ca/delivery-policy/">
+      <div class="tg-legal-hub__card-row">
+        <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
+        <h2>Delivery Policy</h2>
+      </div>
+      <p>Service areas, windows, failed deliveries, packaging, food handling, and weather delays.</p>
+      <span class="tg-legal-hub__link">Read delivery →</span>
+    </a>
+  </div>
+  <p class="tg-legal-hub__foot">
+    Questions? <a href="mailto:info@tiffingrab.ca">info@tiffingrab.ca</a>
+    ·
+    <a href="https://tiffingrab.ca/contact-us/">Contact us</a>
+  </p>
+</div>

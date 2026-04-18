@@ -1,0 +1,392 @@
+<aside id="tg-legal-shell" class="tg-legal-shell" aria-label="Legal navigation">
+  <style>
+    #tg-legal-shell.tg-legal-shell {
+      --lg-on: #231a15;
+      --lg-muted: #564339;
+      --lg-surface: #fff8f6;
+      --lg-orange: #f06b1a;
+      --lg-orange-soft: #fdeae2;
+      --lg-outline: rgba(137, 114, 104, 0.25);
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--lg-on);
+    }
+    #tg-legal-shell .material-symbols-outlined {
+      font-family: "Material Symbols Outlined", sans-serif !important;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-size: 1.125rem;
+      vertical-align: middle;
+    }
+    #tg-legal-shell .tg-legal-shell__label {
+      margin: 0 0 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lg-muted);
+    }
+    #tg-legal-shell .tg-legal-shell__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    #tg-legal-shell .tg-legal-shell__nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 0.75rem;
+      text-decoration: none;
+      color: var(--lg-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    #tg-legal-shell .tg-legal-shell__nav a:hover {
+      background: var(--lg-orange-soft);
+      color: var(--lg-on);
+    }
+    #tg-legal-shell .tg-legal-shell__nav a.is-active {
+      background: var(--lg-orange-soft);
+      color: var(--lg-orange);
+      font-weight: 700;
+    }
+    #tg-legal-shell .tg-legal-shell__hub {
+      margin-top: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--lg-outline);
+    }
+    #tg-legal-shell .tg-legal-shell__hub a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--lg-orange);
+      text-decoration: none;
+    }
+    #tg-legal-shell .tg-legal-shell__hub a:hover {
+      text-decoration: underline;
+    }
+    #tg-legal-shell .tg-legal-shell__help {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      border-radius: 1rem;
+      background: color-mix(in srgb, var(--lg-orange) 8%, var(--lg-surface));
+      border: 1px solid color-mix(in srgb, var(--lg-orange) 18%, transparent);
+    }
+    #tg-legal-shell .tg-legal-shell__help p {
+      margin: 0;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--lg-muted);
+    }
+    #tg-legal-shell .tg-legal-shell__help a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--lg-orange);
+      text-decoration: none;
+    }
+    #tg-legal-shell .tg-legal-shell__help a:hover {
+      text-decoration: underline;
+    }
+    @media (min-width: 900px) {
+      #tg-legal-shell.tg-legal-shell {
+        position: sticky;
+        top: 7rem;
+      }
+    }
+
+    /* Main column (second HTML widget) — scoped to avoid leaking site-wide */
+    #tg-legal-main.tg-legal-main {
+      --m-on: #231a15;
+      --m-muted: #564339;
+      --m-surface: #fff8f6;
+      --m-orange: #f06b1a;
+      --m-orange-mid: #e37b3e;
+      --m-border: #e8dfd7;
+      --m-red: #c0392b;
+      --m-red-light: #fdf2f2;
+      --m-red-mid: #f5c6c2;
+      --m-red-dark: #922b21;
+      --m-gold: #b7860b;
+      --m-stamp-bg: #fffbf0;
+      font-family: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--m-on);
+      min-width: 0;
+      max-width: 720px;
+    }
+    #tg-legal-main * {
+      box-sizing: border-box;
+    }
+    #tg-legal-main .tg-policy-header {
+      border-bottom: 1px solid var(--m-border);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    #tg-legal-main .tg-policy-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--m-orange);
+      margin: 0 0 0.5rem;
+    }
+    #tg-legal-main h1.tg-policy-title {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.65rem, 4vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+    #tg-legal-main h1.tg-policy-title .tg-policy-title-accent {
+      color: var(--m-orange);
+    }
+    #tg-legal-main .tg-policy-dates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+    #tg-legal-main .tg-policy-dates span {
+      font-size: 0.72rem;
+      color: var(--m-muted);
+      background: var(--m-surface);
+      border: 1px solid var(--m-border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+    #tg-legal-main .tg-legal-stamp {
+      background: var(--m-stamp-bg);
+      border: 1px solid #e8d98a;
+      border-left: 4px solid var(--m-gold);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 2rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #5a4a00;
+    }
+    #tg-legal-main .tg-legal-stamp strong {
+      color: #3d3200;
+    }
+    #tg-legal-main .tg-law-section {
+      margin-bottom: 2.5rem;
+    }
+    #tg-legal-main .tg-law-section h2 {
+      margin: 0 0 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--m-border);
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: baseline;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+    #tg-legal-main .tg-sec-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--m-red);
+      background: var(--m-red-light);
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    #tg-legal-main .tg-law-section h3 {
+      margin: 1.15rem 0 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--m-muted);
+    }
+    #tg-legal-main .tg-law-section p,
+    #tg-legal-main .tg-law-section li {
+      font-size: 0.92rem;
+      line-height: 1.72;
+      color: var(--m-muted);
+    }
+    #tg-legal-main .tg-law-section p {
+      margin: 0 0 0.65rem;
+    }
+    #tg-legal-main .tg-law-section ul,
+    #tg-legal-main .tg-law-section ol {
+      margin: 0 0 0.85rem;
+      padding-left: 1.25rem;
+    }
+    #tg-legal-main .tg-law-section li {
+      margin-bottom: 0.35rem;
+    }
+    #tg-legal-main .tg-law-section li::marker {
+      color: var(--m-orange);
+    }
+    #tg-legal-main .tg-law-section a {
+      color: var(--m-orange);
+      font-weight: 600;
+    }
+    #tg-legal-main .tg-box-warning {
+      background: var(--m-red-light);
+      border: 1px solid var(--m-red-mid);
+      border-left: 4px solid var(--m-red);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--m-red-dark);
+    }
+    #tg-legal-main .tg-box-info {
+      background: #f0f6ff;
+      border: 1px solid #cce0ff;
+      border-left: 4px solid #2563eb;
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: #1e3a6e;
+    }
+    #tg-legal-main .tg-box-neutral {
+      background: #f8f8f6;
+      border: 1px solid var(--m-border);
+      border-radius: 6px;
+      padding: 1rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--m-muted);
+    }
+    #tg-legal-main .tg-allergen-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.84rem;
+    }
+    #tg-legal-main .tg-allergen-table th {
+      background: var(--m-on);
+      color: #fff;
+      text-align: left;
+      padding: 0.5rem 0.65rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+    #tg-legal-main .tg-allergen-table td {
+      padding: 0.5rem 0.65rem;
+      border-bottom: 1px solid var(--m-border);
+      vertical-align: top;
+      color: var(--m-muted);
+    }
+    #tg-legal-main .tg-allergen-table tr:nth-child(even) td {
+      background: var(--m-surface);
+    }
+    #tg-legal-main .tg-tag {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      border-radius: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    #tg-legal-main .tg-tag-red {
+      background: var(--m-red-light);
+      color: var(--m-red-dark);
+      border: 1px solid var(--m-red-mid);
+    }
+    #tg-legal-main .tg-tag-green {
+      background: #e8f5e9;
+      color: #1b5e20;
+      border: 1px solid #a5d6a7;
+    }
+    #tg-legal-main .tg-tag-amber {
+      background: #fff8e1;
+      color: #5d4037;
+      border: 1px solid #ffe082;
+    }
+    #tg-legal-main .tg-contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.85rem;
+      margin: 1rem 0;
+    }
+    #tg-legal-main .tg-contact-card {
+      border: 1px solid var(--m-border);
+      border-radius: 8px;
+      padding: 1rem;
+      background: #fff;
+    }
+    #tg-legal-main .tg-contact-card-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--m-muted);
+      margin-bottom: 0.35rem;
+    }
+    #tg-legal-main .tg-contact-card-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--m-on);
+    }
+    #tg-legal-main .tg-contact-card-value a {
+      color: var(--m-orange);
+      text-decoration: none;
+    }
+    #tg-legal-main .tg-contact-card-value a:hover {
+      text-decoration: underline;
+    }
+    #tg-legal-main .tg-law-divider {
+      border: none;
+      border-top: 1px solid var(--m-border);
+      margin: 2rem 0;
+    }
+  </style>
+  <p class="tg-legal-shell__label">Legal hub</p>
+  <nav class="tg-legal-shell__nav" aria-label="Policies">
+    <a data-legal-nav href="https://tiffingrab.ca/terms-and-conditions/">
+      <span class="material-symbols-outlined" aria-hidden="true">description</span>
+      Terms of Service
+    </a>
+    <a data-legal-nav href="https://tiffingrab.ca/privacy-policy/">
+      <span class="material-symbols-outlined" aria-hidden="true">shield</span>
+      Privacy Policy
+    </a>
+    <a data-legal-nav href="https://tiffingrab.ca/refund-policy/">
+      <span class="material-symbols-outlined" aria-hidden="true">currency_exchange</span>
+      Refund Policy
+    </a>
+    <a data-legal-nav href="https://tiffingrab.ca/delivery-policy/">
+      <span class="material-symbols-outlined" aria-hidden="true">local_shipping</span>
+      Delivery Policy
+    </a>
+  </nav>
+  <div class="tg-legal-shell__hub">
+    <a href="https://tiffingrab.ca/legal/">
+      <span class="material-symbols-outlined" aria-hidden="true">grid_view</span>
+      All policies overview
+    </a>
+  </div>
+  <div class="tg-legal-shell__help">
+    <p>Need help understanding these documents? Our team is available 24/7.</p>
+    <a href="https://tiffingrab.ca/contact-us/">
+      Contact support
+      <span class="material-symbols-outlined" style="font-size: 1rem" aria-hidden="true">arrow_forward</span>
+    </a>
+  </div>
+  <script>
+    (function () {
+      var path = (location.pathname || "/").replace(/\/+$/, "") || "/";
+      document.querySelectorAll("#tg-legal-shell a[data-legal-nav]").forEach(function (a) {
+        try {
+          var u = new URL(a.getAttribute("href"), location.origin);
+          var p = (u.pathname || "/").replace(/\/+$/, "") || "/";
+          if (p === path) {
+            a.classList.add("is-active");
+            a.setAttribute("aria-current", "page");
+          }
+        } catch (e) {}
+      });
+    })();
+  </script>
+</aside>
