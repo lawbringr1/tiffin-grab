@@ -246,13 +246,77 @@
       border: 1px solid rgba(186, 26, 26, 0.35);
       color: #5c1010;
     }
-    #tg-contact-2026 .tg-c-map {
-      position: relative;
+    #tg-contact-2026 .tg-c-map-wrap {
+      display: flex;
+      flex-direction: column;
       min-height: 28rem;
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--c-outline);
+      background: var(--c-surface);
+    }
+    @media (min-width: 640px) {
+      #tg-contact-2026 .tg-c-map-wrap {
+        flex-direction: row;
+        align-items: stretch;
+      }
+    }
+    #tg-contact-2026 .tg-c-map-side {
+      flex: 0 0 auto;
+      padding: 1.25rem 1.35rem;
+      background: var(--c-peach);
+      border-bottom: 1px solid var(--c-outline);
+    }
+    @media (min-width: 640px) {
+      #tg-contact-2026 .tg-c-map-side {
+        width: 13.5rem;
+        max-width: 38%;
+        border-bottom: none;
+        border-right: 1px solid var(--c-outline);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+    #tg-contact-2026 .tg-c-map-side-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--c-primary);
+    }
+    #tg-contact-2026 .tg-c-map-side-icon .material-symbols-outlined {
+      font-size: 1.25rem;
+    }
+    #tg-contact-2026 .tg-c-map-side h4 {
+      margin: 0 0 0.5rem;
+      font-family: "Manrope", sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--c-on);
+      line-height: 1.25;
+    }
+    #tg-contact-2026 .tg-c-map-side p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--c-muted);
+    }
+    #tg-contact-2026 .tg-c-map {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 20rem;
       background: var(--c-peach-mid);
+    }
+    @media (min-width: 640px) {
+      #tg-contact-2026 .tg-c-map {
+        min-height: 0;
+      }
     }
     #tg-contact-2026 .tg-c-map-embed-wrap {
       position: absolute;
@@ -408,16 +472,30 @@
       </form>
     </div>
 
-    <div class="tg-c-map" aria-label="Map: kitchen location at 130 Westmore Drive, Etobicoke">
-      <div class="tg-c-map-embed-wrap">
-        <iframe
-          class="tg-c-map-iframe"
-          src="https://www.google.com/maps?q=43.7360459,-79.6046213&amp;z=16&amp;hl=en&amp;output=embed"
-          title="Map: 130 Westmore Drive, Etobicoke"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
-        ></iframe>
+    <div class="tg-c-map-wrap">
+      <div class="tg-c-map-side">
+        <div class="tg-c-map-side-icon">
+          <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+          Address
+        </div>
+        <h4>Our kitchen HQ</h4>
+        <p>
+          130 Westmore Drive<br />
+          Etobicoke, Ontario M9V 5E2<br />
+          Canada
+        </p>
+      </div>
+      <div class="tg-c-map" aria-label="Interactive map: 130 Westmore Drive, Etobicoke">
+        <div class="tg-c-map-embed-wrap">
+          <iframe
+            class="tg-c-map-iframe"
+            src="https://www.google.com/maps?q=43.7360459,-79.6046213&amp;z=16&amp;hl=en&amp;output=embed"
+            title="Map: 130 Westmore Drive, Etobicoke"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
