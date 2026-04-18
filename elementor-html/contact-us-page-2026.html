@@ -100,11 +100,17 @@
       gap: clamp(1.5rem, 4vw, 2.5rem);
       max-width: 72rem;
       margin: 0 auto;
-      align-items: start;
+      align-items: stretch;
     }
     @media (min-width: 1024px) {
       #tg-contact-2026 .tg-c-grid {
         grid-template-columns: 1fr 1fr;
+      }
+      #tg-contact-2026 .tg-c-grid > .tg-c-card,
+      #tg-contact-2026 .tg-c-grid > .tg-c-map-wrap {
+        min-height: 0;
+        height: 100%;
+        align-self: stretch;
       }
     }
     #tg-contact-2026 .tg-c-card {
@@ -254,6 +260,11 @@
       overflow: hidden;
       border: 1px solid var(--c-outline);
       background: var(--c-surface);
+    }
+    @media (min-width: 1024px) {
+      #tg-contact-2026 .tg-c-map-wrap {
+        min-height: 100%;
+      }
     }
     @media (min-width: 640px) {
       #tg-contact-2026 .tg-c-map-wrap {
