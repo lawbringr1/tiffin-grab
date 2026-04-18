@@ -220,6 +220,32 @@
     #tg-contact-2026 .tg-c-submit:active {
       transform: scale(0.99);
     }
+    #tg-contact-2026 .tg-c-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+    #tg-contact-2026 .tg-c-form-status {
+      display: none;
+      margin-bottom: 0.85rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+    #tg-contact-2026 .tg-c-form-status.is-visible {
+      display: block;
+    }
+    #tg-contact-2026 .tg-c-form-status.is-success {
+      background: color-mix(in srgb, #2ecc71 12%, var(--c-peach));
+      border: 1px solid color-mix(in srgb, #27ae60 35%, transparent);
+      color: #0d4a26;
+    }
+    #tg-contact-2026 .tg-c-form-status.is-error {
+      background: color-mix(in srgb, #ba1a1a 8%, #fff5f5);
+      border: 1px solid rgba(186, 26, 26, 0.35);
+      color: #5c1010;
+    }
     #tg-contact-2026 .tg-c-map {
       position: relative;
       min-height: 28rem;
@@ -382,6 +408,16 @@
   <section class="tg-c-grid" aria-label="Contact form and location">
     <div class="tg-c-card">
       <form id="tg-contact-form" class="tg-c-form" novalidate>
+        <input
+          type="text"
+          name="website"
+          id="tg-c-hp"
+          value=""
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0"
+        />
         <div class="tg-c-form-row2">
           <div class="tg-c-field">
             <label class="tg-c-label" for="tg-c-name">Full name</label>
@@ -405,6 +441,7 @@
           <label class="tg-c-label" for="tg-c-msg">Message</label>
           <textarea id="tg-c-msg" name="message" placeholder="Tell us more about your needs…" required></textarea>
         </div>
+        <div id="tg-c-status" class="tg-c-form-status" role="status" aria-live="polite"></div>
         <button type="submit" class="tg-c-submit">Send message</button>
       </form>
     </div>
@@ -468,19 +505,97 @@
         encodeURIComponent("130 Westmore Drive, Etobicoke, ON M9V 5E2, Canada");
       var btn = root.querySelector("[data-tg-maps]");
       if (btn) btn.addEventListener("click", function () { window.open(mapsUrl, "_blank", "noopener,noreferrer"); });
+
+      function showStatus(el, type, text) {
+        if (!el) return;
+        el.textContent = text;
+        el.classList.add("is-visible");
+        el.classList.remove("is-success", "is-error");
+        el.classList.add(type === "success" ? "is-success" : "is-error");
+      }
+      function hideStatus(el) {
+        if (!el) return;
+        el.classList.remove("is-visible", "is-success", "is-error");
+        el.textContent = "";
+      }
+
+      function mailtoFallback() {
+        var name = (root.querySelector("#tg-c-name") || {}).value || "";
+        var email = (root.querySelector("#tg-c-email") || {}).value || "";
+        var msg = (root.querySelector("#tg-c-msg") || {}).value || "";
+        var topics = [];
+        root.querySelectorAll('input[name="topic"]:checked').forEach(function (c) { topics.push(c.value); });
+        var body =
+          "Name: " + name + "\nEmail: " + email + "\nTopics: " + (topics.join(", ") || "(none)") + "\n\n" + msg;
+        window.location.href =
+          "mailto:info@tiffingrab.ca?subject=" + encodeURIComponent("TiffinGrab contact form") + "&body=" + encodeURIComponent(body);
+      }
+
       var form = root.querySelector("#tg-contact-form");
+      var statusEl = root.querySelector("#tg-c-status");
+      var submitBtn = form ? form.querySelector(".tg-c-submit") : null;
+
       if (form) {
         form.addEventListener("submit", function (e) {
           e.preventDefault();
-          var name = (root.querySelector("#tg-c-name") || {}).value || "";
-          var email = (root.querySelector("#tg-c-email") || {}).value || "";
-          var msg = (root.querySelector("#tg-c-msg") || {}).value || "";
+          hideStatus(statusEl);
+          var name = (root.querySelector("#tg-c-name") || {}).value.trim() || "";
+          var email = (root.querySelector("#tg-c-email") || {}).value.trim() || "";
+          var msg = (root.querySelector("#tg-c-msg") || {}).value.trim() || "";
+          var hp = (root.querySelector("#tg-c-hp") || {}).value || "";
           var topics = [];
           root.querySelectorAll('input[name="topic"]:checked').forEach(function (c) { topics.push(c.value); });
-          var body =
-            "Name: " + name + "\nEmail: " + email + "\nTopics: " + (topics.join(", ") || "(none)") + "\n\n" + msg;
-          window.location.href =
-            "mailto:info@tiffingrab.ca?subject=" + encodeURIComponent("TiffinGrab contact form") + "&body=" + encodeURIComponent(body);
+
+          if (!name || !email || !msg) {
+            showStatus(statusEl, "error", "Please enter your name, email, and message.");
+            return;
+          }
+
+          var cfg = window.TIFFINGRAB_CONTACT;
+          if (!cfg || !cfg.url || !cfg.nonce) {
+            mailtoFallback();
+            return;
+          }
+
+          if (submitBtn) submitBtn.disabled = true;
+          fetch(cfg.url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({
+              nonce: cfg.nonce,
+              name: name,
+              email: email,
+              message: msg,
+              topics: topics,
+              website: hp,
+            }),
+          })
+            .then(function (r) {
+              return r.json().then(function (data) {
+                return { ok: r.ok, status: r.status, data: data };
+              });
+            })
+            .then(function (res) {
+              if (res.ok && res.data && res.data.success) {
+                showStatus(statusEl, "success", "Thanks — your message was sent. We'll get back to you soon.");
+                form.reset();
+                var firstCb = form.querySelector('input[name="topic"]');
+                if (firstCb) firstCb.checked = true;
+                return;
+              }
+              var errMsg =
+                (res.data && (res.data.message || (res.data.data && res.data.data.message))) ||
+                "Something went wrong. You can still email info@tiffingrab.ca.";
+              if (res.status === 403) errMsg = "This page expired — please refresh and try again.";
+              showStatus(statusEl, "error", typeof errMsg === "string" ? errMsg : "Could not send. Try email instead.");
+            })
+            .catch(function () {
+              showStatus(statusEl, "error", "Network error. Try again or email info@tiffingrab.ca.");
+            })
+            .finally(function () {
+              if (submitBtn) submitBtn.disabled = false;
+            });
         });
       }
     })();
