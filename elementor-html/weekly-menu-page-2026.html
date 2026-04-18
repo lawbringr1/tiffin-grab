@@ -10,12 +10,32 @@
 />
 
 <style>
+  /* Page canvas + Elementor chrome: avoid white seams (nav/footer gaps, iOS vw rounding). */
+  html:has(body:has(#tg-weekly-menu-2026)),
+  body:has(#tg-weekly-menu-2026) {
+    background-color: #fff8f6 !important;
+  }
+  html:has(body:has(#tg-weekly-menu-2026)) {
+    overflow-x: hidden;
+  }
+  body:has(#tg-weekly-menu-2026) {
+    overflow-x: hidden;
+  }
+  body:has(#tg-weekly-menu-2026) .elementor,
+  body:has(#tg-weekly-menu-2026) #page,
+  body:has(#tg-weekly-menu-2026) .site-content,
+  body:has(#tg-weekly-menu-2026) #content,
+  body:has(#tg-weekly-menu-2026) #main,
+  body:has(#tg-weekly-menu-2026) main {
+    background-color: #fff8f6 !important;
+  }
   .elementor-widget-html:has(#tg-weekly-menu-2026),
   .elementor-widget-html:has(#tg-weekly-menu-2026) .elementor-widget-container,
   .elementor-widget-html-custom:has(#tg-weekly-menu-2026),
   .elementor-widget-html-custom:has(#tg-weekly-menu-2026) .elementor-widget-container,
   .elementor-widget-wrap:has(#tg-weekly-menu-2026),
   .elementor-column:has(#tg-weekly-menu-2026),
+  .elementor-section:has(#tg-weekly-menu-2026),
   .e-con:has(#tg-weekly-menu-2026),
   .e-con-inner:has(#tg-weekly-menu-2026) {
     overflow: visible !important;
@@ -24,6 +44,8 @@
     padding-right: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
+    background-color: #fff8f6 !important;
+    background-image: none !important;
   }
 </style>
 

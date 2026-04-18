@@ -1,5 +1,10 @@
 <footer class="tg-footer" id="tg-site-footer" aria-labelledby="tg-footer-brand">
   <style>
+    /* Footer slot: match footer peach so theme/Elementor never flash white above the footer. */
+    body:has(#tg-site-footer) .elementor-location-footer,
+    body:has(#tg-site-footer) [class*="elementor-location-footer"] {
+      background-color: #fff1eb !important;
+    }
     .elementor-widget-html:has(#tg-site-footer),
     .elementor-widget-html:has(#tg-site-footer) .elementor-widget-container,
     .elementor-widget-html-custom:has(#tg-site-footer),
