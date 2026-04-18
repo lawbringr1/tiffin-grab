@@ -134,13 +134,21 @@
     }
     #tg-weekly-menu-2026 .tg-wm-figure {
       position: relative;
-      width: min(100%, 28rem);
-      aspect-ratio: 3 / 4;
+      width: min(100%, 40rem);
+      min-height: min(72vh, 44rem);
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
-      background: #0d0b0a;
+      background: #1a1a1a;
+    }
+    #tg-weekly-menu-2026 .tg-wm-pdf-frame {
+      display: block;
+      width: 100%;
+      height: min(72vh, 44rem);
+      min-height: 22rem;
+      border: 0;
+      background: #fff;
     }
     #tg-weekly-menu-2026 .tg-wm-figure img {
       display: block;
@@ -327,6 +335,14 @@
         <p class="tg-wm-script">Current weekly menu</p>
         <figure class="tg-wm-figure" id="tg-wm-figure">
           <div class="tg-wm-skel" aria-hidden="true"></div>
+          <iframe
+            id="tg-wm-pdf-frame"
+            class="tg-wm-pdf-frame"
+            title="TiffinGrab weekly menu PDF"
+            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf#view=FitH"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
           <img id="tg-wm-hero-img" alt="" width="600" height="800" decoding="async" hidden />
         </figure>
       </div>
@@ -334,7 +350,7 @@
     <div class="tg-wm-bar">
       <div>
         <p class="tg-wm-status" id="tg-wm-status" role="status" aria-live="polite"></p>
-        <h3 id="tg-wm-date">Loading dates&hellip;</h3>
+        <h3 id="tg-wm-date">This week&rsquo;s menu</h3>
         <p>Includes breakfast, lunch, and dinner options for all subscription plans.</p>
       </div>
       <a
@@ -386,6 +402,7 @@
       var dateEl = root.querySelector("#tg-wm-date");
       var statusEl = root.querySelector("#tg-wm-status");
       var imgEl = root.querySelector("#tg-wm-hero-img");
+      var pdfFrame = root.querySelector("#tg-wm-pdf-frame");
       var fig = root.querySelector("#tg-wm-figure");
       var dl = root.querySelector("#tg-wm-download");
       var ledeEl = root.querySelector("#tg-wm-lede");
@@ -403,6 +420,22 @@
       var base =
         (window.TIFFINGRAB_WEEKLY_MENU && window.TIFFINGRAB_WEEKLY_MENU.url) ||
         (window.location.origin + "/wp-json/tiffingrab/v1/weekly-menu");
+
+      if (pdfFrame && fig) {
+        pdfFrame.addEventListener("load", function () {
+          fig.classList.add("is-loaded");
+        });
+        pdfFrame.addEventListener("error", function () {
+          fig.classList.add("is-loaded");
+          if (statusEl) {
+            statusEl.textContent =
+              "If the menu does not appear, use Download Menu PDF or open the file in a new tab.";
+          }
+        });
+        setTimeout(function () {
+          fig.classList.add("is-loaded");
+        }, 12000);
+      }
 
       function setDateLine(line, fallback) {
         if (!dateEl) return;
@@ -446,14 +479,12 @@
             fig.classList.add("is-loaded");
           };
           imgEl.onerror = function () {
-            if (statusEl) statusEl.textContent = "Menu image could not be loaded.";
             fig.classList.add("is-loaded");
           };
           imgEl.src = img;
+          if (pdfFrame) pdfFrame.setAttribute("hidden", "");
         } else {
-          if (fig) fig.classList.add("is-loaded");
-          if (statusEl) statusEl.textContent = "No menu image found on the weekly menu page yet.";
-          setDateLine("", "Update the Weekly Menu page in WordPress to publish this week’s graphic.");
+          setDateLine("", "Dates update here when the live menu feed is available.");
         }
 
         if (dl) {
@@ -467,24 +498,30 @@
         }
       }
 
-      fetch(base, { credentials: "omit", headers: { Accept: "application/json" } })
+      fetch(base, { credentials: "same-origin", headers: { Accept: "application/json" } })
         .then(function (r) {
-          return r.json().then(function (body) {
+          return r.text().then(function (text) {
+            var body = null;
+            try {
+              body = text ? JSON.parse(text) : null;
+            } catch (e) {
+              body = null;
+            }
             return { ok: r.ok, body: body };
           });
         })
         .then(function (res) {
-          if (!res.ok) {
-            throw new Error((res.body && res.body.message) || "Menu API error");
+          if (!res.ok || !res.body || res.body.code) {
+            throw new Error("menu api");
           }
           applyPayload(res.body);
         })
         .catch(function () {
           if (statusEl) {
-            statusEl.textContent = "Could not load live menu data. Open the standard menu page or try again shortly.";
+            statusEl.textContent =
+              "Optional: dates and intro sync from WordPress when the menu API is active. The PDF above always loads from our site.";
           }
-          setDateLine("", "Dates and file load when the site connection is available.");
-          if (fig) fig.classList.add("is-loaded");
+          setDateLine("", "Scroll the menu or use Download Menu PDF.");
           if (dl) {
             dl.removeAttribute("aria-disabled");
             dl.href = MENU_PDF;
