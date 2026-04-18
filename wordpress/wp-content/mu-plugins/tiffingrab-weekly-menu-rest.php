@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TiffinGrab Weekly Menu REST
  * Description: Public GET /wp-json/tiffingrab/v1/weekly-menu — reads the same Elementor Weekly Menu page (post 1098, /menu/) as staff already update: hero copy, date heading, menu image widget, optional PDF, plans CTA.
- * Version: 1.1.0
+ * Version: 1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,6 +18,12 @@ const TIFFINGRAB_WEEKLY_MENU_PUBLIC_PAGE_ID = 1098;
  * Until then, keep the same as the public page ID.
  */
 const TIFFINGRAB_WEEKLY_MENU_SOURCE_POST_ID = 11118;
+
+/**
+ * Canonical weekly menu PDF when Elementor has no .pdf link on the source page.
+ * Change this when you publish a new file under Media → Uploads.
+ */
+const TIFFINGRAB_WEEKLY_MENU_DEFAULT_PDF_URL = 'https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf';
 
 /**
  * @param string $html
@@ -229,6 +235,9 @@ function tiffingrab_weekly_menu_build_payload_from_parsed( array $parsed, string
 
 	$pdfs = array_merge( $acc['pdfs'], $parsed['scraped_pdfs'] );
 	$pdf  = tiffingrab_weekly_menu_pick_pdf( $pdfs );
+	if ( $pdf === '' && TIFFINGRAB_WEEKLY_MENU_DEFAULT_PDF_URL !== '' ) {
+		$pdf = esc_url_raw( TIFFINGRAB_WEEKLY_MENU_DEFAULT_PDF_URL );
+	}
 
 	$heading_weekly = (string) ( $acc['heading_weekly'] ?? '' );
 	$date_line      = '';
