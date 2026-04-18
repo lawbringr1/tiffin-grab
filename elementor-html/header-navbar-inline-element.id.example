@@ -1,0 +1,2 @@
+Copy this file to header-navbar-inline-element.id and put only the HTML widget element id on one line,
+OR run: python3 scripts/elementor_mcp_push_header_css.py --create-inline-widget

@@ -1,8 +1,9 @@
 /*
   TiffinGrab — paste into Elementor → Site Settings → Custom CSS (Default Kit, post ID 591).
   Source of truth in repo; also applied via WP REST to `_elementor_page_settings.custom_css`.
-  Header/navbar rules live in `site-header-navbar-2026.css`; `scripts/elementor_mcp_push_header_css.py`
-  merges that file into kit post 591 on deploy (Theme Builder header CSS alone is not enqueued on the front).
+  Navbar: `site-header-navbar-2026.css` is pushed to the Theme Builder header (post 1863) via
+  `scripts/elementor_mcp_push_header_css.py`. Optional `--kit-post-id 591` merges into this file too;
+  recommended: an HTML widget in the header inlines `<style>` so rules load on all pages.
 
   REQUIRED: Geist + Material Symbols from WPCode — `elementor-head-geist-preload-snippet.html`.
   Geist loads as a variable font (wght 100–900); use font-weight in CSS as usual. Optional: match Google’s snippet
