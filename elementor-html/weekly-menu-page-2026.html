@@ -96,7 +96,6 @@
     #tg-weekly-menu-2026 .tg-wm-hero {
       position: relative;
       background: var(--c-hero);
-      min-height: clamp(16rem, 52vw, 28rem);
       display: flex;
       align-items: stretch;
       justify-content: center;
@@ -118,7 +117,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
+      justify-content: center;
       text-align: center;
       gap: 0.75rem;
     }
@@ -132,23 +131,25 @@
       margin: 0;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
     }
+    /* One portrait page (~US Letter); height tracks width so the PDF viewer is not taller than the page. */
     #tg-weekly-menu-2026 .tg-wm-figure {
       position: relative;
-      width: min(100%, 40rem);
-      min-height: min(72vh, 44rem);
+      width: min(100%, min(34rem, calc(85vh * 8.5 / 11)));
+      aspect-ratio: 8.5 / 11;
+      margin: 0 auto;
       border-radius: 10px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
-      background: #1a1a1a;
+      background: #3a3d40;
     }
     #tg-weekly-menu-2026 .tg-wm-pdf-frame {
-      display: block;
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: min(72vh, 44rem);
-      min-height: 22rem;
+      height: 100%;
       border: 0;
-      background: #fff;
+      background: #525659;
     }
     #tg-weekly-menu-2026 .tg-wm-figure img {
       display: block;
@@ -339,7 +340,7 @@
             id="tg-wm-pdf-frame"
             class="tg-wm-pdf-frame"
             title="TiffinGrab weekly menu PDF"
-            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf#view=FitH"
+            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf#view=Fit"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
@@ -416,6 +417,9 @@
         "Choose from our most popular tiffin plans, crafted to suit every lifestyle. Whether you’re a student, a busy professional, or feeding your family, our homestyle meals bring authentic Indian flavours straight to your table—fresh, delicious, and hassle-free.";
       /** Resolved from the download link’s href (edit the <a href> above when the PDF changes). */
       var MENU_PDF = dl && dl.href ? dl.href.split("#")[0] : "";
+      if (pdfFrame && MENU_PDF) {
+        pdfFrame.src = MENU_PDF + "#view=Fit";
+      }
 
       var base =
         (window.TIFFINGRAB_WEEKLY_MENU && window.TIFFINGRAB_WEEKLY_MENU.url) ||
