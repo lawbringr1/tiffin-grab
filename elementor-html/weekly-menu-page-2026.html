@@ -179,35 +179,6 @@
     #tg-weekly-menu-2026 .tg-wm-figure.is-loaded .tg-wm-skel {
       display: none;
     }
-    #tg-weekly-menu-2026 .tg-wm-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: stretch;
-      padding: clamp(1.25rem, 3vw, 2rem);
-      background: linear-gradient(180deg, var(--c-peach-high) 0%, var(--c-peach-mid) 100%);
-      border-top: 1px solid var(--c-outline);
-    }
-    @media (min-width: 768px) {
-      #tg-weekly-menu-2026 .tg-wm-bar {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-    #tg-weekly-menu-2026 .tg-wm-bar h3 {
-      margin: 0 0 0.35rem;
-      font-family: "Manrope", sans-serif;
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--c-on);
-    }
-    #tg-weekly-menu-2026 .tg-wm-bar p {
-      margin: 0;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--c-muted);
-    }
     #tg-weekly-menu-2026 .tg-wm-cta {
       display: inline-flex;
       align-items: center;
@@ -240,12 +211,6 @@
       transform: none;
       box-shadow: none;
       pointer-events: none;
-    }
-    #tg-weekly-menu-2026 .tg-wm-status {
-      margin: 0 0 0.5rem;
-      font-size: 0.85rem;
-      color: #ba1a1a;
-      min-height: 1.25rem;
     }
     #tg-weekly-menu-2026 .tg-wm-plans {
       max-width: 48rem;
@@ -348,25 +313,6 @@
         </figure>
       </div>
     </div>
-    <div class="tg-wm-bar">
-      <div>
-        <p class="tg-wm-status" id="tg-wm-status" role="status" aria-live="polite"></p>
-        <h3 id="tg-wm-date">This week&rsquo;s menu</h3>
-        <p>Includes breakfast, lunch, and dinner options for all subscription plans.</p>
-      </div>
-      <a
-        class="tg-wm-cta"
-        id="tg-wm-download"
-        href="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        download
-        tabindex="0"
-      >
-        <span class="material-symbols-outlined" aria-hidden="true">download</span>
-        Download Menu PDF
-      </a>
-    </div>
   </section>
 
   <section class="tg-wm-plans" aria-labelledby="tg-wm-plans-title">
@@ -400,12 +346,9 @@
       var root = document.getElementById("tg-weekly-menu-2026");
       if (!root) return;
 
-      var dateEl = root.querySelector("#tg-wm-date");
-      var statusEl = root.querySelector("#tg-wm-status");
       var imgEl = root.querySelector("#tg-wm-hero-img");
       var pdfFrame = root.querySelector("#tg-wm-pdf-frame");
       var fig = root.querySelector("#tg-wm-figure");
-      var dl = root.querySelector("#tg-wm-download");
       var ledeEl = root.querySelector("#tg-wm-lede");
       var plansTitleEl = root.querySelector("#tg-wm-plans-title");
       var plansLedeEl = root.querySelector("#tg-wm-plans-lede");
@@ -415,8 +358,13 @@
         "Our weekly menu is crafted to offer variety and freshness—no repeated items, just a new selection of delicious Indian dishes every day. Enjoy balanced meals with different flavors throughout the week.";
       var plansLedeFallback =
         "Choose from our most popular tiffin plans, crafted to suit every lifestyle. Whether you’re a student, a busy professional, or feeding your family, our homestyle meals bring authentic Indian flavours straight to your table—fresh, delicious, and hassle-free.";
-      /** Resolved from the download link’s href (edit the <a href> above when the PDF changes). */
-      var MENU_PDF = dl && dl.href ? dl.href.split("#")[0] : "";
+      var MENU_PDF_DEFAULT =
+        "https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf";
+      var MENU_PDF = MENU_PDF_DEFAULT;
+      if (pdfFrame) {
+        var srcBase = (pdfFrame.getAttribute("src") || "").split("#")[0];
+        if (srcBase) MENU_PDF = srcBase;
+      }
       if (pdfFrame && MENU_PDF) {
         pdfFrame.src = MENU_PDF + "#view=Fit&navpanes=0";
       }
@@ -431,27 +379,13 @@
         });
         pdfFrame.addEventListener("error", function () {
           fig.classList.add("is-loaded");
-          if (statusEl) {
-            statusEl.textContent =
-              "If the menu does not appear, use Download Menu PDF or open the file in a new tab.";
-          }
         });
         setTimeout(function () {
           fig.classList.add("is-loaded");
         }, 12000);
       }
 
-      function setDateLine(line, fallback) {
-        if (!dateEl) return;
-        if (line) {
-          dateEl.textContent = "Valid from " + line;
-        } else {
-          dateEl.textContent = fallback || "See this week’s dates on the menu image.";
-        }
-      }
-
       function applyPayload(data) {
-        if (statusEl) statusEl.textContent = "";
         if (ledeEl) {
           ledeEl.textContent = (data && data.lede) || ledeFallback;
         }
@@ -465,13 +399,6 @@
           if (data.plans_cta_url) plansCtaEl.href = data.plans_cta_url;
           if (data.plans_cta_label) plansCtaEl.textContent = data.plans_cta_label;
         }
-        var dateLine = (data && data.date_line) || "";
-        var heading = (data && data.heading_raw) || "";
-        if (!dateLine && heading) {
-          dateLine = heading.replace(/^\s*weekly\s*menu\s*-\s*/i, "").trim();
-        }
-        setDateLine(dateLine, "");
-
         var img = (data && data.image_url) || "";
         var alt = (data && data.image_alt) || "Current weekly menu";
 
@@ -487,18 +414,6 @@
           };
           imgEl.src = img;
           if (pdfFrame) pdfFrame.setAttribute("hidden", "");
-        } else {
-          setDateLine("", "Dates update here when the live menu feed is available.");
-        }
-
-        if (dl) {
-          dl.removeAttribute("aria-disabled");
-          dl.href = MENU_PDF;
-          dl.setAttribute("download", "");
-          dl.target = "_blank";
-          dl.rel = "noopener noreferrer";
-          dl.innerHTML =
-            '<span class="material-symbols-outlined" aria-hidden="true">download</span> Download Menu PDF';
         }
       }
 
@@ -520,22 +435,7 @@
           }
           applyPayload(res.body);
         })
-        .catch(function () {
-          if (statusEl) {
-            statusEl.textContent =
-              "Optional: dates and intro sync from WordPress when the menu API is active. The PDF above always loads from our site.";
-          }
-          setDateLine("", "Scroll the menu or use Download Menu PDF.");
-          if (dl) {
-            dl.removeAttribute("aria-disabled");
-            dl.href = MENU_PDF;
-            dl.setAttribute("download", "");
-            dl.target = "_blank";
-            dl.rel = "noopener noreferrer";
-            dl.innerHTML =
-              '<span class="material-symbols-outlined" aria-hidden="true">download</span> Download Menu PDF';
-          }
-        });
+        .catch(function () {});
     })();
   </script>
 </div>
