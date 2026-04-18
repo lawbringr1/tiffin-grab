@@ -85,7 +85,7 @@
       color: var(--c-muted);
     }
     #tg-weekly-menu-2026 .tg-wm-card {
-      max-width: 56rem;
+      max-width: min(96vw, 76rem);
       margin: 0 auto;
       border-radius: 12px;
       overflow: hidden;
@@ -113,7 +113,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      padding: clamp(1.25rem, 4vw, 2rem);
+      padding: clamp(1rem, 3vw, 1.75rem) clamp(0.5rem, 2.5vw, 1.5rem);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -131,10 +131,10 @@
       margin: 0;
       text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
     }
-    /* One portrait page (~US Letter); height tracks width so the PDF viewer is not taller than the page. */
+    /* Large portrait viewer: nearly full viewport width (capped) so the PDF is readable on desktop. */
     #tg-weekly-menu-2026 .tg-wm-figure {
       position: relative;
-      width: min(100%, min(34rem, calc(85vh * 8.5 / 11)));
+      width: min(100%, min(72rem, calc(90vh * 8.5 / 11), 94vw));
       aspect-ratio: 8.5 / 11;
       margin: 0 auto;
       border-radius: 10px;
@@ -340,7 +340,7 @@
             id="tg-wm-pdf-frame"
             class="tg-wm-pdf-frame"
             title="TiffinGrab weekly menu PDF"
-            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf#view=Fit"
+            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu.pdf#view=Fit&amp;navpanes=0"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
@@ -418,7 +418,7 @@
       /** Resolved from the download link’s href (edit the <a href> above when the PDF changes). */
       var MENU_PDF = dl && dl.href ? dl.href.split("#")[0] : "";
       if (pdfFrame && MENU_PDF) {
-        pdfFrame.src = MENU_PDF + "#view=Fit";
+        pdfFrame.src = MENU_PDF + "#view=Fit&navpanes=0";
       }
 
       var base =
