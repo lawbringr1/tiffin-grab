@@ -1,0 +1,17 @@
+{
+  "_comment": "2026-04-19: Removed from Theme Builder Single template 1589 (post_id) as top-level siblings of the Post Content wrapper. They duplicated old homepage marketing after the Home 2026 page body. Template 1589 now has only container 3b4d6f4 → theme-post-content (a42f25f).",
+  "post_id": 1589,
+  "removed_element_ids": [
+    "69f768c",
+    "7fb5500",
+    "0efad18",
+    "ef38f95",
+    "98a498a",
+    "56f0c08",
+    "7c8f3ce",
+    "9dcd349",
+    "3dab7d9",
+    "a5b0a74",
+    "5217ce1"
+  ]
+}

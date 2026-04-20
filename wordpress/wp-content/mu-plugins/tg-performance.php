@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TiffinGrab Performance (MU)
  * Description: Front-end tweaks for Lighthouse: Elementor eicons font-display, LCP hero img hints, optional emoji removal.
- * Version: 1.0.4
+ * Version: 1.0.5
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -11,6 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Home 2026 page (body.elementor-page-10016). */
 const TG_PERF_HOME_2026_PAGE_ID = 10016;
+
+/**
+ * If true, the front page is not stored in LiteSpeed full-page cache (PHP still runs every visit).
+ * Use only while debugging “stale homepage” after deploys; then set back to false in wp-config.php.
+ *
+ * define( 'TG_PERF_BYPASS_LSCACHE_HOME', true );
+ */
+if ( ! defined( 'TG_PERF_BYPASS_LSCACHE_HOME' ) ) {
+	define( 'TG_PERF_BYPASS_LSCACHE_HOME', false );
+}
 
 /** Hero LCP asset (substring match so minor URL differences still work). */
 const TG_PERF_LCP_IMG_FRAGMENT = 'Maharaja-Thali';
@@ -175,6 +185,27 @@ add_filter(
 /**
  * Skip core emoji scripts/styles on the front.
  */
+/**
+ * Optional: skip LiteSpeed page cache + send no-cache headers for the static front page only.
+ * Hostinger hCDN may still cache until purged; this forces the origin to regenerate HTML for / on each request when enabled.
+ */
+add_action(
+	'template_redirect',
+	static function () {
+		if ( is_admin() || ! TG_PERF_BYPASS_LSCACHE_HOME ) {
+			return;
+		}
+		if ( ! function_exists( 'is_front_page' ) || ! is_front_page() ) {
+			return;
+		}
+		if ( function_exists( 'do_action' ) ) {
+			do_action( 'litespeed_control_set_nocache', 'TG_PERF_BYPASS_LSCACHE_HOME' );
+		}
+		nocache_headers();
+	},
+	0
+);
+
 add_action(
 	'init',
 	static function () {

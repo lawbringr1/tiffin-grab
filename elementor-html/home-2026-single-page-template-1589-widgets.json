@@ -1,0 +1,5 @@
+{
+  "_comment": "Template 1589 (Single Page) now only wraps Post Content + sections below the page body. The duplicate native hero container (6760da1) was removed — hero copy and layout live in embedded template 9825 + page 10016. Add entries here only if you reintroduce native widgets on 1589.",
+  "post_id": 1589,
+  "widgets": []
+}

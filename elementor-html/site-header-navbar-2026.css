@@ -20,6 +20,13 @@
   --tg-muted-foreground: hsl(220 9% 46%);
   --tg-border: hsl(220 13% 91%);
   --tg-inner-max: 80rem; /* max-w-7xl */
+  /* Navbar: keep logo pill, UE links, and icons on the same optical scale */
+  --tg-nav-row-py: 0.45rem;
+  --tg-nav-link-py: 0.42rem;
+  --tg-nav-font: 0.9375rem;
+  --tg-nav-icon-size: 2.5rem;
+  /* One shared “track” height so logo pill, nav pill, and icon buttons line up */
+  --tg-nav-track-min-h: var(--tg-nav-icon-size);
 }
 
 /* ========== Full-width header bar (like header.bg-background) ========== */
@@ -57,6 +64,7 @@ header.elementor.elementor-1863.elementor-location-header {
   max-width: 100% !important;
   margin: 0 auto !important;
   padding: 0 !important;
+  min-height: 0 !important;
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
@@ -64,25 +72,138 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 > .e-con-inner {
+  position: relative !important;
+  /* Flex + order: logo | menu | icons even if DOM order differs; avoids stray grid rows */
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  align-items: center !important;
+  /* Stretch columns to one height, then center each pill/button row inside (fixes stagger) */
+  align-items: stretch !important;
   justify-content: space-between !important;
-  gap: 0.875rem 1.5rem !important;
+  gap: 0.35rem 1rem !important;
   box-sizing: border-box !important;
   width: 100% !important;
   max-width: var(--tg-inner-max) !important;
   min-width: 0 !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: 1rem 1rem !important;
+  padding: var(--tg-nav-row-py) 1rem !important;
+}
+
+/* Inline <style> widget (b706311): must not participate in the bar layout */
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .elementor-element-b706311 {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  order: 99 !important;
+  flex: 0 0 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border: 0 !important;
 }
 
 @media (min-width: 640px) {
   .elementor-1863 .elementor-element-ef53437 > .e-con-inner {
-    padding: 1rem 1.5rem !important;
+    padding: var(--tg-nav-row-py) 1.5rem !important;
   }
+}
+
+/* Strip default top/bottom padding Elementor adds to widgets in the bar */
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner .elementor-widget .elementor-widget-container {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Bar columns (except inline style widget): fill row height, center content on cross-axis */
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child,
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .elementor-element:not(.elementor-element-b706311) {
+  align-self: stretch !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child > .e-con-inner {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  flex: 1 1 auto !important;
+  min-height: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 > .e-con-inner {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  min-height: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-element-4fa470e > .e-con-inner {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  min-height: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+/* Logo column: row flex so pill centers to same midline as nav + icons */
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child:first-child,
+.elementor-1863
+  .elementor-element-ef53437
+  > .e-con-inner
+  > .elementor-element:first-child:not(.elementor-element-39bbf37):not(.elementor-element-4fa470e):not(
+    .elementor-element-b706311
+  ),
+.elementor-1863 .elementor-element-ef53437 .tg-nav-logo-col {
+  order: 1 !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  min-width: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child:first-child > .e-con-inner,
+.elementor-1863
+  .elementor-element-ef53437
+  > .e-con-inner
+  > .elementor-element:first-child:not(.elementor-element-39bbf37):not(.elementor-element-4fa470e):not(
+    .elementor-element-b706311
+  )
+  > .e-con-inner {
+  justify-content: flex-start !important;
+  align-items: center !important;
+  align-self: stretch !important;
+  flex: 1 1 auto !important;
+  min-height: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-widget-heading .elementor-heading-title {
+  margin: 0 !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 .e-con.e-child {
@@ -92,7 +213,10 @@ header.elementor.elementor-1863.elementor-location-header {
 
 /* First column = logo: must NOT shrink or min-width collapses to 0 (logo “disappears”) */
 .elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child:first-child,
-.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .elementor-element:first-child,
+.elementor-1863
+  .elementor-element-ef53437
+  > .e-con-inner
+  > .elementor-element:first-child:not(.elementor-element-b706311),
 .elementor-1863 .elementor-element-ef53437 .tg-nav-logo-col {
   flex: 0 0 auto !important;
   flex-shrink: 0 !important;
@@ -102,19 +226,27 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child:first-child .elementor-widget,
-.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .elementor-element:first-child .elementor-widget {
+.elementor-1863
+  .elementor-element-ef53437
+  > .e-con-inner
+  > .elementor-element:first-child:not(.elementor-element-b706311)
+  .elementor-widget {
   min-width: min-content !important;
   overflow: visible !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 > .e-con-inner > .e-con.e-child:first-child img,
-.elementor-1863 .elementor-element-ef53437 > .e-con-inner > .elementor-element:first-child img {
+.elementor-1863
+  .elementor-element-ef53437
+  > .e-con-inner
+  > .elementor-element:first-child:not(.elementor-element-b706311)
+  img {
   flex-shrink: 0 !important;
   max-width: none !important;
   width: auto !important;
   height: auto !important;
-  min-width: 44px !important;
-  min-height: 44px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
   object-fit: contain !important;
   display: block !important;
   visibility: visible !important;
@@ -122,25 +254,59 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 {
+  order: 2 !important;
   flex: 1 1 auto !important;
   display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   justify-content: center !important;
+  align-items: center !important;
   min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 > .e-con-inner {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* UE widget = NavigationMenu (bg-muted rounded-full p-0.5) */
 .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu {
   min-width: 0 !important;
   max-width: 100% !important;
+  min-height: var(--tg-nav-track-min-h) !important;
+  display: flex !important;
+  align-items: center !important;
   overflow-x: auto !important;
   overflow-y: hidden !important;
   -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   background: var(--tg-muted) !important;
   border-radius: 9999px !important;
-  padding: 0.125rem !important;
+  padding: 1px !important;
   border: none !important;
   box-shadow: none !important;
+  align-self: center !important;
+  box-sizing: border-box !important;
+}
+
+.elementor-1863
+  .elementor-element-ef53437
+  .elementor-element-39bbf37
+  .elementor-widget-ucaddon_nav_menu
+  .elementor-widget-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .elementor-1863
@@ -151,12 +317,16 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 .elementor-element-4fa470e {
+  order: 3 !important;
   flex: 0 0 auto !important;
-  display: inline-flex !important;
+  display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
+  justify-content: flex-end !important;
   gap: 0.5rem !important;
   flex-wrap: nowrap !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Icon / ghost buttons: bg-background border (shadcn trigger style) */
@@ -166,9 +336,9 @@ header.elementor.elementor-1863.elementor-location-header {
   border: 1px solid var(--tg-border) !important;
   border-radius: 9999px !important;
   box-shadow: none !important;
-  min-width: 2.5rem !important;
-  min-height: 2.5rem !important;
-  padding: 0.5rem !important;
+  min-width: var(--tg-nav-icon-size) !important;
+  min-height: var(--tg-nav-icon-size) !important;
+  padding: 0.2rem !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 .elementor-element-4fa470e .elementor-button:hover,
@@ -190,12 +360,12 @@ header.elementor.elementor-1863.elementor-location-header {
   color: var(--tg-on-theme) !important;
   border: 1px solid transparent !important;
   border-radius: 9999px !important;
-  padding: 0.5rem 1.25rem !important;
-  min-height: 2.5rem !important;
+  padding: 0.22rem 0.75rem !important;
+  min-height: var(--tg-nav-icon-size) !important;
   min-width: auto !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
+  font-size: 0.75rem !important;
+  line-height: 1.1rem !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 .elementor-element-4fa470e .tg-shadcn-cta .elementor-button:hover,
@@ -215,6 +385,10 @@ header.elementor.elementor-1863.elementor-location-header {
 .elementor-1863 .elementor-element-95df657 .elementor-widget-container {
   margin: 0 !important;
   padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 0 !important;
 }
 
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
@@ -224,9 +398,13 @@ header.elementor.elementor-1863.elementor-location-header {
   flex-wrap: nowrap !important;
   gap: 0 !important;
   margin: 0 !important;
-  max-width: min(100%, 26rem) !important;
-  padding: 0.28rem 0.65rem 0.28rem 0.45rem !important;
+  /* Kill heading line-box / baseline strut that sits the pill high vs flex-centered nav */
+  line-height: 1 !important;
+  max-width: min(100%, 30rem) !important;
+  min-height: var(--tg-nav-track-min-h) !important;
   box-sizing: border-box !important;
+  /* Same vertical rhythm as UE nav links */
+  padding: var(--tg-nav-link-py) 0.65rem var(--tg-nav-link-py) 0.5rem !important;
   background: var(--tg-bg) !important;
   border: 1px solid var(--tg-border) !important;
   border-radius: 9999px !important;
@@ -243,8 +421,8 @@ header.elementor.elementor-1863.elementor-location-header {
   gap: 0 !important;
   font-family: var(--tg-font) !important;
   font-weight: 700 !important;
-  font-size: clamp(0.8125rem, 1.9vw, 0.9375rem) !important;
-  line-height: 1.15 !important;
+  font-size: clamp(0.8125rem, 1.9vw, var(--tg-nav-font)) !important;
+  line-height: 1.2 !important;
   letter-spacing: -0.03em !important;
   word-spacing: 0 !important;
   white-space: nowrap !important;
@@ -261,8 +439,8 @@ header.elementor.elementor-1863.elementor-location-header {
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a::before,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a::before {
   content: "" !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 30px !important;
+  height: 30px !important;
   flex-shrink: 0 !important;
   display: block !important;
   margin-right: 0.35rem !important;
@@ -271,18 +449,20 @@ header.elementor.elementor-1863.elementor-location-header {
 
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
-  content: "Ghar Jaisa Khana,\A Delivered" !important;
-  display: block !important;
-  white-space: pre-line !important;
-  flex: 1 1 auto !important;
+  content: "Ghar Jaisa Khana, Delivered" !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  align-self: center !important;
+  white-space: nowrap !important;
+  flex: 0 1 auto !important;
   min-width: 0 !important;
-  margin: 0 0 0 0.5rem !important;
-  padding: 0.1rem 0 0.1rem 0.6rem !important;
+  margin: 0 0 0 0.4rem !important;
+  padding: 0 0 0 0.5rem !important;
   border-left: 1px solid var(--tg-border) !important;
   font-family: var(--tg-font) !important;
   font-weight: 500 !important;
-  font-size: clamp(0.625rem, 1.65vw, 0.75rem) !important;
-  line-height: 1.35 !important;
+  font-size: clamp(0.6875rem, 1.5vw, 0.8125rem) !important;
+  line-height: 1.2 !important;
   letter-spacing: -0.01em !important;
   color: var(--tg-muted-foreground) !important;
   text-align: left !important;
@@ -291,21 +471,21 @@ header.elementor.elementor-1863.elementor-location-header {
 @media (max-width: 420px) {
   .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
   .elementor-1863 .elementor-element-95df657 .elementor-heading-title {
-    padding: 0.22rem 0.5rem 0.22rem 0.38rem !important;
+    padding: var(--tg-nav-link-py) 0.5rem var(--tg-nav-link-py) 0.4rem !important;
     max-width: 100% !important;
   }
 
   .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
   .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
     font-size: 0.625rem !important;
-    padding-left: 0.45rem !important;
-    margin-left: 0.35rem !important;
+    padding-left: 0.4rem !important;
+    margin-left: 0.3rem !important;
   }
 
   .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a::before,
   .elementor-1863 .elementor-element-95df657 .elementor-heading-title a::before {
-    width: 28px !important;
-    height: 28px !important;
+    width: 26px !important;
+    height: 26px !important;
   }
 }
 
@@ -322,10 +502,10 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark .tg-nav-logo-img {
-  width: 44px !important;
-  height: 44px !important;
-  max-width: min(44px, 11vw) !important;
-  max-height: min(44px, 11vw) !important;
+  width: 30px !important;
+  height: 30px !important;
+  max-width: min(30px, 11vw) !important;
+  max-height: min(30px, 11vw) !important;
   display: block !important;
   object-fit: contain !important;
 }
@@ -345,8 +525,8 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 .elementor-1863 .elementor-element-ef53437 .tg-nav-logo-mark svg {
-  width: 44px !important;
-  height: 44px !important;
+  width: 30px !important;
+  height: 30px !important;
   display: block !important;
 }
 
@@ -373,6 +553,8 @@ header.elementor.elementor-1863.elementor-location-header {
   background: transparent !important;
   width: max-content !important;
   min-width: min-content !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li {
@@ -386,10 +568,10 @@ header.elementor.elementor-1863.elementor-location-header {
   gap: 0.2rem !important;
   font-family: var(--tg-font) !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
+  font-size: var(--tg-nav-font) !important;
+  line-height: 1.25 !important;
   color: var(--tg-muted-foreground) !important;
-  padding: 0.5rem 1rem !important;
+  padding: var(--tg-nav-link-py) 0.65rem !important;
   white-space: nowrap !important;
   border-radius: 9999px !important;
   text-decoration: none !important;
@@ -402,8 +584,8 @@ header.elementor.elementor-1863.elementor-location-header {
 
 @media (min-width: 1024px) {
   .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
+    padding-left: 0.7rem !important;
+    padding-right: 0.7rem !important;
   }
 }
 
@@ -492,9 +674,9 @@ header.elementor.elementor-1863.elementor-location-header {
   align-items: center !important;
   font-family: var(--tg-font) !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
+  font-size: var(--tg-nav-font) !important;
   color: var(--tg-muted-foreground) !important;
-  padding: 0.5rem 0.75rem !important;
+  padding: var(--tg-nav-link-py) 0.65rem !important;
   white-space: nowrap !important;
   border-radius: 9999px !important;
   text-decoration: none !important;
@@ -516,7 +698,7 @@ header.elementor.elementor-1863.elementor-location-header {
   align-items: center !important;
   gap: 0 !important;
   margin: 0 !important;
-  padding: 0.125rem !important;
+  padding: 0 !important;
   list-style: none !important;
   background: var(--tg-muted) !important;
   border-radius: 9999px !important;
@@ -531,9 +713,9 @@ header.elementor.elementor-1863.elementor-location-header {
   align-items: center !important;
   font-family: var(--tg-font) !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
+  font-size: var(--tg-nav-font) !important;
   color: var(--tg-muted-foreground) !important;
-  padding: 0.5rem 1rem !important;
+  padding: var(--tg-nav-link-py) 0.65rem !important;
   white-space: nowrap !important;
   border-radius: 9999px !important;
   text-decoration: none !important;
@@ -570,13 +752,13 @@ header.elementor.elementor-1863.elementor-location-header {
   justify-content: center !important;
   font-family: var(--tg-font) !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
+  font-size: var(--tg-nav-font) !important;
   color: var(--tg-on-theme) !important;
   background: var(--tg-theme) !important;
   border: none !important;
   border-radius: 9999px !important;
-  padding: 0.5rem 1.15rem !important;
-  min-height: 2.5rem !important;
+  padding: var(--tg-nav-link-py) 0.85rem !important;
+  min-height: var(--tg-nav-icon-size) !important;
 }
 
 .elementor-location-header .tg-nav-signin .elementor-button:hover,
@@ -587,13 +769,13 @@ header.elementor.elementor-1863.elementor-location-header {
 .elementor-location-header .tg-shadcn-cta:not(.tg-nav-signin) .elementor-button {
   font-family: var(--tg-font) !important;
   font-weight: 600 !important;
-  font-size: 0.875rem !important;
+  font-size: var(--tg-nav-font) !important;
   color: var(--tg-on-theme) !important;
   background: var(--tg-theme) !important;
   border: none !important;
   border-radius: 9999px !important;
-  padding: 0.5rem 1.25rem !important;
-  min-height: 2.5rem !important;
+  padding: var(--tg-nav-link-py) 0.85rem !important;
+  min-height: var(--tg-nav-icon-size) !important;
 }
 
 .elementor-location-header .tg-shadcn-cta:not(.tg-nav-signin) .elementor-button::after {
@@ -636,20 +818,20 @@ header.elementor.elementor-1863.elementor-location-header {
   max-width: var(--tg-inner-max) !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: 0 1rem 1rem !important;
+  padding: 0 1rem 0.4rem !important;
   width: 100% !important;
 }
 
 @media (min-width: 640px) {
   .elementor-1863 .elementor-element-67924b6 > .e-con-inner {
-    padding: 0 1.5rem 1rem !important;
+    padding: 0 1.5rem 0.4rem !important;
   }
 }
 
 .elementor-1863 .elementor-element-67924b6 .elementor-widget-ucaddon_nav_menu {
   background: var(--tg-muted) !important;
   border-radius: 9999px !important;
-  padding: 0.125rem !important;
+  padding: 0 !important;
 }
 
 .elementor-1863 .elementor-element-67924b6 .elementor-widget-ucaddon_nav_menu ul.ue-menu > li > a {
