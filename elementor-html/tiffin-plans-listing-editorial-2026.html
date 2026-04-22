@@ -88,7 +88,7 @@
       max-width: none;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: clamp(5rem, 10vw, 6.5rem) clamp(1.25rem, 4vw, 2rem) clamp(4rem, 8vw, 5.5rem);
+      padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 3.5rem);
       box-sizing: border-box;
     }
     @supports (width: 100dvw) {
@@ -391,22 +391,35 @@
 
     .tg-tplans-hero {
       text-align: center;
-      margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+      max-width: 44rem;
+      margin: 0 auto clamp(2rem, 5vw, 3rem);
+    }
+    .tg-tplans-hero .tg-tplans-eyebrow {
+      display: block;
+      margin: 0 0 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--tp-primary);
+      font-family: "Manrope", sans-serif;
     }
     .tg-tplans-hero h1#tg-tplans-title {
-      font-family: var(--tp-font-display);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-size: clamp(2.25rem, 4.5vw, 3rem);
-      line-height: 1.1;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: clamp(1.85rem, 5vw, 2.85rem);
+      line-height: 1.12;
       margin: 0 0 1rem;
     }
+    .tg-tplans-hero h1#tg-tplans-title span {
+      color: var(--tp-primary);
+    }
     .tg-tplans-hero p {
-      max-width: 36rem;
       margin: 0 auto;
       color: var(--tp-muted);
       font-size: 1.05rem;
-      line-height: 1.55;
+      line-height: 1.65;
       font-weight: 400;
     }
 
@@ -1633,7 +1646,8 @@
 
   <div class="tg-tplans-inner">
     <header class="tg-tplans-hero">
-      <h1 id="tg-tplans-title">Tiffin plans</h1>
+      <span class="tg-tplans-eyebrow">Tiffin plans</span>
+      <h1 id="tg-tplans-title">Explore our <span>Tiffin Plans</span></h1>
       <p>
         Explore vegetarian and non-vegetarian meal plans for Toronto and the GTA. Configure days, tiffin count, and start date here — same options as on each product page — then add to cart.
       </p>

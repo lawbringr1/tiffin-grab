@@ -26,16 +26,27 @@
   body:has(#tg-weekly-menu-2026) [class*="elementor-location-header"] {
     background-color: #ffffff !important;
     background-image: none !important;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid #f1ddd2 !important;
+    box-shadow: none !important;
   }
   body:has(#tg-weekly-menu-2026) .elementor-location-body,
   body:has(#tg-weekly-menu-2026) [class*="elementor-location-body"] {
     background-color: #fff8f6 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
   body:has(#tg-weekly-menu-2026) .site-content,
   body:has(#tg-weekly-menu-2026) #content,
   body:has(#tg-weekly-menu-2026) #main,
   body:has(#tg-weekly-menu-2026) main {
     background-color: #fff8f6 !important;
+  }
+  /* Weekly Menu heading now lives inside the widget (same pattern as Contact Us). */
+  body:has(#tg-weekly-menu-2026) h1.entry-title,
+  body:has(#tg-weekly-menu-2026) .elementor-page-title,
+  body:has(#tg-weekly-menu-2026) .page-title {
+    display: none !important;
   }
   .elementor-widget-html:has(#tg-weekly-menu-2026),
   .elementor-widget-html:has(#tg-weekly-menu-2026) .elementor-widget-container,
@@ -96,22 +107,35 @@
     }
     #tg-weekly-menu-2026 .tg-wm-intro {
       text-align: center;
-      max-width: 40rem;
-      margin: 0 auto clamp(2rem, 5vw, 2.75rem);
+      max-width: 44rem;
+      margin: 0 auto clamp(2rem, 5vw, 3rem);
+    }
+    #tg-weekly-menu-2026 .tg-wm-eyebrow {
+      display: block;
+      margin: 0 0 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-primary);
+      font-family: "Manrope", sans-serif;
     }
     #tg-weekly-menu-2026 .tg-wm-title {
-      margin: 0 0 0.85rem;
+      margin: 0 0 1rem;
       font-family: "Manrope", sans-serif;
       font-weight: 800;
-      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-size: clamp(1.85rem, 5vw, 2.85rem);
       line-height: 1.12;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--c-on);
+    }
+    #tg-weekly-menu-2026 .tg-wm-title span {
+      color: var(--c-primary);
     }
     #tg-weekly-menu-2026 .tg-wm-lede {
       margin: 0;
       font-size: 1.05rem;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--c-muted);
     }
     #tg-weekly-menu-2026 .tg-wm-card {
@@ -318,7 +342,8 @@
   </style>
 
   <header class="tg-wm-intro">
-    <h1 class="tg-wm-title">Our Weekly Menu</h1>
+    <span class="tg-wm-eyebrow">Weekly menu</span>
+    <h1 class="tg-wm-title">Our <span>Weekly Menu</span></h1>
     <p class="tg-wm-lede" id="tg-wm-lede">
       Our weekly menu is crafted to offer variety and freshness&mdash;no repeated items, just a new selection of delicious Indian dishes every day. Enjoy balanced meals with different flavors throughout the week.
     </p>
