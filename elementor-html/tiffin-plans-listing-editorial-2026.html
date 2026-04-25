@@ -2371,7 +2371,8 @@
           titleSlot.appendChild(h);
           var price = document.createElement("span");
           price.className = "tg-tplans-price";
-          price.textContent = money(p.prices.price, p.prices.currency_code, p.prices.currency_symbol);
+          price.textContent =
+            money(p.prices.price, p.prices.currency_code, p.prices.currency_symbol) + "/per meal";
           row.appendChild(titleSlot);
           row.appendChild(price);
 
