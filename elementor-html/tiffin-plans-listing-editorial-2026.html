@@ -3419,6 +3419,10 @@
           var totalMinor = baseMinor + qpMinor;
           var subFormatted = money(String(baseMinor), curCode, curSym);
           var qpFormatted = money(String(qpMinor), curCode, curSym);
+          var qpRightHtml =
+            qpMinor === 0 && (tiffins === 20 || tiffins === 24)
+              ? '<span class="tg-tplans-bd-free">FREE</span>'
+              : '<span class="tg-tplans-bd-val">' + escapeHtml(qpFormatted) + "</span>";
           var totalFormatted = money(String(totalMinor), curCode, curSym);
           var perStr = money(String(perMeal), curCode, curSym);
           var formula = perStr + " per meal × " + tiffins + " tiffins";
@@ -3431,9 +3435,9 @@
             "</span></div>";
           if (sch && schemaHasQuantityPricing(sch)) {
             body +=
-              '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Quantity pricing</span><span class="tg-tplans-bd-val">' +
-              escapeHtml(qpFormatted) +
-              "</span></div>";
+              '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Quantity pricing</span>' +
+              qpRightHtml +
+              "</div>";
           }
           body +=
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
