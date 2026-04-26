@@ -928,6 +928,19 @@
       background: #f2ede8;
       border-color: transparent;
     }
+    .tg-tplans-seg button.tg-tplans-seg-btn--no-qp {
+      color: #166534;
+      background: #ecfdf5;
+    }
+    .tg-tplans-seg button.tg-tplans-seg-btn--no-qp:hover:not([aria-pressed="true"]) {
+      background: #d1fae5;
+      color: #14532d;
+    }
+    .tg-tplans-seg button.tg-tplans-seg-btn--no-qp[aria-pressed="true"] {
+      border-color: #22c55e;
+      background: #dcfce7;
+      color: #15803d;
+    }
 
     .tg-tplans-days {
       display: grid;
@@ -1621,6 +1634,26 @@
     #tg-tplans-2026 .tg-tplans-seg > button[aria-pressed="true"]:hover {
       color: #f06b1a !important;
       background: #fdf0e8 !important;
+    }
+
+    /* 20 / 24 tiffins: no quantity-pricing add-on — distinct green so they read differently from 5–15 */
+    #tg-tplans-2026 .tg-tplans-seg > button.tg-tplans-seg-btn--no-qp {
+      color: #166534 !important;
+      background: #ecfdf5 !important;
+      border-color: transparent !important;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button.tg-tplans-seg-btn--no-qp:hover:not([aria-pressed="true"]) {
+      color: #14532d !important;
+      background: #d1fae5 !important;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button.tg-tplans-seg-btn--no-qp[aria-pressed="true"] {
+      color: #15803d !important;
+      background: #dcfce7 !important;
+      border-color: #22c55e !important;
+    }
+    #tg-tplans-2026 .tg-tplans-seg > button.tg-tplans-seg-btn--no-qp[aria-pressed="true"]:hover {
+      color: #15803d !important;
+      background: #dcfce7 !important;
     }
 
     #tg-tplans-2026 button.tg-tplans-daybtn {
@@ -3482,6 +3515,14 @@
                   var b = document.createElement("button");
                   b.type = "button";
                   b.textContent = opt.value;
+                  var tiffinSegCount = tiffinCountFromField(field, opt.value);
+                  if (tiffinSegCount === 20 || tiffinSegCount === 24) {
+                    b.classList.add("tg-tplans-seg-btn--no-qp");
+                    b.setAttribute(
+                      "title",
+                      "No quantity pricing add-on — these tiers have no extra weekly quantity fee."
+                    );
+                  }
                   b.setAttribute("aria-pressed", i === tix ? "true" : "false");
                   b.addEventListener("click", function () {
                     seg.querySelectorAll("button").forEach(function (x) {
