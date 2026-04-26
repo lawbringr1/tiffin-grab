@@ -215,7 +215,7 @@ def main() -> None:
     OUT_MAP.write_text(json.dumps({"post_id": post_id, "html_widget": wid}, indent=2), encoding="utf-8")
     print("Created Referral Program page post_id:", post_id, "html_widget:", wid)
     print("Wrote", OUT_MAP.relative_to(ROOT))
-    print("Set the page slug in WP (e.g. referral-program) and add it to your menu.")
+    print("Add to header menu: python3 scripts/wp_add_referral_nav_menu_item.py")
 
 
 if __name__ == "__main__":
