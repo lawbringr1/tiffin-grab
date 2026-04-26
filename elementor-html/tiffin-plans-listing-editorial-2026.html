@@ -2819,11 +2819,113 @@
       function labelKey(txt) {
         var t = (txt || "").toLowerCase();
         if (t.indexOf("tiffin") !== -1) return "tiffins";
+        if (t.indexOf("quantity") !== -1 && t.indexOf("pric") !== -1) return "quantity_pricing";
         if (/\bmeals?\b/.test(t)) return "tiffins";
         if (t.indexOf("day") !== -1) return "days";
         if (/\b(qty|quantity)\b/.test(t)) return "tiffins";
         if (t.indexOf("date") !== -1) return "date";
         return "other";
+      }
+
+      /**
+       * Right side of APO `tiffins|dollars` = total “Quantity pricing” in dollars. Admin: 5|7.5, 10|10, …
+       * If Woo’s `<option value="5">` has no pipe, the dollar amount is resolved from `option.text` or this map.
+       */
+      var TGPLANS_STANDARD_QP_DOLLARS = { 5: 7.5, 10: 10, 15: 7.5, 20: 0, 24: 0 };
+
+      function parseQuantityPricingAdjustmentMinor(selectedOptionValue) {
+        if (selectedOptionValue == null || selectedOptionValue === "") return 0;
+        var s = String(selectedOptionValue).trim();
+        var parts = s.split("|");
+        var side = parts.length >= 2 ? parts[parts.length - 1].trim() : s;
+        var x = parseFloat(side);
+        if (isNaN(x)) return 0;
+        return Math.round(x * 100);
+      }
+
+      /** Resolves $ amount when the posted value is a bare tiffin id (5) or full `5|7.5`. */
+      function quantityPricingAdjustmentMinorResolved(qpField, selectedRaw, tiffinCount) {
+        if (selectedRaw == null || selectedRaw === "") return 0;
+        var s = String(selectedRaw).trim();
+        if (s.indexOf("|") >= 0) return parseQuantityPricingAdjustmentMinor(s);
+        if (qpField && qpField.options) {
+          var i;
+          for (i = 0; i < qpField.options.length; i++) {
+            var o = qpField.options[i];
+            if (String(o.value) !== s) continue;
+            var v = String(o.value);
+            if (v.indexOf("|") >= 0) return parseQuantityPricingAdjustmentMinor(v);
+            var t = String(o.text || "");
+            if (t.indexOf("|") >= 0) {
+              var p = t.split("|");
+              return parseQuantityPricingAdjustmentMinor("0|" + p[p.length - 1].trim());
+            }
+            var m = t.match(/\$\s*([0-9]+(?:\.[0-9]+)?)/);
+            if (m) return Math.round(parseFloat(m[1]) * 100);
+            m = t.match(/([0-9]+(?:\.[0-9]+)?)\s*$/);
+            if (m && t.length > 1) {
+              var tail = parseFloat(m[1]);
+              if (!isNaN(tail) && tail !== tiffinCount) return Math.round(tail * 100);
+            }
+            break;
+          }
+        }
+        if (
+          TGPLANS_STANDARD_QP_DOLLARS.hasOwnProperty(tiffinCount) &&
+          s === String(tiffinCount) &&
+          s.indexOf(".") < 0
+        ) {
+          return Math.round(TGPLANS_STANDARD_QP_DOLLARS[tiffinCount] * 100);
+        }
+        return parseQuantityPricingAdjustmentMinor(s);
+      }
+
+      function schemaHasQuantityPricing(schema) {
+        if (!schema || !schema.apo) return false;
+        var i;
+        for (i = 0; i < schema.apo.length; i++) {
+          if (labelKey(schema.apo[i].label) === "quantity_pricing") return true;
+        }
+        return false;
+      }
+
+      function optionValueForLinkedQuantityPricing(qpField, tiffinCount) {
+        if (!qpField || !qpField.options || !qpField.options.length) return null;
+        var i;
+        for (i = 0; i < qpField.options.length; i++) {
+          var o = qpField.options[i];
+          var v = String(o.value);
+          var head = v.split("|")[0].trim();
+          var n = parseInt(head, 10);
+          if (!isNaN(n) && n === tiffinCount) return o.value;
+        }
+        for (i = 0; i < qpField.options.length; i++) {
+          var o2 = qpField.options[i];
+          if (tiffinCountFromField({ options: [o2] }, o2.value) === tiffinCount) return o2.value;
+        }
+        return qpField.options[0].value;
+      }
+
+      function syncAutoQuantityPricing(schema, values) {
+        if (!schema || !schema.apo) return;
+        var tField = null;
+        var qField = null;
+        for (var i = 0; i < schema.apo.length; i++) {
+          var f = schema.apo[i];
+          if (labelKey(f.label) === "quantity_pricing") qField = f;
+        }
+        if (!qField) return;
+        for (var j = 0; j < schema.apo.length; j++) {
+          var tf = schema.apo[j];
+          if (labelKey(tf.label) === "tiffins") {
+            tField = tf;
+            break;
+          }
+        }
+        if (!tField) return;
+        var count = tiffinCountFromField(tField, values[tField.name]);
+        var picked = optionValueForLinkedQuantityPricing(qField, count);
+        if (picked != null) values[qField.name] = picked;
       }
 
       /** How many tiffins/meals the selected APO option represents (Woo values may be slugs or labels). */
@@ -3292,6 +3394,7 @@
         }
 
         function updateBreakdown() {
+          syncAutoQuantityPricing(schemaRef.current, values);
           var sch = schemaRef.current;
           var rows = breakdown.querySelector(".tg-tplans-breakdown-rows");
           var totalVal = breakdown.querySelector(".tg-tplans-total-val");
@@ -3303,20 +3406,39 @@
               }
             });
           }
-          /* Weekly total = listed meal price × number of tiffins only (preferred days = delivery schedule, not price). */
-          var totalMinor = Math.round(perMeal * tiffins);
-          var subFormatted = money(String(totalMinor), curCode, curSym);
+          /* Base = listed meal price × number of tiffins; optional Quantity pricing row from linked APO pipe value. */
+          var baseMinor = Math.round(perMeal * tiffins);
+          var qpMinor = 0;
+          if (sch && sch.apo) {
+            sch.apo.forEach(function (f) {
+              if (labelKey(f.label) !== "quantity_pricing") return;
+              var raw = values[f.name];
+              if (raw != null && raw !== "") qpMinor = quantityPricingAdjustmentMinorResolved(f, raw, tiffins);
+            });
+          }
+          var totalMinor = baseMinor + qpMinor;
+          var subFormatted = money(String(baseMinor), curCode, curSym);
+          var qpFormatted = money(String(qpMinor), curCode, curSym);
+          var totalFormatted = money(String(totalMinor), curCode, curSym);
           var perStr = money(String(perMeal), curCode, curSym);
           var formula = perStr + " per meal × " + tiffins + " tiffins";
-          rows.innerHTML =
+          var body =
             '<p class="tg-tplans-bd-formula">' +
             escapeHtml(formula) +
             "</p>" +
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Weekly Subtotal</span><span class="tg-tplans-bd-val">' +
             subFormatted +
-            "</span></div>" +
+            "</span></div>";
+          if (sch && schemaHasQuantityPricing(sch)) {
+            body +=
+              '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Quantity pricing</span><span class="tg-tplans-bd-val">' +
+              escapeHtml(qpFormatted) +
+              "</span></div>";
+          }
+          body +=
             '<div class="tg-tplans-bd-row"><span class="tg-tplans-bd-lbl">Delivery Fee</span><span class="tg-tplans-bd-free">FREE</span></div>';
-          totalVal.textContent = subFormatted;
+          rows.innerHTML = body;
+          totalVal.textContent = totalFormatted;
           totalVal.style.opacity = "1";
           scheduleSyncAllHeights();
         }
@@ -3341,6 +3463,9 @@
 
           schema.apo.forEach(function (field) {
             var key = labelKey(field.label);
+            if (key === "quantity_pricing") {
+              return;
+            }
             var wrap = document.createElement("div");
 
             if (field.tag === "select" && field.options && field.options.length) {
@@ -3359,6 +3484,7 @@
                     });
                     b.setAttribute("aria-pressed", "true");
                     values[field.name] = opt.value;
+                    syncAutoQuantityPricing(schema, values);
                     updateBreakdown();
                   });
                   seg.appendChild(b);
@@ -3433,6 +3559,8 @@
             }
             optionsSlot.appendChild(wrap);
           });
+
+          syncAutoQuantityPricing(schema, values);
 
           submit.disabled = false;
           submit.onclick = function () {
