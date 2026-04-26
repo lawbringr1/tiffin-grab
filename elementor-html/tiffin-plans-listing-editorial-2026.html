@@ -539,6 +539,8 @@
       background: transparent;
       box-shadow: none;
       border-radius: 16px;
+      transition: transform 0.28s ease, filter 0.28s ease;
+      will-change: transform;
     }
     .tg-tplans-flip {
       position: relative;
@@ -569,6 +571,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      border: 1px solid rgba(240, 107, 26, 0.08);
     }
     .tg-tplans-face--front {
       transform: rotateY(0deg) translateZ(1px);
@@ -587,11 +591,19 @@
     }
     .tg-tplans-back-header {
       display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.55rem;
+      flex-shrink: 0;
+      margin-bottom: 1rem;
+    }
+    .tg-tplans-back-header-top {
+      display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 0.75rem;
       flex-shrink: 0;
-      margin-bottom: 1rem;
+      min-width: 0;
     }
     .tg-tplans-back-title {
       font-family: var(--tp-font-display);
@@ -612,6 +624,33 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transform: scale(1);
+      transition: transform 0.45s ease;
+    }
+    .tg-tplans-card:not(.tg-tplans-card--flipped):hover {
+      transform: translateY(-6px);
+      filter: saturate(1.02);
+    }
+    .tg-tplans-card:not(.tg-tplans-card--flipped):hover .tg-tplans-face--front {
+      box-shadow: 0 24px 52px rgba(35, 26, 21, 0.15);
+      border-color: rgba(240, 107, 26, 0.24);
+    }
+    .tg-tplans-card:not(.tg-tplans-card--flipped):hover .tg-tplans-media img {
+      transform: scale(1.035);
+    }
+    .tg-tplans-card:not(.tg-tplans-card--flipped):hover .tg-tplans-badge {
+      transform: translateY(-1px);
+    }
+    .tg-tplans-badge {
+      transition: transform 0.25s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tg-tplans-card,
+      .tg-tplans-face,
+      .tg-tplans-media img,
+      .tg-tplans-badge {
+        transition: none !important;
+      }
     }
     .tg-tplans-badge {
       position: absolute;
@@ -662,14 +701,40 @@
       overflow: hidden;
     }
     .tg-tplans-price {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 0.12rem;
       font-family: var(--tp-font-display);
       font-weight: 700;
-      font-size: 1.25rem;
       letter-spacing: -0.02em;
       color: var(--tp-primary);
-      white-space: nowrap;
+      text-align: right;
+      line-height: 1.1;
     }
-    /* Description + Read more; collapsed height follows line-clamp (viewport-based). Open = natural height. */
+    .tg-tplans-price-from {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #231a15;
+      line-height: 1.2;
+    }
+    .tg-tplans-price-amount {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--tp-primary);
+      line-height: 1.05;
+    }
+    .tg-tplans-price-unit {
+      font-family: "Manrope", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      color: #231a15;
+      text-transform: lowercase;
+    }
+    /* Description + Read more: modest preview height; extra row space sits above CTA (body flex + mt auto). */
     .tg-tplans-desc-shell {
       flex-shrink: 0;
       display: flex;
@@ -684,6 +749,10 @@
       font-size: var(--tg-desc-fs);
       color: var(--tp-muted);
       line-height: var(--tg-desc-lh);
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
+      -webkit-hyphens: auto;
       margin: 0;
       padding: 0.35rem 0.45rem;
       border-radius: 10px;
@@ -693,6 +762,9 @@
       display: block;
       overflow: visible;
       min-height: 0;
+    }
+    .tg-tplans-desc:not(.tg-tplans-desc--open) {
+      overflow: hidden;
     }
     /* Rich text (lists, paragraphs) from WooCommerce: clip inner body when collapsed. */
     .tg-tplans-desc-body {
@@ -709,6 +781,7 @@
     .tg-tplans-desc-body ol {
       margin: 0.35em 0 0.5em;
       padding-left: 1.2em;
+      text-align: start;
     }
     .tg-tplans-desc-body li {
       margin: 0.12em 0;
@@ -716,17 +789,20 @@
     .tg-tplans-desc-body > *:first-child {
       margin-top: 0;
     }
-    /* Collapsed: max-height (~2 lines mobile, ~3 lines ≥480px) — works with ul/li (line-clamp does not). */
+    /* Collapsed: ~5 lines mobile, ~6 lines desktop. */
     .tg-tplans-desc:not(.tg-tplans-desc--open) .tg-tplans-desc-body {
       overflow: hidden;
-      max-height: calc(2 * var(--tg-desc-lh) * 1em);
+      max-height: calc(5 * var(--tg-desc-lh) * 1em);
     }
     @media (min-width: 480px) {
       .tg-tplans-desc:not(.tg-tplans-desc--open) .tg-tplans-desc-body {
-        max-height: calc(3 * var(--tg-desc-lh) * 1em);
+        max-height: calc(6 * var(--tg-desc-lh) * 1em);
       }
     }
     /* Expanded: full HTML from product editor */
+    .tg-tplans-desc.tg-tplans-desc--open {
+      overflow: visible;
+    }
     .tg-tplans-desc.tg-tplans-desc--open .tg-tplans-desc-body {
       max-height: none;
       overflow: visible;
@@ -745,10 +821,45 @@
       color: var(--tp-primary);
       cursor: pointer;
       margin: 0;
+      text-decoration: none;
+    }
+    .tg-tplans-read .tg-tplans-read-label {
+      position: relative;
+      display: inline-block;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .tg-tplans-read .tg-tplans-read-label::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.08em;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.2s ease;
+    }
+    .tg-tplans-read .tg-tplans-icon {
+      text-decoration: none !important;
+      transition: transform 0.2s ease, color 0.2s ease;
     }
     .tg-tplans-read:hover {
-      text-decoration: underline;
+      text-decoration: none;
       color: var(--tp-primary-mid);
+    }
+    .tg-tplans-read:hover .tg-tplans-read-label,
+    .tg-tplans-read:focus-visible .tg-tplans-read-label {
+      color: inherit;
+    }
+    .tg-tplans-read:hover .tg-tplans-read-label::after,
+    .tg-tplans-read:focus-visible .tg-tplans-read-label::after {
+      transform: scaleX(1);
+    }
+    .tg-tplans-read:hover .tg-tplans-icon,
+    .tg-tplans-read:focus-visible .tg-tplans-icon {
+      transform: translateY(1px);
     }
 
     .tg-tplans-actions {
@@ -1332,16 +1443,60 @@
 
     /* Tighter padding on configure face (no card scroll — clip via .tg-tplans-face overflow:hidden). */
     #tg-tplans-2026 .tg-tplans-face--back {
-      padding: 0.8rem 1.1rem 0.75rem;
+      padding: 0.7rem 1rem 0.65rem;
     }
     #tg-tplans-2026 .tg-tplans-back-header {
-      margin-bottom: 0.55rem;
+      gap: 0.4rem;
+      margin-bottom: 0.45rem;
+    }
+    /* Back face: short info pill (matches page .tg-tplans-custom-pill look, scaled for the card) */
+    #tg-tplans-2026 .tg-tplans-back-info-pill {
+      flex-shrink: 0;
+      width: 100%;
+    }
+    #tg-tplans-2026 .tg-tplans-back-info-pill-inner {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 0.45rem;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.4rem 0.55rem;
+      border-radius: 12px;
+      background: var(--tp-pricing-panel, #fff3eb);
+      border: 1px solid rgba(240, 107, 26, 0.32);
+      box-shadow: 0 1px 0 rgba(29, 27, 25, 0.06);
+    }
+    #tg-tplans-2026 .tg-tplans-back-info-pill-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.85rem;
+      height: 1.85rem;
+      border-radius: 999px;
+      background: var(--tp-orange-fill, rgba(240, 107, 26, 0.12));
+      margin-top: 0.05rem;
+    }
+    #tg-tplans-2026 .tg-tplans-back-info-pill-icon .material-symbols-outlined {
+      font-size: 1.1rem;
+      color: var(--tp-primary, #f06b1a);
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    #tg-tplans-2026 .tg-tplans-back-info-pill-text {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      text-align: left;
+      color: var(--tp-on, #1d1b19);
     }
     #tg-tplans-2026 .tg-tplans-config-inner {
-      gap: 0.85rem;
+      gap: 0.7rem;
     }
     #tg-tplans-2026 .tg-tplans-options-slot {
-      gap: 0.85rem;
+      gap: 0.7rem;
     }
     #tg-tplans-2026 .tg-tplans-face--back .tg-tplans-label {
       margin-bottom: 0.35rem;
@@ -1434,6 +1589,15 @@
     #tg-tplans-2026 button.tg-tplans-read:hover {
       color: #d3540f !important;
       background: transparent !important;
+      text-decoration: none !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-read:hover .tg-tplans-read-label,
+    #tg-tplans-2026 button.tg-tplans-read:focus-visible .tg-tplans-read-label {
+      color: inherit !important;
+    }
+    #tg-tplans-2026 button.tg-tplans-read:hover .tg-tplans-read-label::after,
+    #tg-tplans-2026 button.tg-tplans-read:focus-visible .tg-tplans-read-label::after {
+      transform: scaleX(1) !important;
     }
 
     #tg-tplans-2026 .tg-tplans-seg > button {
@@ -1589,9 +1753,96 @@
       padding: 3rem 1rem;
       color: var(--tp-muted);
       font-size: 0.95rem;
+      grid-column: 1 / -1;
+      width: 100%;
+    }
+    .tg-tplans-status--loading {
+      padding: 0 !important;
+      text-align: center;
+      color: inherit;
+    }
+    .tg-tplans-skeleton-wrap {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    .tg-tplans-skeleton-title {
+      text-align: center;
+      margin: 0 0 1.1rem;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--tp-muted);
+      letter-spacing: 0.01em;
+    }
+    .tg-tplans-skeleton-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+    @media (min-width: 700px) {
+      .tg-tplans-skeleton-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (min-width: 1024px) {
+      .tg-tplans-skeleton-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    .tg-tplans-skeleton-card {
+      background: var(--tp-card);
+      border-radius: 1.15rem;
+      border: 1px solid rgba(240, 107, 26, 0.12);
+      overflow: hidden;
+      box-shadow: var(--tp-shadow);
+    }
+    .tg-tplans-skeleton-media {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(90deg, #f5eee7 25%, #fff5ef 45%, #f5eee7 65%);
+      background-size: 200% 100%;
+      animation: tgSkeletonShimmer 1.2s linear infinite;
+    }
+    .tg-tplans-skeleton-body {
+      padding: 0.95rem 1rem 1rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+    .tg-tplans-skeleton-line {
+      height: 0.72rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f6ede6 25%, #fff7f2 45%, #f6ede6 65%);
+      background-size: 200% 100%;
+      animation: tgSkeletonShimmer 1.2s linear infinite;
+    }
+    .tg-tplans-skeleton-line--title {
+      width: 72%;
+      height: 0.92rem;
+    }
+    .tg-tplans-skeleton-line--price {
+      width: 36%;
+      justify-self: end;
+      height: 0.9rem;
+    }
+    .tg-tplans-skeleton-line--desc {
+      width: 100%;
+    }
+    .tg-tplans-skeleton-line--desc-short {
+      width: 78%;
+    }
+    .tg-tplans-skeleton-line--btn {
+      width: 100%;
+      height: 2.4rem;
+      border-radius: 999px;
+      margin-top: 0.25rem;
     }
     .tg-tplans-status--err {
       color: #8b1d1d;
+    }
+    @keyframes tgSkeletonShimmer {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0 50%; }
     }
 
     .tg-tplans-options-loading {
@@ -1983,7 +2234,20 @@
 
       async function loadProducts() {
         state.loading = true;
-        mount.innerHTML = '<p class="tg-tplans-status">Loading plans…</p>';
+        mount.innerHTML =
+          '<div class="tg-tplans-status tg-tplans-status--loading" role="status" aria-live="polite">' +
+          '<div class="tg-tplans-skeleton-wrap">' +
+          '<p class="tg-tplans-skeleton-title">Loading plans for you...</p>' +
+          '<div class="tg-tplans-skeleton-grid">' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          '<article class="tg-tplans-skeleton-card"><div class="tg-tplans-skeleton-media"></div><div class="tg-tplans-skeleton-body"><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--title"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--price"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--desc-short"></span><span class="tg-tplans-skeleton-line tg-tplans-skeleton-line--btn"></span></div></article>' +
+          "</div>" +
+          "</div>" +
+          "</div>";
         pager.innerHTML = "";
 
         try {
@@ -2259,7 +2523,11 @@
         var totalRows = Math.ceil(n / cols);
         var openFlipped =
           state.openId && state.openId.classList.contains("tg-tplans-card--flipped");
-        var row, start, idx, maxFrontH, j, c, flip, h;
+        var backH = 0;
+        if (openFlipped) {
+          backH = Math.ceil(measureCardBackHeight(state.openId));
+        }
+        var row, start, idx, maxFrontH, j, c, flip, h, openInRow;
         for (row = 0; row < totalRows; row++) {
           start = row * cols;
           maxFrontH = 0;
@@ -2267,14 +2535,20 @@
             maxFrontH = Math.max(maxFrontH, measureCardFrontHeight(cards[idx]));
           }
           maxFrontH = Math.max(Math.ceil(maxFrontH), 400);
+          openInRow = false;
+          if (openFlipped) {
+            for (j = start; j < start + cols && j < n; j++) {
+              if (cards[j] === state.openId) {
+                openInRow = true;
+                break;
+              }
+            }
+          }
+          h = openInRow ? Math.max(maxFrontH, backH) : maxFrontH;
           for (j = start; j < start + cols && j < n; j++) {
             c = cards[j];
             flip = c.querySelector(".tg-tplans-flip");
             if (!flip) continue;
-            h = maxFrontH;
-            if (openFlipped && c === state.openId) {
-              h = Math.max(maxFrontH, Math.ceil(measureCardBackHeight(c)));
-            }
             flip.style.minHeight = h + "px";
             flip.style.height = h + "px";
             c.style.minHeight = h + "px";
@@ -2371,8 +2645,22 @@
           titleSlot.appendChild(h);
           var price = document.createElement("span");
           price.className = "tg-tplans-price";
-          price.textContent =
-            money(p.prices.price, p.prices.currency_code, p.prices.currency_symbol) + "/per meal";
+          var priceFrom = document.createElement("span");
+          priceFrom.className = "tg-tplans-price-from";
+          priceFrom.textContent = "From";
+          var priceAmount = document.createElement("span");
+          priceAmount.className = "tg-tplans-price-amount";
+          priceAmount.textContent = money(
+            p.prices.price,
+            p.prices.currency_code,
+            p.prices.currency_symbol
+          );
+          var priceUnit = document.createElement("span");
+          priceUnit.className = "tg-tplans-price-unit";
+          priceUnit.textContent = "/ per meal";
+          price.appendChild(priceFrom);
+          price.appendChild(priceAmount);
+          price.appendChild(priceUnit);
           row.appendChild(titleSlot);
           row.appendChild(price);
 
@@ -2467,6 +2755,8 @@
 
           var backHeader = document.createElement("div");
           backHeader.className = "tg-tplans-back-header";
+          var backHeaderTop = document.createElement("div");
+          backHeaderTop.className = "tg-tplans-back-header-top";
           var backTitle = document.createElement("h2");
           backTitle.className = "tg-tplans-back-title";
           backTitle.textContent = "Configure your plan";
@@ -2480,8 +2770,26 @@
             scheduleSyncAllHeights();
             syncFlipA11y(card);
           });
-          backHeader.appendChild(backTitle);
-          backHeader.appendChild(closeBtn);
+          backHeaderTop.appendChild(backTitle);
+          backHeaderTop.appendChild(closeBtn);
+          backHeader.appendChild(backHeaderTop);
+
+          var backInfoPill = document.createElement("div");
+          backInfoPill.className = "tg-tplans-back-info-pill";
+          var backInfoInner = document.createElement("div");
+          backInfoInner.className = "tg-tplans-back-info-pill-inner";
+          var backInfoIcon = document.createElement("div");
+          backInfoIcon.className = "tg-tplans-back-info-pill-icon";
+          backInfoIcon.setAttribute("aria-hidden", "true");
+          backInfoIcon.innerHTML = '<span class="material-symbols-outlined">auto_awesome</span>';
+          var backInfoText = document.createElement("p");
+          backInfoText.className = "tg-tplans-back-info-pill-text";
+          backInfoText.textContent =
+            "Customize your tiffin plan after ordering—get a JotForm link via WhatsApp or email to pick your daily items.";
+          backInfoInner.appendChild(backInfoIcon);
+          backInfoInner.appendChild(backInfoText);
+          backInfoPill.appendChild(backInfoInner);
+          backHeader.appendChild(backInfoPill);
 
           var config = document.createElement("div");
           config.className = "tg-tplans-config";
