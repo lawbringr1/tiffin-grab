@@ -146,7 +146,10 @@ def publish(url: str, auth: str, sid: str, post_id: int) -> None:
             auth,
             sid,
             "elementor-mcp-update-page-settings",
-            {"post_id": post_id, "settings": {"post_status": "publish"}},
+            {
+                "post_id": post_id,
+                "settings": {"post_status": "publish", "hide_title": "yes", "hide_page_title": "yes"},
+            },
         )
     )
 
