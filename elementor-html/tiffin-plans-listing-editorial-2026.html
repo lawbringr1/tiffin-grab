@@ -452,11 +452,42 @@
       box-shadow: 0 12px 28px var(--tp-orange-a22);
     }
 
+    /* Top row: JotForm pill + quantity-pricing band (stack on small screens) */
+    .tg-tplans-top-bands {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1rem, 2.5vw, 1.5rem);
+      width: 100%;
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+    @media (min-width: 960px) {
+      .tg-tplans-top-bands {
+        flex-direction: row;
+        align-items: stretch;
+      }
+      .tg-tplans-top-bands .tg-tplans-custom-pill,
+      .tg-tplans-top-bands .tg-tplans-qp-band {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      .tg-tplans-top-bands .tg-tplans-custom-pill-inner,
+      .tg-tplans-top-bands .tg-tplans-qp-band-inner {
+        max-width: none;
+        width: 100%;
+        min-height: 100%;
+        box-sizing: border-box;
+      }
+    }
+
     /* Editorial “customization” pill — JotForm / post-order meal picks (matches Stitch pricing-panel band) */
     .tg-tplans-custom-pill {
       display: flex;
       justify-content: center;
-      margin-bottom: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 0;
+      width: 100%;
     }
     .tg-tplans-custom-pill-inner {
       display: flex;
@@ -511,6 +542,83 @@
       font-size: clamp(0.75rem, 1.2vw, 0.875rem);
       line-height: 1.55;
       color: var(--tp-muted);
+    }
+
+    /* Quantity pricing info — pairs visually with green 20/24 tiffin segments */
+    .tg-tplans-qp-band {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    .tg-tplans-qp-band-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 56rem;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 9999px;
+      background: #ecfdf5;
+      border: 1px solid rgba(34, 197, 94, 0.38);
+      box-shadow: 0 1px 0 rgba(29, 27, 25, 0.04);
+      text-align: center;
+      box-sizing: border-box;
+    }
+    @media (min-width: 768px) {
+      .tg-tplans-qp-band-inner {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+        padding: 1rem 2rem;
+        gap: 1.25rem;
+      }
+    }
+    .tg-tplans-qp-band-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.18);
+    }
+    .tg-tplans-qp-band-icon .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #15803d;
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .tg-tplans-qp-band-text {
+      min-width: 0;
+    }
+    .tg-tplans-qp-band-heading {
+      font-family: var(--tp-font-display);
+      font-weight: 700;
+      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      line-height: 1.35;
+      color: #14532d;
+      margin: 0 0 0.35rem;
+    }
+    .tg-tplans-qp-band-body {
+      margin: 0;
+      font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+      line-height: 1.55;
+      color: #166534;
+    }
+    @media (min-width: 768px) {
+      .tg-tplans-qp-band-body {
+        text-align: justify;
+        text-align-last: left;
+      }
+    }
+    .tg-tplans-qp-band-body strong {
+      font-weight: 700;
+      color: #14532d;
+    }
+    .tg-tplans-qp-band-highlight {
+      display: inline;
+      color: #15803d;
     }
 
     .tg-tplans-grid {
@@ -1944,21 +2052,40 @@
       <button type="button" class="tg-tplans-filter" data-filter="nonveg" aria-pressed="false">Non vegetarian</button>
     </div>
 
-    <section class="tg-tplans-custom-pill" aria-labelledby="tg-tplans-custom-pill-title">
-      <div class="tg-tplans-custom-pill-inner">
-        <div class="tg-tplans-custom-pill-icon" aria-hidden="true">
-          <span class="material-symbols-outlined">auto_awesome</span>
+    <div class="tg-tplans-top-bands">
+      <section class="tg-tplans-custom-pill" aria-labelledby="tg-tplans-custom-pill-title">
+        <div class="tg-tplans-custom-pill-inner">
+          <div class="tg-tplans-custom-pill-icon" aria-hidden="true">
+            <span class="material-symbols-outlined">auto_awesome</span>
+          </div>
+          <div class="tg-tplans-custom-pill-text">
+            <h2 id="tg-tplans-custom-pill-title" class="tg-tplans-custom-pill-heading">
+              Want to Customize Your Tiffin Plan?
+            </h2>
+            <p class="tg-tplans-custom-pill-body">
+              After placing your order, you’ll receive a JotForm link via WhatsApp or email. From there, you can easily select your preferred items for each day.
+            </p>
+          </div>
         </div>
-        <div class="tg-tplans-custom-pill-text">
-          <h2 id="tg-tplans-custom-pill-title" class="tg-tplans-custom-pill-heading">
-            Want to Customize Your Tiffin Plan?
-          </h2>
-          <p class="tg-tplans-custom-pill-body">
-            After placing your order, you’ll receive a JotForm link via WhatsApp or email. From there, you can easily select your preferred items for each day.
-          </p>
+      </section>
+
+      <section class="tg-tplans-qp-band" aria-labelledby="tg-tplans-qp-title">
+        <div class="tg-tplans-qp-band-inner">
+          <div class="tg-tplans-qp-band-icon" aria-hidden="true">
+            <span class="material-symbols-outlined">savings</span>
+          </div>
+          <div class="tg-tplans-qp-band-text">
+            <h2 id="tg-tplans-qp-title" class="tg-tplans-qp-band-heading">Quantity pricing</h2>
+            <p class="tg-tplans-qp-band-body">
+              Your weekly total includes a separate <strong>quantity pricing</strong> line that depends on how many tiffins you choose—it’s shown in the plan breakdown before you add to cart.
+              <span class="tg-tplans-qp-band-highlight">
+                For the best value with <strong>no quantity fee</strong>, pick <strong>20</strong> or <strong>24</strong> tiffins (the green buttons when you open “Customize &amp; subscribe”).
+              </span>
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <div id="tg-tplans-mount" class="tg-tplans-grid" aria-live="polite"></div>
     <nav id="tg-tplans-pager" class="tg-tplans-pager" aria-label="Pagination"></nav>
