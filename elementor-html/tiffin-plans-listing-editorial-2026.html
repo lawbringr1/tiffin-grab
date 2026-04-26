@@ -529,19 +529,26 @@
     .tg-tplans-custom-pill-text {
       min-width: 0;
     }
-    .tg-tplans-custom-pill-heading {
-      font-family: var(--tp-font-display);
-      font-weight: 700;
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
-      line-height: 1.35;
-      color: var(--tp-on);
-      margin: 0 0 0.35rem;
-    }
     .tg-tplans-custom-pill-body {
       margin: 0;
       font-size: clamp(0.75rem, 1.2vw, 0.875rem);
       line-height: 1.55;
       color: var(--tp-muted);
+    }
+    @media (min-width: 768px) {
+      .tg-tplans-custom-pill-body {
+        text-align: justify;
+        text-align-last: left;
+      }
+    }
+    .tg-tplans-custom-pill-body strong {
+      font-weight: 700;
+      color: var(--tp-on);
+    }
+    .tg-tplans-custom-pill-body > strong:first-child {
+      font-family: var(--tp-font-display);
+      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      line-height: 1.35;
     }
 
     /* Quantity pricing info — pairs visually with green 20/24 tiffin segments */
@@ -2052,11 +2059,9 @@
             <span class="material-symbols-outlined">auto_awesome</span>
           </div>
           <div class="tg-tplans-custom-pill-text">
-            <h2 id="tg-tplans-custom-pill-title" class="tg-tplans-custom-pill-heading">
-              Want to Customize Your Tiffin Plan?
-            </h2>
             <p class="tg-tplans-custom-pill-body">
-              After placing your order, you’ll receive a JotForm link via WhatsApp or email. From there, you can easily select your preferred items for each day.
+              <strong id="tg-tplans-custom-pill-title">Customize your tiffin plan</strong><br />
+              Once you place your order, you’ll receive a <strong>JotForm link via WhatsApp or email</strong>. From there, you can easily <strong>choose your preferred items for each day</strong> and tailor your meals to your taste—simple, flexible, and completely in your control.
             </p>
           </div>
         </div>
