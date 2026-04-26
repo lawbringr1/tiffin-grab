@@ -592,14 +592,6 @@
     .tg-tplans-qp-band-text {
       min-width: 0;
     }
-    .tg-tplans-qp-band-heading {
-      font-family: var(--tp-font-display);
-      font-weight: 700;
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
-      line-height: 1.35;
-      color: #14532d;
-      margin: 0 0 0.35rem;
-    }
     .tg-tplans-qp-band-body {
       margin: 0;
       font-size: clamp(0.75rem, 1.2vw, 0.875rem);
@@ -616,9 +608,10 @@
       font-weight: 700;
       color: #14532d;
     }
-    .tg-tplans-qp-band-highlight {
-      display: inline;
-      color: #15803d;
+    .tg-tplans-qp-band-body > strong:first-child {
+      font-family: var(--tp-font-display);
+      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      line-height: 1.35;
     }
 
     .tg-tplans-grid {
@@ -2075,12 +2068,9 @@
             <span class="material-symbols-outlined">savings</span>
           </div>
           <div class="tg-tplans-qp-band-text">
-            <h2 id="tg-tplans-qp-title" class="tg-tplans-qp-band-heading">Quantity pricing</h2>
             <p class="tg-tplans-qp-band-body">
-              Your total may include a small quantity-based charge depending on how many tiffins you select—shown clearly before checkout. This helps us manage sourcing, preparation, and delivery efficiently at smaller volumes.
-              <span class="tg-tplans-qp-band-highlight">
-                For the best value with no extra fee, choose <strong>20</strong> or <strong>24</strong> tiffins (highlighted in green under &ldquo;Customize &amp; Subscribe&rdquo;).
-              </span>
+              <strong id="tg-tplans-qp-title">Quantity pricing</strong><br />
+              Your total may include a small <strong>quantity-based charge</strong> depending on how many tiffins you select—<strong>shown clearly before checkout</strong>. This helps us manage <strong>sourcing, preparation, and delivery efficiently</strong> at smaller volumes. For the <strong>best value with no extra fee</strong>, choose <strong>20 or 24 tiffins</strong> (highlighted in green under &ldquo;Customize &amp; Subscribe&rdquo;).
             </p>
           </div>
         </div>
