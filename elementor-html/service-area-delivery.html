@@ -777,6 +777,26 @@
         return "";
       }
 
+      /* East GTA policy override: Ajax/Pickering/Oshawa/Whitby share one delivery window. */
+      function eastGtaFixedWindowByPostal(norm) {
+        var n = compact(norm);
+        if (n.length < 3) return "";
+        var fsa = n.slice(0, 3);
+        if (fsa === "L1S" || fsa === "L1J" || fsa === "L1V" || fsa === "L1H" || fsa === "L1N" || fsa === "L1M" || fsa === "L1P") {
+          return "11:00 AM - 3:00 PM";
+        }
+        return "";
+      }
+
+      function eastGtaFixedWindowByArea(areaLine) {
+        var s = String(areaLine || "").toLowerCase();
+        if (!s) return "";
+        if (s.indexOf("ajax") !== -1 || s.indexOf("pickering") !== -1 || s.indexOf("oshawa") !== -1 || s.indexOf("whitby") !== -1) {
+          return "11:00 AM - 3:00 PM";
+        }
+        return "";
+      }
+
       function formatSlotListItem(line) {
         if (line != null && typeof line === "object") {
           var time =
@@ -1057,9 +1077,12 @@
                     sn.textContent = areaLine;
                     out.appendChild(sn);
                   }
+                  var forcedWindow = eastGtaFixedWindowByPostal(norm) || eastGtaFixedWindowByArea(areaLine);
+                  var slotsToRender = forcedWindow ? [forcedWindow] : data.data.slots;
+
                   var ul = document.createElement("ul");
                   ul.className = "tg-sa-slots";
-                  data.data.slots.forEach(function (line) {
+                  slotsToRender.forEach(function (line) {
                     var li = document.createElement("li");
                     li.textContent = formatSlotListItem(line);
                     ul.appendChild(li);
