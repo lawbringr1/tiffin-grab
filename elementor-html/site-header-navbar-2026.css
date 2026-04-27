@@ -43,6 +43,34 @@ header.elementor.elementor-1863.elementor-location-header {
   display: block !important;
 }
 
+/* ========== Sitewide referral announcement strip (below navbar) ========== */
+header.elementor.elementor-1863.elementor-location-header::after,
+.elementor-location-header.elementor-1863::after {
+  content: "Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Open Referral Program in menu.";
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: var(--tg-font);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: #14532d;
+  background: linear-gradient(180deg, #eefbf3 0%, #e7f8ef 100%);
+  border-top: 1px solid rgba(46, 204, 113, 0.35);
+  border-bottom: 1px solid rgba(46, 204, 113, 0.35);
+  padding: 0.38rem 0.9rem;
+}
+
+@media (max-width: 767px) {
+  header.elementor.elementor-1863.elementor-location-header::after,
+  .elementor-location-header.elementor-1863::after {
+    font-size: 0.73rem;
+    padding: 0.34rem 0.65rem;
+  }
+}
+
 .elementor-location-header > .elementor-section {
   width: 100% !important;
   max-width: 100% !important;
