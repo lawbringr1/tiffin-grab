@@ -146,7 +146,7 @@ def wrap_inline_style(css: str) -> str:
 })();
 </script>
 """.strip()
-    return f'<style id="tg-header-navbar-rules">\\n{css.rstrip()}\\n</style>\\n{script}\\n'
+    return f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>\n{script}\n'
 
 
 def structured_from_result(raw: dict) -> dict:
