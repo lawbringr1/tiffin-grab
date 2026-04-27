@@ -112,6 +112,140 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
 .home-2026-tags {
   width: 100%;
 }
+/* ---- Home hero loading skeleton (breaks out of column to cover typical hero band) ---- */
+#tg-hero-tags.tg-home-loading {
+  position: relative;
+  min-height: min(72vh, 38rem);
+}
+#tg-hero-tags:not(.tg-home-loading) .tg-home-page-skel {
+  display: none !important;
+}
+#tg-hero-tags.tg-home-loading .tg-home-page-skel {
+  display: block;
+  position: relative;
+  z-index: 4;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  box-sizing: border-box;
+  padding: clamp(1.25rem, 4vw, 2.25rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 3rem);
+  background: #fff8f6;
+  pointer-events: none;
+}
+@supports (width: 100dvw) {
+  #tg-hero-tags.tg-home-loading .tg-home-page-skel {
+    width: 100dvw;
+    margin-left: calc(50% - 50dvw);
+    margin-right: calc(50% - 50dvw);
+  }
+}
+#tg-hero-tags.tg-home-loading .tg-home-page-skel-inner {
+  max-width: min(var(--tg-hero-max), calc(100vw - 2 * var(--tg-hero-gutter)));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+@media (min-width: 768px) {
+  #tg-hero-tags.tg-home-loading .tg-home-page-skel-inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
+  }
+}
+@keyframes tg-home-skel-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -40% 0;
+  }
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-bar {
+  border-radius: 0.55rem;
+  background: linear-gradient(90deg, #ede4df 22%, #f9f4f1 50%, #ede4df 78%);
+  background-size: 240% 100%;
+  animation: tg-home-skel-shimmer 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  #tg-hero-tags.tg-home-loading .tg-home-skel-bar {
+    animation: none;
+    background: #ebe3de;
+  }
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-pill {
+  width: min(16.5rem, 88%);
+  height: 2.35rem;
+  border-radius: 999px;
+  margin-bottom: 0.35rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-h1 {
+  height: clamp(1.85rem, 4.5vw, 2.35rem);
+  width: 96%;
+  max-width: 22rem;
+  margin-bottom: 0.45rem;
+  border-radius: 0.65rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-h1b {
+  height: clamp(1.85rem, 4.5vw, 2.35rem);
+  width: 78%;
+  max-width: 18rem;
+  margin-bottom: 0.85rem;
+  border-radius: 0.65rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-line {
+  height: 0.85rem;
+  width: 100%;
+  max-width: 26rem;
+  margin-bottom: 0.4rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-line--short {
+  width: 72%;
+  margin-bottom: 1.1rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-cta {
+  height: 2.75rem;
+  border-radius: 999px;
+  width: min(11.5rem, 46%);
+}
+#tg-hero-tags.tg-home-loading .tg-home-skel-cta--wide {
+  width: min(13.5rem, 52%);
+}
+#tg-hero-tags.tg-home-loading .tg-home-page-skel-media {
+  border-radius: 1.5rem;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  max-height: min(52vh, 22rem);
+  margin: 0 auto;
+  background: linear-gradient(135deg, #ede4df 0%, #f5ebe6 45%, #e8ddd6 100%);
+  box-shadow: inset 0 0 0 1px rgba(220, 193, 181, 0.25);
+}
+@media (min-width: 768px) {
+  #tg-hero-tags.tg-home-loading .tg-home-page-skel-media {
+    max-height: none;
+    min-height: 15rem;
+  }
+}
+#tg-hero-tags.tg-home-loading .tg-hero-tags-align {
+  visibility: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 .home-2026-social-pill {
   display: inline-flex;
   align-items: center;
@@ -447,7 +581,23 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
     }
   }
 </style>
-<div class="home-2026-tags" id="tg-hero-tags">
+<div class="home-2026-tags tg-home-loading" id="tg-hero-tags" aria-busy="true">
+  <div class="tg-home-page-skel" aria-hidden="true">
+    <div class="tg-home-page-skel-inner">
+      <div class="tg-home-page-skel-main">
+        <div class="tg-home-skel-bar tg-home-skel-pill"></div>
+        <div class="tg-home-skel-bar tg-home-skel-h1"></div>
+        <div class="tg-home-skel-bar tg-home-skel-h1b"></div>
+        <div class="tg-home-skel-bar tg-home-skel-line"></div>
+        <div class="tg-home-skel-bar tg-home-skel-line tg-home-skel-line--short"></div>
+        <div class="tg-home-skel-cta-row">
+          <div class="tg-home-skel-bar tg-home-skel-cta tg-home-skel-cta--wide"></div>
+          <div class="tg-home-skel-bar tg-home-skel-cta"></div>
+        </div>
+      </div>
+      <div class="tg-home-page-skel-media" aria-hidden="true"></div>
+    </div>
+  </div>
   <div class="tg-hero-tags-align">
     <div class="home-2026-social-pill" role="group" aria-label="Social proof">
       <div class="home-2026-social-avatars" aria-hidden="true">
@@ -495,4 +645,23 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
       <p class="home-2026-social-text">Loved by <strong>20K+</strong> happy foodies.</p>
     </div>
   </div>
+  <script>
+    (function () {
+      var root = document.getElementById("tg-hero-tags");
+      if (!root) return;
+      function markHomeHeroReady() {
+        if (!root.classList.contains("tg-home-loading")) return;
+        root.classList.remove("tg-home-loading");
+        root.removeAttribute("aria-busy");
+      }
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        requestAnimationFrame(markHomeHeroReady);
+      } else {
+        document.addEventListener("DOMContentLoaded", function () {
+          requestAnimationFrame(markHomeHeroReady);
+        }, { once: true });
+      }
+      setTimeout(markHomeHeroReady, 4500);
+    })();
+  </script>
 </div>
