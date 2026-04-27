@@ -105,7 +105,7 @@ def wrap_inline_style(css: str) -> str:
   var link = document.createElement('a');
   link.className = 'tg-referral-banner-link';
   link.href = 'https://tiffingrab.ca/referral-program/';
-  link.textContent = 'Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Tap to open Referral Program.';
+  link.textContent = 'Refer & Earn Free Tiffins - You: +1, Friend: +2. Tap to join now.';
   link.setAttribute('aria-label', 'Open Referral Program page');
   header.appendChild(link);
 })();
