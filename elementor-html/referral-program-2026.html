@@ -10,6 +10,45 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&amp;display=swap"
     rel="stylesheet"
   />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            background: "#fff8f6",
+            surface: "#fff8f6",
+            "on-background": "#231a15",
+            "on-surface": "#231a15",
+            "on-surface-variant": "#564339",
+            primary: "#E37B3E",
+            "on-primary": "#ffffff",
+            secondary: "#2ECC71",
+            tertiary: "#27AE60",
+            "friend-card": "#065f46",
+            "on-friend-card": "#ffffff",
+            "surface-container-low": "#fff1eb",
+            "surface-container": "#fdeae2",
+            "outline-variant": "#dcc1b5",
+          },
+          borderRadius: {
+            DEFAULT: "0.5rem",
+            lg: "0.75rem",
+            xl: "1rem",
+            "2xl": "1.5rem",
+            full: "9999px",
+          },
+          fontFamily: {
+            headline: ["Manrope", "system-ui", "sans-serif"],
+            body: ["Work Sans", "system-ui", "sans-serif"],
+            label: ["Work Sans", "system-ui", "sans-serif"],
+            handwritten: ["Caveat", "cursive"],
+          },
+        },
+      },
+    };
+  </script>
   <style>
     /* Hide WP / theme / Elementor duplicate page title above full-width HTML (same idea as weekly menu). */
     html body:has(#tg-ref-2026) .entry-header,
@@ -21,22 +60,10 @@
       display: none !important;
     }
     #tg-ref-2026 .material-symbols-outlined {
-      font-family: "Material Symbols Outlined", sans-serif;
       font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-      line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      display: inline-block;
-      white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      -webkit-font-feature-settings: "liga";
-      -webkit-font-smoothing: antialiased;
     }
     #tg-ref-2026 .tg-ref-body {
       font-family: "Work Sans", system-ui, sans-serif;
-      background: #fff8f6;
-      color: #231a15;
     }
     #tg-ref-2026 .tg-ref-body h1,
     #tg-ref-2026 .tg-ref-body h2,
@@ -53,155 +80,6 @@
     #tg-ref-2026 .polaroid:hover {
       transform: scale(1.05) rotate(0deg) !important;
       z-index: 50;
-    }
-    #tg-ref-2026 main {
-      max-width: 80rem;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child {
-      position: relative;
-      overflow: hidden;
-      border-radius: 2rem;
-      background: #fff1eb;
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) {
-      display: grid;
-      gap: 1.5rem;
-      align-items: center;
-      width: 100%;
-      padding: 1.25rem;
-      position: relative;
-      z-index: 20;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) > div:first-child {
-      text-align: center;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) > div:first-child h1 {
-      font-size: clamp(2rem, 10vw, 4.5rem);
-      line-height: 1.1;
-      margin: 0;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) > div:first-child p {
-      font-size: clamp(1rem, 3.8vw, 1.25rem);
-      line-height: 1.6;
-      color: #564339;
-      margin: 0;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) > div:first-child p strong {
-      color: #231a15;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child a[href*="wa.me"] {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-      text-decoration: none;
-      color: #fff;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:first-child .inline-block {
-      display: inline-block;
-      padding: 0.38rem 1rem;
-      border-radius: 9999px;
-      background: rgba(46, 204, 113, 0.15);
-      color: #14532d;
-      font-size: 0.82rem;
-      font-weight: 700;
-      transform: rotate(-2deg);
-      margin-bottom: 0.35rem;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) .grid,
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) .grid {
-      display: grid;
-      gap: 1.5rem;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) > h2 {
-      margin: 0 0 1.25rem;
-      font-size: 1.6rem;
-      font-weight: 800;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) .grid > div {
-      padding: 1.5rem;
-      border-radius: 1rem;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) {
-      background: #fff;
-      border: 1px solid #e4e4e7;
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) > div:first-child {
-      margin-bottom: 2rem;
-      text-align: center;
-    }
-    #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) > div:first-child h2 {
-      font-size: 1.75rem;
-      margin: 0;
-      font-weight: 800;
-    }
-    #tg-ref-2026 .text-3xl {
-      font-size: 1.75rem;
-      line-height: 1.1;
-    }
-    #tg-ref-2026 .text-4xl {
-      font-size: 1.8rem;
-    }
-    #tg-ref-2026 .text-xl {
-      font-size: 1.2rem;
-    }
-    #tg-ref-2026 .text-2xl {
-      font-size: 1.5rem;
-    }
-    #tg-ref-2026 .text-sm {
-      font-size: 0.92rem;
-    }
-    #tg-ref-2026 .hidden.md\\:block {
-      display: none !important;
-    }
-    @media (min-width: 768px) {
-      #tg-ref-2026 .tg-ref-body {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-      }
-      #tg-ref-2026 main {
-        padding: 0 2rem;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:first-child {
-        border-radius: 3rem;
-        margin-bottom: 4rem;
-        min-height: 700px;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) {
-        padding: 3rem;
-        gap: 2rem;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:first-child > div:nth-child(2) > div:first-child {
-        text-align: left;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:first-child a[href*="wa.me"] {
-        width: auto;
-      }
-      #tg-ref-2026 .hidden.md\\:block {
-        display: block !important;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) .grid,
-      #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) .grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) > h2 {
-        margin-bottom: 2rem;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:nth-child(2) .grid > div {
-        padding: 2rem;
-      }
-      #tg-ref-2026 .tg-ref-body > main > section:nth-child(3) {
-        padding: 3rem;
-      }
     }
     @media (max-width: 767px) {
       #tg-ref-2026 .tg-ref-body {
