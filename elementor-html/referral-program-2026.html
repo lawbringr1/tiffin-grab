@@ -136,6 +136,8 @@
       padding: 1rem 0 1.5rem;
       font-family: "Work Sans", system-ui, sans-serif;
       color: transparent;
+      /* Opaque base so grid gaps never show through to dark theme chrome for a frame */
+      background-color: #fff8f6;
     }
     /* Force neutral skeleton surfaces even if theme/global styles inject borders. */
     #tg-ref-2026 .tg-ref-loader,
@@ -154,6 +156,8 @@
       grid-template-columns: 1fr;
       gap: 1rem;
       min-height: 26rem;
+      isolation: isolate;
+      overflow: hidden;
     }
     #tg-ref-2026 .tg-ref-skeleton-left {
       display: flex;
@@ -261,6 +265,9 @@
       grid-template-columns: 1fr;
       gap: 0.75rem;
       margin-bottom: 0.9rem;
+      background-color: #fff8f6;
+      isolation: isolate;
+      overflow: hidden;
     }
     #tg-ref-2026 .tg-ref-skeleton-box {
       height: 7.5rem;
@@ -273,6 +280,8 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.7rem;
+      isolation: isolate;
+      overflow: hidden;
     }
     #tg-ref-2026 .tg-ref-skeleton-steps .tg-ref-skeleton-box {
       height: 3.8rem;
@@ -310,6 +319,19 @@
       #tg-ref-2026 .tg-ref-body {
         overflow-x: clip;
       }
+    }
+    /*
+     * Before Tailwind utilities attach, bare `border` + width can use currentColor (black).
+     * Stable colors until CDN utilities paint (fixes sub‑ms black grid/outline flash).
+     */
+    #tg-ref-2026 .tg-ref-body .border.border-zinc-100 {
+      border-color: #f4f4f5;
+    }
+    #tg-ref-2026 .tg-ref-body .border.border-outline-variant\/40 {
+      border-color: rgba(220, 193, 181, 0.4);
+    }
+    #tg-ref-2026 .tg-ref-body .border-2.border-primary\/25 {
+      border-color: rgba(227, 123, 62, 0.25);
     }
   </style>
   <div class="tg-ref-loader" aria-hidden="true">
@@ -550,15 +572,39 @@
     (function () {
       var root = document.getElementById("tg-ref-2026");
       if (!root) return;
-      var done = function () {
+      var revealed = false;
+      function done() {
+        if (revealed) return;
+        revealed = true;
         root.classList.remove("tg-ref-loading");
-      };
-      if (document.readyState === "complete" || document.readyState === "interactive") {
-        requestAnimationFrame(done);
-      } else {
-        document.addEventListener("DOMContentLoaded", done, { once: true });
       }
-      setTimeout(done, 2500);
+      /* Two frames after Tailwind exists so border-* / grid utilities are in the cascade */
+      function paintSafeDone() {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(done);
+        });
+      }
+      function tryReveal() {
+        if (typeof tailwind === "undefined") return false;
+        paintSafeDone();
+        return true;
+      }
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        if (!tryReveal()) {
+          window.addEventListener("load", paintSafeDone, { once: true });
+        }
+      } else {
+        document.addEventListener(
+          "DOMContentLoaded",
+          function () {
+            if (!tryReveal()) {
+              window.addEventListener("load", paintSafeDone, { once: true });
+            }
+          },
+          { once: true }
+        );
+      }
+      setTimeout(paintSafeDone, 2800);
     })();
   </script>
 </div>
