@@ -1,18 +1,4 @@
-<!--
-  TiffinGrab — Tiffin Plans listing (Editorial Nourishment + live WooCommerce).
-  Paste into an Elementor HTML widget on the draft “Tiffin plans (new design)” page.
-  Omits site header/footer (theme supplies those).
 
-  Data: WooCommerce Store API GET /wp-json/wc/store/v1/products
-  Cart: same-origin POST to each product permalink (form.cart), including APO fields
-        (Prefered Days, Number Of Tiffins, Start Date) when present — same as single product pages.
-
-  Optional: set data-store-root on #tg-tplans-2026 if the widget is tested off-domain (defaults to location.origin).
-
-  Fonts: Geist (variable wght 100–900) + Material Symbols load once in <head> via WPCode
-  (elementor-head-geist-preload-snippet.html). Do not duplicate preconnect / stylesheet / font preloads here —
-  body widgets add extra requests and Lighthouse noise; fall back to system-ui if head snippet is absent.
--->
 <section id="tg-tplans-2026" class="tg-tplans tg-tplans-loading" data-store-root="" data-tg-pricing-ui="stitch-weekly-total" aria-labelledby="tg-tplans-title">
   <style>
     .elementor-widget-html:has(#tg-tplans-2026),
@@ -648,6 +634,9 @@
       box-shadow: none;
       border-radius: 16px;
       transition: transform 0.28s ease, filter 0.28s ease;
+    }
+    /* Promote compositor layer only while flipped — avoids permanent layer cost on every card. */
+    .tg-tplans-card--flipped {
       will-change: transform;
     }
     .tg-tplans-flip {
@@ -661,6 +650,9 @@
     @media (prefers-reduced-motion: reduce) {
       .tg-tplans-flip {
         transition: none;
+      }
+      .tg-tplans-card--flipped {
+        will-change: auto;
       }
     }
     .tg-tplans-card--flipped .tg-tplans-flip {
