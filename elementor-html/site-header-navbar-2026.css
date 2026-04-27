@@ -890,70 +890,64 @@ header.elementor.elementor-1863.elementor-location-header::after,
     justify-content: flex-start !important;
   }
 
-  /* Mobile nav: use on-screen dropdown panel (not side drawer). */
+  /* Mobile nav: bottom dock (no hamburger / no side drawer). */
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0,
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .elementor-widget-container {
     width: 100% !important;
   }
 
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper {
-    position: relative !important;
+    position: static !important;
     width: 100% !important;
-    justify-content: flex-start !important;
-    z-index: 1002 !important;
+    justify-content: center !important;
+    z-index: 1105 !important;
   }
 
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile {
-    border-radius: 9999px !important;
-    border: 1px solid var(--tg-border) !important;
-    background: var(--tg-muted) !important;
-    color: var(--tg-foreground) !important;
-    height: 2.5rem !important;
-    min-width: 2.5rem !important;
-    width: auto !important;
-    padding: 0 0.75rem !important;
-    font-size: 1rem !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: none !important;
   }
 
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu {
-    position: absolute !important;
-    left: 0 !important;
-    right: 0 !important;
-    top: calc(100% + 0.45rem) !important;
-    width: 100% !important;
-    max-height: min(70vh, 28rem) !important;
-    overflow: auto !important;
-    border-radius: 0.95rem !important;
+    position: fixed !important;
+    left: max(0.65rem, env(safe-area-inset-left)) !important;
+    right: max(0.65rem, env(safe-area-inset-right)) !important;
+    bottom: calc(0.6rem + env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border-radius: 9999px !important;
     border: 1px solid var(--tg-border) !important;
-    background: #fff !important;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16) !important;
-    padding: 0.35rem !important;
-    display: none !important;
-    flex-direction: column !important;
-    gap: 0.15rem !important;
+    background: rgba(255, 255, 255, 0.96) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18) !important;
+    padding: 0.25rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: stretch !important;
+    gap: 0.2rem !important;
     transform: none !important;
+    z-index: 1106 !important;
   }
 
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu > li {
-    width: 100% !important;
+    width: auto !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
   }
 
   .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu > li > a {
     width: 100% !important;
-    justify-content: flex-start !important;
-    border-radius: 0.7rem !important;
-    padding: 0.65rem 0.7rem !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper.ue-left-open .ue-menu,
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper.ue-open .ue-menu,
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper[aria-expanded="true"] .ue-menu,
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu[style*="display: block"],
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu[style*="display:block"] {
-    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    border-radius: 9999px !important;
+    padding: 0.56rem 0.5rem !important;
+    font-size: 0.76rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .elementor-1863 .ue-nav-menu_overlay,
@@ -961,5 +955,10 @@ header.elementor.elementor-1863.elementor-location-header::after,
     display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
+  }
+
+  /* Keep page content visible above dock. */
+  html body {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)) !important;
   }
 }
