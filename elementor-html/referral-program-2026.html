@@ -89,31 +89,108 @@
       display: none;
     }
     #tg-ref-2026.tg-ref-loading .tg-ref-loader {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 24rem;
-      border-radius: 1.25rem;
-      background: #fff1eb;
-      color: #564339;
+      display: block;
+      padding: 1rem 0 1.5rem;
       font-family: "Work Sans", system-ui, sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
     }
-    #tg-ref-2026 .tg-ref-loader::before {
-      content: "";
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.6rem;
-      border-radius: 999px;
-      border: 2px solid rgba(227, 123, 62, 0.25);
-      border-top-color: #e37b3e;
-      animation: tg-ref-spin 0.8s linear infinite;
+    #tg-ref-2026 .tg-ref-skeleton-hero {
+      border-radius: 1.5rem;
+      background: #fff1eb;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
     }
-    @keyframes tg-ref-spin {
-      to {
-        transform: rotate(360deg);
+    #tg-ref-2026 .tg-ref-skeleton-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+      align-items: center;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line,
+    #tg-ref-2026 .tg-ref-skeleton-box {
+      border-radius: 0.65rem;
+      background: linear-gradient(90deg, #f5e6de 25%, #fbf2ee 50%, #f5e6de 75%);
+      background-size: 240% 100%;
+      animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-pill {
+      width: 7rem;
+      height: 1.15rem;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #f5e6de 25%, #fbf2ee 50%, #f5e6de 75%);
+      background-size: 240% 100%;
+      animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
+      margin-bottom: 0.95rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--h1 {
+      height: 2.15rem;
+      width: 88%;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--h2 {
+      height: 2.15rem;
+      width: 72%;
+      margin-bottom: 0.9rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--p {
+      height: 0.9rem;
+      width: 100%;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--p-short {
+      height: 0.9rem;
+      width: 68%;
+      margin-bottom: 1rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--cta {
+      height: 2.7rem;
+      width: 12.5rem;
+      border-radius: 0.9rem;
+      margin-bottom: 0.85rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--note {
+      height: 0.95rem;
+      width: 70%;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-box {
+      height: 7.5rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-steps {
+      border-radius: 1.2rem;
+      background: #fff;
+      border: 1px solid #f0e4de;
+      padding: 0.9rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-steps .tg-ref-skeleton-box {
+      height: 3.8rem;
+    }
+    @keyframes tg-ref-skeleton-wave {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -40% 0;
+      }
+    }
+    @media (min-width: 768px) {
+      #tg-ref-2026.tg-ref-loading .tg-ref-loader {
+        padding: 1.2rem 0 2rem;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-hero {
+        padding: 1.8rem;
+        border-radius: 1.8rem;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      #tg-ref-2026 .tg-ref-skeleton-steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
     @media (max-width: 767px) {
@@ -122,7 +199,27 @@
       }
     }
   </style>
-  <div class="tg-ref-loader" aria-hidden="true">Loading referral experience…</div>
+  <div class="tg-ref-loader" aria-hidden="true">
+    <div class="tg-ref-skeleton-hero">
+      <div class="tg-ref-skeleton-pill"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--h1"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--h2"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--p"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--p-short"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--cta"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--note"></div>
+    </div>
+    <div class="tg-ref-skeleton-cards">
+      <div class="tg-ref-skeleton-box"></div>
+      <div class="tg-ref-skeleton-box"></div>
+      <div class="tg-ref-skeleton-box"></div>
+    </div>
+    <div class="tg-ref-skeleton-steps">
+      <div class="tg-ref-skeleton-box"></div>
+      <div class="tg-ref-skeleton-box"></div>
+      <div class="tg-ref-skeleton-box"></div>
+    </div>
+  </div>
   <div class="tg-ref-body bg-background text-on-background antialiased py-8 md:py-16">
     <main class="max-w-7xl mx-auto px-4 md:px-8">
       <section
