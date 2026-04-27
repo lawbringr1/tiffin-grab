@@ -43,29 +43,36 @@ header.elementor.elementor-1863.elementor-location-header {
   display: block !important;
 }
 
-/* ========== Sitewide referral announcement strip (below navbar) ========== */
-header.elementor.elementor-1863.elementor-location-header::after,
-.elementor-location-header.elementor-1863::after {
-  content: "Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Open Referral Program in menu.";
+/* ========== Sitewide referral announcement strip (real clickable link injected by inline header widget script) ========== */
+.elementor-location-header.elementor-1863 .tg-referral-banner-link {
   display: block;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
+  text-decoration: none !important;
   font-family: var(--tg-font);
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0.01em;
-  color: #14532d;
+  color: #14532d !important;
   background: linear-gradient(180deg, #eefbf3 0%, #e7f8ef 100%);
   border-top: 1px solid rgba(46, 204, 113, 0.35);
   border-bottom: 1px solid rgba(46, 204, 113, 0.35);
   padding: 0.38rem 0.9rem;
 }
+.elementor-location-header.elementor-1863 .tg-referral-banner-link:hover,
+.elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
+  color: #064e3b !important;
+  background: linear-gradient(180deg, #e7f8ef 0%, #dff4e8 100%);
+}
+.elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
+  outline: 2px solid rgba(46, 204, 113, 0.45);
+  outline-offset: -2px;
+}
 
 @media (max-width: 767px) {
-  header.elementor.elementor-1863.elementor-location-header::after,
-  .elementor-location-header.elementor-1863::after {
+  .elementor-location-header.elementor-1863 .tg-referral-banner-link {
     font-size: 0.73rem;
     padding: 0.34rem 0.65rem;
   }

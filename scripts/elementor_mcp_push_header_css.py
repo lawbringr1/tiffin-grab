@@ -95,7 +95,23 @@ def with_push_build_stamp(css: str) -> str:
 
 
 def wrap_inline_style(css: str) -> str:
-    return f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>'
+    script = """
+<script id="tg-header-referral-banner-script">
+(function () {
+  var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');
+  if (!header) return;
+  var existing = header.querySelector('.tg-referral-banner-link');
+  if (existing) return;
+  var link = document.createElement('a');
+  link.className = 'tg-referral-banner-link';
+  link.href = 'https://tiffingrab.ca/referral-program/';
+  link.textContent = 'Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Tap to open Referral Program.';
+  link.setAttribute('aria-label', 'Open Referral Program page');
+  header.appendChild(link);
+})();
+</script>
+""".strip()
+    return f'<style id="tg-header-navbar-rules">\\n{css.rstrip()}\\n</style>\\n{script}\\n'
 
 
 def structured_from_result(raw: dict) -> dict:
