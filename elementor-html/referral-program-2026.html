@@ -1,5 +1,5 @@
 
-<div id="tg-ref-2026" class="tg-ref-root tg-ref-loading">
+<div id="tg-ref-2026" class="tg-ref-root tg-ref-loading" aria-busy="true">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
@@ -27,7 +27,7 @@
       rel="stylesheet"
     />
   </noscript>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -147,14 +147,15 @@
       outline: none !important;
       box-shadow: none !important;
     }
+    /* Skeleton uses flex + margins only (no CSS grid) to avoid subpixel gutter / “black grid” flashes */
     #tg-ref-2026 .tg-ref-skeleton-hero {
       border-radius: 1.75rem;
       background: #fff1eb;
       padding: 1.25rem;
       margin-bottom: 1rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
       min-height: 26rem;
       isolation: isolate;
       overflow: hidden;
@@ -162,8 +163,12 @@
     #tg-ref-2026 .tg-ref-skeleton-left {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
       justify-content: center;
+      width: 100%;
+      min-width: 0;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-left > * + * {
+      margin-top: 0.6rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-right {
       display: none;
@@ -192,7 +197,6 @@
       background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%);
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
-      margin-bottom: 0.95rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--h1 {
       height: 2.1rem;
@@ -201,7 +205,6 @@
     #tg-ref-2026 .tg-ref-skeleton-line--h2 {
       height: 2.1rem;
       width: 76%;
-      margin-bottom: 0.9rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--p {
       height: 0.9rem;
@@ -210,13 +213,11 @@
     #tg-ref-2026 .tg-ref-skeleton-line--p-short {
       height: 0.9rem;
       width: 68%;
-      margin-bottom: 1rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--cta {
       height: 2.7rem;
       width: 12.5rem;
       border-radius: 0.9rem;
-      margin-bottom: 0.85rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--note {
       height: 0.95rem;
@@ -261,13 +262,18 @@
       transform: rotate(-12deg);
     }
     #tg-ref-2026 .tg-ref-skeleton-cards {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
+      display: flex;
+      flex-direction: column;
       margin-bottom: 0.9rem;
       background-color: #fff8f6;
       isolation: isolate;
       overflow: hidden;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-cards > * {
+      margin-bottom: 0.75rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-cards > *:last-child {
+      margin-bottom: 0;
     }
     #tg-ref-2026 .tg-ref-skeleton-box {
       height: 7.5rem;
@@ -277,11 +283,16 @@
       background: #fff;
       border: 0 !important;
       padding: 0.9rem;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.7rem;
+      display: flex;
+      flex-direction: column;
       isolation: isolate;
       overflow: hidden;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-steps > * {
+      margin-bottom: 0.7rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-steps > *:last-child {
+      margin-bottom: 0;
     }
     #tg-ref-2026 .tg-ref-skeleton-steps .tg-ref-skeleton-box {
       height: 3.8rem;
@@ -301,18 +312,47 @@
       #tg-ref-2026 .tg-ref-skeleton-hero {
         padding: 1.8rem;
         border-radius: 2rem;
-        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-        gap: 1.5rem;
+        flex-direction: row;
+        align-items: flex-start;
         min-height: 34rem;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-left {
+        flex: 1 1 52%;
+        max-width: 52%;
+        padding-right: 1.5rem;
+        box-sizing: border-box;
       }
       #tg-ref-2026 .tg-ref-skeleton-right {
         display: block;
+        flex: 1 1 48%;
+        max-width: 48%;
+        min-width: 0;
       }
       #tg-ref-2026 .tg-ref-skeleton-cards {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        flex-direction: row;
+        align-items: stretch;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-cards > * {
+        margin-bottom: 0;
+        margin-right: 0.75rem;
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-cards > *:last-child {
+        margin-right: 0;
       }
       #tg-ref-2026 .tg-ref-skeleton-steps {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        flex-direction: row;
+        align-items: stretch;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-steps > * {
+        margin-bottom: 0;
+        margin-right: 0.7rem;
+        flex: 1 1 0;
+        min-width: 0;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-steps > *:last-child {
+        margin-right: 0;
       }
     }
     @media (max-width: 767px) {
@@ -321,8 +361,7 @@
       }
     }
     /*
-     * Before Tailwind utilities attach, bare `border` + width can use currentColor (black).
-     * Stable colors until CDN utilities paint (fixes sub‑ms black grid/outline flash).
+     * Before Tailwind border-* color utilities apply, width-only borders can use currentColor (black).
      */
     #tg-ref-2026 .tg-ref-body .border.border-zinc-100 {
       border-color: #f4f4f5;
@@ -577,34 +616,14 @@
         if (revealed) return;
         revealed = true;
         root.classList.remove("tg-ref-loading");
+        root.removeAttribute("aria-busy");
       }
-      /* Two frames after Tailwind exists so border-* / grid utilities are in the cascade */
-      function paintSafeDone() {
-        requestAnimationFrame(function () {
-          requestAnimationFrame(done);
-        });
-      }
-      function tryReveal() {
-        if (typeof tailwind === "undefined") return false;
-        paintSafeDone();
-        return true;
-      }
-      if (document.readyState === "complete" || document.readyState === "interactive") {
-        if (!tryReveal()) {
-          window.addEventListener("load", paintSafeDone, { once: true });
-        }
-      } else {
-        document.addEventListener(
-          "DOMContentLoaded",
-          function () {
-            if (!tryReveal()) {
-              window.addEventListener("load", paintSafeDone, { once: true });
-            }
-          },
-          { once: true }
-        );
-      }
-      setTimeout(paintSafeDone, 2800);
+      /*
+       * Tailwind CDN above is parser-blocking for this widget, so utilities exist before this runs.
+       * Do not wait for window.load (waits whole page images) — that kept the skeleton up too long.
+       */
+      requestAnimationFrame(done);
+      setTimeout(done, 120);
     })();
   </script>
 </div>
