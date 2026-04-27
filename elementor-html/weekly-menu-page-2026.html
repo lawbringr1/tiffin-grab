@@ -68,7 +68,7 @@
   }
 </style>
 
-<div id="tg-weekly-menu-2026" class="tg-weekly-menu-2026">
+<div id="tg-weekly-menu-2026" class="tg-weekly-menu-2026 tg-wm-loading">
   <style>
     #tg-weekly-menu-2026.tg-weekly-menu-2026 {
       --c-primary: #e37b3e;
@@ -339,7 +339,62 @@
       line-height: 1.55;
       color: var(--c-muted);
     }
+    #tg-weekly-menu-2026 .tg-wm-page-skeleton {
+      display: none;
+    }
+    #tg-weekly-menu-2026.tg-wm-loading .tg-wm-page-skeleton {
+      display: block;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+    #tg-weekly-menu-2026.tg-wm-loading > :not(style):not(script):not(.tg-wm-page-skeleton) {
+      display: none !important;
+    }
+    #tg-weekly-menu-2026 .tg-wm-sk {
+      background: linear-gradient(90deg, #f4e6dd 25%, #fbf4ef 50%, #f4e6dd 75%);
+      background-size: 240% 100%;
+      animation: tgWmPageSkWave 1.2s ease-in-out infinite;
+      border-radius: 12px;
+    }
+    #tg-weekly-menu-2026 .tg-wm-sk-head {
+      height: 7rem;
+      margin-bottom: 0.9rem;
+      border-radius: 16px;
+    }
+    #tg-weekly-menu-2026 .tg-wm-sk-body {
+      height: 20rem;
+      margin-bottom: 0.9rem;
+      border-radius: 18px;
+    }
+    #tg-weekly-menu-2026 .tg-wm-sk-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    #tg-weekly-menu-2026 .tg-wm-sk-card {
+      height: 7.25rem;
+      border-radius: 14px;
+    }
+    @media (min-width: 800px) {
+      #tg-weekly-menu-2026 .tg-wm-sk-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    @keyframes tgWmPageSkWave {
+      0% { background-position: 200% 0; }
+      100% { background-position: -40% 0; }
+    }
   </style>
+
+  <div class="tg-wm-page-skeleton" aria-hidden="true">
+    <div class="tg-wm-sk tg-wm-sk-head"></div>
+    <div class="tg-wm-sk tg-wm-sk-body"></div>
+    <div class="tg-wm-sk-row">
+      <div class="tg-wm-sk tg-wm-sk-card"></div>
+      <div class="tg-wm-sk tg-wm-sk-card"></div>
+      <div class="tg-wm-sk tg-wm-sk-card"></div>
+    </div>
+  </div>
 
   <header class="tg-wm-intro">
     <span class="tg-wm-eyebrow">Weekly menu</span>
@@ -400,6 +455,9 @@
     (function () {
       var root = document.getElementById("tg-weekly-menu-2026");
       if (!root) return;
+      function markWeeklyReady() {
+        root.classList.remove("tg-wm-loading");
+      }
 
       var imgEl = root.querySelector("#tg-wm-hero-img");
       var pdfFrame = root.querySelector("#tg-wm-pdf-frame");
@@ -490,7 +548,9 @@
           }
           applyPayload(res.body);
         })
-        .catch(function () {});
+        .catch(function () {})
+        .finally(markWeeklyReady);
+      setTimeout(markWeeklyReady, 3500);
     })();
   </script>
 </div>

@@ -54,7 +54,7 @@
     background-image: none !important;
   }
 </style>
-<div id="tg-contact-2026" class="tg-contact-2026">
+<div id="tg-contact-2026" class="tg-contact-2026 tg-c-loading">
   <style>
     #tg-contact-2026.tg-contact-2026 {
       --c-primary: #e37b3e;
@@ -460,7 +460,78 @@
     #tg-contact-2026 .tg-c-maps-btn:hover .material-symbols-outlined {
       transform: translateX(3px);
     }
+    #tg-contact-2026 .tg-c-page-skeleton {
+      display: none;
+    }
+    #tg-contact-2026.tg-c-loading .tg-c-page-skeleton {
+      display: block;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+    #tg-contact-2026.tg-c-loading > :not(style):not(script):not(.tg-c-page-skeleton) {
+      display: none !important;
+    }
+    #tg-contact-2026 .tg-c-sk {
+      background: linear-gradient(90deg, #f4e6dd 25%, #fbf4ef 50%, #f4e6dd 75%);
+      background-size: 240% 100%;
+      animation: tgContactSkWave 1.2s ease-in-out infinite;
+      border-radius: 12px;
+    }
+    #tg-contact-2026 .tg-c-sk-hero {
+      height: 6.75rem;
+      margin-bottom: 0.95rem;
+      border-radius: 16px;
+    }
+    #tg-contact-2026 .tg-c-sk-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+      margin-bottom: 0.95rem;
+    }
+    #tg-contact-2026 .tg-c-sk-form {
+      height: 20rem;
+      border-radius: 16px;
+    }
+    #tg-contact-2026 .tg-c-sk-map {
+      height: 20rem;
+      border-radius: 16px;
+    }
+    #tg-contact-2026 .tg-c-sk-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    #tg-contact-2026 .tg-c-sk-card {
+      height: 6.5rem;
+      border-radius: 14px;
+    }
+    @media (min-width: 900px) {
+      #tg-contact-2026 .tg-c-sk-grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+      #tg-contact-2026 .tg-c-sk-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+    @keyframes tgContactSkWave {
+      0% { background-position: 200% 0; }
+      100% { background-position: -40% 0; }
+    }
   </style>
+
+  <div class="tg-c-page-skeleton" aria-hidden="true">
+    <div class="tg-c-sk tg-c-sk-hero"></div>
+    <div class="tg-c-sk-grid">
+      <div class="tg-c-sk tg-c-sk-form"></div>
+      <div class="tg-c-sk tg-c-sk-map"></div>
+    </div>
+    <div class="tg-c-sk-row">
+      <div class="tg-c-sk tg-c-sk-card"></div>
+      <div class="tg-c-sk tg-c-sk-card"></div>
+      <div class="tg-c-sk tg-c-sk-card"></div>
+      <div class="tg-c-sk tg-c-sk-card"></div>
+    </div>
+  </div>
 
   <section class="tg-c-hero" aria-labelledby="tg-contact-heading">
     <span class="tg-c-eyebrow">Get in touch</span>
@@ -581,11 +652,15 @@
     (function () {
       var root = document.getElementById("tg-contact-2026");
       if (!root) return;
+      function markContactReady() {
+        root.classList.remove("tg-c-loading");
+      }
       var mapsUrl =
         "https://www.google.com/maps/search/?api=1&query=" +
         encodeURIComponent("130 Westmore Drive, Etobicoke, ON M9V 5E2, Canada");
       var btn = root.querySelector("[data-tg-maps]");
       if (btn) btn.addEventListener("click", function () { window.open(mapsUrl, "_blank", "noopener,noreferrer"); });
+      markContactReady();
 
       function showStatus(el, type, text) {
         if (!el) return;

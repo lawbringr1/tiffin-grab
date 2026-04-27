@@ -13,7 +13,7 @@
   (elementor-head-geist-preload-snippet.html). Do not duplicate preconnect / stylesheet / font preloads here —
   body widgets add extra requests and Lighthouse noise; fall back to system-ui if head snippet is absent.
 -->
-<section id="tg-tplans-2026" class="tg-tplans" data-store-root="" data-tg-pricing-ui="stitch-weekly-total" aria-labelledby="tg-tplans-title">
+<section id="tg-tplans-2026" class="tg-tplans tg-tplans-loading" data-store-root="" data-tg-pricing-ui="stitch-weekly-total" aria-labelledby="tg-tplans-title">
   <style>
     .elementor-widget-html:has(#tg-tplans-2026),
     .elementor-widget-html:has(#tg-tplans-2026) .elementor-widget-container,
@@ -2035,7 +2035,72 @@
       transform: translateX(-50%) translateY(0);
       opacity: 1;
     }
+
+    /* Initial page skeleton while plans payload loads. */
+    #tg-tplans-2026 .tg-tplans-page-skeleton {
+      display: none;
+    }
+    #tg-tplans-2026.tg-tplans-loading .tg-tplans-page-skeleton {
+      display: block;
+      max-width: 72rem;
+      margin: 0 auto clamp(1.75rem, 4vw, 2.5rem);
+      padding: 0 1rem;
+      box-sizing: border-box;
+    }
+    #tg-tplans-2026.tg-tplans-loading .tg-tplans-inner {
+      visibility: hidden;
+      height: 0;
+      overflow: hidden;
+    }
+    #tg-tplans-2026 .tg-tplans-sk {
+      background: linear-gradient(90deg, #f4e7de 25%, #fbf4ef 50%, #f4e7de 75%);
+      background-size: 240% 100%;
+      animation: tgTplansSkWave 1.15s ease-in-out infinite;
+      border-radius: 12px;
+    }
+    #tg-tplans-2026 .tg-tplans-sk-hero {
+      height: 10.5rem;
+      margin-bottom: 1rem;
+      border-radius: 18px;
+    }
+    #tg-tplans-2026 .tg-tplans-sk-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    #tg-tplans-2026 .tg-tplans-sk-card {
+      height: 19.5rem;
+      border-radius: 16px;
+    }
+    @media (min-width: 768px) {
+      #tg-tplans-2026 .tg-tplans-page-skeleton {
+        padding: 0 1.5rem;
+      }
+      #tg-tplans-2026 .tg-tplans-sk-hero {
+        height: 12rem;
+      }
+      #tg-tplans-2026 .tg-tplans-sk-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    @keyframes tgTplansSkWave {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -40% 0;
+      }
+    }
   </style>
+
+  <div class="tg-tplans-page-skeleton" aria-hidden="true">
+    <div class="tg-tplans-sk tg-tplans-sk-hero"></div>
+    <div class="tg-tplans-sk-grid">
+      <div class="tg-tplans-sk tg-tplans-sk-card"></div>
+      <div class="tg-tplans-sk tg-tplans-sk-card"></div>
+      <div class="tg-tplans-sk tg-tplans-sk-card"></div>
+    </div>
+  </div>
 
   <div class="tg-tplans-inner">
     <header class="tg-tplans-hero">
@@ -2112,6 +2177,12 @@
       var mount = document.getElementById("tg-tplans-mount");
       var pager = document.getElementById("tg-tplans-pager");
       var toastEl = document.getElementById("tg-tplans-toast");
+      function markTplansReady() {
+        if (root.classList.contains("tg-tplans-loading")) {
+          root.classList.remove("tg-tplans-loading");
+        }
+      }
+      setTimeout(markTplansReady, 5000);
 
       function money(minor, currencyCode, symbol) {
         var n = (parseInt(minor, 10) || 0) / 100;
@@ -2440,6 +2511,7 @@
             "</p>";
         } finally {
           state.loading = false;
+          markTplansReady();
         }
         renderPager();
       }
