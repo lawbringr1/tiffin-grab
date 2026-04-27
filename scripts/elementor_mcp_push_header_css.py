@@ -108,6 +108,65 @@ def wrap_inline_style(css: str) -> str:
   link.textContent = 'Refer & Earn Free Tiffins - You: +1, Friend: +2. Tap to join now.';
   link.setAttribute('aria-label', 'Open Referral Program page');
   header.appendChild(link);
+
+  function applyMobileDock() {
+    var isMobile = window.matchMedia('(max-width: 767px)').matches;
+    var wrap = header.querySelector('.elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper');
+    if (!wrap) return;
+    var menu = wrap.querySelector('.ue-menu');
+    if (!menu) return;
+    var toggle = wrap.querySelector('.ue-nav-menu-mobile');
+    if (toggle) toggle.style.display = isMobile ? 'none' : '';
+    if (!isMobile) return;
+
+    Object.assign(menu.style, {
+      position: 'fixed',
+      left: 'max(0.65rem, env(safe-area-inset-left))',
+      right: 'max(0.65rem, env(safe-area-inset-right))',
+      bottom: 'calc(0.6rem + env(safe-area-inset-bottom))',
+      width: 'auto',
+      maxHeight: 'none',
+      overflow: 'visible',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'stretch',
+      gap: '0.2rem',
+      padding: '0.25rem',
+      borderRadius: '9999px',
+      border: '1px solid hsl(220 13% 91%)',
+      background: 'rgba(255,255,255,0.96)',
+      boxShadow: '0 14px 35px rgba(15,23,42,0.18)',
+      backdropFilter: 'blur(8px)',
+      WebkitBackdropFilter: 'blur(8px)',
+      zIndex: '1106'
+    });
+
+    var items = menu.querySelectorAll(':scope > li');
+    items.forEach(function (li) {
+      Object.assign(li.style, { flex: '1 1 0', minWidth: '0', width: 'auto' });
+      var a = li.querySelector(':scope > a');
+      if (!a) return;
+      Object.assign(a.style, {
+        width: '100%',
+        display: 'inline-flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+        borderRadius: '9999px',
+        padding: '0.56rem 0.5rem',
+        fontSize: '0.76rem',
+        lineHeight: '1.2',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
+      });
+    });
+
+    document.body.style.paddingBottom = 'calc(4.5rem + env(safe-area-inset-bottom))';
+  }
+
+  applyMobileDock();
+  window.addEventListener('resize', applyMobileDock, { passive: true });
 })();
 </script>
 """.strip()
