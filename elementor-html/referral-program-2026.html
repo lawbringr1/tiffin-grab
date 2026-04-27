@@ -81,11 +81,16 @@
       transform: scale(1.05) rotate(0deg) !important;
       z-index: 50;
     }
+    @media (max-width: 767px) {
+      #tg-ref-2026 .tg-ref-body {
+        overflow-x: clip;
+      }
+    }
   </style>
-  <div class="tg-ref-body bg-background text-on-background antialiased py-12 md:py-16">
+  <div class="tg-ref-body bg-background text-on-background antialiased py-8 md:py-16">
     <main class="max-w-7xl mx-auto px-4 md:px-8">
       <section
-        class="relative overflow-hidden rounded-[3rem] bg-surface-container-low mb-16 min-h-[600px] md:min-h-[700px] flex items-center"
+        class="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-surface-container-low mb-10 md:mb-16 min-h-0 md:min-h-[700px] flex items-center"
       >
         <div class="absolute inset-0 opacity-10 pointer-events-none">
           <div class="absolute top-10 left-10 text-primary rotate-12">
@@ -98,33 +103,33 @@
             <span class="material-symbols-outlined text-4xl">restaurant</span>
           </div>
         </div>
-        <div class="grid lg:grid-cols-12 gap-8 items-center relative z-20 w-full p-8 md:p-12 lg:p-20">
-          <div class="lg:col-span-5 space-y-8 text-center lg:text-left">
+        <div class="grid lg:grid-cols-12 gap-6 md:gap-8 items-center relative z-20 w-full p-5 sm:p-6 md:p-12 lg:p-20">
+          <div class="lg:col-span-5 space-y-5 md:space-y-8 text-center lg:text-left">
             <div
               class="inline-block px-4 py-1.5 rounded-full bg-secondary/15 text-emerald-900 font-bold text-sm transform -rotate-2"
             >
               Community Party! 🎉
             </div>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] tracking-tight">
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] tracking-tight">
               Better with <span class="text-primary italic">Friends.</span><br />
               Free with <span class="underline decoration-secondary decoration-wavy">Tiffins.</span>
             </h1>
-            <p class="text-xl text-on-surface-variant font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
+            <p class="text-base sm:text-lg md:text-xl text-on-surface-variant font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
               Why eat alone? Bring the crew to <strong class="text-on-surface">TiffinGrab</strong>. Share great meals
               and earn free tiffins when friends subscribe through your referral.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 md:pt-4">
               <a
                 href="https://wa.me/16475173663?text=Hi%20TiffinGrab%2C%20I%27d%20like%20to%20refer%20a%20friend%20to%20your%20meal%20plan."
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex px-10 py-5 bg-primary text-on-primary font-black text-lg rounded-2xl shadow-[0_8px_0_0_#b85a2a] hover:shadow-[0_4px_0_0_#b85a2a] hover:translate-y-1 active:shadow-none active:translate-y-2 transition-all items-center justify-center gap-3 no-underline"
+                class="inline-flex w-full sm:w-auto px-5 sm:px-8 md:px-10 py-3.5 md:py-5 bg-primary text-on-primary font-black text-base md:text-lg rounded-2xl shadow-[0_8px_0_0_#b85a2a] hover:shadow-[0_4px_0_0_#b85a2a] hover:translate-y-1 active:shadow-none active:translate-y-2 transition-all items-center justify-center gap-2.5 md:gap-3 no-underline"
               >
                 <span>Chat on WhatsApp to Refer</span>
                 <span class="material-symbols-outlined">chat</span>
               </a>
             </div>
-            <div class="font-handwritten text-2xl text-primary transform -rotate-1 pt-4">
+            <div class="font-handwritten text-xl md:text-2xl text-primary transform -rotate-1 pt-2 md:pt-4">
               Psst… free tiffins are waiting when your friends join!
             </div>
           </div>
@@ -178,11 +183,11 @@
         </div>
       </section>
 
-      <section class="mb-16">
+      <section class="mb-10 md:mb-16">
         <h2 class="text-2xl font-extrabold text-on-surface mb-8">Exclusive Referral Rewards</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
-            class="md:col-span-1 bg-white p-8 rounded-2xl border border-zinc-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+            class="md:col-span-1 bg-white p-6 md:p-8 rounded-2xl border border-zinc-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
           >
             <div>
               <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6">
@@ -195,7 +200,7 @@
             </div>
           </div>
           <div
-            class="md:col-span-1 bg-friend-card text-on-friend-card p-8 rounded-2xl shadow-sm flex flex-col justify-between overflow-hidden relative group"
+            class="md:col-span-1 bg-friend-card text-on-friend-card p-6 md:p-8 rounded-2xl shadow-sm flex flex-col justify-between overflow-hidden relative group"
           >
             <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
             <div class="relative z-10">
@@ -208,7 +213,7 @@
               <p class="text-sm text-white/60">Applied on their first subscription when referred.</p>
             </div>
           </div>
-          <div class="md:col-span-1 bg-surface-container p-8 rounded-2xl flex flex-col gap-6 border border-outline-variant/40">
+          <div class="md:col-span-1 bg-surface-container p-6 md:p-8 rounded-2xl flex flex-col gap-6 border border-outline-variant/40">
             <h3 class="text-xl font-bold">Why refer?</h3>
             <div class="space-y-4">
               <div class="flex items-start gap-3">
@@ -239,12 +244,12 @@
         </div>
       </section>
 
-      <section class="bg-white border border-zinc-100 rounded-3xl p-8 md:p-12 mb-4 shadow-sm">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-extrabold text-on-surface">How it works</h2>
+      <section class="bg-white border border-zinc-100 rounded-3xl p-6 md:p-12 mb-4 shadow-sm">
+        <div class="text-center mb-8 md:mb-12">
+          <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">How it works</h2>
           <p class="text-on-surface-variant mt-2">Three simple steps to free meals</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
           <div class="hidden md:block absolute top-10 left-[20%] right-[20%] h-0.5 bg-zinc-100 -z-10"></div>
           <div class="flex flex-col items-center text-center group">
             <div
