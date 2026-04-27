@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TiffinGrab Performance (MU)
  * Description: Front-end tweaks for Lighthouse: Elementor eicons font-display, LCP hero img hints, optional emoji removal.
- * Version: 1.0.5
+ * Version: 1.0.6
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -65,7 +65,8 @@ add_action(
 		if ( is_admin() || ! function_exists( 'is_page' ) || ! is_page( TG_PERF_HOME_2026_PAGE_ID ) ) {
 			return;
 		}
-		$url = content_url( '/uploads/2025/02/Maharaja-Thali-Non-veg.webp' );
+		/* Match hero asset used on Home 2026 (see elementor-html/home-2026-hero-card.html). */
+		$url = content_url( '/uploads/2026/04/Maharaja-Thali-4x3-1.webp' );
 		printf(
 			'<link rel="preload" as="image" href="%s" fetchpriority="high" />' . "\n",
 			esc_url( $url )

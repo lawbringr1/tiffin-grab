@@ -142,7 +142,25 @@ def wrap_inline_style(css: str) -> str:
   }
 
   ensureMobileDock();
-  window.addEventListener('resize', ensureMobileDock, { passive: true });
+  var mqlDock = window.matchMedia('(max-width: 767px)');
+  function onDockBreakpoint() {
+    ensureMobileDock();
+  }
+  if (mqlDock.addEventListener) {
+    mqlDock.addEventListener('change', onDockBreakpoint);
+  } else if (mqlDock.addListener) {
+    mqlDock.addListener(onDockBreakpoint);
+  }
+  /* iOS address bar / orientation: debounce — avoid work on every intermediate resize frame */
+  var dockResizeT = null;
+  window.addEventListener(
+    'resize',
+    function () {
+      if (dockResizeT) clearTimeout(dockResizeT);
+      dockResizeT = setTimeout(ensureMobileDock, 120);
+    },
+    { passive: true }
+  );
 })();
 </script>
 """.strip()

@@ -1,13 +1,5 @@
-<!--
-  TiffinGrab — Home 2026 hero top tags (Elementor HTML widget on template "Home 2026 Hero", id 4fd2df8).
-  Boxes the hero section: max-width + horizontal margin auto + padding (no max-width:none on .e-con — that was breaking inset).
-  Social proof row only (no “Freshly cooked daily” pill).
 
-  Also defines shared magnetic CTAs (.tg-h26-btn) — scoped with body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)
-  so styles apply even if the WordPress page ID is not 10016, as long as this hero widget (id tg-hero-tags) is on the page.
-  Same pattern as Shadcn Button + ArrowUpRight. Keep this widget on Home 2026 so downstream sections pick up button CSS.
--->
-<!-- Geist + Material Symbols + font preloads: load once in site <head> via WPCode (elementor-head-geist-preload-snippet.html). Do not duplicate <link> tags here — they run in the body and repeat preconnect/preload. -->
+
 <style>
 :root {
   --tg-hero-gutter: clamp(1.5rem, 6vw, 3.5rem);
@@ -43,6 +35,9 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   font-weight: 700 !important;
 }
 @media (max-width: 767px) {
+  .home-2026-social-av {
+    will-change: auto;
+  }
   html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)),
   body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
     background-color: var(--tg-page-canvas) !important;
