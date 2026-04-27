@@ -881,6 +881,16 @@ header.elementor.elementor-1863.elementor-location-header {
   box-shadow: none !important;
 }
 
+/* Prevent mobile container artifacts on desktop (e.g. stray back-link text). */
+@media (min-width: 768px) {
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
+    display: none !important;
+  }
+  .tg-mobile-dock {
+    display: none !important;
+  }
+}
+
 .elementor-1863 .elementor-element-67924b6 > .e-con-inner {
   max-width: var(--tg-inner-max) !important;
   margin-left: auto !important;
@@ -925,6 +935,11 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 
 @media (max-width: 767px) {
+  /* Mobile should use the mobile row + dock; hide desktop row to avoid overlap. */
+  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent {
+    display: none !important;
+  }
+
   .elementor-location-header .tg-shadcn-nav .elementor-nav-menu {
     justify-content: flex-start !important;
   }
