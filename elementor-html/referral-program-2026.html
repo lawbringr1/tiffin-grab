@@ -50,6 +50,32 @@
     };
   </script>
   <style>
+    /* Full-page referral canvas: remove theme white frame around content. */
+    #tg-ref-2026 {
+      display: block;
+      width: 100%;
+      background: #fff8f6;
+    }
+    html body:has(#tg-ref-2026) {
+      background: #fff8f6 !important;
+    }
+    html body:has(#tg-ref-2026) .site-content,
+    html body:has(#tg-ref-2026) .content-area,
+    html body:has(#tg-ref-2026) .entry-content,
+    html body:has(#tg-ref-2026) .elementor-widget-container {
+      background: transparent !important;
+    }
+    html body:has(#tg-ref-2026) .ast-container,
+    html body:has(#tg-ref-2026) .site-content .ast-container {
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      background: #fff8f6 !important;
+    }
+    html body:has(#tg-ref-2026) .entry-content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
     /* Hide WP / theme / Elementor duplicate page title above full-width HTML (same idea as weekly menu). */
     html body:has(#tg-ref-2026) .entry-header,
     html body:has(#tg-ref-2026) h1.entry-title,
