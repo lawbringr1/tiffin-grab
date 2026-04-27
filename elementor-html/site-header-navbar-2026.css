@@ -897,64 +897,13 @@ header.elementor.elementor-1863.elementor-location-header {
     justify-content: flex-start !important;
   }
 
-  /* Mobile nav: bottom dock (no hamburger / no side drawer). */
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0,
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .elementor-widget-container {
-    width: 100% !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile-wrapper {
-    position: static !important;
-    width: 100% !important;
-    justify-content: center !important;
-    z-index: 1105 !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-nav-menu-mobile {
+  /* Hide plugin hamburger / side drawer controls on mobile. */
+  .elementor-1863 .ue-nav-menu-mobile,
+  .elementor-1863 .ue-nav-menu-mobile-wrapper,
+  .elementor-1863 .ue-left-open,
+  .elementor-1863 .ue-left-close,
+  .elementor-1863 .elementor-element-4e5b519 {
     display: none !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu {
-    position: fixed !important;
-    left: max(0.65rem, env(safe-area-inset-left)) !important;
-    right: max(0.65rem, env(safe-area-inset-right)) !important;
-    bottom: calc(0.6rem + env(safe-area-inset-bottom)) !important;
-    width: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    border-radius: 9999px !important;
-    border: 1px solid var(--tg-border) !important;
-    background: rgba(255, 255, 255, 0.96) !important;
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18) !important;
-    padding: 0.25rem !important;
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: stretch !important;
-    gap: 0.2rem !important;
-    transform: none !important;
-    z-index: 1106 !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu > li {
-    width: auto !important;
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-  }
-
-  .elementor-1863 .elementor-element-67924b6 .elementor-element-21c3db0 .ue-menu > li > a {
-    width: 100% !important;
-    justify-content: center !important;
-    text-align: center !important;
-    border-radius: 9999px !important;
-    padding: 0.56rem 0.5rem !important;
-    font-size: 0.76rem !important;
-    line-height: 1.2 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
   }
 
   .elementor-1863 .ue-nav-menu_overlay,
@@ -964,8 +913,57 @@ header.elementor.elementor-1863.elementor-location-header {
     pointer-events: none !important;
   }
 
-  /* Keep page content visible above dock. */
+  /* Injected JS creates this dock at <body> level for stable behavior. */
+  .tg-mobile-dock {
+    position: fixed;
+    left: max(0.65rem, env(safe-area-inset-left));
+    right: max(0.65rem, env(safe-area-inset-right));
+    bottom: calc(0.6rem + env(safe-area-inset-bottom));
+    z-index: 1106;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--tg-border);
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18);
+  }
+
+  .tg-mobile-dock a {
+    flex: 1 1 0;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 0.56rem 0.48rem;
+    font-family: var(--tg-font);
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--tg-muted-foreground);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tg-mobile-dock a:hover,
+  .tg-mobile-dock a:focus-visible {
+    color: var(--tg-foreground);
+    background: var(--tg-bg);
+  }
+
+  .tg-mobile-dock a[aria-current="page"] {
+    color: var(--tg-foreground);
+    background: var(--tg-bg);
+    font-weight: 700;
+  }
+
   html body {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(4.9rem + env(safe-area-inset-bottom)) !important;
   }
 }
