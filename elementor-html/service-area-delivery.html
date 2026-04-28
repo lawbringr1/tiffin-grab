@@ -1,11 +1,5 @@
-<!--
-  TiffinGrab — "Are we in your area?" section (paste into Elementor HTML widget).
-  Home stack band 1 (after hero): peach strip #fdeae2 — reads clearly darker than hero #fff8f6; alternates with #fff8f6 sections.
-  Elementor hosts match this band to avoid white seams.
-  Requires: wordpress/tiffingrab-delivery-ajax-config.php (or equivalent) so window.tiffinGrabDelivery.nonce exists.
-  Brand green: Elementor Site Settings → Global Colors → "WhatsApp Green" (--e-global-color-whatsapp).
--->
-<!-- Fonts loaded once in home-2026-hero-tags.html (template 9825). -->
+
+
 <section class="tg-sa" id="tg-service-area" aria-labelledby="tg-sa-title">
   <style>
     /* Pinch-zoom / iOS visual viewport: reinforce root clip + canvas (in case hero-tags widget order differs). */
@@ -561,13 +555,13 @@
         </div>
       </div>
       <div class="tg-sa-card" data-postal="M8V 1A1" role="button" tabindex="0">
-        <strong>Etobicoke</strong><span>6:00 AM - 11:00 AM</span>
+        <strong>Etobicoke</strong><span>6:00 AM-11:00 PM</span>
         <div class="tg-sa-card-pins">
           <button type="button" class="tg-sa-pin-pill" data-postal="M8V 1A1" aria-label="Check delivery for M8V 1A1, Etobicoke">M8V 1A1</button>
         </div>
       </div>
       <div class="tg-sa-card" data-postal="L3R 0G1" role="button" tabindex="0">
-        <strong>Markham</strong><span>7:00 AM - 10:00 AM</span>
+        <strong>Markham</strong><span>7:00 AM- 10:00 AM</span>
         <div class="tg-sa-card-pins">
           <button type="button" class="tg-sa-pin-pill" data-postal="L3R 0G1" aria-label="Check delivery for L3R 0G1, Markham">L3R 0G1</button>
         </div>
@@ -579,7 +573,7 @@
         </div>
       </div>
       <div class="tg-sa-card" data-postal="M2N 6K1" role="button" tabindex="0">
-        <strong>North York</strong><span>6:00 AM - 12:00 PM</span>
+        <strong>North York</strong><span>6:00 AM-12:00 PM</span>
         <div class="tg-sa-card-pins">
           <button type="button" class="tg-sa-pin-pill" data-postal="M2N 6K1" aria-label="Check delivery for M2N 6K1, North York">M2N 6K1</button>
         </div>
@@ -597,7 +591,7 @@
         </div>
       </div>
       <div class="tg-sa-card" data-postal="M1B 3B5" role="button" tabindex="0">
-        <strong>Scarborough</strong><span>6:00 AM - 1:00 PM</span>
+        <strong>Scarborough</strong><span>6:00 AM-1:00 PM</span>
         <div class="tg-sa-card-pins">
           <button type="button" class="tg-sa-pin-pill" data-postal="M1B 3B5" aria-label="Check delivery for M1B 3B5, Scarborough">M1B 3B5</button>
         </div>
@@ -777,23 +771,77 @@
         return "";
       }
 
-      /* East GTA policy override: Ajax/Pickering/Oshawa/Whitby share one delivery window. */
-      function eastGtaFixedWindowByPostal(norm) {
+      /* Policy override map: enforce exact delivery windows by municipality. */
+      var AREA_WINDOW_BY_KEY = {
+        etobicoke: "6:00 AM-11:00 PM",
+        "north york": "6:00 AM-12:00 PM",
+        scarborough: "6:00 AM-1:00 PM",
+        mississauga: "10:00 AM - 1:00 PM",
+        brampton: "10:00 AM - 11:30 AM",
+        markham: "7:00 AM- 10:00 AM",
+        vaughan: "7:30 AM - 10:30 AM",
+        "richmond hill": "8:30 AM - 10:00 AM",
+        oakville: "1:00 PM - 3:00 PM",
+        "east york": "11:00 AM - 1:00 PM",
+        ajax: "11:00 AM - 3:00 PM",
+        pickering: "11:00 AM - 3:00 PM",
+        oshawa: "11:00 AM - 3:00 PM",
+        whitby: "11:00 AM - 3:00 PM",
+      };
+
+      function fixedWindowFromAreaKey(areaKey) {
+        var k = String(areaKey || "").toLowerCase().trim();
+        return AREA_WINDOW_BY_KEY[k] || "";
+      }
+
+      function fixedWindowByPostal(norm) {
         var n = compact(norm);
         if (n.length < 3) return "";
         var fsa = n.slice(0, 3);
-        if (fsa === "L1S" || fsa === "L1J" || fsa === "L1V" || fsa === "L1H" || fsa === "L1N" || fsa === "L1M" || fsa === "L1P") {
-          return "11:00 AM - 3:00 PM";
-        }
+        if (fsa === "M8V" || fsa === "M8W" || fsa === "M8X" || fsa === "M8Z" || fsa === "M9C" || fsa === "M9B" || fsa === "M9W" || fsa === "M9V")
+          return fixedWindowFromAreaKey("etobicoke");
+        if (fsa === "M2J" || fsa === "M2N" || fsa === "M2R" || fsa === "M3C" || fsa === "M6A" || fsa === "M9L" || fsa === "M9M")
+          return fixedWindowFromAreaKey("north york");
+        if (fsa === "M1P" || fsa === "M1V" || fsa === "M1B" || fsa === "M1K" || fsa === "M1N")
+          return fixedWindowFromAreaKey("scarborough");
+        if (fsa === "L4T" || fsa === "L4W" || fsa === "L4Z" || fsa === "L5B" || fsa === "L5A" || fsa === "L5V" || fsa === "L5N" || fsa === "L5M" || fsa === "L5J")
+          return fixedWindowFromAreaKey("mississauga");
+        if (fsa === "L6Y" || fsa === "L6X" || fsa === "L6T" || fsa === "L6Z" || fsa === "L6R" || fsa === "L6W")
+          return fixedWindowFromAreaKey("brampton");
+        if (fsa === "L3R" || fsa === "L3T" || fsa === "L6C" || fsa === "L6B" || fsa === "L6G" || fsa === "L3S")
+          return fixedWindowFromAreaKey("markham");
+        if (fsa === "L4K" || fsa === "L6A" || fsa === "L4H" || fsa === "L4J")
+          return fixedWindowFromAreaKey("vaughan");
+        if (fsa === "L4B" || fsa === "L4C" || fsa === "L6E" || fsa === "L4E")
+          return fixedWindowFromAreaKey("richmond hill");
+        if (fsa === "L6K" || fsa === "L6L" || fsa === "L6M" || fsa === "L6H")
+          return fixedWindowFromAreaKey("oakville");
+        if (fsa === "M4E" || fsa === "M4G" || fsa === "M4J" || fsa === "M4C")
+          return fixedWindowFromAreaKey("east york");
+        if (fsa === "L1S") return fixedWindowFromAreaKey("ajax");
+        if (fsa === "L1J" || fsa === "L1V") return fixedWindowFromAreaKey("pickering");
+        if (fsa === "L1H") return fixedWindowFromAreaKey("oshawa");
+        if (fsa === "L1N" || fsa === "L1M" || fsa === "L1P") return fixedWindowFromAreaKey("whitby");
         return "";
       }
 
-      function eastGtaFixedWindowByArea(areaLine) {
+      function fixedWindowByArea(areaLine) {
         var s = String(areaLine || "").toLowerCase();
         if (!s) return "";
-        if (s.indexOf("ajax") !== -1 || s.indexOf("pickering") !== -1 || s.indexOf("oshawa") !== -1 || s.indexOf("whitby") !== -1) {
-          return "11:00 AM - 3:00 PM";
-        }
+        if (s.indexOf("etobicoke") !== -1) return fixedWindowFromAreaKey("etobicoke");
+        if (s.indexOf("north york") !== -1) return fixedWindowFromAreaKey("north york");
+        if (s.indexOf("scarborough") !== -1) return fixedWindowFromAreaKey("scarborough");
+        if (s.indexOf("mississauga") !== -1) return fixedWindowFromAreaKey("mississauga");
+        if (s.indexOf("brampton") !== -1) return fixedWindowFromAreaKey("brampton");
+        if (s.indexOf("markham") !== -1) return fixedWindowFromAreaKey("markham");
+        if (s.indexOf("vaughan") !== -1) return fixedWindowFromAreaKey("vaughan");
+        if (s.indexOf("richmond hill") !== -1) return fixedWindowFromAreaKey("richmond hill");
+        if (s.indexOf("oakville") !== -1) return fixedWindowFromAreaKey("oakville");
+        if (s.indexOf("east york") !== -1) return fixedWindowFromAreaKey("east york");
+        if (s.indexOf("ajax") !== -1) return fixedWindowFromAreaKey("ajax");
+        if (s.indexOf("pickering") !== -1) return fixedWindowFromAreaKey("pickering");
+        if (s.indexOf("oshawa") !== -1) return fixedWindowFromAreaKey("oshawa");
+        if (s.indexOf("whitby") !== -1) return fixedWindowFromAreaKey("whitby");
         return "";
       }
 
@@ -1077,7 +1125,7 @@
                     sn.textContent = areaLine;
                     out.appendChild(sn);
                   }
-                  var forcedWindow = eastGtaFixedWindowByPostal(norm) || eastGtaFixedWindowByArea(areaLine);
+                  var forcedWindow = fixedWindowByPostal(norm) || fixedWindowByArea(areaLine);
                   var slotsToRender = forcedWindow ? [forcedWindow] : data.data.slots;
 
                   var ul = document.createElement("ul");
