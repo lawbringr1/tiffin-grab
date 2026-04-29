@@ -114,3 +114,40 @@ html body .tg-aud-badge::before {
 		background-image: none;
 	}
 }
+
+/* Mobile: magnetic CTA pills — no sliding knob / arrow; simple centered pills */
+@media (max-width: 767px) {
+	html body a.tg-h26-btn.tg-h26-btn,
+	html body button.tg-h26-btn.tg-h26-btn,
+	html body a.tg-h26-btn.tg-h26-btn:link,
+	html body a.tg-h26-btn.tg-h26-btn:visited {
+		justify-content: center !important;
+		align-items: center !important;
+		padding: 0.72rem 1.2rem !important;
+		min-height: 2.75rem !important;
+		height: auto !important;
+		transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease !important;
+	}
+	html body a.tg-h26-btn:hover,
+	html body a.tg-h26-btn:focus-visible,
+	html body button.tg-h26-btn:hover:not(:disabled),
+	html body button.tg-h26-btn:focus-visible:not(:disabled) {
+		padding: 0.72rem 1.2rem !important;
+	}
+	html body .tg-h26-btn .tg-h26-btn__knob {
+		display: none !important;
+		width: 0 !important;
+		height: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow: hidden !important;
+		clip: rect(0, 0, 0, 0) !important;
+		position: absolute !important;
+		border: 0 !important;
+		opacity: 0 !important;
+		pointer-events: none !important;
+	}
+	html body .tg-h26-btn .tg-h26-btn__label {
+		text-align: center;
+	}
+}

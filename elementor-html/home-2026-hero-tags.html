@@ -544,6 +544,29 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
       height: auto;
       font-size: clamp(0.8rem, 3.2vw, 0.875rem);
     }
+    /* Plain pills on touch: no arrow knob / magnetic slide */
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn {
+      justify-content: center !important;
+      padding: 0.72rem 1.2rem !important;
+      min-height: 2.75rem !important;
+      height: auto !important;
+      transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease !important;
+    }
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:hover,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn:focus-visible,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:hover:not(:disabled),
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn:focus-visible:not(:disabled) {
+      padding: 0.72rem 1.2rem !important;
+    }
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn .tg-h26-btn__knob,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn .tg-h26-btn__knob {
+      display: none !important;
+    }
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn .tg-h26-btn__label,
+    body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) button.tg-h26-btn .tg-h26-btn__label {
+      text-align: center;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) a.tg-h26-btn,

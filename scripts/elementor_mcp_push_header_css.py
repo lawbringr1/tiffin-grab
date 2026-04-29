@@ -130,6 +130,33 @@ def wrap_inline_style(css: str) -> str:
         '<a href="https://tiffingrab.ca/contact-us/">Contact</a>';
       document.body.appendChild(nav);
     }
+    var dock = document.querySelector('.tg-mobile-dock');
+    if (dock && !dock.dataset.tgBound) {
+      dock.dataset.tgBound = '1';
+      function forceNavigateFromEvent(e) {
+        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href');
+        if (!href) return;
+        var target = (a.getAttribute('target') || '').toLowerCase();
+        if (target === '_blank') return;
+        if (a.dataset.tgNavigating === '1') return;
+        a.dataset.tgNavigating = '1';
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.assign(a.href);
+      }
+      /* iOS/Safari can eat first click due focus/hover/overlay interactions; use early touch/pointer handlers. */
+      dock.addEventListener('pointerup', forceNavigateFromEvent, true);
+      dock.addEventListener(
+        'touchend',
+        function (e) {
+          forceNavigateFromEvent(e);
+        },
+        { capture: true, passive: false }
+      );
+      dock.addEventListener('click', forceNavigateFromEvent, true);
+    }
 
     var path = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
     document.querySelectorAll('.tg-mobile-dock a').forEach(function (a) {
@@ -141,7 +168,65 @@ def wrap_inline_style(css: str) -> str:
     document.body.style.paddingBottom = 'calc(4.9rem + env(safe-area-inset-bottom))';
   }
 
+  function bindGlobalSingleTapNav() {
+    if (document.documentElement.dataset.tgFastTapBound === '1') return;
+    document.documentElement.dataset.tgFastTapBound = '1';
+
+    function isCoarseTouch() {
+      return !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+    }
+
+    function shouldHandleAnchor(a) {
+      if (!a || !a.getAttribute) return false;
+      if (a.dataset && a.dataset.tgNoFasttap === '1') return false;
+      if (a.hasAttribute('download')) return false;
+      var href = (a.getAttribute('href') || '').trim();
+      if (!href) return false;
+      if (href === '#' || href.indexOf('javascript:') === 0) return false;
+      return true;
+    }
+
+    function fastNavigate(e) {
+      if (!isCoarseTouch()) return;
+      var t = e.target;
+      var a = t && t.closest ? t.closest('a[href]') : null;
+      if (!shouldHandleAnchor(a)) return;
+      if (a.dataset.tgNavigating === '1') return;
+
+      var href = a.getAttribute('href');
+      if (href && href.charAt(0) === '#') return;
+
+      a.dataset.tgNavigating = '1';
+      e.preventDefault();
+      e.stopPropagation();
+
+      var target = (a.getAttribute('target') || '').toLowerCase();
+      if (target === '_blank') {
+        window.open(a.href, '_blank', 'noopener,noreferrer');
+      } else {
+        window.location.assign(a.href);
+      }
+    }
+
+    document.addEventListener(
+      'touchend',
+      function (e) {
+        fastNavigate(e);
+      },
+      { capture: true, passive: false }
+    );
+    document.addEventListener(
+      'pointerup',
+      function (e) {
+        if (e.pointerType && e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+        fastNavigate(e);
+      },
+      true
+    );
+  }
+
   ensureMobileDock();
+  bindGlobalSingleTapNav();
   var mqlDock = window.matchMedia('(max-width: 767px)');
   function onDockBreakpoint() {
     ensureMobileDock();

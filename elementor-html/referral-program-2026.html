@@ -138,6 +138,8 @@
       color: transparent;
       /* Opaque base so grid gaps never show through to dark theme chrome for a frame */
       background-color: #fff8f6;
+      color-scheme: light;
+      forced-color-adjust: none;
     }
     /* Force neutral skeleton surfaces even if theme/global styles inject borders. */
     #tg-ref-2026 .tg-ref-loader,
@@ -147,10 +149,14 @@
       outline: none !important;
       box-shadow: none !important;
     }
+    #tg-ref-2026 .tg-ref-loader > *,
+    #tg-ref-2026 .tg-ref-loader > * > * {
+      background-color: transparent;
+    }
     /* Skeleton uses flex + margins only (no CSS grid) to avoid subpixel gutter / “black grid” flashes */
     #tg-ref-2026 .tg-ref-skeleton-hero {
       border-radius: 1.75rem;
-      background: #fff1eb;
+      background: #fff1eb !important;
       padding: 1.25rem;
       margin-bottom: 1rem;
       display: flex;
@@ -179,14 +185,14 @@
       position: absolute;
       border-radius: 0.8rem;
       padding: 0.5rem;
-      background: #fff;
+      background: #fff !important;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
       border: 0 !important;
     }
     #tg-ref-2026 .tg-ref-skeleton-line,
     #tg-ref-2026 .tg-ref-skeleton-box {
       border-radius: 0.65rem;
-      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%);
+      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
@@ -194,7 +200,7 @@
       width: 7rem;
       height: 1.15rem;
       border-radius: 9999px;
-      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%);
+      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
@@ -256,7 +262,7 @@
       width: 7.8rem;
       height: 2.5rem;
       border-radius: 0.9rem;
-      background: linear-gradient(90deg, #deefe6 25%, #eef8f3 50%, #deefe6 75%);
+      background: linear-gradient(90deg, #deefe6 25%, #eef8f3 50%, #deefe6 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
       transform: rotate(-12deg);
@@ -265,7 +271,7 @@
       display: flex;
       flex-direction: column;
       margin-bottom: 0.9rem;
-      background-color: #fff8f6;
+      background-color: #fff8f6 !important;
       isolation: isolate;
       overflow: hidden;
     }
@@ -280,7 +286,7 @@
     }
     #tg-ref-2026 .tg-ref-skeleton-steps {
       border-radius: 1.2rem;
-      background: #fff;
+      background: #fff !important;
       border: 0 !important;
       padding: 0.9rem;
       display: flex;

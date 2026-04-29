@@ -70,18 +70,30 @@
       font-synthesis: none;
       color: var(--tp-on);
       background: var(--tp-surface);
-      width: 100vw;
-      max-width: none;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
+      /* Avoid 100vw + negative-margin breakout on narrow viewports — common cause of horizontal scroll on mobile */
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
       padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 3.5rem);
       box-sizing: border-box;
+      overflow-x: clip;
+    }
+    @media (min-width: 768px) {
+      .tg-tplans {
+        width: 100vw;
+        max-width: none;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+      }
     }
     @supports (width: 100dvw) {
-      .tg-tplans {
-        width: 100dvw;
-        margin-left: calc(50% - 50dvw);
-        margin-right: calc(50% - 50dvw);
+      @media (min-width: 768px) {
+        .tg-tplans {
+          width: 100dvw;
+          margin-left: calc(50% - 50dvw);
+          margin-right: calc(50% - 50dvw);
+        }
       }
     }
     .tg-tplans * {
@@ -106,6 +118,8 @@
       font-synthesis: none;
     }
     .tg-tplans-inner {
+      width: 100%;
+      min-width: 0;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -245,6 +259,48 @@
       #tg-tplans-2026 a.tg-h26-btn--primary:hover,
       #tg-tplans-2026 button.tg-h26-btn--primary:hover:not(:disabled) {
         background-color: #e85f0f !important;
+      }
+    }
+    /* Mobile: plain pills — no arrow knob sliding; no outline “blob” fill animation */
+    @media (max-width: 767px) {
+      #tg-tplans-2026 a.tg-h26-btn,
+      #tg-tplans-2026 button.tg-h26-btn {
+        justify-content: center !important;
+        padding: 0.72rem 1.2rem !important;
+        min-height: 2.75rem !important;
+        height: auto !important;
+        transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease !important;
+      }
+      #tg-tplans-2026 a.tg-h26-btn:hover,
+      #tg-tplans-2026 a.tg-h26-btn:focus-visible,
+      #tg-tplans-2026 button.tg-h26-btn:hover:not(:disabled),
+      #tg-tplans-2026 button.tg-h26-btn:focus-visible:not(:disabled) {
+        padding: 0.72rem 1.2rem !important;
+      }
+      #tg-tplans-2026 a.tg-h26-btn .tg-h26-btn__knob,
+      #tg-tplans-2026 button.tg-h26-btn .tg-h26-btn__knob {
+        display: none !important;
+      }
+      #tg-tplans-2026 .tg-h26-btn .tg-h26-btn__label {
+        text-align: center;
+      }
+      #tg-tplans-2026 .tg-tplans-fill-cursor__blob {
+        display: none !important;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor {
+        background-color: var(--tp-primary) !important;
+        color: var(--tp-on-primary) !important;
+        -webkit-text-fill-color: var(--tp-on-primary) !important;
+        border-color: var(--tp-primary) !important;
+        transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease !important;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:hover,
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:focus-visible {
+        background-color: var(--tp-primary-mid) !important;
+        border-color: var(--tp-primary-mid) !important;
+      }
+      #tg-tplans-2026 button.tg-tplans-quick.tg-tplans-fill-cursor:active {
+        transform: scale(0.98);
       }
     }
     #tg-tplans-2026 button.tg-h26-btn:disabled {
@@ -412,16 +468,29 @@
     .tg-tplans-filters {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
       gap: 0.5rem;
+      width: 100%;
       margin-bottom: clamp(2rem, 4vw, 2.75rem);
     }
+    @media (max-width: 380px) {
+      .tg-tplans-filters {
+        justify-content: center;
+      }
+      .tg-tplans-filters .tg-tplans-filter {
+        flex: 0 1 auto;
+      }
+    }
     .tg-tplans-filter {
+      flex: 1 1 auto;
+      min-width: 0;
       font-family: var(--tp-font-body);
       font-weight: 600;
       font-size: 0.875rem;
       padding: 0.65rem 1.15rem;
       border-radius: 999px;
+      text-align: center;
       border: 1px solid transparent;
       background: var(--tp-card);
       color: var(--tp-on);
@@ -444,6 +513,7 @@
       flex-direction: column;
       gap: clamp(1rem, 2.5vw, 1.5rem);
       width: 100%;
+      min-width: 0;
       max-width: 72rem;
       margin-left: auto;
       margin-right: auto;
@@ -799,6 +869,11 @@
       -webkit-line-clamp: 2;
       line-clamp: 2;
       overflow: hidden;
+    }
+    @media (max-width: 767px) {
+      .tg-tplans-name {
+        font-size: clamp(1.1rem, 4.8vw, 1.28rem);
+      }
     }
     .tg-tplans-price {
       display: inline-flex;
@@ -1807,7 +1882,7 @@
       padding: 0.4rem 0.65rem 0.4rem 2.15rem !important;
       width: 100% !important;
       max-width: 280px !important;
-      min-width: 240px !important;
+      min-width: 0 !important;
       background-color: #fef8f3 !important;
       color: var(--tp-on, #1d1b19) !important;
       -webkit-text-fill-color: var(--tp-on, #1d1b19) !important;
