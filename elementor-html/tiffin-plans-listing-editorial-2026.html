@@ -256,6 +256,23 @@
     #tg-tplans-2026 button.tg-h26-btn:disabled .tg-h26-btn__knob {
       opacity: 0.85;
     }
+    /* Mobile: use plain tap Add to Cart (no knob/slide affordance). */
+    @media (max-width: 767px) {
+      #tg-tplans-2026 button.tg-tplans-submit.tg-h26-btn {
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.75rem 1rem;
+        border-radius: 12px;
+      }
+      #tg-tplans-2026 button.tg-tplans-submit.tg-h26-btn .tg-h26-btn__knob {
+        display: none;
+      }
+      #tg-tplans-2026 button.tg-tplans-submit.tg-h26-btn .tg-h26-btn__label {
+        width: 100%;
+        margin-right: 0;
+        text-align: center;
+      }
+    }
     #tg-tplans-2026 .tg-tplans-quick-wrap {
       width: 100%;
       display: flex;
