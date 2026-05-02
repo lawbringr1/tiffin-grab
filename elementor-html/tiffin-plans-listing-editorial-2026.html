@@ -860,6 +860,16 @@
       transform: rotateY(180deg) translateZ(1px);
       padding: 1.25rem 1.5rem 1.35rem;
     }
+
+    @media (max-width: 639px) {
+      .tg-tplans-card--flipped .tg-tplans-face--back {
+        overflow-x: clip;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        min-height: 0;
+      }
+    }
     .tg-tplans-face--front .tg-tplans-media {
       flex-shrink: 0;
     }
@@ -2935,7 +2945,14 @@
               }
             }
           }
-          h = openInRow ? Math.max(maxFrontH, backH) : maxFrontH;
+          /*
+            Single-column grid: maxFrontH is only this card — back face is usually taller, so syncing
+            to Math.max(maxFrontH, backH) visibly “inflates” the card vs desktop rows where neighbours
+            already raised maxFrontH. Lock row height to the front silhouette; back scrolls (CSS ≤639px).
+            Multi-column rows still grow together so taller backs don’t clip.
+          */
+          h =
+            openInRow && cols > 1 ? Math.max(maxFrontH, backH) : maxFrontH;
           for (j = start; j < start + cols && j < n; j++) {
             c = cards[j];
             flip = c.querySelector(".tg-tplans-flip");
