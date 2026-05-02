@@ -13,8 +13,60 @@
     .e-con-inner:has(#tg-tplans-2026) {
       overflow: visible !important;
       max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       background-color: #fef8f3 !important;
       background-image: none !important;
+    }
+
+    /*
+      Phone landscape + tablets often exceed 767px CSS width — must match the .tg-tplans vw-breakout cutoff
+      (see @media min-width below) or `100vw` + `calc(50% - 50vw)` pulls the whole section sideways in Elementor.
+    */
+    @media (max-width: 1199px) {
+      .elementor-widget-html:has(#tg-tplans-2026),
+      .elementor-widget-html:has(#tg-tplans-2026) .elementor-widget-container,
+      .elementor-widget-html-custom:has(#tg-tplans-2026),
+      .elementor-widget-html-custom:has(#tg-tplans-2026) .elementor-widget-container,
+      .elementor-widget-wrap:has(#tg-tplans-2026),
+      .elementor-column:has(#tg-tplans-2026),
+      .elementor-column-wrap:has(#tg-tplans-2026),
+      .elementor-section:has(#tg-tplans-2026),
+      .e-con:has(#tg-tplans-2026),
+      .e-con-inner:has(#tg-tplans-2026),
+      .e-con.e-parent:has(#tg-tplans-2026) {
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+      }
+
+      .elementor-column:has(#tg-tplans-2026),
+      .elementor-column-wrap:has(#tg-tplans-2026),
+      .elementor-widget-html:has(#tg-tplans-2026),
+      .elementor-widget-html-custom:has(#tg-tplans-2026),
+      .elementor-widget-html:has(#tg-tplans-2026) .elementor-widget-container,
+      .elementor-widget-html-custom:has(#tg-tplans-2026) .elementor-widget-container {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        align-self: stretch !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .e-con-inner:has(#tg-tplans-2026),
+      .elementor-section:has(#tg-tplans-2026),
+      .elementor-section.elementor-section-boxed:has(#tg-tplans-2026) {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      /* Let full-width widgets drop below sibling columns instead of shrinking into the right gutter. */
+      .e-flex:has(#tg-tplans-2026),
+      .elementor-container:has(#tg-tplans-2026) {
+        flex-wrap: wrap !important;
+      }
     }
 
     html:has(body:has(#tg-tplans-2026)),
@@ -22,10 +74,14 @@
       background-color: #fef8f3 !important;
     }
     html:has(body:has(#tg-tplans-2026)) {
-      overflow-x: hidden;
+      overflow-x: clip !important;
+      max-width: 100% !important;
+      overscroll-behavior-x: none !important;
     }
     body:has(#tg-tplans-2026) {
-      overflow-x: hidden;
+      overflow-x: clip !important;
+      max-width: 100% !important;
+      overscroll-behavior-x: none !important;
     }
     body:has(#tg-tplans-2026) .elementor-location-header,
     body:has(#tg-tplans-2026) [class*="elementor-location-header"] {
@@ -41,6 +97,8 @@
     body:has(#tg-tplans-2026) #main,
     body:has(#tg-tplans-2026) main {
       background-color: #fef8f3 !important;
+      overflow-x: clip !important;
+      max-width: 100% !important;
     }
 
     .tg-tplans {
@@ -75,11 +133,15 @@
       max-width: 100%;
       margin-left: 0;
       margin-right: 0;
-      padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 3.5rem);
+      padding-top: calc(clamp(1.25rem, 4vw, 2rem) + env(safe-area-inset-top, 0px));
+      padding-bottom: calc(clamp(2.5rem, 6vw, 3.5rem) + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-left, 0px));
+      padding-right: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-right, 0px));
       box-sizing: border-box;
       overflow-x: clip;
     }
-    @media (min-width: 768px) {
+    /* Full-bleed only on wide desktop — never on phone landscape / tablets (breaks boxed Elementor ancestors). */
+    @media (min-width: 1200px) {
       .tg-tplans {
         width: 100vw;
         max-width: none;
@@ -88,12 +150,24 @@
       }
     }
     @supports (width: 100dvw) {
-      @media (min-width: 768px) {
+      @media (min-width: 1200px) {
         .tg-tplans {
           width: 100dvw;
           margin-left: calc(50% - 50dvw);
           margin-right: calc(50% - 50dvw);
         }
+      }
+    }
+    @media (max-width: 1199px) {
+      section#tg-tplans-2026.tg-tplans,
+      #tg-tplans-2026.tg-tplans {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
       }
     }
     .tg-tplans * {
@@ -121,7 +195,8 @@
       width: 100%;
       min-width: 0;
       max-width: 1200px;
-      margin: 0 auto;
+      margin-inline: auto;
+      box-sizing: border-box;
     }
     /*
       Icons: match Home 2026 / FAQ widgets — use class "material-symbols-outlined" + !important.
@@ -433,8 +508,37 @@
 
     .tg-tplans-hero {
       text-align: center;
+      box-sizing: border-box;
+      width: 100%;
       max-width: 44rem;
-      margin: 0 auto clamp(2rem, 5vw, 3rem);
+      margin-top: 0;
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+      margin-left: auto;
+      margin-right: auto;
+      padding-inline: 0;
+    }
+    /* Elementor/global heading rules occasionally win on mobile — keep hero optically centered. */
+    #tg-tplans-2026 .tg-tplans-hero h1,
+    #tg-tplans-2026 .tg-tplans-hero h1 span,
+    #tg-tplans-2026 .tg-tplans-hero .tg-tplans-eyebrow,
+    #tg-tplans-2026 .tg-tplans-hero p {
+      text-align: center !important;
+      margin-inline: auto;
+      max-width: 100%;
+    }
+    #tg-tplans-2026 .tg-tplans-hero h1 {
+      text-wrap: balance;
+    }
+    #tg-tplans-2026 .tg-tplans-hero p {
+      max-width: 40rem;
+    }
+    @media (max-width: 1199px) {
+      .tg-tplans-hero {
+        max-width: 100%;
+      }
+      #tg-tplans-2026 .tg-tplans-hero p {
+        padding-inline: 0;
+      }
     }
     .tg-tplans-hero .tg-tplans-eyebrow {
       display: block;
@@ -683,6 +787,11 @@
       gap: clamp(1.5rem, 3vw, 2rem);
       /* start: when one card is flipped tall, others keep front-only height (no stretch to row). */
       align-items: start;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin-inline: auto;
+      overflow-x: clip;
     }
     @media (min-width: 640px) {
       .tg-tplans-grid {
