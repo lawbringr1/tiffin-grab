@@ -91,8 +91,12 @@
       width: 100%;
       max-width: none;
       margin: 0;
-      padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 3.5rem);
+      padding-top: calc(clamp(1.25rem, 4vw, 2rem) + env(safe-area-inset-top, 0px));
+      padding-right: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(clamp(2.5rem, 6vw, 3.5rem) + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-left, 0px));
       box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
     }
     #tg-weekly-menu-2026 *,
     #tg-weekly-menu-2026 *::before,
@@ -140,6 +144,7 @@
     }
     #tg-weekly-menu-2026 .tg-wm-card {
       max-width: min(96vw, 76rem);
+      width: 100%;
       margin: 0 auto;
       border-radius: 12px;
       overflow: hidden;
@@ -196,6 +201,7 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
       background: #3a3d40;
+      -webkit-overflow-scrolling: touch;
     }
     #tg-weekly-menu-2026 .tg-wm-pdf-frame {
       position: absolute;
@@ -212,8 +218,10 @@
       object-fit: cover;
       transition: transform 0.6s ease;
     }
-    #tg-weekly-menu-2026 .tg-wm-card:hover .tg-wm-figure img {
-      transform: scale(1.03);
+    @media (hover: hover) {
+      #tg-weekly-menu-2026 .tg-wm-card:hover .tg-wm-figure img {
+        transform: scale(1.03);
+      }
     }
     #tg-weekly-menu-2026 .tg-wm-skel {
       position: absolute;
@@ -251,6 +259,8 @@
       box-shadow: 0 4px 14px rgba(227, 123, 62, 0.35);
       transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       white-space: nowrap;
+      touch-action: manipulation;
+      min-height: 48px;
     }
     #tg-weekly-menu-2026 .tg-wm-cta:hover {
       background: var(--c-primary-dark);
@@ -384,6 +394,71 @@
       0% { background-position: 200% 0; }
       100% { background-position: -40% 0; }
     }
+
+    @media (max-width: 639px) {
+      #tg-weekly-menu-2026 .tg-wm-intro {
+        margin-bottom: clamp(1.5rem, 6vw, 2rem);
+      }
+      #tg-weekly-menu-2026 .tg-wm-title {
+        font-size: clamp(1.65rem, 7vw, 2.2rem);
+        line-height: 1.14;
+      }
+      #tg-weekly-menu-2026 .tg-wm-lede {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      #tg-weekly-menu-2026 .tg-wm-card {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+      #tg-weekly-menu-2026 .tg-wm-hero-inner {
+        padding: 0.85rem 0.35rem clamp(1rem, 3vw, 1.75rem);
+      }
+      /* Full-bleed menu viewer: avoids double horizontal inset (96vw inside padded root) */
+      #tg-weekly-menu-2026 .tg-wm-figure {
+        width: 100%;
+        max-width: 100%;
+        min-height: min(52dvh, 22rem);
+        border-radius: 8px;
+      }
+      #tg-weekly-menu-2026 .tg-wm-script {
+        font-size: clamp(0.98rem, 4vw, 1.25rem);
+        padding-inline: 0.25rem;
+      }
+      #tg-weekly-menu-2026 .tg-wm-plans {
+        padding: clamp(1.25rem, 5vw, 1.85rem) clamp(0.9rem, 4vw, 1.35rem);
+      }
+      #tg-weekly-menu-2026 .tg-wm-plans-lede {
+        font-size: 0.94rem;
+        margin-bottom: 1.1rem;
+      }
+      #tg-weekly-menu-2026 .tg-wm-cta,
+      #tg-weekly-menu-2026 .tg-wm-cta--outline {
+        white-space: normal;
+        width: 100%;
+        max-width: 22rem;
+        margin-inline: auto;
+        text-align: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      #tg-weekly-menu-2026 .tg-wm-feature {
+        padding: 1.35rem 1.15rem;
+      }
+      #tg-weekly-menu-2026 .tg-wm-feature h4 {
+        font-size: 1rem;
+      }
+      #tg-weekly-menu-2026 .tg-wm-feature p {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Very narrow: keep plans CTA from feeling tiny */
+    @media (max-width: 380px) {
+      #tg-weekly-menu-2026 .tg-wm-plans-title {
+        font-size: 1.2rem;
+      }
+    }
   </style>
 
   <div class="tg-wm-page-skeleton" aria-hidden="true">
@@ -415,8 +490,8 @@
             id="tg-wm-pdf-frame"
             class="tg-wm-pdf-frame"
             title="TiffinGrab weekly menu PDF"
-            src="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu-5.pdf#view=Fit&amp;navpanes=0"
-            loading="lazy"
+            src="about:blank"
+            data-menu-pdf="https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu-5.pdf"
             referrerpolicy="no-referrer-when-downgrade"
           ></iframe>
           <img id="tg-wm-hero-img" alt="" width="600" height="800" decoding="async" hidden />
@@ -473,13 +548,33 @@
         "Choose from our most popular tiffin plans, crafted to suit every lifestyle. Whether you’re a student, a busy professional, or feeding your family, our homestyle meals bring authentic Indian flavours straight to your table—fresh, delicious, and hassle-free.";
       var MENU_PDF_DEFAULT =
         "https://tiffingrab.ca/wp-content/uploads/2026/04/Tiffingrab-Menu-5.pdf";
-      var MENU_PDF = MENU_PDF_DEFAULT;
+      var menuPdfBase = MENU_PDF_DEFAULT;
       if (pdfFrame) {
-        var srcBase = (pdfFrame.getAttribute("src") || "").split("#")[0];
-        if (srcBase) MENU_PDF = srcBase;
+        var fromData = pdfFrame.getAttribute("data-menu-pdf");
+        if (fromData) menuPdfBase = fromData.split("#")[0];
       }
-      if (pdfFrame && MENU_PDF) {
-        pdfFrame.src = MENU_PDF + "#view=Fit&navpanes=0";
+
+      var pageFullyLoaded = document.readyState === "complete";
+
+      function tryAssignPdfIframeSrc() {
+        if (!pdfFrame || !fig) return;
+        if (pdfFrame.hasAttribute("hidden")) return;
+        if (!pageFullyLoaded) return;
+        if (!menuPdfBase) return;
+        var withHash = menuPdfBase + "#view=Fit&navpanes=0";
+        var curBase = (pdfFrame.getAttribute("src") || "").split("#")[0];
+        if (curBase === menuPdfBase) return;
+        pdfFrame.src = withHash;
+      }
+
+      if (pageFullyLoaded) {
+        tryAssignPdfIframeSrc();
+      } else {
+        window.addEventListener("load", function onWmLoad() {
+          window.removeEventListener("load", onWmLoad);
+          pageFullyLoaded = true;
+          tryAssignPdfIframeSrc();
+        });
       }
 
       var base =
@@ -488,6 +583,8 @@
 
       if (pdfFrame && fig) {
         pdfFrame.addEventListener("load", function () {
+          var base = (pdfFrame.getAttribute("src") || "").split("#")[0];
+          if (!base || base === "about:blank") return;
           fig.classList.add("is-loaded");
         });
         pdfFrame.addEventListener("error", function () {
@@ -512,6 +609,10 @@
           if (data.plans_cta_url) plansCtaEl.href = data.plans_cta_url;
           if (data.plans_cta_label) plansCtaEl.textContent = data.plans_cta_label;
         }
+        if (data && data.pdf_url) {
+          var pu = String(data.pdf_url).trim().split("#")[0];
+          if (pu) menuPdfBase = pu;
+        }
         var img = (data && data.image_url) || "";
         var alt = (data && data.image_alt) || "Current weekly menu";
 
@@ -527,6 +628,8 @@
           };
           imgEl.src = img;
           if (pdfFrame) pdfFrame.setAttribute("hidden", "");
+        } else if (pdfFrame) {
+          tryAssignPdfIframeSrc();
         }
       }
 

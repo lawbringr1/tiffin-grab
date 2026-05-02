@@ -3,6 +3,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Caveat:wght@400;700&amp;display=swap"
     rel="stylesheet"
@@ -27,9 +28,9 @@
       rel="stylesheet"
     />
   </noscript>
-  <script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
   <script>
-    tailwind.config = {
+    window.tailwind = window.tailwind || {};
+    window.tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
@@ -65,6 +66,21 @@
         },
       },
     };
+  </script>
+  <script>
+    (function () {
+      if (window.__tgRefTailwindLoader) return;
+      window.__tgRefTailwindLoader = true;
+      var hasTailwindStyles =
+        !!document.querySelector("style[data-tw-source], style[data-tailwindcss]") ||
+        !!document.querySelector("script[src*='cdn.tailwindcss.com']");
+      if (hasTailwindStyles && window.tailwind) return;
+      var script = document.createElement("script");
+      script.src = "https://cdn.tailwindcss.com";
+      script.defer = true;
+      script.setAttribute("data-tg-ref-tailwind", "1");
+      document.head.appendChild(script);
+    })();
   </script>
   <style>
     /* Full-page referral canvas: remove theme white frame around content. */
@@ -369,7 +385,8 @@
     /*
      * Before Tailwind border-* color utilities apply, width-only borders can use currentColor (black).
      */
-    #tg-ref-2026 .tg-ref-body .border.border-zinc-100 {
+    #tg-ref-2026 .tg-ref-body .border.border-zinc-100,
+    #tg-ref-2026 .tg-ref-body .bg-white.border.border-zinc-100 {
       border-color: #f4f4f5;
     }
     #tg-ref-2026 .tg-ref-body .border.border-outline-variant\/40 {
@@ -377,6 +394,12 @@
     }
     #tg-ref-2026 .tg-ref-body .border-2.border-primary\/25 {
       border-color: rgba(227, 123, 62, 0.25);
+    }
+    #tg-ref-2026 .tg-ref-body .bg-zinc-950 {
+      background-color: #09090b;
+    }
+    #tg-ref-2026 .tg-ref-body .text-white {
+      color: #fff;
     }
   </style>
   <div class="tg-ref-loader" aria-hidden="true">
@@ -624,12 +647,31 @@
         root.classList.remove("tg-ref-loading");
         root.removeAttribute("aria-busy");
       }
-      /*
-       * Tailwind CDN above is parser-blocking for this widget, so utilities exist before this runs.
-       * Do not wait for window.load (waits whole page images) — that kept the skeleton up too long.
-       */
-      requestAnimationFrame(done);
-      setTimeout(done, 120);
+      function tailwindReady() {
+        var probe = document.createElement("div");
+        probe.className = "hidden bg-primary border border-zinc-100";
+        root.appendChild(probe);
+        var styles = window.getComputedStyle(probe);
+        var ok =
+          styles.display === "none" &&
+          styles.backgroundColor !== "rgba(0, 0, 0, 0)" &&
+          styles.borderTopColor !== "rgb(0, 0, 0)";
+        probe.remove();
+        return ok;
+      }
+
+      var checks = 0;
+      function revealWhenReady() {
+        checks += 1;
+        if (tailwindReady() || checks > 50) {
+          done();
+          return;
+        }
+        setTimeout(revealWhenReady, 40);
+      }
+
+      requestAnimationFrame(revealWhenReady);
+      setTimeout(done, 2200);
     })();
   </script>
 </div>

@@ -115,6 +115,22 @@ html body .tg-aud-badge::before {
 	}
 }
 
+/*
+  Sitewide (all templates / pages): kill horizontal drift + sideways overscroll.
+  Does not disable pinch-zoom; touch-action for pan-y is mobile-only below.
+*/
+html {
+	overflow-x: clip !important;
+	max-width: 100% !important;
+	overscroll-behavior-x: none !important;
+}
+body {
+	overflow-x: clip !important;
+	max-width: 100% !important;
+	min-width: 0 !important;
+	overscroll-behavior-x: none !important;
+}
+
 /* Mobile: magnetic CTA pills — no sliding knob / arrow; simple centered pills */
 @media (max-width: 767px) {
 	html body a.tg-h26-btn.tg-h26-btn,
@@ -149,5 +165,28 @@ html body .tg-aud-badge::before {
 	}
 	html body .tg-h26-btn .tg-h26-btn__label {
 		text-align: center;
+	}
+
+	/*
+	  Touch: `manipulation` keeps vertical scroll/pinch-zoom but avoids Safari treating many first taps
+	  as ambiguous scroll gestures (common with pan-y-only on html/body).
+	  Horizontal overscroll stays suppressed via overscroll-behavior-x + overflow-x clip above.
+	  Carousels still override locally (swiper).
+	*/
+	html {
+		position: relative;
+		touch-action: manipulation !important;
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+	}
+	body {
+		position: relative;
+		touch-action: manipulation !important;
+	}
+
+	/* Carousels / horizontal sliders still need horizontal pan inside their box */
+	html body .swiper,
+	html body .swiper-container {
+		touch-action: pan-x pan-y pinch-zoom !important;
 	}
 }

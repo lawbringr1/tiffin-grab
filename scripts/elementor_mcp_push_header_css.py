@@ -94,68 +94,95 @@ def with_push_build_stamp(css: str) -> str:
     return stamp + stripped.lstrip("\n")
 
 
+TG_MOBILE_DOCK_VERSION = "tg-dock-v3"
+
+
+def tg_mobile_dock_inner_html() -> str:
+    """Anchors-only fragment (shared by SSR markup and JS fallback)."""
+    base = (
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">home</span>'
+        '<span class="tg-mobile-dock__label">Home</span></a>'
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/referral-program/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">card_giftcard</span>'
+        '<span class="tg-mobile-dock__label">Referral</span></a>'
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/tiffin-plans/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">set_meal</span>'
+        '<span class="tg-mobile-dock__label">Plans</span></a>'
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/menu/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">menu_book</span>'
+        '<span class="tg-mobile-dock__label">Menu</span></a>'
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/contact-us/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">chat_bubble</span>'
+        '<span class="tg-mobile-dock__label">Contact</span></a>'
+    )
+    return base
+
+
 def wrap_inline_style(css: str) -> str:
-    script = """
+    dock_inner_js = json.dumps(tg_mobile_dock_inner_html(), ensure_ascii=False)
+    dock_nav_ssr = (
+        "<nav "
+        'class="tg-mobile-dock" '
+        f'data-tg-dock-version="{TG_MOBILE_DOCK_VERSION}" '
+        'aria-label="Mobile bottom navigation">'
+        f"{tg_mobile_dock_inner_html()}</nav>"
+    )
+    script_tpl = """
 <script id="tg-header-referral-banner-script">
 (function () {
   var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');
-  if (!header) return;
-  var existing = header.querySelector('.tg-referral-banner-link');
-  if (existing) return;
-  var link = document.createElement('a');
-  link.className = 'tg-referral-banner-link';
-  link.href = 'https://tiffingrab.ca/referral-program/';
-  link.textContent = 'Refer & Earn Free Tiffins - You: +1, Friend: +2. Tap to join now.';
-  link.setAttribute('aria-label', 'Open Referral Program page');
-  header.appendChild(link);
+  /*
+    Inject referral banner only when missing — never bail out early: that used to skip
+    ensureMobileDock() when the link was already present (cached HTML / revisit).
+  */
+  if (header && !header.querySelector('.tg-referral-banner-link')) {
+    var link = document.createElement('a');
+    link.className = 'tg-referral-banner-link';
+    link.href = 'https://tiffingrab.ca/referral-program/';
+    link.textContent = 'Refer & Earn Free Tiffins - You: +1, Friend: +2. Tap to join now.';
+    link.setAttribute('aria-label', 'Open Referral Program page');
+    header.appendChild(link);
+  }
 
   function ensureMobileDock() {
     var isMobile = window.matchMedia('(max-width: 767px)').matches;
     var existing = document.querySelector('.tg-mobile-dock');
     if (!isMobile) {
-      if (existing) existing.remove();
       document.body.style.paddingBottom = '';
+      /* Desktop hides .tg-mobile-dock via CSS — do NOT remove DOM (avoids teardown on every resize / paint). */
       return;
+    }
+
+    /* Upgrade path when markup revision changes */
+    var DOCK_VERSION = __DOCK_VERSION__;
+    if (existing && existing.getAttribute('data-tg-dock-version') !== DOCK_VERSION) {
+      existing.remove();
+      existing = null;
     }
 
     if (!existing) {
       var nav = document.createElement('nav');
       nav.className = 'tg-mobile-dock';
-      nav.setAttribute('aria-label', 'Mobile quick navigation');
-      nav.innerHTML =
-        '<a href="https://tiffingrab.ca/">Home</a>' +
-        '<a href="https://tiffingrab.ca/referral-program/">Referral</a>' +
-        '<a href="https://tiffingrab.ca/tiffin-plans/">Plans</a>' +
-        '<a href="https://tiffingrab.ca/menu/">Menu</a>' +
-        '<a href="https://tiffingrab.ca/contact-us/">Contact</a>';
+      nav.setAttribute('data-tg-dock-version', DOCK_VERSION);
+      nav.setAttribute('aria-label', 'Mobile bottom navigation');
+      nav.innerHTML = __DOCK_INNER_JSON__;
       document.body.appendChild(nav);
+      existing = nav;
     }
+
+    /* SSR nav sits in header widget DOM first — move once to body for reliable fixed/z-index layering */
+    if (existing.parentNode !== document.body) {
+      document.body.appendChild(existing);
+    }
+
     var dock = document.querySelector('.tg-mobile-dock');
+    /*
+      Marker only: navigation is delegated in bindGlobalSingleTapNav() using composedPath + deferred assign.
+      (Duplicate capture listeners on both document and dock used to confuse iOS event ordering.)
+    */
     if (dock && !dock.dataset.tgBound) {
       dock.dataset.tgBound = '1';
-      function forceNavigateFromEvent(e) {
-        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
-        if (!a) return;
-        var href = a.getAttribute('href');
-        if (!href) return;
-        var target = (a.getAttribute('target') || '').toLowerCase();
-        if (target === '_blank') return;
-        if (a.dataset.tgNavigating === '1') return;
-        a.dataset.tgNavigating = '1';
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.assign(a.href);
-      }
-      /* iOS/Safari can eat first click due focus/hover/overlay interactions; use early touch/pointer handlers. */
-      dock.addEventListener('pointerup', forceNavigateFromEvent, true);
-      dock.addEventListener(
-        'touchend',
-        function (e) {
-          forceNavigateFromEvent(e);
-        },
-        { capture: true, passive: false }
-      );
-      dock.addEventListener('click', forceNavigateFromEvent, true);
     }
 
     var path = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
@@ -165,15 +192,26 @@ def wrap_inline_style(css: str) -> str:
       else a.removeAttribute('aria-current');
     });
 
-    document.body.style.paddingBottom = 'calc(4.9rem + env(safe-area-inset-bottom))';
+    document.body.style.paddingBottom = 'calc(4.15rem + env(safe-area-inset-bottom))';
   }
 
   function bindGlobalSingleTapNav() {
     if (document.documentElement.dataset.tgFastTapBound === '1') return;
     document.documentElement.dataset.tgFastTapBound = '1';
 
-    function isCoarseTouch() {
-      return !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+    /*
+      Broad defaults: viewport-based phones/tablets plus any coarse pointer (covers odd Safari UA reporting).
+      Handlers gate on actual touch-like pointer types / touchend so desktop mouse is unaffected.
+    */
+    function useFastTapChrome() {
+      if (!window.matchMedia) return true;
+      if (window.matchMedia('(max-width: 1024px)').matches) return true;
+      if (
+        window.matchMedia('(hover: none)').matches &&
+        window.matchMedia('(any-pointer: coarse)').matches
+      )
+        return true;
+      return false;
     }
 
     function shouldHandleAnchor(a) {
@@ -186,26 +224,82 @@ def wrap_inline_style(css: str) -> str:
       return true;
     }
 
-    function fastNavigate(e) {
-      if (!isCoarseTouch()) return;
-      var t = e.target;
-      var a = t && t.closest ? t.closest('a[href]') : null;
-      if (!shouldHandleAnchor(a)) return;
-      if (a.dataset.tgNavigating === '1') return;
+    /*
+      Prefer composedPath(): fixes shadow-boundary / odd targeting where target.closest skips the link.
+    */
+    function anchorFromEvent(e) {
+      var a = null;
+      if (typeof e.composedPath === 'function') {
+        var path = e.composedPath();
+        for (var i = 0; i < path.length; i++) {
+          var node = path[i];
+          if (!node || !node.closest) continue;
+          if (node.matches && node.matches('a[href]')) {
+            a = node;
+            break;
+          }
+        }
+      }
+      if (!a && e.target && e.target.closest) {
+        a = e.target.closest('a[href]');
+      }
+      return a;
+    }
 
-      var href = a.getAttribute('href');
-      if (href && href.charAt(0) === '#') return;
+    function assignNav(url) {
+      requestAnimationFrame(function () {
+        window.location.assign(url);
+      });
+    }
+
+    var __tgLastNavUrl = '';
+    var __tgLastNavAt = 0;
+
+    function fastNavigate(e) {
+      if (!useFastTapChrome()) return;
+      /* Only emulate nav for real touch streams (mouse path keeps native click). */
+      var isTouchEnded = e.type === 'touchend';
+      var isPenOrTouchPointer =
+        e.pointerType === 'touch' || e.pointerType === 'pen' || (!e.pointerType && isTouchEnded);
+      if (!isPenOrTouchPointer) return;
+
+      var a = anchorFromEvent(e);
+      if (!shouldHandleAnchor(a)) return;
+      var hrefRaw = (a.getAttribute('href') || '').trim();
+      if (hrefRaw.charAt(0) === '#') return;
+
+      if (document.documentElement.dataset.tgGoing === '1' || a.dataset.tgNavigating === '1') return;
+
+      /* Same tap often emits pointerup then touchend (or reverse); collapse to one navigate. */
+      var nowMs = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
+      var absUrl = '';
+      try {
+        absUrl = new URL(a.getAttribute('href'), window.location.href).href;
+      } catch (_e) {
+        absUrl = a.href;
+      }
+      if (absUrl && absUrl === __tgLastNavUrl && nowMs - __tgLastNavAt < 500) return;
+      __tgLastNavUrl = absUrl;
+      __tgLastNavAt = nowMs;
 
       a.dataset.tgNavigating = '1';
+      document.documentElement.dataset.tgGoing = '1';
+      window.setTimeout(function () {
+        if (a.dataset) delete a.dataset.tgNavigating;
+        delete document.documentElement.dataset.tgGoing;
+      }, 1800);
+
       e.preventDefault();
       e.stopPropagation();
 
-      var target = (a.getAttribute('target') || '').toLowerCase();
-      if (target === '_blank') {
+      var targetAttr = (a.getAttribute('target') || '').toLowerCase();
+      if (targetAttr === '_blank') {
+        delete document.documentElement.dataset.tgGoing;
+        delete a.dataset.tgNavigating;
         window.open(a.href, '_blank', 'noopener,noreferrer');
-      } else {
-        window.location.assign(a.href);
+        return;
       }
+      assignNav(a.href);
     }
 
     document.addEventListener(
@@ -218,11 +312,22 @@ def wrap_inline_style(css: str) -> str:
     document.addEventListener(
       'pointerup',
       function (e) {
-        if (e.pointerType && e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
         fastNavigate(e);
       },
       true
     );
+
+    /*
+      BFCache restore: anchors can retain stale tgNavigating; allow taps after back/forward.
+    */
+    window.addEventListener('pageshow', function () {
+      document.querySelectorAll('a[data-tg-navigating]').forEach(function (el) {
+        delete el.dataset.tgNavigating;
+      });
+      delete document.documentElement.dataset.tgGoing;
+      __tgLastNavUrl = '';
+      __tgLastNavAt = 0;
+    });
   }
 
   ensureMobileDock();
@@ -248,8 +353,17 @@ def wrap_inline_style(css: str) -> str:
   );
 })();
 </script>
-""".strip()
-    return f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>\n{script}\n'
+"""
+    script = (
+        script_tpl.strip()
+        .replace("__DOCK_VERSION__", json.dumps(TG_MOBILE_DOCK_VERSION))
+        .replace("__DOCK_INNER_JSON__", dock_inner_js)
+    )
+    return (
+        f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>\n'
+        f"{dock_nav_ssr}\n"
+        f"{script}\n"
+    )
 
 
 def structured_from_result(raw: dict) -> dict:

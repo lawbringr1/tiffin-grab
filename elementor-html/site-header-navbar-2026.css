@@ -890,6 +890,8 @@ header.elementor.elementor-1863.elementor-location-header {
   }
   .tg-mobile-dock {
     display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
   }
 }
 
@@ -930,6 +932,23 @@ header.elementor.elementor-1863.elementor-location-header {
   z-index: 1000;
 }
 
+/*
+  Prefer single-tap link activation inside the sticky header (Safari hover/focus + touch ambiguity).
+*/
+@media (max-width: 1024px) {
+  .elementor-location-header {
+    touch-action: manipulation;
+  }
+
+  .elementor-location-header a[href]:not(.tg-mobile-dock__item),
+  .elementor-location-header .tg-referral-banner-link,
+  .elementor-location-header .elementor-menu-toggle,
+  .elementor-location-header button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
 .elementor-location-header .elementor-menu-toggle {
   border-radius: 9999px !important;
   border: 1px solid var(--tg-border) !important;
@@ -967,71 +986,124 @@ header.elementor.elementor-1863.elementor-location-header {
     pointer-events: none !important;
   }
 
-  /* Injected JS creates this dock at <body> level for stable behavior. */
+  /*
+    Theme-matched bottom dock (warm canvas + green accent): full-width strip, icons + labels.
+    Injected JS: scripts/elementor_mcp_push_header_css.py
+  */
   .tg-mobile-dock {
     position: fixed;
-    left: max(0.65rem, env(safe-area-inset-left));
-    right: max(0.65rem, env(safe-area-inset-right));
-    bottom: calc(0.6rem + env(safe-area-inset-bottom));
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1106;
     display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    padding: 0.25rem;
-    border-radius: 9999px;
-    border: 1px solid var(--tg-border);
-    /* Solid surface: backdrop-filter on fixed layers is costly on mobile GPUs. */
-    background: rgba(255, 255, 255, 0.98);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.18);
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0;
+    padding: 0.42rem 0.3rem calc(0.45rem + env(safe-area-inset-bottom));
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid var(--tg-border);
+    background: linear-gradient(180deg, #ffffff 0%, #fff8f6 48%, #fff5f0 100%);
+    box-shadow:
+      0 -1px 0 rgba(29, 92, 50, 0.06),
+      0 -8px 36px rgba(35, 26, 21, 0.06);
     pointer-events: auto;
-    touch-action: manipulation;
-  }
-
-  .tg-mobile-dock a {
-    flex: 1 1 0;
-    min-width: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    padding: 0.56rem 0.48rem;
-    font-family: var(--tg-font);
-    font-size: 0.76rem;
-    font-weight: 600;
-    line-height: 1.2;
-    color: var(--tg-muted-foreground);
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .tg-mobile-dock .tg-mobile-dock__item {
+    flex: 1 1 0;
+    max-width: 5.5rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0.18rem 0.15rem 0.28rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.12rem;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    font-family: var(--tg-font), system-ui, sans-serif;
+    font-size: 0.5875rem;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    color: var(--tg-muted-foreground);
+    text-decoration: none;
+    text-decoration-line: none;
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+    text-align: center;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
     -webkit-touch-callout: none;
     user-select: none;
-    pointer-events: auto;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+  }
+
+  .tg-mobile-dock .material-symbols-outlined.tg-mobile-dock__icon {
+    font-family: "Material Symbols Outlined", sans-serif !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 1.46rem !important;
+    width: auto;
+    height: auto;
+    line-height: 1 !important;
+    color: inherit;
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24 !important;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"],
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"] .tg-mobile-dock__icon {
+    color: var(--tg-theme) !important;
+  }
+
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"] .material-symbols-outlined.tg-mobile-dock__icon {
+    font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24 !important;
+  }
+
+  .tg-mobile-dock .tg-mobile-dock__label {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: inherit;
+    opacity: 0.95;
+    font-weight: inherit;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .tg-mobile-dock a:hover {
+    .tg-mobile-dock .tg-mobile-dock__item:hover:not([aria-current="page"]) {
       color: var(--tg-foreground);
-      background: var(--tg-bg);
+      background: rgba(29, 92, 50, 0.06);
+      border-radius: 0.5rem;
+    }
+    .tg-mobile-dock .tg-mobile-dock__item:hover[aria-current="page"] {
+      background: rgba(29, 92, 50, 0.05);
+      border-radius: 0.5rem;
     }
   }
 
-  .tg-mobile-dock a:focus-visible {
-    color: var(--tg-foreground);
-    background: var(--tg-bg);
-  }
-
-  .tg-mobile-dock a[aria-current="page"] {
-    color: var(--tg-foreground);
-    background: var(--tg-bg);
-    font-weight: 700;
+  .tg-mobile-dock .tg-mobile-dock__item:focus-visible {
+    outline: 2px solid rgba(29, 92, 50, 0.4);
+    outline-offset: -2px;
+    border-radius: 0.35rem;
   }
 
   html body {
-    padding-bottom: calc(4.9rem + env(safe-area-inset-bottom)) !important;
+    padding-bottom: calc(4.15rem + env(safe-area-inset-bottom)) !important;
   }
 }

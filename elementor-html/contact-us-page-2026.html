@@ -75,8 +75,12 @@
       width: 100%;
       max-width: none;
       margin: 0;
-      padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 4vw, 1.5rem) clamp(2.5rem, 6vw, 3.5rem);
+      padding-top: calc(clamp(1.25rem, 4vw, 2rem) + env(safe-area-inset-top, 0px));
+      padding-right: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(clamp(2.5rem, 6vw, 3.5rem) + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(clamp(1rem, 4vw, 1.5rem) + env(safe-area-inset-left, 0px));
       box-sizing: border-box;
+      -webkit-text-size-adjust: 100%;
     }
     #tg-contact-2026 *,
     #tg-contact-2026 *::before,
@@ -168,6 +172,14 @@
       color: var(--c-on);
       transition: box-shadow 0.2s ease;
     }
+    /* 16px+ on narrow viewports avoids iOS Safari zoom-on-focus */
+    @media (max-width: 639px) {
+      #tg-contact-2026 .tg-c-form input[type="text"],
+      #tg-contact-2026 .tg-c-form input[type="email"],
+      #tg-contact-2026 .tg-c-form textarea {
+        font-size: max(1rem, 16px);
+      }
+    }
     #tg-contact-2026 .tg-c-form input:focus,
     #tg-contact-2026 .tg-c-form textarea:focus {
       outline: none;
@@ -209,6 +221,8 @@
       border-radius: 8px;
       cursor: pointer;
       transition: border-color 0.2s ease, background 0.2s ease;
+      touch-action: manipulation;
+      min-height: 44px;
     }
     #tg-contact-2026 .tg-c-check:hover {
       border-color: color-mix(in srgb, var(--c-primary) 55%, var(--c-outline));
@@ -246,6 +260,8 @@
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(227, 123, 62, 0.35);
       transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+      touch-action: manipulation;
+      min-height: 48px;
     }
     #tg-contact-2026 .tg-c-submit:hover {
       background: var(--c-primary-dark);
@@ -516,6 +532,42 @@
     @keyframes tgContactSkWave {
       0% { background-position: 200% 0; }
       100% { background-position: -40% 0; }
+    }
+
+    @media (max-width: 639px) {
+      #tg-contact-2026 .tg-c-hero {
+        margin-bottom: clamp(1.5rem, 6vw, 2rem);
+      }
+      #tg-contact-2026 .tg-c-title {
+        font-size: clamp(1.65rem, 7vw, 2.2rem);
+        line-height: 1.14;
+      }
+      #tg-contact-2026 .tg-c-card {
+        padding: clamp(1.125rem, 5vw, 1.5rem);
+      }
+      /* Shorter stacked map+detail card; embedded map stays thumb-friendly */
+      #tg-contact-2026 .tg-c-map-wrap {
+        min-height: 0;
+      }
+      #tg-contact-2026 .tg-c-map {
+        min-height: min(52dvh, 22rem);
+      }
+      #tg-contact-2026 .tg-c-map-side {
+        padding: 1rem 1.15rem;
+      }
+      #tg-contact-2026 .tg-c-info-card {
+        padding: 1.35rem 1.2rem;
+      }
+      #tg-contact-2026 .tg-c-maps-btn {
+        min-height: 44px;
+        padding: 0.65rem 0;
+        justify-content: flex-start;
+      }
+      #tg-contact-2026 .tg-c-info-card a {
+        display: inline-block;
+        padding: 0.4rem 0;
+        margin-top: 0.1rem;
+      }
     }
   </style>
 
