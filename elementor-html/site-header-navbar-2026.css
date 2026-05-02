@@ -22,6 +22,8 @@
   --tg-inner-max: 80rem; /* max-w-7xl */
   /* Navbar: keep logo pill, UE links, and icons on the same optical scale */
   --tg-nav-row-py: 0.45rem;
+  /* Extra air below Dynamic Island / status bar on phones (paired with env(safe-area-inset-top) on header). */
+  --tg-header-top-pad: 0.5rem;
   --tg-nav-link-py: 0.42rem;
   --tg-nav-font: 0.9375rem;
   --tg-nav-icon-size: 2.5rem;
@@ -37,7 +39,14 @@ header.elementor.elementor-1863.elementor-location-header {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
-  padding: 0 !important;
+  /*
+    Respect notch / status bar inset and add a minimum top cushion so logo + icons
+    aren’t glued to the top edge on mobile Safari.
+  */
+  padding-block-start: max(var(--tg-header-top-pad), env(safe-area-inset-top, 0px)) !important;
+  padding-inline-start: env(safe-area-inset-left, 0px) !important;
+  padding-inline-end: env(safe-area-inset-right, 0px) !important;
+  padding-block-end: 0 !important;
   background: var(--tg-bg) !important;
   border-bottom: 1px solid var(--tg-border) !important;
   display: block !important;
@@ -148,6 +157,15 @@ header.elementor.elementor-1863.elementor-location-header {
 @media (min-width: 640px) {
   .elementor-1863 .elementor-element-ef53437 > .e-con-inner {
     padding: var(--tg-nav-row-py) 1.5rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .elementor-1863 .elementor-element-ef53437 > .e-con-inner {
+    padding-top: calc(var(--tg-nav-row-py) + 0.35rem) !important;
+    padding-bottom: calc(var(--tg-nav-row-py) + 0.2rem) !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 }
 
@@ -899,13 +917,14 @@ header.elementor.elementor-1863.elementor-location-header {
   max-width: var(--tg-inner-max) !important;
   margin-left: auto !important;
   margin-right: auto !important;
-  padding: 0 1rem 0.4rem !important;
+  /* Was 0 top — crushed against status bar row; outer header adds safe-area, this adds inner air */
+  padding: 0.55rem 1rem 0.5rem !important;
   width: 100% !important;
 }
 
 @media (min-width: 640px) {
   .elementor-1863 .elementor-element-67924b6 > .e-con-inner {
-    padding: 0 1.5rem 0.4rem !important;
+    padding: 0.55rem 1.5rem 0.55rem !important;
   }
 }
 
