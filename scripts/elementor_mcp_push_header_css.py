@@ -247,9 +247,11 @@ def wrap_inline_style(css: str) -> str:
     }
 
     function assignNav(url) {
-      requestAnimationFrame(function () {
-        window.location.assign(url);
-      });
+      /*
+        Navigate in the same turn as the user gesture. Deferring with rAF can detach navigation
+        from the tap on mobile WebKit and leave the next document visibly “idle” until a second tap.
+      */
+      window.location.assign(url);
     }
 
     var __tgLastNavUrl = '';

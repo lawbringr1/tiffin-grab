@@ -428,6 +428,126 @@ header.elementor.elementor-1863.elementor-location-header {
   color: var(--tg-on-theme) !important;
 }
 
+/* ========== WooCommerce Menu Cart (Elementor Pro) — same outline pill as icon buttons ========== */
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart {
+  margin: 0 !important;
+}
+
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-widget-container,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-widget-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-menu-cart__toggle
+  .elementor-button,
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle_button,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle .elementor-button,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle_button {
+  font-family: var(--tg-font) !important;
+  font-weight: 600 !important;
+  font-size: var(--tg-nav-font) !important;
+  line-height: 1.2 !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.35rem !important;
+  flex-wrap: nowrap !important;
+  background: var(--tg-bg) !important;
+  color: var(--tg-foreground) !important;
+  border: 1px solid var(--tg-border) !important;
+  border-radius: 9999px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  min-height: var(--tg-nav-icon-size) !important;
+  min-width: var(--tg-nav-icon-size) !important;
+  padding: 0.2rem 0.5rem !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease !important;
+}
+
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-menu-cart__toggle
+  .elementor-button:hover,
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-menu-cart__toggle
+  .elementor-button:focus-visible,
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle_button:hover,
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-menu-cart__toggle_button:focus-visible,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle .elementor-button:hover,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle .elementor-button:focus-visible,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle_button:hover,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__toggle_button:focus-visible {
+  background: var(--tg-muted) !important;
+  color: var(--tg-foreground) !important;
+}
+
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-button-icon
+  svg,
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-button-icon
+  i,
+.elementor-location-header.elementor-1863
+  .elementor-widget-woocommerce-menu-cart
+  .elementor-button-icon
+  i:before,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-button-icon svg,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-button-icon i,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-button-icon i:before {
+  fill: currentColor !important;
+  color: var(--tg-foreground) !important;
+}
+
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-button-text,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-button-text {
+  font-family: var(--tg-font) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  color: inherit !important;
+}
+
+.elementor-location-header.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__items-indicator,
+.elementor-1863 .elementor-widget-woocommerce-menu-cart .elementor-menu-cart__items-indicator {
+  font-family: var(--tg-font) !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  min-width: 1.1rem !important;
+  height: 1.1rem !important;
+  padding: 0 0.28rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--tg-theme) !important;
+  color: var(--tg-on-theme) !important;
+  border-radius: 9999px !important;
+  border: 2px solid var(--tg-bg) !important;
+  box-sizing: border-box !important;
+}
+
+.elementor-location-header.elementor-1863 .elementor-menu-cart__main,
+.elementor-1863 .elementor-menu-cart__main {
+  font-family: var(--tg-font) !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid var(--tg-border) !important;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1) !important;
+}
+
 /*
   Live header uses Elementor Heading widgets (not the HTML snippet):
   • Desktop: .elementor-element-94e7fd8 — <a>Tiffin<span class="span">Grab</span></a>
@@ -778,6 +898,82 @@ header.elementor.elementor-1863.elementor-location-header {
   color: var(--tg-foreground) !important;
 }
 
+/*
+  UE ships: #uc_nav_menu_elementor_{id} .ue-nav-menu-mobile { display:none } and
+  .ue-nav-menu-mobile > * { display:none } for “desktop” — menu often lives inside that node.
+  Overrides in @media (min-width:768px) alone can be stripped by LiteSpeed UCSS; these rules
+  are always loaded, scoped to desktop row ef53437 (that row is display:none at ≤767 elsewhere).
+  Attribute selector tracks any widget instance ID.
+*/
+.elementor-location-header .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile-wrapper,
+.elementor-1863 .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.elementor-location-header .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile,
+.elementor-1863 .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.elementor-location-header .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile > ul.ue-menu,
+.elementor-1863 .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] .ue-nav-menu-mobile > ul.ue-menu {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  transform: none !important;
+  flex-direction: row !important;
+  width: max-content !important;
+  max-width: min(100%, 100vw) !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  clip-path: none !important;
+}
+
+/*
+  Accordion layout: ul.ue-menu is commonly a sibling of .ue-nav-menu-checkbox (not under .ue-nav-menu-mobile).
+  UE uses opacity:0 + pointer-events:none until :checked — the hidden checkbox never checks on desktop → invisible links.
+*/
+.elementor-location-header .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] ul.ue-menu,
+.elementor-1863 .elementor-element-ef53437 [id^="uc_nav_menu_elementor_"] ul.ue-menu {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  transform: none !important;
+  width: max-content !important;
+  max-width: min(100%, 100vw) !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* ========== Native Elementor Nav + tg-shadcn-nav ========== */
 .elementor-location-header .tg-shadcn-nav .elementor-nav-menu {
   display: flex !important;
@@ -901,7 +1097,7 @@ header.elementor.elementor-1863.elementor-location-header {
   box-shadow: none !important;
 }
 
-/* Prevent mobile container artifacts on desktop (e.g. stray back-link text). */
+/* Prevent mobile container artifacts on desktop + tablet (e.g. stray back-link text). */
 @media (min-width: 768px) {
   .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
     display: none !important;
@@ -910,6 +1106,121 @@ header.elementor.elementor-1863.elementor-location-header {
     display: none !important;
     pointer-events: none !important;
     visibility: hidden !important;
+  }
+
+  /*
+    Tablet gap: UC / Unlimited Elements often enables the hamburger branch below ~1024px and
+    hides ul.ue-menu, so the desktop row shows logo + icons but no links. Keep the centered
+    muted pill + horizontal menu for every width ≥768 until the ≤767 mobile layout (dock).
+  */
+  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent {
+    display: flex !important;
+  }
+
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37,
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* UE puts .ue-left-close on the root #uc_nav_menu_elementor_* — must stay visible on desktop. */
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 [id^="uc_nav_menu_elementor_"].ue-nav-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    pointer-events: auto !important;
+  }
+
+  .elementor-1863
+    .elementor-element-ef53437
+    .elementor-element-39bbf37
+    .elementor-widget-ucaddon_nav_menu
+    ul.ue-menu {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    clip: auto !important;
+    clip-path: none !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: relative !important;
+    width: max-content !important;
+    max-width: min(100%, 100vw) !important;
+  }
+
+  /*
+    Do NOT hide .ue-nav-menu-mobile-wrapper — UC often nests the horizontal ul.ue-menu inside it.
+    Only suppress the actual hamburger / drawer chrome in the centered column.
+  */
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .ue-nav-menu-mobile-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /*
+    Many UC builds put ul.ue-menu INSIDE .ue-nav-menu-mobile — never display:none that block.
+    Only hide drawer / hamburger chrome that is actually separate (open/close + Elementor toggle).
+  */
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .ue-nav-menu-mobile {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  /*
+    Hamburger / drawer chrome only. Never match #uc_nav_menu_elementor_* — UE adds .ue-left-close
+    to that root for animation state; hiding it collapsed the whole desktop menu (computed display:none).
+  */
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .ue-left-open:not([id^="uc_nav_menu_elementor_"]),
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .ue-left-close:not([id^="uc_nav_menu_elementor_"]),
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-menu-toggle {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /*
+    Accordion markup: ul.ue-menu is a direct sibling of .ue-nav-menu-mobile-wrapper / label (H6 probe:
+    white 50×50 label.ue-nav-menu-mobile beside ul). Showing those with display:flex surfaced a white circle.
+    Only when ul is a direct root child hide the wrapper; older builds nest ul inside the label unchanged.
+  */
+  .elementor-location-header .elementor-element-ef53437 .elementor-element-39bbf37 [id^="uc_nav_menu_elementor_"]:has(> ul.ue-menu) > .ue-nav-menu-mobile-wrapper,
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 [id^="uc_nav_menu_elementor_"]:has(> ul.ue-menu) > .ue-nav-menu-mobile-wrapper {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    pointer-events: none !important;
   }
 }
 
@@ -1124,5 +1435,87 @@ header.elementor.elementor-1863.elementor-location-header {
 
   html body {
     padding-bottom: calc(4.15rem + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/*
+  UE injects its own <style> block immediately BEFORE #uc_nav_menu_elementor_* in DOM — after
+  header inline widget (b706311). Base #id .ue-menu { opacity:0 } can win the cascade when
+  specificity ties with earlier rules. Tie-break with #id child selector + !important, repeated
+  late in this sheet. Hardcoded id matches current header widget; change if Elementor replaces it.
+  Fallback: [id^="..."] for new widget ids (slightly lower specificity but still !important).
+*/
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu,
+header.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu,
+header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  transform: none !important;
+  width: max-content !important;
+  max-width: min(100%, 100vw) !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
+header.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a,
+header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/*
+  White-circle fallback without :has() — some optimizers strip :has from the @media (768px) block
+  above, which restores the 50×50 label.ue-nav-menu-mobile. This repeats the hide using the live
+  widget id + direct child only (accordion DOM: wrapper is first child, ul is sibling). Update
+  21c3db0 if Theme Builder replaces this Unlimited Elements nav instance.
+*/
+@media (min-width: 768px) {
+  .elementor-location-header .elementor-element-ef53437 .elementor-element-39bbf37 #uc_nav_menu_elementor_21c3db0.ue-nav-menu > .ue-nav-menu-mobile-wrapper,
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 #uc_nav_menu_elementor_21c3db0.ue-nav-menu > .ue-nav-menu-mobile-wrapper {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Kill residual flex + white pill on label (H6 still reported display:flex on 0×0 label). */
+  .elementor-location-header .elementor-element-ef53437 .elementor-element-39bbf37 #uc_nav_menu_elementor_21c3db0 label.ue-nav-menu-mobile,
+  .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 #uc_nav_menu_elementor_21c3db0 label.ue-nav-menu-mobile {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    clip-path: inset(50%) !important;
+    position: absolute !important;
+    opacity: 0 !important;
   }
 }
