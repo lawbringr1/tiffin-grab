@@ -1,0 +1,66 @@
+<!--
+  TiffinGrab — paste into WordPress HEAD (Appearance → Theme File Editor header.php,
+  Elementor Site Settings → Custom Code, “Insert Headers and Footers”, or child theme hooks).
+  Enables Geist + Caveat + Material Symbols + Google Ads tag site-wide.
+  Referral page may still load Caveat as a fallback if this snippet isn’t pasted yet.
+
+  IMPORTANT: Omit duplicate Manrope / Work Sans bundles in widgets — use Geist from here.
+-->
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Geist variable font (wght 100–900) + Material Symbols — non-blocking CSS for Lighthouse -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=optional"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=optional" />
+</noscript>
+<!-- Caveat: handwritten headings / polaroid captions on referral hero -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap" />
+</noscript>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+  />
+</noscript>
+<link
+  rel="preload"
+  as="font"
+  type="font/woff2"
+  crossorigin
+  fetchpriority="high"
+  href="https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwcGFWNOITd.woff2"
+/>
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/geist/v4/gyByhwUxId8gMEwSGFWNOITddY4.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/materialsymbolsoutlined/v325/kJEPBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzBwG-RpA6RzaxHMPdY40KH8nGzv3fzfVJO1USv9ls.woff2" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16605348848"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "AW-16605348848");
+</script>

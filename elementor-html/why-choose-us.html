@@ -122,12 +122,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       gap: clamp(2.25rem, 5vw, 4rem);
     }
     @media (min-width: 1024px) {
       .tg-wcu-grid {
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         gap: clamp(2.5rem, 4vw, 4.5rem);
       }
       .tg-wcu-col-media,
@@ -179,6 +181,7 @@
       display: flex;
       gap: 1rem;
       align-items: flex-start;
+      justify-content: flex-start;
     }
     .tg-wcu-features .tg-wcu-ico {
       flex-shrink: 0;
@@ -204,10 +207,13 @@
     }
     .tg-wcu-cta-wrap {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
+      width: 100%;
       margin-top: clamp(2.5rem, 5vw, 3.5rem);
     }
-    /* CTA: shared .tg-h26-btn in home-2026-hero-tags.html (Shadcn magnetic pill) */
+    /* CTA: Sitewide .tg-h26-btn — Elementor Site Settings kit CSS (Why Choose GTA canonical). */
     @media (max-width: 767px) {
       .tg-wcu {
         padding-left: max(1rem, env(safe-area-inset-left, 0px));

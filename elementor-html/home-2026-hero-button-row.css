@@ -1,12 +1,11 @@
-/* Home 2026 Hero — button row a2cdc57 (post 9825).
-   Shadcn-style pill. IMPORTANT: icon must NOT be position:relative on .elementor-button-content-wrapper
-   or the absolute icon anchors to text-width and covers the label. */
+/* Home 2026 Hero — Elementor knobs use top:50% + translateY(-50%); theme/button metrics skew pure top:ring vs .tg-h26-btn. */
 selector {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   gap: 14px !important;
   align-items: center !important;
+  justify-content: center !important;
   margin-top: 10px !important;
   width: 100% !important;
 }
@@ -17,25 +16,29 @@ selector .elementor-element[data-id="149cf5bc"] {
 /* Only the <a> is the positioning context for the flying icon */
 selector .elementor-element[data-id="438c2085"] .elementor-button,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button {
+  --tg-ring: 0.25rem !important;
+  --tg-knob: 2.5rem !important;
+  --tg-slide: calc(var(--tg-knob) + var(--tg-ring)) !important;
   position: relative !important;
+  isolation: isolate !important;
   overflow: hidden !important;
   width: fit-content !important;
   max-width: none !important;
-  /* Clear vertical band: theme often fights shorthand padding — set block explicitly. */
-  min-height: 50px !important;
-  height: auto !important;
+  min-height: 3rem !important;
+  height: 3rem !important;
   border-radius: 999px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
   box-sizing: border-box !important;
-  line-height: 1.25 !important;
+  line-height: 1.2 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
   border: none !important;
   box-shadow: none !important;
-  padding-left: 24px !important;
-  padding-right: 52px !important;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
+  /* Slightly roomy py — Elementor + line-height 1.2 can clip punctuation without extra band */
+  padding: 0.3125rem 3.5rem 0.3125rem 1.5rem !important;
   transition: padding 0.5s ease !important;
 }
 selector .elementor-element[data-id="438c2085"] .elementor-button {
@@ -50,12 +53,9 @@ selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
 selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-  padding-left: 52px !important;
-  padding-right: 24px !important;
-  padding-top: 8px !important;
-  padding-bottom: 8px !important;
+  padding: 0.3125rem 1.5rem 0.3125rem 3.5rem !important;
 }
-/* static = icon’s absolute ties to .elementor-button, not text-only width */
+/* MUST stay static — if relative, icons inside wrapper use text width as CB and collide with label */
 selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-content-wrapper {
   position: static !important;
@@ -78,19 +78,20 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
 selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
   position: absolute !important;
+  /* Elementor’s button box/ascent pushes top:ring knobs down — mirror mobile and center vs padding box */
   top: 50% !important;
-  right: 8px !important;
+  right: var(--tg-ring) !important;
   left: auto !important;
   bottom: auto !important;
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  max-width: 32px !important;
-  min-height: 32px !important;
-  max-height: 32px !important;
+  width: var(--tg-knob) !important;
+  height: var(--tg-knob) !important;
+  min-width: var(--tg-knob) !important;
+  min-height: var(--tg-knob) !important;
+  max-width: var(--tg-knob) !important;
+  max-height: var(--tg-knob) !important;
   margin: 0 !important;
   padding: 0 !important;
-  flex: 0 0 32px !important;
+  flex: 0 0 auto !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -100,6 +101,8 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   font-size: 0 !important;
   line-height: 0 !important;
   transition: right 0.5s ease, transform 0.5s ease !important;
+  transform: translateY(-50%) !important;
+  transform-origin: 50% 50% !important;
   z-index: 1 !important;
   overflow: hidden !important;
 }
@@ -107,20 +110,14 @@ selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-but
 selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon * {
   display: none !important;
 }
-selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon {
-  transform: translateY(-50%) rotate(0deg) !important;
-}
-selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
-  transform: translateY(-50%) !important;
-}
 selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
 selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
-  right: calc(100% - 8px - 32px) !important;
+  right: calc(100% - var(--tg-slide)) !important;
   transform: translateY(-50%) rotate(45deg) !important;
 }
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
 selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
-  right: calc(100% - 8px - 32px) !important;
+  right: calc(100% - var(--tg-slide)) !important;
   transform: translateY(-50%) !important;
 }
 /* Inline SVG arrow (FA often missing in editor / lazy-loaded) */
@@ -131,8 +128,8 @@ selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-but
 selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon::before {
   content: "" !important;
   display: block !important;
-  width: 15px !important;
-  height: 15px !important;
+  width: 16px !important;
+  height: 16px !important;
   flex-shrink: 0 !important;
   background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
     center / contain no-repeat !important;
@@ -145,17 +142,16 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
 selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon::before {
   content: "" !important;
   display: block !important;
-  width: 15px !important;
-  height: 15px !important;
+  width: 18px !important;
+  height: 18px !important;
   flex-shrink: 0 !important;
   background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2325d366%22%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
     center / contain no-repeat !important;
 }
-@media (max-width: 767px) {
-  /*
-    One row on mobile: two equal columns, full-width bar (inset). Knobs match FAQ CTA (2.35rem).
-    Slightly tighter horizontal padding than stacked layout so labels fit beside the disc.
-  */
+/*
+  Touch / narrow: simple full pill CTAs (no flying icon). Matches .tg-h26-btn mobile + landscape phones (hover: none).
+*/
+@media (max-width: 767px), (hover: none) {
   selector {
     flex-direction: row !important;
     align-items: stretch !important;
@@ -171,98 +167,53 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   }
   selector .elementor-element[data-id="438c2085"],
   selector .elementor-element[data-id="149cf5bc"] {
-    flex: 1 1 0 !important;
+    flex: 1 1 calc(50% - 5px) !important;
     min-width: 0 !important;
+    max-width: calc(50% - 5px) !important;
     width: auto !important;
-    max-width: none !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button {
     width: 100% !important;
     max-width: 100% !important;
-    min-height: 52px !important;
+    min-height: 3rem !important;
     height: auto !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     align-items: center !important;
-    /* Slightly smaller than 16–18px caps — still beats theme default on small screens */
-    font-size: clamp(13.5px, 3.5vw, 16px) !important;
-    line-height: 1.22 !important;
-    padding-left: 1rem !important;
-    padding-right: 2.85rem !important;
-    padding-top: 0.55rem !important;
-    padding-bottom: 0.55rem !important;
+    padding: 0.75rem 0.75rem !important;
+    border-radius: 9999px !important;
+    overflow: visible !important;
+    font-size: clamp(12.5px, 3.4vw, 15px) !important;
+    line-height: 1.25 !important;
+    transition: background-color 0.2s ease, transform 0.15s ease !important;
+  }
+  selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:active,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:active {
+    padding: 0.75rem 0.75rem !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-content-wrapper,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-content-wrapper {
+    position: static !important;
     min-width: 0 !important;
     max-width: 100% !important;
+    justify-content: center !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-text,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-text {
     font-size: inherit !important;
     line-height: inherit !important;
     white-space: normal !important;
+    text-align: center !important;
     overflow: visible !important;
     text-overflow: clip !important;
-    text-align: left !important;
   }
-  /* 36px disc for better visual balance in hero */
   selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
-    width: 2rem !important;
-    height: 2rem !important;
-    min-width: 2rem !important;
-    max-width: 2rem !important;
-    min-height: 2rem !important;
-    max-height: 2rem !important;
-    flex: 0 0 2rem !important;
-    right: 0.45rem !important;
-    top: 50% !important;
-    left: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    line-height: 0 !important;
-    border-radius: 999px !important;
-    background: #ffffff !important;
-    overflow: hidden !important;
-  }
-  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon {
-    transform: translateY(-50%) rotate(0deg) !important;
-  }
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon {
-    transform: translateY(-50%) !important;
-  }
-  selector .elementor-element[data-id="438c2085"] .elementor-button:hover .elementor-button-icon,
-  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible .elementor-button-icon {
-    right: calc(100% - 0.45rem - 2rem) !important;
-    transform: translateY(-50%) rotate(45deg) !important;
-  }
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover .elementor-button-icon,
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible .elementor-button-icon {
-    right: calc(100% - 0.45rem - 2rem) !important;
-    transform: translateY(-50%) !important;
-  }
-  /* Same inner glyph sizes as FAQ CTA (.tg-faq-magnetic--primary / --wa) */
-  selector .elementor-element[data-id="438c2085"] .elementor-button .elementor-button-icon::before,
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-button-icon::before {
-    width: 14px !important;
-    height: 14px !important;
-    flex-shrink: 0 !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-  }
-  selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
-  selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-    padding-left: 2.85rem !important;
-    padding-right: 1rem !important;
-    padding-top: 0.55rem !important;
-    padding-bottom: 0.55rem !important;
+    display: none !important;
   }
 }
 @media (max-width: 380px) {
@@ -273,19 +224,15 @@ selector .elementor-element[data-id="149cf5bc"] .elementor-button .elementor-but
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button {
-    font-size: clamp(13px, 3.35vw, 15px) !important;
-    padding-left: 0.5rem !important;
-    padding-right: 2.75rem !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+    font-size: clamp(12px, 3.35vw, 14px) !important;
+    padding: 0.65rem 0.6rem !important;
   }
   selector .elementor-element[data-id="438c2085"] .elementor-button:hover,
   selector .elementor-element[data-id="438c2085"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="438c2085"] .elementor-button:active,
   selector .elementor-element[data-id="149cf5bc"] .elementor-button:hover,
-  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible {
-    padding-left: 2.75rem !important;
-    padding-right: 0.5rem !important;
-    padding-top: 0.5rem !important;
-    padding-bottom: 0.5rem !important;
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:focus-visible,
+  selector .elementor-element[data-id="149cf5bc"] .elementor-button:active {
+    padding: 0.65rem 0.6rem !important;
   }
 }

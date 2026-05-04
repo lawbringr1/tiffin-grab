@@ -131,42 +131,306 @@ body {
 	overscroll-behavior-x: none !important;
 }
 
-/* Mobile: magnetic CTA pills — no sliding knob / arrow; simple centered pills */
-@media (max-width: 767px) {
-	html body a.tg-h26-btn.tg-h26-btn,
-	html body button.tg-h26-btn.tg-h26-btn,
-	html body a.tg-h26-btn.tg-h26-btn:link,
-	html body a.tg-h26-btn.tg-h26-btn:visited {
+/*
+  Magnetic CTA → shadcn: h-12 p-1 ps-6 pe-14, knob w-10 h-10 + right-1, hover:right-[calc(100%-44px)] + rotate.
+  (--tg-slide = w-10 + right-1 = 2.75rem). Uses % widths only — no container queries.
+*/
+html body a.tg-h26-btn,
+html body a.tg-h26-btn:link,
+html body a.tg-h26-btn:visited,
+html body button.tg-h26-btn {
+	--tg-ring: 0.25rem;
+	--tg-knob: 2.5rem;
+	--tg-slide: calc(var(--tg-knob) + var(--tg-ring));
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: fit-content;
+	max-width: 100%;
+	min-height: 3rem;
+	height: 3rem;
+	padding: 0.25rem 3.5rem 0.25rem 1.5rem;
+	border-radius: 9999px;
+	overflow: hidden;
+	box-sizing: border-box;
+	font-family: "Geist", sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: 0.02em;
+	text-decoration: none !important;
+	border: none;
+	cursor: pointer;
+	box-shadow: none !important;
+	-webkit-tap-highlight-color: transparent;
+	transition: padding 0.5s ease, background-color 0.35s ease, filter 0.25s ease, transform 0.2s ease;
+	-webkit-appearance: none;
+	appearance: none;
+}
+html body button.tg-h26-btn {
+	color: #fff !important;
+}
+/* Padding swap only for real hover devices — touch “sticky hover” otherwise fights mobile overrides */
+@media (hover: hover) {
+	html body a.tg-h26-btn:hover,
+	html body button.tg-h26-btn:hover:not(:disabled) {
+		padding: 0.25rem 1.5rem 0.25rem 3.5rem;
+	}
+}
+html body a.tg-h26-btn:focus-visible,
+html body button.tg-h26-btn:focus-visible:not(:disabled) {
+	padding: 0.25rem 1.5rem 0.25rem 3.5rem;
+}
+html body a.tg-h26-btn:active,
+html body button.tg-h26-btn:active:not(:disabled) {
+	transform: scale(0.98);
+}
+html body a.tg-h26-btn:focus-visible,
+html body button.tg-h26-btn:focus-visible {
+	outline: 2px solid rgba(240, 107, 26, 0.55);
+	outline-offset: 3px;
+}
+html body a.tg-h26-btn--wa:focus-visible,
+html body button.tg-h26-btn--wa:focus-visible {
+	outline-color: rgba(37, 211, 102, 0.65);
+}
+html body a.tg-h26-btn .tg-h26-btn__label,
+html body button.tg-h26-btn .tg-h26-btn__label {
+	position: relative;
+	z-index: 2;
+	color: #ffffff !important;
+	-webkit-text-fill-color: #ffffff;
+	white-space: nowrap;
+	padding: 0;
+	margin: 0;
+}
+html body a.tg-h26-btn .tg-h26-btn__knob,
+html body button.tg-h26-btn .tg-h26-btn__knob {
+	position: absolute;
+	top: var(--tg-ring);
+	right: var(--tg-ring);
+	width: var(--tg-knob);
+	height: var(--tg-knob);
+	min-width: var(--tg-knob);
+	min-height: var(--tg-knob);
+	margin: 0;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	background: #ffffff;
+	transform: none;
+	transform-origin: 50% 50%;
+	transition: right 0.5s ease, transform 0.5s ease;
+	z-index: 1;
+	pointer-events: none;
+	flex-shrink: 0;
+	box-sizing: border-box;
+}
+@media (hover: hover) {
+	html body a.tg-h26-btn:hover .tg-h26-btn__knob,
+	html body button.tg-h26-btn:hover:not(:disabled) .tg-h26-btn__knob {
+		right: calc(100% - var(--tg-slide));
+	}
+}
+html body a.tg-h26-btn:focus-visible .tg-h26-btn__knob,
+html body button.tg-h26-btn:focus-visible:not(:disabled) .tg-h26-btn__knob {
+	right: calc(100% - var(--tg-slide));
+}
+html body a.tg-h26-btn--primary .tg-h26-btn__knob::before,
+html body button.tg-h26-btn--primary .tg-h26-btn__knob::before {
+	content: "";
+	display: block;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23231a15%22%20stroke-width%3D%222.25%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%2017L17%207%22/%3E%3Cpath%20d%3D%22M7%207h10v10%22/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+@media (hover: hover) {
+	html body a.tg-h26-btn--primary:hover .tg-h26-btn__knob,
+	html body button.tg-h26-btn--primary:hover:not(:disabled) .tg-h26-btn__knob {
+		transform: rotate(45deg);
+	}
+}
+html body a.tg-h26-btn--primary:focus-visible .tg-h26-btn__knob,
+html body button.tg-h26-btn--primary:focus-visible:not(:disabled) .tg-h26-btn__knob {
+	transform: rotate(45deg);
+}
+html body a.tg-h26-btn--wa .tg-h26-btn__knob::before,
+html body button.tg-h26-btn--wa .tg-h26-btn__knob::before {
+	content: "";
+	display: block;
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%2325d366%22%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
+		center / contain no-repeat;
+}
+html body a.tg-h26-btn--primary,
+html body button.tg-h26-btn--primary {
+	background: #f06b1a !important;
+	background-color: #f06b1a !important;
+	color: #ffffff !important;
+}
+@media (hover: hover) {
+	html body a.tg-h26-btn--primary:hover,
+	html body button.tg-h26-btn--primary:hover:not(:disabled) {
+		background-color: #e85f0f !important;
+	}
+}
+html body a.tg-h26-btn--wa,
+html body button.tg-h26-btn--wa {
+	background: #25d366 !important;
+	background-color: #25d366 !important;
+	color: #ffffff !important;
+}
+@media (hover: hover) {
+	html body a.tg-h26-btn--wa:hover,
+	html body button.tg-h26-btn--wa:hover:not(:disabled) {
+		background-color: color-mix(in srgb, #25d366 88%, #063a1f) !important;
+	}
+}
+html body button.tg-h26-btn:disabled {
+	opacity: 1;
+	cursor: wait;
+	transform: none;
+	filter: brightness(0.92);
+}
+html body button.tg-h26-btn:disabled .tg-h26-btn__knob {
+	opacity: 0.85;
+}
+html body #tg-common-faq .tg-faq-cta-actions a.tg-h26-btn {
+	justify-content: center;
+}
+html body #tg-common-faq .tg-faq-cta-actions .tg-h26-btn__label {
+	text-align: center;
+}
+
+/*
+  Mobile / touch-first: plain pill CTAs — hide magnetic knob + stable padding.
+  (hover: none) covers phones in landscape (>767px); avoid (pointer:coarse) alone — it matches desktop touch monitors.
+*/
+@media (max-width: 767px), (hover: none) {
+	html body a.tg-h26-btn,
+	html body button.tg-h26-btn {
+		min-height: 3rem;
+		height: auto;
 		justify-content: center !important;
 		align-items: center !important;
-		padding: 0.72rem 1.2rem !important;
-		min-height: 2.75rem !important;
-		height: auto !important;
-		transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.15s ease !important;
+		padding: 0.75rem 1.25rem !important;
+		font-size: clamp(0.8rem, 3.2vw, 0.875rem);
+		overflow: visible !important;
+		touch-action: manipulation;
+		/* Full pill — themes sometimes flatten border-radius on <button> */
+		border-radius: 9999px !important;
+		transition:
+			background-color 0.25s ease,
+			filter 0.2s ease,
+			transform 0.15s ease !important;
 	}
 	html body a.tg-h26-btn:hover,
 	html body a.tg-h26-btn:focus-visible,
+	html body a.tg-h26-btn:active,
 	html body button.tg-h26-btn:hover:not(:disabled),
-	html body button.tg-h26-btn:focus-visible:not(:disabled) {
-		padding: 0.72rem 1.2rem !important;
+	html body button.tg-h26-btn:focus-visible:not(:disabled),
+	html body button.tg-h26-btn:active:not(:disabled) {
+		padding: 0.75rem 1.25rem !important;
 	}
-	html body .tg-h26-btn .tg-h26-btn__knob {
+	html body a.tg-h26-btn .tg-h26-btn__knob,
+	html body button.tg-h26-btn .tg-h26-btn__knob {
 		display: none !important;
-		width: 0 !important;
-		height: 0 !important;
-		margin: 0 !important;
-		padding: 0 !important;
-		overflow: hidden !important;
-		clip: rect(0, 0, 0, 0) !important;
-		position: absolute !important;
-		border: 0 !important;
-		opacity: 0 !important;
-		pointer-events: none !important;
 	}
-	html body .tg-h26-btn .tg-h26-btn__label {
+	html body a.tg-h26-btn .tg-h26-btn__label,
+	html body button.tg-h26-btn .tg-h26-btn__label {
+		white-space: normal;
 		text-align: center;
 	}
+	html body a.tg-h26-btn--primary,
+	html body button.tg-h26-btn--primary {
+		background-color: #f06b1a !important;
+		color: #ffffff !important;
+	}
+	html body a.tg-h26-btn--wa,
+	html body button.tg-h26-btn--wa {
+		background-color: #25d366 !important;
+		color: #ffffff !important;
+	}
+	html body #tg-why-choose .tg-h26-btn,
+	html body #tg-perfect-for .tg-h26-btn {
+		display: flex !important;
+		width: 100%;
+		max-width: 22rem;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
 
+@media (max-width: 380px) {
+	html body a.tg-h26-btn,
+	html body button.tg-h26-btn {
+		font-size: clamp(0.78rem, 3.35vw, 0.875rem);
+		padding: 0.7rem 1rem !important;
+	}
+	html body a.tg-h26-btn:hover,
+	html body a.tg-h26-btn:focus-visible,
+	html body a.tg-h26-btn:active,
+	html body button.tg-h26-btn:hover:not(:disabled),
+	html body button.tg-h26-btn:focus-visible:not(:disabled),
+	html body button.tg-h26-btn:active:not(:disabled) {
+		padding: 0.7rem 1rem !important;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html body a.tg-h26-btn,
+	html body button.tg-h26-btn,
+	html body .tg-h26-btn .tg-h26-btn__knob {
+		transition: none !important;
+	}
+	html body a.tg-h26-btn:active,
+	html body button.tg-h26-btn:active {
+		transform: none !important;
+	}
+}
+
+/* Weekly Menu: compact CTAs (fit-content), centered — avoid flex-grow filling the row */
+html body #tg-weekly-menu-2026 .tg-wm-pdf-actions {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 10px 14px;
+	width: calc(100% - 24px);
+	max-width: calc(100vw - 24px);
+	margin-left: auto;
+	margin-right: auto;
+	box-sizing: border-box;
+	padding-left: max(0px, env(safe-area-inset-left, 0px));
+	padding-right: max(0px, env(safe-area-inset-right, 0px));
+}
+html body #tg-weekly-menu-2026 .tg-wm-pdf-actions .tg-h26-btn {
+	flex: 0 1 auto;
+	width: fit-content;
+	max-width: 100%;
+	min-width: 0;
+}
+@media (max-width: 380px) {
+	html body #tg-weekly-menu-2026 .tg-wm-pdf-actions {
+		width: calc(100% - 20px);
+		max-width: calc(100vw - 20px);
+		gap: 8px;
+	}
+}
+html body #tg-weekly-menu-2026 .tg-wm-plans .tg-h26-btn {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 767px) {
 	/*
 	  Touch: `manipulation` keeps vertical scroll/pinch-zoom but avoids Safari treating many first taps
 	  as ambiguous scroll gestures (common with pan-y-only on html/body).

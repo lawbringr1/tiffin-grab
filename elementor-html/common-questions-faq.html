@@ -139,10 +139,51 @@
     #tg-common-faq .tg-faq-card-inner {
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.72rem;
-      min-height: 100%;
+      min-height: 0;
+    }
+    #tg-common-faq details.tg-faq-disclosure {
+      margin: 0;
+      border: 0;
+      padding: 0;
+      background: transparent;
+    }
+    #tg-common-faq summary.tg-faq-sum {
+      list-style: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 0.65rem 0.85rem;
+    }
+    #tg-common-faq summary.tg-faq-sum::-webkit-details-marker {
+      display: none;
+    }
+    #tg-common-faq summary.tg-faq-sum:focus {
+      outline: none;
+    }
+    #tg-common-faq summary.tg-faq-sum:focus-visible {
+      outline: 2px solid var(--faq-primary-mid);
+      outline-offset: 3px;
+      border-radius: 0.35rem;
+    }
+    #tg-common-faq .tg-faq-chevron {
+      flex-shrink: 0;
+      color: var(--faq-primary-mid);
+      font-size: 1.35rem !important;
+      line-height: 1;
+      margin-top: 0.1rem;
+      transition: transform 0.2s ease;
+    }
+    #tg-common-faq details[open].tg-faq-disclosure > summary .tg-faq-chevron {
+      transform: rotate(180deg);
+    }
+    #tg-common-faq .tg-faq-drawer {
+      padding-top: 0.65rem;
+      margin-top: 0.35rem;
+      border-top: 1px solid rgba(220, 193, 181, 0.28);
     }
     #tg-common-faq .tg-faq-card--large { padding: clamp(1.15rem, 2vw, 1.45rem); }
     #tg-common-faq .tg-faq-icon-wrap {
@@ -157,15 +198,8 @@
       flex-shrink: 0;
     }
     #tg-common-faq .tg-faq-card .material-symbols-outlined { font-size: 1.32rem; }
-    #tg-common-faq .tg-faq-large-body {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      align-items: start;
-      gap: 0.95rem 1rem;
-      min-height: 100%;
-    }
     #tg-common-faq .tg-faq-card-q {
-      margin: 0 0 0.35rem;
+      margin: 0;
       color: var(--faq-on);
       font-size: clamp(1.02rem, 1.35vw, 1.22rem);
       line-height: 1.28;
@@ -178,6 +212,70 @@
       line-height: 1.55;
       max-width: 52ch;
       font-size: 0.94rem;
+    }
+    /*
+      Desktop: avoid display:contents on <summary> — it is unreliable inside <details> (wrong grid
+      item placement → question squeezed into a hairline column, answer orphaned). Nested grid keeps
+      icon | (question stacked above answer) aligned; minmax(0,1fr) lets column 2 use real width.
+    */
+    @media (min-width: 768px) {
+      #tg-common-faq details.tg-faq-disclosure {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        gap: 0.35rem 1rem;
+        align-items: start;
+      }
+      #tg-common-faq summary.tg-faq-sum {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        align-self: start;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: 0.85rem;
+        /* Top-align icon with heading cap line (not vertically centered in a tall row). */
+        align-items: start;
+        cursor: default;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-icon-wrap {
+        grid-column: 1;
+        align-self: start;
+        width: 2.25rem;
+        height: auto;
+        min-height: 0;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-top: 0.14em;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-icon-wrap .material-symbols-outlined {
+        display: block;
+        line-height: 1;
+        font-size: 1.35rem !important;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-card-q {
+        grid-column: 2;
+        margin: 0 0 0.35rem !important;
+        padding: 0 !important;
+        min-width: 0;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-chevron {
+        display: none !important;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-drawer {
+        grid-column: 2;
+        grid-row: 2;
+        align-self: start;
+        padding-top: 0;
+        margin-top: 0;
+        border-top: none;
+        min-width: 0;
+      }
+      #tg-common-faq .tg-faq-disclosure .tg-faq-drawer .tg-faq-card-answer {
+        max-width: none;
+      }
+      #tg-common-faq details[open].tg-faq-disclosure > summary .tg-faq-chevron {
+        transform: none;
+      }
     }
     #tg-common-faq .tg-faq-card-answer strong {
       color: var(--faq-on);
@@ -219,6 +317,14 @@
       z-index: 1;
       max-width: 42rem;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    #tg-common-faq .tg-faq-cta-heading,
+    #tg-common-faq .tg-faq-cta-lede {
+      align-self: stretch;
     }
     #tg-common-faq .tg-faq-cta-heading {
       margin: 0;
@@ -237,7 +343,9 @@
     }
     #tg-common-faq .tg-faq-cta-actions {
       display: inline-flex;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: center;
       gap: 0.4rem;
       border-radius: 999px;
       padding: 0.32rem;
@@ -289,12 +397,13 @@
       #tg-common-faq .tg-faq-head { margin-bottom: 2rem; }
       #tg-common-faq .tg-faq-grid { grid-template-columns: 1fr; }
       #tg-common-faq .tg-faq-card--large { padding: 1.05rem 0.95rem; }
-      #tg-common-faq .tg-faq-large-body { gap: 0.85rem; }
       #tg-common-faq .tg-faq-card-q { font-size: 1.02rem; }
       #tg-common-faq .tg-faq-card-answer { font-size: 0.9rem; line-height: 1.5; max-width: none; }
       #tg-common-faq .tg-faq-cta-actions {
         display: flex;
         flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
         gap: 0.35rem;
         width: 100%;
         max-width: 17rem;
@@ -315,7 +424,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       #tg-common-faq .tg-faq-card,
-      #tg-common-faq .tg-faq-cta-btn { transition: none !important; }
+      #tg-common-faq .tg-faq-cta-btn,
+      #tg-common-faq .tg-faq-chevron { transition: none !important; }
     }
   </style>
   <div class="tg-faq-inner">
@@ -327,93 +437,151 @@
 
     <ul class="tg-faq-grid">
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">pause_circle</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">How can I pause my tiffin?</h3>
-            <p class="tg-faq-card-answer">You can pause your tiffin deliveries by informing us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong> to your scheduled delivery.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">pause_circle</span></div>
+              <h3 class="tg-faq-card-q">How can I pause my tiffin?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">
+                You can pause your tiffin deliveries by informing us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong> to your scheduled delivery.
+              </p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">How do I change my delivery address?</h3>
-            <p class="tg-faq-card-answer">To change your delivery address, please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>, and we will update it accordingly.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></div>
+              <h3 class="tg-faq-card-q">How do I change my delivery address?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">
+                To change your delivery address, please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>, and we will update it accordingly.
+              </p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">sms</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">How will I receive my tracking link?</h3>
-            <p class="tg-faq-card-answer">Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">sms</span></div>
+              <h3 class="tg-faq-card-q">How will I receive my tracking link?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">Your tracking link will be shared with you via SMS on the day of delivery so you can track your order in real time.</p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">calendar_month</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Can I choose specific delivery days?</h3>
-            <p class="tg-faq-card-answer">Yes, you can choose your preferred delivery days. Please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">calendar_month</span></div>
+              <h3 class="tg-faq-card-q">Can I choose specific delivery days?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">
+                Yes, you can choose your preferred delivery days. Please inform us on <strong>WhatsApp</strong> before <strong>7:00 PM</strong>, <strong>one day prior</strong>.
+              </p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">edit_note</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Can I customize my tiffin plan?</h3>
-            <p class="tg-faq-card-answer">Yes, you can customize your tiffin plan based on your preferences. Contact us on <strong>WhatsApp</strong> and our team will assist you.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">edit_note</span></div>
+              <h3 class="tg-faq-card-q">Can I customize my tiffin plan?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">Yes, you can customize your tiffin plan based on your preferences. Contact us on <strong>WhatsApp</strong> and our team will assist you.</p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">verified</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Is the chicken halal?</h3>
-            <p class="tg-faq-card-answer">Yes, we use halal-certified chicken in all our non-vegetarian meals.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">verified</span></div>
+              <h3 class="tg-faq-card-q">Is the chicken halal?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">Yes, we use halal-certified chicken in all our non-vegetarian meals.</p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_shipping</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Are there any delivery charges?</h3>
-            <p class="tg-faq-card-answer">We provide <strong>free delivery</strong>. However, upstairs delivery is charged at $1 per delivery.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_shipping</span></div>
+              <h3 class="tg-faq-card-q">Are there any delivery charges?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">We provide <strong>free delivery</strong>. However, upstairs delivery is charged at $1 per delivery.</p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">restaurant</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Can I select veg on non-veg plans?</h3>
-            <p class="tg-faq-card-answer">Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">restaurant</span></div>
+              <h3 class="tg-faq-card-q">Can I select veg on non-veg plans?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">
+                Yes, you can choose vegetarian meals for specific days even if you are on a non-veg plan through our item selection form.
+              </p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_fire_department</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">What is the spice level of food?</h3>
-            <p class="tg-faq-card-answer">Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">local_fire_department</span></div>
+              <h3 class="tg-faq-card-q">What is the spice level of food?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">Our food is generally low to moderately spicy. If you prefer spicier food, you can opt for our spicy chutney add-on.</p>
+            </div>
+          </details>
         </div>
       </li>
       <li class="tg-faq-card tg-faq-card--large">
-        <div class="tg-faq-card-inner tg-faq-large-body">
-          <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">menu_book</span></div>
-          <div>
-            <h3 class="tg-faq-card-q">Does the menu remain the same?</h3>
-            <p class="tg-faq-card-answer">No, our menu changes every week to ensure variety, freshness, and a better dining experience.</p>
-          </div>
+        <div class="tg-faq-card-inner">
+          <details class="tg-faq-disclosure" open>
+            <summary class="tg-faq-sum">
+              <div class="tg-faq-icon-wrap" aria-hidden="true"><span class="material-symbols-outlined">menu_book</span></div>
+              <h3 class="tg-faq-card-q">Does the menu remain the same?</h3>
+              <span class="tg-faq-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="tg-faq-drawer">
+              <p class="tg-faq-card-answer">No, our menu changes every week to ensure variety, freshness, and a better dining experience.</p>
+            </div>
+          </details>
         </div>
       </li>
     </ul>
@@ -429,6 +597,36 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById("tg-common-faq");
+      if (!root) return;
+      var mq = window.matchMedia("(max-width: 767px)");
+      /*
+        Markup uses <details open> so desktop SSR shows answers immediately (no wait for this script).
+        Mobile: strip open → accordion collapsed; resize/orientation restores via mq listener.
+      */
+      function syncFaqDisclosures() {
+        root.querySelectorAll(".tg-faq-disclosure").forEach(function (d) {
+          if (mq.matches) {
+            d.removeAttribute("open");
+          } else {
+            d.setAttribute("open", "");
+          }
+        });
+      }
+      root.querySelectorAll(".tg-faq-disclosure").forEach(function (d) {
+        d.addEventListener("toggle", function () {
+          if (!mq.matches && !d.open) {
+            d.open = true;
+          }
+        });
+      });
+      syncFaqDisclosures();
+      mq.addEventListener("change", syncFaqDisclosures);
+    })();
+  </script>
 
   <script type="application/ld+json">
     {

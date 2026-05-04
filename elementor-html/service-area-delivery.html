@@ -3,7 +3,8 @@
 <section class="tg-sa" id="tg-service-area" aria-labelledby="tg-sa-title">
   <style>
     /* Pinch-zoom / iOS visual viewport: reinforce root clip + canvas (in case hero-tags widget order differs). */
-    @media (max-width: 767px) {
+    @media (max-width: 767px),
+    (hover: none) {
       html:has(body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016)),
       body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) {
         background-color: #fff8f6 !important;
@@ -142,6 +143,7 @@
     .tg-sa-bar {
       display: flex;
       align-items: stretch;
+      justify-content: flex-start;
       flex-wrap: nowrap;
       gap: 0;
       max-width: 36rem;
@@ -251,7 +253,7 @@
       -webkit-text-fill-color: rgba(137, 114, 104, 0.65);
       text-transform: none;
     }
-    /* Submit uses shared .tg-h26-btn (home-2026-hero-tags.html) on Home 2026 */
+    /* Submit: Sitewide .tg-h26-btn — Elementor kit (bar layout tweaks below). */
     #tg-service-area .tg-sa-bar button.tg-h26-btn {
       flex: 0 0 auto;
       white-space: nowrap;
@@ -334,7 +336,7 @@
       text-transform: uppercase;
       color: rgba(86, 67, 57, 0.55);
     }
-    @media (max-width: 767px) {
+    @media (max-width: 767px), (hover: none) {
       /* Compact area list: one pill per city (tap uses data-postal), not full-width cards */
       .tg-sa-grid {
         display: flex;
@@ -449,7 +451,7 @@
     .tg-sa-foot a:hover {
       color: var(--tg-orange-deep);
     }
-    @media (max-width: 767px) {
+    @media (max-width: 767px), (hover: none) {
       .tg-sa {
         padding-left: max(1rem, env(safe-area-inset-left, 0px));
         padding-right: max(1rem, env(safe-area-inset-right, 0px));
@@ -511,6 +513,39 @@
       .tg-sa-pin-pill {
         min-height: 44px;
         padding: 0.5rem 0.85rem;
+      }
+    }
+    /*
+      Same rules as kit mobile CTAs but scoped here so they ship with the homepage widget (cache/order proof).
+      (hover: none) = phones in landscape where width > 767px.
+    */
+    @media (max-width: 767px), (hover: none) {
+      #tg-service-area .tg-sa-bar button.tg-h26-btn.tg-h26-btn--primary,
+      #tg-service-area .tg-sa-bar button.tg-h26-btn.tg-h26-btn--primary:hover,
+      #tg-service-area .tg-sa-bar button.tg-h26-btn.tg-h26-btn--primary:focus-visible,
+      #tg-service-area .tg-sa-bar button.tg-h26-btn.tg-h26-btn--primary:active {
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0.75rem 1.25rem !important;
+        min-height: 3rem !important;
+        height: auto !important;
+        overflow: visible !important;
+        border-radius: 9999px !important;
+        background: #f06b1a !important;
+        background-color: #f06b1a !important;
+        background-image: none !important;
+        color: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      #tg-service-area .tg-sa-bar button.tg-h26-btn .tg-h26-btn__knob {
+        display: none !important;
+      }
+      #tg-service-area .tg-sa-bar button.tg-h26-btn .tg-h26-btn__label {
+        text-align: center !important;
+        white-space: normal !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
       }
     }
   </style>

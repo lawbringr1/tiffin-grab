@@ -1,37 +1,36 @@
-
-<div id="tg-ref-2026" class="tg-ref-root tg-ref-loading" aria-busy="true">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- WhatsApp/Facebook previews use og:title, og:description, og:image (~1200×630), og:url in RankMath/Yoast (HEAD)—not visible to crawlers inside this widget. -->
+<div id="tg-ref-2026" lang="en-CA" class="tg-ref-root tg-ref-loading" aria-busy="true">
+  <!-- Geist + Material: WP HEAD. Caveat-only here (~one small CSS) ensures “Friends.” / captions load even if HEAD snippet lags. -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap" />
+  </noscript>
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
-  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
+  <link rel="dns-prefetch" href="https://wa.me" />
+  <link rel="dns-prefetch" href="https://api.whatsapp.com" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Caveat:wght@400;700&amp;display=swap"
-    rel="stylesheet"
-    media="print"
-    onload="this.media='all'"
+    rel="preload"
+    as="image"
+    type="image/webp"
+    href="https://tiffingrab.ca/wp-content/uploads/2026/04/andy-hay-ZN-TT10kf4o-unsplash.webp"
+    fetchpriority="high"
   />
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Work+Sans:wght@400;500;600&amp;family=Caveat:wght@400;700&amp;display=swap"
-      rel="stylesheet"
-    />
-  </noscript>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&amp;display=swap"
-    rel="stylesheet"
-    media="print"
-    onload="this.media='all'"
-  />
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&amp;display=swap"
-      rel="stylesheet"
-    />
-  </noscript>
   <script>
     window.tailwind = window.tailwind || {};
     window.tailwind.config = {
       darkMode: "class",
+      /* Scope utilities here; NEVER run global Preflight from this CDN (fixes black boxes around header/nav). */
+      important: "#tg-ref-2026",
+      corePlugins: {
+        preflight: false,
+      },
       theme: {
         extend: {
           colors: {
@@ -43,6 +42,7 @@
             primary: "#E37B3E",
             "on-primary": "#ffffff",
             secondary: "#2ECC71",
+            "on-secondary": "#ffffff",
             tertiary: "#27AE60",
             "friend-card": "#065f46",
             "on-friend-card": "#ffffff",
@@ -58,10 +58,10 @@
             full: "9999px",
           },
           fontFamily: {
-            headline: ["Manrope", "system-ui", "sans-serif"],
-            body: ["Work Sans", "system-ui", "sans-serif"],
-            label: ["Work Sans", "system-ui", "sans-serif"],
-            handwritten: ["Caveat", "cursive"],
+            headline: ['Geist', 'system-ui', 'sans-serif'],
+            body: ['Geist', 'system-ui', 'sans-serif'],
+            label: ['Geist', 'system-ui', 'sans-serif'],
+            handwritten: ['Caveat', 'cursive'],
           },
         },
       },
@@ -75,39 +75,116 @@
         !!document.querySelector("style[data-tw-source], style[data-tailwindcss]") ||
         !!document.querySelector("script[src*='cdn.tailwindcss.com']");
       if (hasTailwindStyles && window.tailwind) return;
-      var script = document.createElement("script");
-      script.src = "https://cdn.tailwindcss.com";
-      script.defer = true;
-      script.setAttribute("data-tg-ref-tailwind", "1");
-      document.head.appendChild(script);
+      function injectTailwind() {
+        if (document.getElementById("tg-ref-tw-cdn")) return;
+        var script = document.createElement("script");
+        script.id = "tg-ref-tw-cdn";
+        script.src = "https://cdn.tailwindcss.com";
+        script.async = true;
+        script.setAttribute("data-tg-ref-tailwind", "1");
+        document.head.appendChild(script);
+      }
+      /* Yield so text fonts + first paint can start before heavy Tailwind compile. */
+      setTimeout(injectTailwind, 0);
     })();
   </script>
   <style>
+    /* Scoped box model (Tailwind Preflight OFF for this CDN load). */
+    #tg-ref-2026 *,
+    #tg-ref-2026 *::before,
+    #tg-ref-2026 *::after {
+      box-sizing: border-box;
+    }
     /* Full-page referral canvas: remove theme white frame around content. */
     #tg-ref-2026 {
       display: block;
       width: 100%;
+      max-width: 100%;
       background: #fff8f6;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      overflow-x: clip;
     }
-    html body:has(#tg-ref-2026) {
-      background: #fff8f6 !important;
+    html body:has(#tg-ref-2026),
+    html:has(body:has(#tg-ref-2026)) {
+      background-color: #fff8f6 !important;
+      /* Avoid forcing overflow-x:hidden on HTML/body — that can repaint sticky/nav as black slivers mid-load */
+      overflow-x: clip;
+      color-scheme: light;
     }
     html body:has(#tg-ref-2026) .site-content,
     html body:has(#tg-ref-2026) .content-area,
-    html body:has(#tg-ref-2026) .entry-content,
-    html body:has(#tg-ref-2026) .elementor-widget-container {
-      background: transparent !important;
+    html body:has(#tg-ref-2026) #content,
+    html body:has(#tg-ref-2026) #main,
+    html body:has(#tg-ref-2026) main {
+      background-color: #fff8f6 !important;
+      background-image: none !important;
     }
-    html body:has(#tg-ref-2026) .ast-container,
-    html body:has(#tg-ref-2026) .site-content .ast-container {
+    /* Do not blanket-clear every Elementor widget (shows parent chrome as black boxed frames). */
+    html body:has(#tg-ref-2026) .entry-content .elementor-widget-html:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .elementor-widget-html:has(#tg-ref-2026) .elementor-widget-container,
+    html body:has(#tg-ref-2026) .elementor-widget-html-custom:has(#tg-ref-2026) .elementor-widget-container,
+    html body:has(#tg-ref-2026) .elementor-widget-wrap:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .elementor-column:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .elementor-section:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .e-con:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .e-con-inner:has(#tg-ref-2026) {
+      overflow: visible !important;
+      max-width: none !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      background-color: #fff8f6 !important;
+      background-image: none !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    /* Elementor flex containers often pick up theme `border: 1px solid currentColor` on .e-con children. */
+    html body:has(#tg-ref-2026) .elementor-element.e-con:has(#tg-ref-2026),
+    html body:has(#tg-ref-2026) .elementor-element.e-con-inner:has(#tg-ref-2026) {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    /* Narrow to main content wrappers only — avoids touching header/footer .ast-* shells. */
+    html body:has(#tg-ref-2026) .site-content > .ast-container,
+    html body:has(#tg-ref-2026) .site-content .ast-container,
+    html body:has(#tg-ref-2026) #primary .ast-container {
       max-width: 100% !important;
       padding-left: 0 !important;
       padding-right: 0 !important;
-      background: #fff8f6 !important;
+      background-color: #fff8f6 !important;
+      background-image: none !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
     html body:has(#tg-ref-2026) .entry-content {
       margin: 0 !important;
       padding: 0 !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    /* Body location canvas only — NEVER match [class*="elementor-location-body"] (can hit sticky/aux nodes). */
+    html body:has(#tg-ref-2026) .elementor-location-body {
+      background-color: #fff8f6 !important;
+      background-image: none !important;
+    }
+    /* Solid header/backdrop during referral load paint (kits use --tg-bg). */
+    html body:has(#tg-ref-2026) .elementor-location-header {
+      background-color: var(--tg-bg, #ffffff) !important;
+      background-image: none !important;
+    }
+    /* Referral route: strip theme/currentColor rims on primary header strip (narrow — not cart/icons). */
+    html body:has(#tg-ref-2026) .elementor-location-header .elementor-element-ef53437 > .e-con-inner,
+    html body:has(#tg-ref-2026) .elementor-location-header .elementor-element-ef53437 .elementor-widget-container:not(.elementor-menu-cart__wrapper) {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
     }
     /* Hide WP / theme / Elementor duplicate page title above full-width HTML (same idea as weekly menu). */
     html body:has(#tg-ref-2026) .entry-header,
@@ -119,22 +196,93 @@
       display: none !important;
     }
     #tg-ref-2026 .material-symbols-outlined {
-      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-variation-settings:
+        "FILL" 0,
+        "wght" 400,
+        "GRAD" 0,
+        "opsz" 24;
+      font-feature-settings: "liga";
+      font-optical-sizing: auto;
+      font-size: inherit;
+      line-height: 1;
+      letter-spacing: normal;
     }
     #tg-ref-2026 .tg-ref-body {
-      font-family: "Work Sans", system-ui, sans-serif;
+      font-family: var(--tg-font, "Geist", system-ui, sans-serif);
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      /* Neutralize Tailwind ring inheritance without a universal * border reset. */
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-ring-offset-width: 0;
+      --tw-ring-color: transparent;
+    }
+    /* Theme / UA often paints black or system outlines on nested blocks; keep keyboard focus only. */
+    #tg-ref-2026 .tg-ref-body *:focus:not(:focus-visible) {
+      outline: none !important;
+    }
+    #tg-ref-2026 .tg-ref-body a:focus-visible,
+    #tg-ref-2026 .tg-ref-body button:focus-visible {
+      outline: 2px solid rgba(227, 123, 62, 0.45) !important;
+      outline-offset: 2px;
+    }
+    /* Targeted stroke strip (no * { border:0 } — that fought shadows and looked like “black boxes”). */
+    #tg-ref-2026 .tg-ref-body main,
+    #tg-ref-2026 .tg-ref-body section.tg-ref-hero-mouse,
+    #tg-ref-2026 .tg-ref-body .tg-ref-rewards-wrap,
+    #tg-ref-2026 .tg-ref-body .tg-ref-rewards-grid,
+    #tg-ref-2026 .tg-ref-body .tg-ref-fold {
+      border: none !important;
+      outline: none !important;
     }
     #tg-ref-2026 .tg-ref-body h1,
     #tg-ref-2026 .tg-ref-body h2,
     #tg-ref-2026 .tg-ref-body h3,
     #tg-ref-2026 .tg-ref-body h4 {
-      font-family: Manrope, system-ui, sans-serif;
+      font-family: var(--tg-font, "Geist", system-ui, sans-serif);
+    }
+    #tg-ref-2026 .font-handwritten {
+      font-family: Caveat, cursive !important;
+      font-style: normal;
+      font-weight: 700;
+    }
+    @media (min-width: 1024px) {
+      #tg-ref-2026 .tg-ref-body {
+        text-rendering: optimizeLegibility;
+      }
+      /* Large screens: skip expensive backdrop blur (faster scroll/paint). */
+      #tg-ref-2026 .tg-ref-hero-panel {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(255, 248, 244, 0.96);
+      }
+      /* Deferred paint only where transforms don’t extend past bounds — NOT on tilted reward cards */
+      #tg-ref-2026 section.tg-ref-fold--steps {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 640px;
+      }
+    }
+    #tg-ref-2026 a[href*="wa.me"],
+    #tg-ref-2026 a[href*="whatsapp.com"] {
+      -webkit-tap-highlight-color: rgba(46, 204, 113, 0.22);
+      touch-action: manipulation;
     }
     #tg-ref-2026 .polaroid {
       background: white;
       padding: 1rem 1rem 3rem 1rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      border-radius: 1.5rem;
+      box-shadow:
+        0 12px 32px -10px rgba(155, 69, 7, 0.14),
+        0 8px 20px -8px rgba(240, 107, 26, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* Inner photo radius slightly tighter than frame for a neat white rim. */
+    #tg-ref-2026 .polaroid img {
+      display: block;
+      width: 100%;
+      border-radius: 1.15rem;
+      background-color: #f4e7e1;
     }
     #tg-ref-2026 .polaroid:hover {
       transform: scale(1.05) rotate(0deg) !important;
@@ -147,13 +295,16 @@
     #tg-ref-2026 .tg-ref-loader {
       display: none;
     }
+    #tg-ref-2026.tg-ref-loading {
+      background-color: #fff8f6 !important;
+    }
     #tg-ref-2026.tg-ref-loading .tg-ref-loader {
       display: block;
       padding: 1rem 0 1.5rem;
-      font-family: "Work Sans", system-ui, sans-serif;
+      font-family: var(--tg-font, "Geist", system-ui, sans-serif);
       color: transparent;
       /* Opaque base so grid gaps never show through to dark theme chrome for a frame */
-      background-color: #fff8f6;
+      background-color: #fff8f6 !important;
       color-scheme: light;
       forced-color-adjust: none;
     }
@@ -165,10 +316,7 @@
       outline: none !important;
       box-shadow: none !important;
     }
-    #tg-ref-2026 .tg-ref-loader > *,
-    #tg-ref-2026 .tg-ref-loader > * > * {
-      background-color: transparent;
-    }
+    /* Do not blanket-clear nested skeleton fills — that stripped gradients and flashed dark “black boxes”. */
     /* Skeleton uses flex + margins only (no CSS grid) to avoid subpixel gutter / “black grid” flashes */
     #tg-ref-2026 .tg-ref-skeleton-hero {
       border-radius: 1.75rem;
@@ -199,16 +347,17 @@
     }
     #tg-ref-2026 .tg-ref-skeleton-polaroid {
       position: absolute;
-      border-radius: 0.8rem;
+      border-radius: 1.5rem;
       padding: 0.5rem;
       background: #fff !important;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 28px -8px rgba(155, 69, 7, 0.12);
       border: 0 !important;
     }
     #tg-ref-2026 .tg-ref-skeleton-line,
     #tg-ref-2026 .tg-ref-skeleton-box {
       border-radius: 0.65rem;
-      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
+      background-color: #efe4de !important;
+      background-image: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
@@ -216,7 +365,8 @@
       width: 7rem;
       height: 1.15rem;
       border-radius: 9999px;
-      background: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
+      background-color: #efe4de !important;
+      background-image: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
@@ -248,7 +398,7 @@
     #tg-ref-2026 .tg-ref-skeleton-polaroid .tg-ref-skeleton-box {
       width: 100%;
       height: 100%;
-      border-radius: 0.5rem;
+      border-radius: 1.15rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-polaroid--a {
       top: 0;
@@ -278,7 +428,8 @@
       width: 7.8rem;
       height: 2.5rem;
       border-radius: 0.9rem;
-      background: linear-gradient(90deg, #deefe6 25%, #eef8f3 50%, #deefe6 75%) !important;
+      background-color: #dfece4 !important;
+      background-image: linear-gradient(90deg, #deefe6 25%, #eef8f3 50%, #deefe6 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
       transform: rotate(-12deg);
@@ -302,7 +453,7 @@
     }
     #tg-ref-2026 .tg-ref-skeleton-steps {
       border-radius: 1.2rem;
-      background: #fff !important;
+      background: #fdf6f2 !important;
       border: 0 !important;
       padding: 0.9rem;
       display: flex;
@@ -382,12 +533,9 @@
         overflow-x: clip;
       }
     }
-    /*
-     * Before Tailwind border-* color utilities apply, width-only borders can use currentColor (black).
-     */
-    #tg-ref-2026 .tg-ref-body .border.border-zinc-100,
-    #tg-ref-2026 .tg-ref-body .bg-white.border.border-zinc-100 {
-      border-color: #f4f4f5;
+    /* Legacy Tailwind border color helpers kept for rare utility combos; surfaces use shadow instead of rims. */
+    #tg-ref-2026 .tg-ref-body .border-outline-variant {
+      border-color: rgba(220, 193, 181, 0.45) !important;
     }
     #tg-ref-2026 .tg-ref-body .border.border-outline-variant\/40 {
       border-color: rgba(220, 193, 181, 0.4);
@@ -395,12 +543,327 @@
     #tg-ref-2026 .tg-ref-body .border-2.border-primary\/25 {
       border-color: rgba(227, 123, 62, 0.25);
     }
-    #tg-ref-2026 .tg-ref-body .bg-zinc-950 {
-      background-color: #09090b;
+    /* Full-width WhatsApp magnetic CTA in perks card */
+    #tg-ref-2026 .tg-ref-invite-cta.tg-h26-btn {
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
     }
     #tg-ref-2026 .tg-ref-body .text-white {
       color: #fff;
     }
+
+    /* Reward + steps: elevation via shadow — no bordered “boxes” (avoids black currentColor rims). */
+    #tg-ref-2026 .tg-ref-reward-card {
+      border: none !important;
+      outline: none !important;
+      box-sizing: border-box;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow:
+        0 1px 0 rgba(255, 252, 250, 0.9) inset,
+        0 14px 40px rgba(155, 69, 7, 0.08),
+        0 4px 14px rgba(240, 107, 26, 0.06);
+    }
+    #tg-ref-2026 .tg-ref-reward-card:hover {
+      box-shadow:
+        0 1px 0 rgba(255, 252, 250, 0.9) inset,
+        0 18px 48px rgba(155, 69, 7, 0.1),
+        0 8px 20px rgba(240, 107, 26, 0.07);
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend:hover {
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.12) inset,
+        0 22px 52px rgba(5, 80, 40, 0.44),
+        0 10px 24px rgba(6, 95, 70, 0.22);
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend {
+      background-color: #065f46 !important;
+      background-image: none !important;
+      color: #ffffff !important;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.1) inset,
+        0 18px 48px rgba(5, 80, 40, 0.35),
+        0 6px 18px rgba(6, 95, 70, 0.18);
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend h3 {
+      color: #ffffff !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend p {
+      color: rgba(255, 255, 255, 0.88) !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend p.text-sm {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend .text-3xl {
+      color: #ffffff !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend .material-symbols-outlined {
+      color: #ffffff !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--friend .bg-white\/20 {
+      background-color: rgba(255, 255, 255, 0.22) !important;
+    }
+    /* Light cards — warm paper tone (#fff8f6 family); beats theme white resets. */
+    #tg-ref-2026 .tg-ref-reward-card--you {
+      background-color: #fef8f5 !important;
+      background-image: radial-gradient(
+        ellipse 90% 75% at 92% 4%,
+        rgba(240, 107, 26, 0.065) 0%,
+        transparent 58%
+      ) !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--why {
+      background-color: #fdeae2 !important;
+      background-image: linear-gradient(
+        172deg,
+        rgba(255, 250, 245, 0.98) 0%,
+        rgba(253, 235, 224, 0.62) 45%,
+        rgba(246, 222, 208, 0.78) 100%
+      ) !important;
+    }
+    #tg-ref-2026 .tg-ref-steps-shell {
+      border: none !important;
+      outline: none !important;
+      box-sizing: border-box;
+      box-shadow:
+        0 1px 0 rgba(255, 252, 250, 0.95) inset,
+        0 16px 44px rgba(155, 69, 7, 0.08),
+        0 6px 18px rgba(240, 107, 26, 0.06);
+      background-color: #fdf6f2 !important;
+      background-image: linear-gradient(
+        180deg,
+        rgba(255, 252, 248, 0.99) 0%,
+        rgba(251, 240, 233, 0.97) 55%,
+        rgba(246, 230, 218, 0.45) 100%
+      ) !important;
+    }
+    /* Pills: theme often nukes Tailwind bg-* / text-* on badges */
+    #tg-ref-2026 .tg-ref-community-pill {
+      background-color: #2ecc71 !important;
+      background-image: none !important;
+      color: #ffffff !important;
+      border: none !important;
+      outline: none !important;
+      box-sizing: border-box;
+      box-shadow: 0 6px 18px rgba(46, 204, 113, 0.28), 0 2px 8px rgba(155, 69, 7, 0.06);
+    }
+    #tg-ref-2026 .tg-ref-bonus-pill {
+      background-color: #065f46 !important;
+      background-image: none !important;
+      color: #ffffff !important;
+      border: none !important;
+      outline: none !important;
+      box-sizing: border-box;
+      box-shadow: 0 14px 36px rgba(5, 80, 40, 0.45), 0 6px 16px rgba(6, 95, 70, 0.2);
+    }
+    #tg-ref-2026 .tg-ref-bonus-pill .material-symbols-outlined {
+      color: #ffffff !important;
+    }
+    #tg-ref-2026 .tg-ref-bonus-pill .font-bold,
+    #tg-ref-2026 .tg-ref-bonus-pill .text-xl {
+      color: #ffffff !important;
+    }
+    #tg-ref-2026 .tg-ref-bonus-pill .tg-ref-bonus-pill-sub {
+      color: rgba(255, 255, 255, 0.88) !important;
+    }
+
+    /* “Tiffins.” wavy underline — force brand green (Tailwind decoration-* often loses to theme). */
+    #tg-ref-2026 .tg-ref-headline-tiffins {
+      text-decoration-line: underline !important;
+      text-decoration-style: wavy !important;
+      text-decoration-thickness: from-font;
+      text-decoration-color: #2ecc71 !important;
+      text-underline-offset: 0.14em;
+      -webkit-text-decoration-color: #2ecc71 !important;
+    }
+
+    /* Handwritten accents — Caveat (loaded from widget + mirrored in WP HEAD snippet). */
+    #tg-ref-2026 .tg-ref-headline-friends {
+      font-family: Caveat, cursive !important;
+      font-style: normal;
+      font-weight: 700;
+      color: #e37b3e !important;
+      display: inline-block;
+      transform: rotate(-2deg);
+    }
+    #tg-ref-2026 .tg-ref-psst-note {
+      font-family: Caveat, cursive !important;
+      font-style: normal;
+      font-weight: 700;
+      color: #e37b3e !important;
+      display: inline-block;
+      transform: rotate(-1deg);
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+    @media (min-width: 768px) {
+      #tg-ref-2026 .tg-ref-psst-note {
+        font-size: 1.875rem;
+      }
+    }
+    @media (min-width: 768px) {
+      #tg-ref-2026 .tg-ref-reward-card--you {
+        transform: rotate(-1.25deg);
+      }
+      #tg-ref-2026 .tg-ref-reward-card--friend {
+        transform: rotate(2deg);
+      }
+      #tg-ref-2026 .tg-ref-reward-card--why {
+        transform: rotate(-1deg);
+      }
+      #tg-ref-2026 .tg-ref-reward-card:hover {
+        transform: rotate(0deg) translateY(-2px);
+      }
+    }
+
+    #tg-ref-2026 .tg-ref-body main {
+      overflow-x: visible !important;
+      overflow-y: visible !important;
+    }
+    /* Room for rotated cards — content-visibility on parent clipped corners; padded grid gives bleed */
+    #tg-ref-2026 .tg-ref-rewards-wrap {
+      overflow: visible !important;
+    }
+    #tg-ref-2026 .tg-ref-rewards-grid {
+      overflow: visible !important;
+    }
+    @media (min-width: 768px) {
+      #tg-ref-2026 .tg-ref-rewards-grid {
+        padding-block: clamp(14px, 2.25vw, 26px);
+        padding-inline: clamp(10px, 1.5vw, 18px);
+        margin-inline: clamp(-12px, -1.75vw, -6px);
+      }
+    }
+
+    #tg-ref-2026 .tg-ref-body img,
+    #tg-ref-2026 .tg-ref-body iframe,
+    #tg-ref-2026 .tg-ref-body video {
+      border: 0 !important;
+      outline: none !important;
+    }
+
+    /* Cursor-following tint (mousemove sets --tg-ref-px/py on section.tg-ref-hero-mouse). */
+    #tg-ref-2026 section.tg-ref-hero-mouse {
+      --tg-ref-px: 50%;
+      --tg-ref-py: 42%;
+    }
+    /* Hero inner panel — slight lift from page bg */
+    /* Same orange wash as home hero blob (home-2026-hero-card: #F06B1A @ ~0.14–0.32). */
+    #tg-ref-2026 .tg-ref-hero-panel {
+      isolation: isolate;
+      background-color: rgba(255, 248, 244, 0.88);
+      background-image:
+        radial-gradient(
+          circle at 88% 6%,
+          rgba(240, 107, 26, 0.22) 0%,
+          rgba(240, 107, 26, 0.08) 42%,
+          rgba(240, 107, 26, 0) 70%
+        ),
+        radial-gradient(
+          circle at 4% 96%,
+          rgba(240, 107, 26, 0.12) 0%,
+          rgba(240, 107, 26, 0) 55%
+        ),
+        linear-gradient(168deg, rgba(255, 253, 250, 0.97) 0%, rgba(255, 236, 222, 0.65) 55%, rgba(255, 244, 235, 0.9) 100%);
+      border: none !important;
+      outline: none !important;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.65) inset,
+        0 14px 44px rgba(240, 107, 26, 0.09),
+        0 12px 36px rgba(155, 69, 7, 0.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    #tg-ref-2026 .tg-ref-hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(
+        ellipse 78% 65% at var(--tg-ref-px, 50%) var(--tg-ref-py, 42%),
+        rgba(248, 128, 60, 0.34) 0%,
+        rgba(240, 107, 26, 0.16) 34%,
+        rgba(240, 107, 26, 0) 62%
+      );
+      mix-blend-mode: multiply;
+      opacity: 0.74;
+      transition: opacity 0.35s ease;
+    }
+    #tg-ref-2026 section.tg-ref-hero-mouse:hover .tg-ref-hero-panel::before,
+    #tg-ref-2026 section.tg-ref-hero-mouse:focus-within .tg-ref-hero-panel::before {
+      opacity: 0.93;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #tg-ref-2026 section.tg-ref-hero-mouse {
+        --tg-ref-px: 50%;
+        --tg-ref-py: 42%;
+      }
+      #tg-ref-2026 .tg-ref-hero-panel::before {
+        opacity: 0 !important;
+        visibility: hidden;
+        animation: none;
+      }
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      #tg-ref-2026 .tg-ref-hero-panel {
+        background-color: #fff1eb;
+        background-image: radial-gradient(
+          circle at 88% 6%,
+          rgba(240, 107, 26, 0.2) 0%,
+          rgba(240, 107, 26, 0) 68%
+        );
+      }
+    }
+    /* Decorative hero glyphs: theme often forces Material icons to inherit white */
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--a,
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--a .material-symbols-outlined {
+      color: #e37b3e !important;
+    }
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--b,
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--b .material-symbols-outlined {
+      color: #2ecc71 !important;
+    }
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--c,
+    #tg-ref-2026 .tg-ref-hero-deco .tg-ref-hero-deco-icon--c .material-symbols-outlined {
+      color: #27ae60 !important;
+    }
+
+    /* “How it works” — icon wells: soft fill + glow, no hairline rims. */
+    #tg-ref-2026 .tg-ref-steps-shell .tg-ref-step-icon-shell {
+      background-color: #fff9f5 !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 0 0 1px rgba(227, 123, 62, 0.18),
+        0 10px 24px rgba(227, 123, 62, 0.08),
+        0 4px 12px rgba(240, 107, 26, 0.06);
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    #tg-ref-2026 .tg-ref-steps-shell .tg-ref-step:hover .tg-ref-step-icon-shell {
+      background-color: rgba(227, 123, 62, 0.12) !important;
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.85) inset,
+        0 0 0 1px rgba(227, 123, 62, 0.35),
+        0 14px 32px rgba(227, 123, 62, 0.16),
+        0 6px 14px rgba(240, 107, 26, 0.08);
+    }
+    #tg-ref-2026 .tg-ref-steps-shell .tg-ref-step-icon-shell .material-symbols-outlined {
+      color: #e37b3e !important;
+    }
+
+    /* Reward card icons on light cards stay brand orange/green where theme washes them */
+    #tg-ref-2026 .tg-ref-reward-card--you .rounded-xl .material-symbols-outlined {
+      color: #e37b3e !important;
+    }
+    #tg-ref-2026 .tg-ref-reward-card--why .flex.items-start .material-symbols-outlined.text-secondary {
+      color: #2ecc71 !important;
+    }
+
+    /* Hero WhatsApp uses same kit green magnetic as home / Invite (.tg-h26-btn--wa). */
   </style>
   <div class="tg-ref-loader" aria-hidden="true">
     <div class="tg-ref-skeleton-hero">
@@ -431,50 +894,54 @@
       <div class="tg-ref-skeleton-box"></div>
     </div>
   </div>
-  <div class="tg-ref-body bg-background text-on-background antialiased py-8 md:py-16">
-    <main class="max-w-7xl mx-auto px-4 md:px-8">
+  <div class="tg-ref-body bg-background text-on-background antialiased py-8 md:py-12 lg:py-16">
+    <main class="max-w-7xl mx-auto px-4 md:px-8 lg:px-10">
       <section
-        class="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-surface-container-low mb-10 md:mb-16 min-h-0 md:min-h-[700px] flex items-center"
+        class="tg-ref-hero-mouse relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-surface-container-low mb-10 md:mb-16 min-h-0 md:min-h-[min(640px,85vh)] lg:min-h-[min(600px,80vh)] flex items-center px-3 sm:px-4 md:px-8 lg:px-10"
       >
-        <div class="absolute inset-0 opacity-10 pointer-events-none">
-          <div class="absolute top-10 left-10 text-primary rotate-12">
+        <div class="absolute inset-0 opacity-[0.14] pointer-events-none tg-ref-hero-deco" aria-hidden="true">
+          <div class="absolute top-10 left-10 tg-ref-hero-deco-icon--a rotate-12">
             <span class="material-symbols-outlined text-4xl">celebration</span>
           </div>
-          <div class="absolute bottom-20 right-20 text-secondary -rotate-12">
+          <div class="absolute bottom-20 right-20 tg-ref-hero-deco-icon--b -rotate-12">
             <span class="material-symbols-outlined text-4xl">favorite</span>
           </div>
-          <div class="absolute top-1/2 left-1/4 text-tertiary rotate-45">
+          <div class="absolute top-1/2 left-1/4 tg-ref-hero-deco-icon--c rotate-45">
             <span class="material-symbols-outlined text-4xl">restaurant</span>
           </div>
         </div>
-        <div class="grid lg:grid-cols-12 gap-6 md:gap-8 items-center relative z-20 w-full p-5 sm:p-6 md:p-12 lg:p-20">
+        <div
+          class="tg-ref-hero-panel relative z-20 w-full max-w-[calc(100%-0.75rem)] sm:max-w-none mx-auto rounded-[1.6rem] md:rounded-[2.25rem] p-5 sm:p-6 md:p-10 lg:p-14 xl:p-16"
+        >
+        <div class="relative z-[1] grid lg:grid-cols-12 gap-6 md:gap-8 items-center w-full">
           <div class="lg:col-span-5 space-y-5 md:space-y-8 text-center lg:text-left">
             <div
-              class="inline-block px-4 py-1.5 rounded-full bg-secondary/15 text-emerald-900 font-bold text-sm transform -rotate-2"
+              class="tg-ref-community-pill inline-block px-4 py-1.5 rounded-full bg-secondary text-on-secondary font-bold text-sm transform -rotate-2 shadow-sm"
             >
               Community Party! 🎉
             </div>
             <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-on-surface leading-[1.1] tracking-tight">
-              Better with <span class="text-primary italic">Friends.</span><br />
-              Free with <span class="underline decoration-secondary decoration-wavy">Tiffins.</span>
+              Better with <span class="tg-ref-headline-friends text-[2.85rem] sm:text-[3.25rem] md:text-[5.25rem] leading-none">Friends.</span><br />
+              Free with <span class="tg-ref-headline-tiffins underline decoration-secondary decoration-wavy underline-offset-[0.14em]">Tiffins.</span>
             </h1>
             <p class="text-base sm:text-lg md:text-xl text-on-surface-variant font-medium leading-relaxed max-w-lg mx-auto lg:mx-0">
-              Why eat alone? Bring the crew to <strong class="text-on-surface">TiffinGrab</strong>. Share great meals
-              and earn free tiffins when friends subscribe through your referral.
+              Why eat alone? Bring the crew to <strong class="text-on-surface">TiffinGrab</strong>. We’re spreading
+              the joy of homemade food — refer friends and pile on bonus tiffins for everyone!
             </p>
             <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 md:pt-4">
               <a
                 href="https://wa.me/16475173663?text=Hi%20TiffinGrab%2C%20I%27d%20like%20to%20refer%20a%20friend%20to%20your%20meal%20plan."
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex w-full sm:w-auto px-5 sm:px-8 md:px-10 py-3.5 md:py-5 bg-primary text-on-primary font-black text-base md:text-lg rounded-2xl shadow-[0_8px_0_0_#b85a2a] hover:shadow-[0_4px_0_0_#b85a2a] hover:translate-y-1 active:shadow-none active:translate-y-2 transition-all items-center justify-center gap-2.5 md:gap-3 no-underline"
+                class="tg-h26-btn tg-h26-btn--wa w-full sm:w-auto no-underline"
+                aria-label="Open WhatsApp to chat with TiffinGrab about referring a friend"
               >
-                <span>Chat on WhatsApp to Refer</span>
-                <span class="material-symbols-outlined">chat</span>
+                <span class="tg-h26-btn__label">Chat on WhatsApp to Refer</span>
+                <span class="tg-h26-btn__knob" aria-hidden="true"></span>
               </a>
             </div>
-            <div class="font-handwritten text-xl md:text-2xl text-primary transform -rotate-1 pt-2 md:pt-4">
-              Psst… free tiffins are waiting when your friends join!
+            <div class="tg-ref-psst-note pt-2 md:pt-4">
+              Psst… 200+ tiffins earned by referrers this week!
             </div>
           </div>
           <div class="lg:col-span-7 relative h-[500px] hidden md:block">
@@ -485,7 +952,9 @@
                 src="https://tiffingrab.ca/wp-content/uploads/2026/04/andy-hay-ZN-TT10kf4o-unsplash.webp"
                 width="288"
                 height="288"
-                loading="lazy"
+                sizes="(min-width: 1024px) 288px, 0px"
+                loading="eager"
+                fetchpriority="high"
                 decoding="async"
               />
               <div class="font-handwritten text-xl mt-4 text-center text-on-surface">“Today’s lunch! Yum! 🍱”</div>
@@ -497,7 +966,9 @@
                 src="https://tiffingrab.ca/wp-content/uploads/2026/04/nayan-bhalotia-z9Swhu2yv4U-unsplash.webp"
                 width="224"
                 height="224"
+                sizes="(min-width: 1024px) 224px, 0px"
                 loading="lazy"
+                fetchpriority="low"
                 decoding="async"
               />
               <div class="font-handwritten text-xl mt-4 text-center text-on-surface">Sarah joined! +1 for me</div>
@@ -509,29 +980,32 @@
                 src="https://tiffingrab.ca/wp-content/uploads/2026/04/shane-wester-ep-8NzLfKKU-unsplash.webp"
                 width="240"
                 height="240"
+                sizes="(min-width: 1024px) 240px, 0px"
                 loading="lazy"
+                fetchpriority="low"
                 decoding="async"
               />
               <div class="font-handwritten text-xl mt-4 text-center text-on-surface">Tiffin party at Mike’s!</div>
             </div>
             <div
-              class="absolute bottom-20 right-0 bg-friend-card text-on-friend-card px-6 py-4 rounded-2xl shadow-xl z-40 transform -rotate-12 flex items-center gap-3"
+              class="tg-ref-bonus-pill absolute bottom-20 right-0 bg-friend-card text-on-friend-card px-6 py-4 rounded-2xl shadow-xl z-40 transform -rotate-12 flex items-center gap-3"
             >
               <span class="material-symbols-outlined text-3xl">workspace_premium</span>
               <div class="font-bold">
-                <div class="text-xs uppercase opacity-80">Bonus Unlocked</div>
+                <div class="tg-ref-bonus-pill-sub text-xs uppercase opacity-80">Bonus Unlocked</div>
                 <div class="text-xl">FREE TIFFIN</div>
               </div>
             </div>
           </div>
         </div>
+        </div>
       </section>
 
-      <section class="mb-10 md:mb-16">
+      <section class="tg-ref-rewards-wrap mb-10 md:mb-16">
         <h2 class="text-2xl font-extrabold text-on-surface mb-8">Exclusive Referral Rewards</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="tg-ref-rewards-grid grid grid-cols-1 md:grid-cols-3 gap-6">
           <div
-            class="md:col-span-1 bg-white p-6 md:p-8 rounded-2xl border border-zinc-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow"
+            class="tg-ref-reward-card tg-ref-reward-card--you md:col-span-1 bg-white p-6 md:p-8 rounded-2xl flex flex-col justify-between"
           >
             <div>
               <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-6">
@@ -540,24 +1014,26 @@
               <h3 class="text-xl font-bold mb-2">For You</h3>
               <p class="text-on-surface-variant mb-6">Spread the goodness and keep your belly full.</p>
               <div class="text-3xl font-extrabold text-primary mb-2">+1 free tiffin for you</div>
-              <p class="text-sm text-zinc-500">Confirmed via WhatsApp after your friend signs up.</p>
+              <p class="text-sm text-on-surface-variant">Confirmed via WhatsApp after your friend signs up.</p>
             </div>
           </div>
           <div
-            class="md:col-span-1 bg-friend-card text-on-friend-card p-6 md:p-8 rounded-2xl shadow-sm flex flex-col justify-between overflow-hidden relative group"
+            class="tg-ref-reward-card tg-ref-reward-card--friend md:col-span-1 bg-friend-card text-on-friend-card p-6 md:p-8 rounded-2xl flex flex-col justify-between overflow-hidden relative group"
           >
             <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
             <div class="relative z-10">
               <div class="w-12 h-12 bg-white/20 text-on-friend-card rounded-xl flex items-center justify-center mb-6">
                 <span class="material-symbols-outlined">group</span>
               </div>
-              <h3 class="text-xl font-bold mb-2">For Your Friend</h3>
+              <h3 class="text-xl font-bold mb-2 text-white">For Your Friend</h3>
               <p class="text-white/80 mb-6">Give them a warm welcome to better weekday meals.</p>
-              <div class="text-3xl font-extrabold mb-2">2 free tiffins ($30 value) for your friend</div>
+              <div class="text-3xl font-extrabold mb-2 text-white">2 free tiffins ($30 value) for your friend</div>
               <p class="text-sm text-white/60">Applied on their first subscription when referred.</p>
             </div>
           </div>
-          <div class="md:col-span-1 bg-surface-container p-6 md:p-8 rounded-2xl flex flex-col gap-6 border border-outline-variant/40">
+          <div
+            class="tg-ref-reward-card tg-ref-reward-card--why md:col-span-1 bg-surface-container p-6 md:p-8 rounded-2xl flex flex-col gap-6"
+          >
             <h3 class="text-xl font-bold">Why refer?</h3>
             <div class="space-y-4">
               <div class="flex items-start gap-3">
@@ -580,24 +1056,28 @@
               href="https://wa.me/16475173663?text=Hi%20TiffinGrab%2C%20I%27d%20like%20to%20invite%20a%20friend%20to%20subscribe."
               target="_blank"
               rel="noopener noreferrer"
-              class="mt-auto w-full py-3 bg-zinc-950 text-white font-bold rounded-xl active:scale-95 transition-all text-center no-underline inline-block"
+              class="tg-h26-btn tg-h26-btn--wa tg-ref-invite-cta mt-auto no-underline"
+              aria-label="Invite a friend to TiffinGrab via WhatsApp"
             >
-              Invite Now
+              <span class="tg-h26-btn__label">Invite Now</span>
+              <span class="tg-h26-btn__knob" aria-hidden="true"></span>
             </a>
           </div>
         </div>
       </section>
 
-      <section class="bg-white border border-zinc-100 rounded-3xl p-6 md:p-12 mb-4 shadow-sm">
+      <section
+        class="tg-ref-fold tg-ref-fold--steps tg-ref-steps-shell bg-white rounded-3xl p-6 md:p-12 mb-4"
+      >
         <div class="text-center mb-8 md:mb-12">
           <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">How it works</h2>
           <p class="text-on-surface-variant mt-2">Three simple steps to free meals</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
-          <div class="hidden md:block absolute top-10 left-[20%] right-[20%] h-0.5 bg-zinc-100 -z-10"></div>
-          <div class="flex flex-col items-center text-center group">
+          <div class="hidden md:block absolute top-10 left-[20%] right-[20%] h-0.5 bg-outline-variant/50 -z-10"></div>
+          <div class="tg-ref-step flex flex-col items-center text-center">
             <div
-              class="w-16 h-16 rounded-2xl bg-white border-2 border-primary/25 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300"
+              class="tg-ref-step-icon-shell w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-4"
             >
               <span class="material-symbols-outlined text-3xl">chat</span>
             </div>
@@ -607,9 +1087,9 @@
               You or your friend messages us and mentions your phone number so we can link the referral.
             </p>
           </div>
-          <div class="flex flex-col items-center text-center group">
+          <div class="tg-ref-step flex flex-col items-center text-center">
             <div
-              class="w-16 h-16 rounded-2xl bg-white border-2 border-primary/25 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300"
+              class="tg-ref-step-icon-shell w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-4"
             >
               <span class="material-symbols-outlined text-3xl">subscriptions</span>
             </div>
@@ -619,9 +1099,9 @@
               They sign up for any TiffinGrab meal plan and we confirm the referral.
             </p>
           </div>
-          <div class="flex flex-col items-center text-center group">
+          <div class="tg-ref-step flex flex-col items-center text-center">
             <div
-              class="w-16 h-16 rounded-2xl bg-white border-2 border-primary/25 flex items-center justify-center text-primary mb-4 group-hover:bg-primary group-hover:text-white transition-all duration-300"
+              class="tg-ref-step-icon-shell w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-4"
             >
               <span class="material-symbols-outlined text-3xl">celebration</span>
             </div>
@@ -640,6 +1120,15 @@
     (function () {
       var root = document.getElementById("tg-ref-2026");
       if (!root) return;
+      try {
+        if (!document.querySelector('meta[name="theme-color"]')) {
+          var tm = document.createElement("meta");
+          tm.name = "theme-color";
+          tm.content = "#fff8f6";
+          tm.setAttribute("data-tg-referral", "1");
+          document.head.appendChild(tm);
+        }
+      } catch (_) {}
       var revealed = false;
       function done() {
         if (revealed) return;
@@ -649,7 +1138,7 @@
       }
       function tailwindReady() {
         var probe = document.createElement("div");
-        probe.className = "hidden bg-primary border border-zinc-100";
+        probe.className = "hidden bg-primary border border-outline-variant";
         root.appendChild(probe);
         var styles = window.getComputedStyle(probe);
         var ok =
@@ -661,17 +1150,51 @@
       }
 
       var checks = 0;
+      var maxChecks = 40;
       function revealWhenReady() {
         checks += 1;
-        if (tailwindReady() || checks > 50) {
+        if (tailwindReady() || checks > maxChecks) {
           done();
           return;
         }
-        setTimeout(revealWhenReady, 40);
+        setTimeout(revealWhenReady, 28);
       }
 
       requestAnimationFrame(revealWhenReady);
-      setTimeout(done, 2200);
+      setTimeout(done, 1000);
+
+      /* Hero panel: radial highlight follows pointer (fine pointer only; respects reduced-motion). */
+      try {
+        if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+        var heroSec = root.querySelector("section.tg-ref-hero-mouse");
+        if (!heroSec) return;
+        var heroScheduled = false;
+        var heroPx = 50;
+        var heroPy = 42;
+        heroSec.addEventListener(
+          "mousemove",
+          function (e) {
+            var rect = heroSec.getBoundingClientRect();
+            var w = rect.width || 1;
+            var h = rect.height || 1;
+            heroPx = Math.max(4, Math.min(96, ((e.clientX - rect.left) / w) * 100));
+            heroPy = Math.max(4, Math.min(96, ((e.clientY - rect.top) / h) * 100));
+            if (heroScheduled) return;
+            heroScheduled = true;
+            requestAnimationFrame(function () {
+              heroScheduled = false;
+              heroSec.style.setProperty("--tg-ref-px", heroPx.toFixed(1) + "%");
+              heroSec.style.setProperty("--tg-ref-py", heroPy.toFixed(1) + "%");
+            });
+          },
+          { passive: true }
+        );
+        heroSec.addEventListener("mouseleave", function () {
+          heroSec.style.setProperty("--tg-ref-px", "50%");
+          heroSec.style.setProperty("--tg-ref-py", "42%");
+        });
+      } catch (_) {}
     })();
   </script>
 </div>
