@@ -71,8 +71,10 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
     max-width: 100%;
     box-sizing: border-box;
     padding-inline: 0;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: auto;
   }
 }
 @supports (width: min(1320px, 100dvw)) {
@@ -154,8 +156,8 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
 }
 #tg-hero-tags.tg-home-loading .tg-home-page-skel {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
@@ -172,8 +174,8 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   gap: 0;
   width: fit-content;
   max-width: 100%;
-  min-height: 48px;
-  padding: 7px 16px 7px 10px;
+  min-height: 50px;
+  padding: 7px 16px 7px 7px;
   border-radius: 999px;
   background: #ffffff;
   border: 1px solid rgba(35, 26, 21, 0.08);
@@ -222,7 +224,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
 }
 #tg-hero-tags.tg-home-loading .tg-home-skel-line--pilltext {
   height: 14px;
-  width: min(11.5rem, 42vw);
+  width: min(14.75rem, 58vw);
   max-width: 100%;
   margin-left: 10px;
   border-radius: 999px;
@@ -242,7 +244,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   #tg-hero-tags.tg-home-loading .tg-home-skel-line--pilltext {
     height: 12px;
     margin-left: 8px;
-    width: min(10rem, 48vw);
+    width: min(12rem, 58vw);
   }
 }
 #tg-hero-tags.tg-home-loading .tg-hero-tags-align {
@@ -387,8 +389,10 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   }
   .tg-hero-tags-align {
     max-width: 100%;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: auto;
   }
   .home-2026-social-pill {
     max-width: 100%;
@@ -413,7 +417,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
   }
 }
 </style>
-<div class="home-2026-tags tg-home-loading" id="tg-hero-tags" aria-busy="true">
+<div class="home-2026-tags" id="tg-hero-tags">
   <div class="tg-home-page-skel" aria-hidden="true">
     <div class="tg-home-page-skel-inner">
       <div class="tg-home-skel-avatars" aria-hidden="true">
@@ -434,8 +438,9 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
             alt=""
             width="36"
             height="36"
-            loading="lazy"
+            loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         </span>
         <span class="home-2026-social-av">
@@ -444,7 +449,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
             alt=""
             width="36"
             height="36"
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </span>
@@ -454,7 +459,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
             alt=""
             width="36"
             height="36"
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </span>
@@ -464,7 +469,7 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
             alt=""
             width="36"
             height="36"
-            loading="lazy"
+            loading="eager"
             decoding="async"
           />
         </span>
@@ -476,22 +481,9 @@ body:is(:has(#tg-hero-tags), .elementor-page-10016, .page-id-10016) .elementor-h
     (function () {
       var root = document.getElementById("tg-hero-tags");
       if (!root) return;
-      function markHomeHeroReady() {
-        root.classList.remove("tg-home-loading");
-        root.removeAttribute("aria-busy");
-      }
-      /* #tg-hero-tags is only the social strip; remove loading ASAP so we never cover Elementor hero.
-         Multiple hooks cover late execution (moved scripts, DC already fired, lazy widgets). */
-      if (document.readyState !== "loading") {
-        markHomeHeroReady();
-      } else {
-        document.addEventListener("DOMContentLoaded", markHomeHeroReady, { once: true });
-      }
-      requestAnimationFrame(markHomeHeroReady);
-      setTimeout(markHomeHeroReady, 0);
-      setTimeout(markHomeHeroReady, 160);
-      window.addEventListener("load", markHomeHeroReady, { once: true });
-      setTimeout(markHomeHeroReady, 2000);
+      /* Safe fallback: never block the real social pill behind loading state. */
+      root.classList.remove("tg-home-loading");
+      root.removeAttribute("aria-busy");
     })();
   </script>
 </div>
