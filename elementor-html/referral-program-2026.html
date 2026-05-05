@@ -300,7 +300,11 @@
     }
     #tg-ref-2026.tg-ref-loading .tg-ref-loader {
       display: block;
-      padding: 1rem 0 1.5rem;
+      padding: 1rem clamp(1rem, 4vw, 2.5rem) 1.5rem;
+      box-sizing: border-box;
+      max-width: 80rem;
+      margin-left: auto;
+      margin-right: auto;
       font-family: var(--tg-font, "Geist", system-ui, sans-serif);
       color: transparent;
       /* Opaque base so grid gaps never show through to dark theme chrome for a frame */
@@ -322,11 +326,11 @@
       border-radius: 1.75rem;
       background: #fff1eb !important;
       padding: 1.25rem;
-      margin-bottom: 1rem;
+      margin-bottom: 2.5rem;
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      min-height: 26rem;
+      min-height: min(32rem, 82vh);
       isolation: isolate;
       overflow: hidden;
     }
@@ -338,17 +342,18 @@
       min-width: 0;
     }
     #tg-ref-2026 .tg-ref-skeleton-left > * + * {
-      margin-top: 0.6rem;
+      margin-top: 0.75rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-right {
       display: none;
       position: relative;
-      min-height: 20rem;
+      min-height: 31.25rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-polaroid {
       position: absolute;
       border-radius: 1.5rem;
-      padding: 0.5rem;
+      padding: 0.65rem;
+      padding-bottom: 2.25rem;
       background: #fff !important;
       box-shadow: 0 12px 28px -8px rgba(155, 69, 7, 0.12);
       border: 0 !important;
@@ -362,8 +367,8 @@
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
     #tg-ref-2026 .tg-ref-skeleton-pill {
-      width: 7rem;
-      height: 1.15rem;
+      width: 11rem;
+      height: 1.85rem;
       border-radius: 9999px;
       background-color: #efe4de !important;
       background-image: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
@@ -371,104 +376,186 @@
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--h1 {
-      height: 2.1rem;
-      width: 88%;
+      height: 2.85rem;
+      width: 100%;
+      max-width: 22rem;
     }
-    #tg-ref-2026 .tg-ref-skeleton-line--h2 {
-      height: 2.1rem;
-      width: 76%;
+    /* Second headline line (“Free with Tiffins”) */
+    #tg-ref-2026 .tg-ref-skeleton-line--h1b {
+      height: 2.85rem;
+      width: 86%;
+      max-width: 19rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--p {
-      height: 0.9rem;
+      height: 1rem;
       width: 100%;
+      max-width: 32rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--p-short {
-      height: 0.9rem;
-      width: 68%;
+      height: 1rem;
+      width: 72%;
+      max-width: 24rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--cta {
-      height: 2.7rem;
-      width: 12.5rem;
-      border-radius: 0.9rem;
+      height: 2.85rem;
+      width: min(100%, 18rem);
+      border-radius: 9999px;
     }
     #tg-ref-2026 .tg-ref-skeleton-line--note {
       height: 0.95rem;
-      width: 70%;
+      width: 78%;
+      max-width: 22rem;
     }
-    #tg-ref-2026 .tg-ref-skeleton-polaroid .tg-ref-skeleton-box {
+    #tg-ref-2026 .tg-ref-skeleton-line--section-title {
+      height: 1.85rem;
+      width: min(72%, 20rem);
+      margin-bottom: 1.85rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--steps-h2 {
+      height: 1.75rem;
+      width: 40%;
+      max-width: 13rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0.5rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--steps-sub {
+      height: 0.95rem;
+      width: 56%;
+      max-width: 18rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 1.5rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--step-cap {
+      height: 0.65rem;
+      width: 3.75rem;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 0.35rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--step-h {
+      height: 1.05rem;
+      width: 88%;
+      max-width: 11rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-line--step-p {
+      height: 0.82rem;
       width: 100%;
-      height: 100%;
-      border-radius: 1.15rem;
+      margin-left: auto;
+      margin-right: auto;
     }
+    /* step-p-short reuses global p-short width; centered in column */
+    #tg-ref-2026 .tg-ref-skeleton-step-col .tg-ref-skeleton-line--step-p-short {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-polaroid .tg-ref-skeleton-box--square {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      border-radius: 1.05rem;
+    }
+    /* Match polaroid frame sizes: w-72, w-56, w-60 (+ caption band in padding-bottom) */
     #tg-ref-2026 .tg-ref-skeleton-polaroid--a {
       top: 0;
-      right: 0.65rem;
-      width: 9.5rem;
-      height: 10.5rem;
+      right: 2.5rem;
+      width: 18rem;
       transform: rotate(3deg);
+      z-index: 3;
     }
     #tg-ref-2026 .tg-ref-skeleton-polaroid--b {
-      top: 3.7rem;
-      left: 0.65rem;
-      width: 8.5rem;
-      height: 9.25rem;
+      top: 5rem;
+      left: 2.5rem;
+      width: 14rem;
       transform: rotate(-6deg);
+      z-index: 1;
     }
     #tg-ref-2026 .tg-ref-skeleton-polaroid--c {
-      bottom: 0.35rem;
-      left: 4.3rem;
-      width: 9rem;
-      height: 9.75rem;
+      bottom: 2.5rem;
+      left: 8rem;
+      width: 15rem;
       transform: rotate(6deg);
+      z-index: 2;
     }
     #tg-ref-2026 .tg-ref-skeleton-badge {
       position: absolute;
       right: 0;
-      bottom: 1.25rem;
-      width: 7.8rem;
-      height: 2.5rem;
-      border-radius: 0.9rem;
+      bottom: 5rem;
+      width: 10.5rem;
+      height: 3.5rem;
+      border-radius: 1rem;
       background-color: #dfece4 !important;
       background-image: linear-gradient(90deg, #deefe6 25%, #eef8f3 50%, #deefe6 75%) !important;
       background-size: 240% 100%;
       animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
       transform: rotate(-12deg);
+      z-index: 4;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-rewards {
+      margin-bottom: 2.5rem;
+      background-color: #fff8f6 !important;
     }
     #tg-ref-2026 .tg-ref-skeleton-cards {
       display: flex;
       flex-direction: column;
-      margin-bottom: 0.9rem;
-      background-color: #fff8f6 !important;
       isolation: isolate;
       overflow: hidden;
+      gap: 1.5rem;
     }
     #tg-ref-2026 .tg-ref-skeleton-cards > * {
-      margin-bottom: 0.75rem;
-    }
-    #tg-ref-2026 .tg-ref-skeleton-cards > *:last-child {
       margin-bottom: 0;
     }
+    /* Reward cards (~ p-8 + icon + headings + body) */
+    #tg-ref-2026 .tg-ref-skeleton-card.tg-ref-skeleton-box {
+      min-height: 17rem;
+      height: auto;
+      border-radius: 1.25rem;
+    }
     #tg-ref-2026 .tg-ref-skeleton-box {
-      height: 7.5rem;
+      border-radius: 0.85rem;
+    }
+    /* “How it works” shell — mirrors rounded-3xl white card */
+    #tg-ref-2026 .tg-ref-skeleton-steps-shell {
+      border-radius: 1.85rem;
+      background: #ffffff !important;
+      padding: 1.25rem 1rem 1.5rem;
+      text-align: center;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-step-col > * + * {
+      margin-top: 0.65rem;
+    }
+    #tg-ref-2026 .tg-ref-skeleton-icon-well {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0.15rem;
+      background-color: #efe4de !important;
+      background-image: linear-gradient(90deg, #f4e7e1 25%, #fbf4f1 50%, #f4e7e1 75%) !important;
+      background-size: 240% 100%;
+      animation: tg-ref-skeleton-wave 1.25s ease-in-out infinite;
     }
     #tg-ref-2026 .tg-ref-skeleton-steps {
-      border-radius: 1.2rem;
-      background: #fdf6f2 !important;
+      border-radius: 0;
+      background: transparent !important;
       border: 0 !important;
-      padding: 0.9rem;
+      padding: 0;
       display: flex;
       flex-direction: column;
       isolation: isolate;
       overflow: hidden;
+      gap: 1.75rem;
     }
-    #tg-ref-2026 .tg-ref-skeleton-steps > * {
-      margin-bottom: 0.7rem;
-    }
-    #tg-ref-2026 .tg-ref-skeleton-steps > *:last-child {
-      margin-bottom: 0;
-    }
-    #tg-ref-2026 .tg-ref-skeleton-steps .tg-ref-skeleton-box {
-      height: 3.8rem;
+    #tg-ref-2026 .tg-ref-skeleton-step-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 1 auto;
+      min-width: 0;
     }
     @keyframes tg-ref-skeleton-wave {
       0% {
@@ -480,52 +567,61 @@
     }
     @media (min-width: 768px) {
       #tg-ref-2026.tg-ref-loading .tg-ref-loader {
-        padding: 1.2rem 0 2rem;
+        padding: 2rem clamp(1rem, 4vw, 2.5rem) 2.25rem;
+        box-sizing: border-box;
       }
       #tg-ref-2026 .tg-ref-skeleton-hero {
-        padding: 1.8rem;
+        padding: 1.75rem 2rem;
         border-radius: 2rem;
         flex-direction: row;
-        align-items: flex-start;
-        min-height: 34rem;
+        align-items: center;
+        min-height: min(640px, 85vh);
+        margin-bottom: 4rem;
       }
       #tg-ref-2026 .tg-ref-skeleton-left {
-        flex: 1 1 52%;
-        max-width: 52%;
-        padding-right: 1.5rem;
+        flex: 5 5 41.666%;
+        max-width: 41.666%;
+        padding-right: 1.75rem;
         box-sizing: border-box;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-left > * + * {
+        margin-top: 0.95rem;
       }
       #tg-ref-2026 .tg-ref-skeleton-right {
         display: block;
-        flex: 1 1 48%;
-        max-width: 48%;
+        flex: 7 7 58.334%;
+        max-width: 58.334%;
         min-width: 0;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-rewards {
+        margin-bottom: 4rem;
       }
       #tg-ref-2026 .tg-ref-skeleton-cards {
         flex-direction: row;
         align-items: stretch;
+        gap: 1.5rem;
       }
       #tg-ref-2026 .tg-ref-skeleton-cards > * {
         margin-bottom: 0;
-        margin-right: 0.75rem;
+        margin-right: 0;
         flex: 1 1 0;
         min-width: 0;
       }
-      #tg-ref-2026 .tg-ref-skeleton-cards > *:last-child {
-        margin-right: 0;
+      #tg-ref-2026 .tg-ref-skeleton-steps-shell {
+        padding: 2.75rem clamp(1.25rem, 3vw, 3rem);
+        border-radius: 1.75rem;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-line--steps-h2 {
+        margin-bottom: 0.4rem;
+      }
+      #tg-ref-2026 .tg-ref-skeleton-line--steps-sub {
+        margin-bottom: 2rem;
       }
       #tg-ref-2026 .tg-ref-skeleton-steps {
         flex-direction: row;
-        align-items: stretch;
-      }
-      #tg-ref-2026 .tg-ref-skeleton-steps > * {
-        margin-bottom: 0;
-        margin-right: 0.7rem;
-        flex: 1 1 0;
-        min-width: 0;
-      }
-      #tg-ref-2026 .tg-ref-skeleton-steps > *:last-child {
-        margin-right: 0;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: clamp(1.5rem, 4vw, 3rem);
       }
     }
     @media (max-width: 767px) {
@@ -870,28 +966,50 @@
       <div class="tg-ref-skeleton-left">
         <div class="tg-ref-skeleton-pill"></div>
         <div class="tg-ref-skeleton-line tg-ref-skeleton-line--h1"></div>
-        <div class="tg-ref-skeleton-line tg-ref-skeleton-line--h2"></div>
+        <div class="tg-ref-skeleton-line tg-ref-skeleton-line--h1b"></div>
         <div class="tg-ref-skeleton-line tg-ref-skeleton-line--p"></div>
         <div class="tg-ref-skeleton-line tg-ref-skeleton-line--p-short"></div>
         <div class="tg-ref-skeleton-line tg-ref-skeleton-line--cta"></div>
         <div class="tg-ref-skeleton-line tg-ref-skeleton-line--note"></div>
       </div>
       <div class="tg-ref-skeleton-right">
-        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--a"><div class="tg-ref-skeleton-box"></div></div>
-        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--b"><div class="tg-ref-skeleton-box"></div></div>
-        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--c"><div class="tg-ref-skeleton-box"></div></div>
+        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--a"><div class="tg-ref-skeleton-box tg-ref-skeleton-box--square"></div></div>
+        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--b"><div class="tg-ref-skeleton-box tg-ref-skeleton-box--square"></div></div>
+        <div class="tg-ref-skeleton-polaroid tg-ref-skeleton-polaroid--c"><div class="tg-ref-skeleton-box tg-ref-skeleton-box--square"></div></div>
         <div class="tg-ref-skeleton-badge"></div>
       </div>
     </div>
-    <div class="tg-ref-skeleton-cards">
-      <div class="tg-ref-skeleton-box"></div>
-      <div class="tg-ref-skeleton-box"></div>
-      <div class="tg-ref-skeleton-box"></div>
+    <div class="tg-ref-skeleton-rewards">
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--section-title"></div>
+      <div class="tg-ref-skeleton-cards">
+        <div class="tg-ref-skeleton-card tg-ref-skeleton-box"></div>
+        <div class="tg-ref-skeleton-card tg-ref-skeleton-box"></div>
+        <div class="tg-ref-skeleton-card tg-ref-skeleton-box"></div>
+      </div>
     </div>
-    <div class="tg-ref-skeleton-steps">
-      <div class="tg-ref-skeleton-box"></div>
-      <div class="tg-ref-skeleton-box"></div>
-      <div class="tg-ref-skeleton-box"></div>
+    <div class="tg-ref-skeleton-steps-shell">
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--steps-h2"></div>
+      <div class="tg-ref-skeleton-line tg-ref-skeleton-line--steps-sub"></div>
+      <div class="tg-ref-skeleton-steps">
+        <div class="tg-ref-skeleton-step-col">
+          <div class="tg-ref-skeleton-icon-well"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-cap"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-h"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-p"></div>
+        </div>
+        <div class="tg-ref-skeleton-step-col">
+          <div class="tg-ref-skeleton-icon-well"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-cap"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-h"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-p"></div>
+        </div>
+        <div class="tg-ref-skeleton-step-col">
+          <div class="tg-ref-skeleton-icon-well"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-cap"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-h"></div>
+          <div class="tg-ref-skeleton-line tg-ref-skeleton-line--step-p-short"></div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="tg-ref-body bg-background text-on-background antialiased py-8 md:py-12 lg:py-16">
