@@ -13,8 +13,34 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&amp;display=swap" />
   </noscript>
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com" />
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
+  <link rel="preload" href="https://cdn.tailwindcss.com" as="script" />
   <link rel="dns-prefetch" href="https://wa.me" />
   <link rel="dns-prefetch" href="https://api.whatsapp.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Icons + UI font: avoid empty / dark glyph boxes before global HEAD/CSS finishes (cache hits wp-head duplicates). -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=optional"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=optional" />
+  </noscript>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    />
+  </noscript>
   <link
     rel="preload"
     as="image"
@@ -69,12 +95,23 @@
   </script>
   <script>
     (function () {
+      window.__tgRefTwReady = window.__tgRefTwReady || false;
       if (window.__tgRefTailwindLoader) return;
       window.__tgRefTailwindLoader = true;
       var hasTailwindStyles =
         !!document.querySelector("style[data-tw-source], style[data-tailwindcss]") ||
         !!document.querySelector("script[src*='cdn.tailwindcss.com']");
-      if (hasTailwindStyles && window.tailwind) return;
+      if (hasTailwindStyles && window.tailwind) {
+        queueMicrotask(function () {
+          requestAnimationFrame(function () {
+            window.__tgRefTwReady = true;
+          });
+        });
+        return;
+      }
+      function signalTailwindReady() {
+        window.__tgRefTwReady = true;
+      }
       function injectTailwind() {
         if (document.getElementById("tg-ref-tw-cdn")) return;
         var script = document.createElement("script");
@@ -82,9 +119,16 @@
         script.src = "https://cdn.tailwindcss.com";
         script.async = true;
         script.setAttribute("data-tg-ref-tailwind", "1");
+        script.addEventListener("load", function () {
+          /* CDN runs JIT on the main thread; flush layout before peeling loading shell. */
+          requestAnimationFrame(function () {
+            requestAnimationFrame(signalTailwindReady);
+          });
+        });
+        script.addEventListener("error", signalTailwindReady);
         document.head.appendChild(script);
       }
-      /* Yield so text fonts + first paint can start before heavy Tailwind compile. */
+      /* Yield so Caveat/fonts + preload can win first paint before Tailwind compile. */
       setTimeout(injectTailwind, 0);
     })();
   </script>
@@ -145,6 +189,13 @@
     /* Elementor flex containers often pick up theme `border: 1px solid currentColor` on .e-con children. */
     html body:has(#tg-ref-2026) .elementor-element.e-con:has(#tg-ref-2026),
     html body:has(#tg-ref-2026) .elementor-element.e-con-inner:has(#tg-ref-2026) {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    /* Inner Elementor wrappers (nested flex containers): same theme currentColor rims as outer */
+    html body:has(#tg-ref-2026) .elementor-element:has(#tg-ref-2026).e-child,
+    html body:has(#tg-ref-2026) .elementor-element:has(#tg-ref-2026).e-parent {
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
@@ -276,6 +327,7 @@
         0 12px 32px -10px rgba(155, 69, 7, 0.14),
         0 8px 20px -8px rgba(240, 107, 26, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backface-visibility: hidden;
     }
     /* Inner photo radius slightly tighter than frame for a neat white rim. */
     #tg-ref-2026 .polaroid img {
@@ -651,6 +703,11 @@
     }
 
     /* Reward + steps: elevation via shadow — no bordered “boxes” (avoids black currentColor rims). */
+    /* Small icon wells on reward cards — theme borders read as harsh “boxes” until Tailwind colors apply */
+    #tg-ref-2026 .tg-ref-reward-card .rounded-xl.flex.items-center.justify-center {
+      border: none !important;
+      outline: none !important;
+    }
     #tg-ref-2026 .tg-ref-reward-card {
       border: none !important;
       outline: none !important;
@@ -1266,20 +1323,24 @@
         probe.remove();
         return ok;
       }
-
-      var checks = 0;
-      var maxChecks = 40;
+      var waitSpins = 0;
+      var postTwFrames = 0;
       function revealWhenReady() {
-        checks += 1;
-        if (tailwindReady() || checks > maxChecks) {
-          done();
+        if (revealed) return;
+        if (!window.__tgRefTwReady) {
+          waitSpins += 1;
+          /* ~2.5s of rAF (~150 frames typical) waiting for CDN `load`; cap avoids infinite spinner */
+          if (waitSpins > 168) done();
+          else requestAnimationFrame(revealWhenReady);
           return;
         }
-        setTimeout(revealWhenReady, 28);
+        postTwFrames += 1;
+        if (tailwindReady() || postTwFrames > 10) done();
+        else requestAnimationFrame(revealWhenReady);
       }
-
       requestAnimationFrame(revealWhenReady);
-      setTimeout(done, 1000);
+      /* Never trap users on skeleton if CDN fails or our probe disagrees forever */
+      setTimeout(done, 2200);
 
       /* Hero panel: radial highlight follows pointer (fine pointer only; respects reduced-motion). */
       try {
