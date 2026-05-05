@@ -102,11 +102,7 @@
         !!document.querySelector("style[data-tw-source], style[data-tailwindcss]") ||
         !!document.querySelector("script[src*='cdn.tailwindcss.com']");
       if (hasTailwindStyles && window.tailwind) {
-        queueMicrotask(function () {
-          requestAnimationFrame(function () {
-            window.__tgRefTwReady = true;
-          });
-        });
+        window.__tgRefTwReady = true;
         return;
       }
       function signalTailwindReady() {
