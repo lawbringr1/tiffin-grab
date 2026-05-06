@@ -1,5 +1,14 @@
 <!-- WhatsApp/Facebook previews use og:title, og:description, og:image (~1200×630), og:url in RankMath/Yoast (HEAD)—not visible to crawlers inside this widget. -->
 <div id="tg-ref-2026" lang="en-CA" class="tg-ref-root tg-ref-loading" aria-busy="true">
+  <script>
+    /* Route hook before first paint: :has() isn’t everywhere; theme/Elementor borders must still strip. */
+    (function () {
+      try {
+        document.documentElement.classList.add("tg-ref-2026-page");
+        document.body.classList.add("tg-ref-2026-page");
+      } catch (_) {}
+    })();
+  </script>
   <!-- Geist + Material: WP HEAD. Caveat-only here (~one small CSS) ensures “Friends.” / captions load even if HEAD snippet lags. -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -232,6 +241,26 @@
       border: none !important;
       outline: none !important;
       box-shadow: none !important;
+    }
+    /* Same as :has() rules above, keyed off body class (see early script) — fixes dark “boxes” when :has fails or matches late. */
+    html.tg-ref-2026-page body #primary .e-con,
+    html.tg-ref-2026-page body #primary .e-con-inner,
+    html.tg-ref-2026-page body #primary .elementor-widget-wrap,
+    html.tg-ref-2026-page body #primary .elementor-column,
+    html.tg-ref-2026-page body #primary .elementor-section,
+    html.tg-ref-2026-page body #primary .elementor-widget-container,
+    html.tg-ref-2026-page body .entry-content .elementor-widget-html .elementor-widget-container,
+    html.tg-ref-2026-page body .entry-content .elementor-widget-wrap,
+    html.tg-ref-2026-page body .entry-content .elementor-column,
+    html.tg-ref-2026-page body .entry-content .elementor-section {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    html.tg-ref-2026-page body #primary .e-con,
+    html.tg-ref-2026-page body #primary .e-con-inner {
+      border-width: 0 !important;
+      border-color: transparent !important;
     }
     /* Hide WP / theme / Elementor duplicate page title above full-width HTML (same idea as weekly menu). */
     html body:has(#tg-ref-2026) .entry-header,
@@ -705,6 +734,7 @@
       outline: none !important;
     }
     #tg-ref-2026 .tg-ref-reward-card {
+      isolation: isolate;
       border: none !important;
       outline: none !important;
       box-sizing: border-box;
@@ -937,13 +967,14 @@
         rgba(240, 107, 26, 0.16) 34%,
         rgba(240, 107, 26, 0) 62%
       );
-      mix-blend-mode: multiply;
-      opacity: 0.74;
+      /* multiply often reads as muddy black “frames” around the panel on Safari/GPU layers */
+      mix-blend-mode: normal;
+      opacity: 0.38;
       transition: opacity 0.35s ease;
     }
     #tg-ref-2026 section.tg-ref-hero-mouse:hover .tg-ref-hero-panel::before,
     #tg-ref-2026 section.tg-ref-hero-mouse:focus-within .tg-ref-hero-panel::before {
-      opacity: 0.93;
+      opacity: 0.52;
     }
     @media (prefers-reduced-motion: reduce) {
       #tg-ref-2026 section.tg-ref-hero-mouse {
@@ -1291,6 +1322,10 @@
     (function () {
       var root = document.getElementById("tg-ref-2026");
       if (!root) return;
+      try {
+        document.documentElement.classList.add("tg-ref-2026-page");
+        document.body.classList.add("tg-ref-2026-page");
+      } catch (_) {}
       try {
         if (!document.querySelector('meta[name="theme-color"]')) {
           var tm = document.createElement("meta");
