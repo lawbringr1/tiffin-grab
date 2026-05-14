@@ -604,15 +604,16 @@ header.elementor.elementor-1863.elementor-location-header {
 /* ========== Cart count badge (icon links → /cart/ — filled via inline header script + Store API) ========== */
 .elementor-location-header.elementor-1863 .tg-cart-icon-wrap {
   position: relative !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  /* Shrink-wrap the SVG pill so the badge anchors to the icon corner, not a wide flex box. */
+  display: inline-block !important;
+  line-height: 0 !important;
+  vertical-align: middle !important;
 }
 
 .elementor-location-header.elementor-1863 .tg-cart-count-badge {
   position: absolute;
-  top: -0.2rem;
-  right: -0.15rem;
+  top: 0;
+  right: 0;
   z-index: 3;
   box-sizing: border-box;
   min-width: 1.05rem;
@@ -631,6 +632,14 @@ header.elementor.elementor-1863.elementor-location-header {
   border-radius: 9999px;
   border: 2px solid var(--tg-bg);
   pointer-events: none;
+  /* Half outside the icon box = classic corner chip (not centered on the cart glyph). */
+  transform: translate(38%, -42%);
+}
+
+@media (max-width: 767px) {
+  .elementor-location-header.elementor-1863 .tg-cart-count-badge {
+    transform: translate(36%, -40%);
+  }
 }
 
 .elementor-location-header.elementor-1863 .tg-cart-count-badge[data-tg-cart-visible="1"] {
