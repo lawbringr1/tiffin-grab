@@ -597,6 +597,42 @@ header.elementor.elementor-1863.elementor-location-header {
   box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1) !important;
 }
 
+/* ========== Cart count badge (icon links → /cart/ — filled via inline header script + Store API) ========== */
+.elementor-location-header.elementor-1863 .tg-cart-icon-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.elementor-location-header.elementor-1863 .tg-cart-count-badge {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.15rem;
+  z-index: 3;
+  box-sizing: border-box;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  padding: 0 0.28rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--tg-font);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--tg-on-theme);
+  background: var(--tg-theme);
+  border-radius: 9999px;
+  border: 2px solid var(--tg-bg);
+  pointer-events: none;
+}
+
+.elementor-location-header.elementor-1863 .tg-cart-count-badge[data-tg-cart-visible="1"] {
+  display: inline-flex;
+}
+
 /*
   Live header uses Elementor Heading widgets (not the HTML snippet):
   • Desktop: .elementor-element-94e7fd8 — <a>Tiffin<span class="span">Grab</span></a>

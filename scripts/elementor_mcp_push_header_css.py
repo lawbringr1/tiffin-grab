@@ -145,6 +145,114 @@ def wrap_inline_style(css: str) -> str:
     header.appendChild(link);
   }
 
+  /* Cart quantity badge on Elementor icon widgets that link to the cart page (not Menu Cart widget). */
+  function tgIsCartPageHref(href) {
+    if (!href) return false;
+    try {
+      var u = new URL(href, window.location.origin);
+      var p = u.pathname || '/';
+      while (p.length > 1 && p.charAt(p.length - 1) === '/') p = p.slice(0, -1);
+      if (!p) p = '/';
+      return p === '/cart' || p.endsWith('/cart');
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  function tgSumCartQty(data) {
+    if (!data || !Array.isArray(data.items)) return 0;
+    var t = 0;
+    for (var i = 0; i < data.items.length; i++) {
+      var q = data.items[i].quantity;
+      t += typeof q === 'number' ? q : parseInt(q, 10) || 0;
+    }
+    return t;
+  }
+
+  function tgCartBadgeLabel(n) {
+    if (n > 99) return '99+';
+    return String(n);
+  }
+
+  function tgEnsureBadgeOnCartIcon(anchor) {
+    var wrap = anchor.parentElement;
+    if (!wrap || !wrap.classList.contains('elementor-icon-wrapper')) return null;
+    wrap.classList.add('tg-cart-icon-wrap');
+    var badge = wrap.querySelector('.tg-cart-count-badge');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'tg-cart-count-badge';
+      badge.setAttribute('aria-hidden', 'true');
+      wrap.appendChild(badge);
+    }
+    return badge;
+  }
+
+  var tgCartBadgeTimer = null;
+  function tgRefreshCartBadges() {
+    var hdr =
+      document.querySelector('header.elementor.elementor-1863.elementor-location-header') ||
+      document.querySelector('.elementor-location-header.elementor-1863');
+    if (!hdr) return;
+    var anchors = hdr.querySelectorAll('a.elementor-icon[href]');
+    var cartAnchors = [];
+    anchors.forEach(function (a) {
+      if (a.closest('.elementor-widget-woocommerce-menu-cart')) return;
+      if (!tgIsCartPageHref(a.getAttribute('href'))) return;
+      cartAnchors.push(a);
+    });
+    if (!cartAnchors.length) return;
+
+    var cartJsonUrl = new URL('/wp-json/wc/store/v1/cart', window.location.origin).href;
+
+    fetch(cartJsonUrl, {
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json' },
+    })
+      .then(function (r) {
+        return r.ok ? r.json() : null;
+      })
+      .then(function (data) {
+        if (!data) return;
+        var n = tgSumCartQty(data);
+        cartAnchors.forEach(function (a) {
+          var badge = tgEnsureBadgeOnCartIcon(a);
+          if (!badge) return;
+          if (!a.dataset.tgCartAriaDefault && a.getAttribute('aria-label')) {
+            a.dataset.tgCartAriaDefault = a.getAttribute('aria-label');
+          }
+          if (n > 0) {
+            badge.textContent = tgCartBadgeLabel(n);
+            badge.setAttribute('data-tg-cart-visible', '1');
+            a.setAttribute('aria-label', 'Cart, ' + n + (n === 1 ? ' item' : ' items'));
+          } else {
+            badge.textContent = '';
+            badge.removeAttribute('data-tg-cart-visible');
+            var def = a.dataset.tgCartAriaDefault;
+            if (def) a.setAttribute('aria-label', def);
+            else a.removeAttribute('aria-label');
+          }
+        });
+      })
+      .catch(function () {});
+  }
+
+  function tgScheduleCartBadgeRefresh() {
+    if (tgCartBadgeTimer) clearTimeout(tgCartBadgeTimer);
+    tgCartBadgeTimer = setTimeout(tgRefreshCartBadges, 200);
+  }
+
+  tgRefreshCartBadges();
+  if (window.jQuery) {
+    window.jQuery(document.body).on('added_to_cart removed_from_cart', tgScheduleCartBadgeRefresh);
+    window.jQuery(document.body).on('wc_fragment_refresh', tgScheduleCartBadgeRefresh);
+  }
+  document.addEventListener('wc-blocks_added_to_cart', tgScheduleCartBadgeRefresh);
+  window.addEventListener('load', tgScheduleCartBadgeRefresh);
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) tgScheduleCartBadgeRefresh();
+  });
+
   function ensureMobileDock() {
     var isMobile = window.matchMedia('(max-width: 767px)').matches;
     var existing = document.querySelector('.tg-mobile-dock');
