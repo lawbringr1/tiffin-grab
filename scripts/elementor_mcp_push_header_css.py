@@ -133,21 +133,17 @@ def wrap_inline_style(css: str) -> str:
 (function () {
   var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');
   /*
-    Promo banner link: create if missing, always sync copy/href so coupon text updates ship
-    without requiring visitors to clear the old node from cache.
+    Promo banner link: create if missing, always sync copy/href. Kept as the last child of the
+    header so it renders below Theme Builder navbar rows (desktop + mobile).
   */
   if (header) {
     var link = header.querySelector('.tg-referral-banner-link');
     if (!link) {
       link = document.createElement('a');
       link.className = 'tg-referral-banner-link';
-      var ins = header.firstElementChild;
-      if (ins) header.insertBefore(link, ins);
-      else header.appendChild(link);
-    } else if (link.parentNode === header && header.firstElementChild !== link) {
-      /* Keep announcement above the main header rows so it never stacks over nav hit targets. */
-      var first = header.firstElementChild;
-      if (first && first !== link) header.insertBefore(link, first);
+      header.appendChild(link);
+    } else if (link.parentNode === header && header.lastElementChild !== link) {
+      header.appendChild(link);
     }
     link.href = 'https://tiffingrab.ca/tiffin-plans/';
     link.textContent = 'Use coupon code FREE4TIFFINS - Offer valid till 18th May.';
