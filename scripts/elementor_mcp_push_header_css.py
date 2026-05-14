@@ -164,12 +164,22 @@ def wrap_inline_style(css: str) -> str:
     }
   }
 
+  function tgLineQty(item) {
+    if (!item) return 0;
+    var q = item.quantity;
+    if (typeof q === 'number' && !isNaN(q)) return Math.max(0, Math.floor(q));
+    if (typeof q === 'string') {
+      var n = parseInt(q, 10);
+      return isNaN(n) ? 0 : Math.max(0, n);
+    }
+    return 0;
+  }
+
   function tgSumCartQty(data) {
     if (!data || !Array.isArray(data.items)) return 0;
     var t = 0;
     for (var i = 0; i < data.items.length; i++) {
-      var q = data.items[i].quantity;
-      t += typeof q === 'number' ? q : parseInt(q, 10) || 0;
+      t += tgLineQty(data.items[i]);
     }
     return t;
   }
@@ -203,6 +213,8 @@ def wrap_inline_style(css: str) -> str:
     var cartAnchors = [];
     anchors.forEach(function (a) {
       if (a.closest('.elementor-widget-woocommerce-menu-cart')) return;
+      /* Drawer / UE side menu embeds a second mini header with its own cart icon — skip duplicates. */
+      if (a.closest('.elementor-widget-ucaddon_ue_side_menu')) return;
       if (!tgIsCartPageHref(a.getAttribute('href'))) return;
       cartAnchors.push(a);
     });
@@ -218,7 +230,17 @@ def wrap_inline_style(css: str) -> str:
         return r.ok ? r.json() : null;
       })
       .then(function (data) {
-        if (!data) return;
+        if (!data) {
+          cartAnchors.forEach(function (a) {
+            var wrap = a.parentElement;
+            if (!wrap) return;
+            var badge = wrap.querySelector('.tg-cart-count-badge');
+            if (!badge) return;
+            badge.textContent = '';
+            badge.removeAttribute('data-tg-cart-visible');
+          });
+          return;
+        }
         var n = tgSumCartQty(data);
         cartAnchors.forEach(function (a) {
           var badge = tgEnsureBadgeOnCartIcon(a);
@@ -239,7 +261,16 @@ def wrap_inline_style(css: str) -> str:
           }
         });
       })
-      .catch(function () {});
+      .catch(function () {
+        cartAnchors.forEach(function (a) {
+          var wrap = a.parentElement;
+          if (!wrap) return;
+          var badge = wrap.querySelector('.tg-cart-count-badge');
+          if (!badge) return;
+          badge.textContent = '';
+          badge.removeAttribute('data-tg-cart-visible');
+        });
+      });
   }
 
   function tgScheduleCartBadgeRefresh() {
