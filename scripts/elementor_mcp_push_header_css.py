@@ -141,7 +141,13 @@ def wrap_inline_style(css: str) -> str:
     if (!link) {
       link = document.createElement('a');
       link.className = 'tg-referral-banner-link';
-      header.appendChild(link);
+      var ins = header.firstElementChild;
+      if (ins) header.insertBefore(link, ins);
+      else header.appendChild(link);
+    } else if (link.parentNode === header && header.firstElementChild !== link) {
+      /* Keep announcement above the main header rows so it never stacks over nav hit targets. */
+      var first = header.firstElementChild;
+      if (first && first !== link) header.insertBefore(link, first);
     }
     link.href = 'https://tiffingrab.ca/tiffin-plans/';
     link.textContent = 'Use coupon code FREE4TIFFINS - Offer valid till 18th May.';
@@ -246,15 +252,22 @@ def wrap_inline_style(css: str) -> str:
   }
 
   tgRefreshCartBadges();
-  if (window.jQuery) {
-    window.jQuery(document.body).on('added_to_cart removed_from_cart', tgScheduleCartBadgeRefresh);
-    window.jQuery(document.body).on('wc_fragment_refresh', tgScheduleCartBadgeRefresh);
+
+  function tgBindCartBadgeListeners() {
+    if (!document.body) return;
+    try {
+      if (window.jQuery) {
+        window.jQuery(document.body).on('added_to_cart removed_from_cart', tgScheduleCartBadgeRefresh);
+        window.jQuery(document.body).on('wc_fragment_refresh', tgScheduleCartBadgeRefresh);
+      }
+    } catch (_e) {}
+    document.addEventListener('wc-blocks_added_to_cart', tgScheduleCartBadgeRefresh);
+    window.addEventListener('load', tgScheduleCartBadgeRefresh);
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) tgScheduleCartBadgeRefresh();
+    });
   }
-  document.addEventListener('wc-blocks_added_to_cart', tgScheduleCartBadgeRefresh);
-  window.addEventListener('load', tgScheduleCartBadgeRefresh);
-  window.addEventListener('pageshow', function (e) {
-    if (e.persisted) tgScheduleCartBadgeRefresh();
-  });
+  tgBindCartBadgeListeners();
 
   function ensureMobileDock() {
     var isMobile = window.matchMedia('(max-width: 767px)').matches;
@@ -378,6 +391,11 @@ def wrap_inline_style(css: str) -> str:
 
       var a = anchorFromEvent(e);
       if (!shouldHandleAnchor(a)) return;
+      /*
+        Limit to Theme Builder header + our mobile dock only. A site-wide capture handler
+        breaks accordions, block interactions, and third-party widgets (e.g. UC menus).
+      */
+      if (!a.closest('.elementor-location-header, .tg-mobile-dock')) return;
       var hrefRaw = (a.getAttribute('href') || '').trim();
       if (hrefRaw.charAt(0) === '#') return;
 

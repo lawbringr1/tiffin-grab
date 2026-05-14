@@ -109,6 +109,10 @@ header.elementor.elementor-1863.elementor-location-header {
   border-bottom: 1px solid rgba(127, 29, 29, 0.75);
   padding: 0.38rem 0.9rem;
   animation: tg-banner-alert 3.5s ease-in-out infinite;
+  /* Below main nav row (z-index:2) so animated transform cannot steal taps from links. */
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
 }
 
 @media (prefers-reduced-motion: reduce) {
