@@ -133,16 +133,19 @@ def wrap_inline_style(css: str) -> str:
 (function () {
   var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');
   /*
-    Inject referral banner only when missing — never bail out early: that used to skip
-    ensureMobileDock() when the link was already present (cached HTML / revisit).
+    Promo banner link: create if missing, always sync copy/href so coupon text updates ship
+    without requiring visitors to clear the old node from cache.
   */
-  if (header && !header.querySelector('.tg-referral-banner-link')) {
-    var link = document.createElement('a');
-    link.className = 'tg-referral-banner-link';
+  if (header) {
+    var link = header.querySelector('.tg-referral-banner-link');
+    if (!link) {
+      link = document.createElement('a');
+      link.className = 'tg-referral-banner-link';
+      header.appendChild(link);
+    }
     link.href = 'https://tiffingrab.ca/tiffin-plans/';
-    link.textContent = 'Use coupon code BUY24PAY20 - Buy any 24 tiffins and pay for 20 tiffins. Offer valid till 18th May.';
-    link.setAttribute('aria-label', 'Tiffin plans: coupon BUY24PAY20, buy 24 tiffins and pay for 20. Valid till 18th May.');
-    header.appendChild(link);
+    link.textContent = 'Use coupon code FREE4TIFFINS - Offer valid till 18th May.';
+    link.setAttribute('aria-label', 'Tiffin plans: coupon FREE4TIFFINS. Valid till 18th May.');
   }
 
   /* Cart quantity badge on Elementor icon widgets that link to the cart page (not Menu Cart widget). */
