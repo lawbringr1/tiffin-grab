@@ -139,9 +139,9 @@ def wrap_inline_style(css: str) -> str:
   if (header && !header.querySelector('.tg-referral-banner-link')) {
     var link = document.createElement('a');
     link.className = 'tg-referral-banner-link';
-    link.href = 'https://tiffingrab.ca/referral-program/';
-    link.textContent = 'Refer & Earn Free Tiffins - You: +1, Friend: +2. Tap to join now.';
-    link.setAttribute('aria-label', 'Open Referral Program page');
+    link.href = 'https://tiffingrab.ca/tiffin-plans/';
+    link.textContent = 'Use coupon code BUY24PAY20 - Buy any 24 tiffins and pay for 20 tiffins. Offer valid till 18th May.';
+    link.setAttribute('aria-label', 'Tiffin plans: coupon BUY24PAY20, buy 24 tiffins and pay for 20. Valid till 18th May.');
     header.appendChild(link);
   }
 
