@@ -601,20 +601,17 @@ header.elementor.elementor-1863.elementor-location-header {
   box-shadow: 0 10px 40px rgba(15, 23, 42, 0.1) !important;
 }
 
-/* ========== Cart count badge (icon links → /cart/ — filled via inline header script + Store API) ========== */
-.elementor-location-header.elementor-1863 .tg-cart-icon-wrap {
+/* ========== Cart count badge (icon widget orange box = .elementor-widget-container) ========== */
+.elementor-location-header.elementor-1863 .tg-cart-badge-host {
   position: relative !important;
-  /* Shrink-wrap the SVG pill so the badge anchors to the icon corner, not a wide flex box. */
-  display: inline-block !important;
-  line-height: 0 !important;
-  vertical-align: middle !important;
+  overflow: visible !important;
 }
 
-.elementor-location-header.elementor-1863 .tg-cart-count-badge {
+.elementor-location-header.elementor-1863 .tg-cart-badge-host .tg-cart-count-badge {
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 3;
+  top: -0.12rem;
+  right: -0.12rem;
+  z-index: 5;
   box-sizing: border-box;
   min-width: 1.05rem;
   height: 1.05rem;
@@ -632,17 +629,19 @@ header.elementor.elementor-1863.elementor-location-header {
   border-radius: 9999px;
   border: 2px solid var(--tg-bg);
   pointer-events: none;
-  /* Half outside the icon box = classic corner chip (not centered on the cart glyph). */
-  transform: translate(38%, -42%);
+  /* Sit on the outer button’s top-right corner (half chip outside the orange square). */
+  transform: translate(48%, -48%);
 }
 
 @media (max-width: 767px) {
-  .elementor-location-header.elementor-1863 .tg-cart-count-badge {
-    transform: translate(36%, -40%);
+  .elementor-location-header.elementor-1863 .tg-cart-badge-host .tg-cart-count-badge {
+    top: -0.08rem;
+    right: -0.08rem;
+    transform: translate(44%, -44%);
   }
 }
 
-.elementor-location-header.elementor-1863 .tg-cart-count-badge[data-tg-cart-visible="1"] {
+.elementor-location-header.elementor-1863 .tg-cart-badge-host .tg-cart-count-badge[data-tg-cart-visible="1"] {
   display: inline-flex;
 }
 

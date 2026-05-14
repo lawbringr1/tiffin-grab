@@ -189,16 +189,27 @@ def wrap_inline_style(css: str) -> str:
     return String(n);
   }
 
+  function tgCartBadgeHost(anchor) {
+    var widget = anchor.closest('.elementor-widget.elementor-widget-icon');
+    if (!widget) return null;
+    var c = widget.querySelector('.elementor-widget-container');
+    return c || widget;
+  }
+
   function tgEnsureBadgeOnCartIcon(anchor) {
-    var wrap = anchor.parentElement;
-    if (!wrap || !wrap.classList.contains('elementor-icon-wrapper')) return null;
-    wrap.classList.add('tg-cart-icon-wrap');
-    var badge = wrap.querySelector('.tg-cart-count-badge');
+    /*
+      Orange hit area lives on the widget container, not .elementor-icon-wrapper (SVG only).
+      Pin the count chip to that box’s top-right corner.
+    */
+    var host = tgCartBadgeHost(anchor);
+    if (!host) return null;
+    host.classList.add('tg-cart-badge-host');
+    var badge = host.querySelector('.tg-cart-count-badge');
     if (!badge) {
       badge = document.createElement('span');
       badge.className = 'tg-cart-count-badge';
       badge.setAttribute('aria-hidden', 'true');
-      wrap.appendChild(badge);
+      host.appendChild(badge);
     }
     return badge;
   }
@@ -232,9 +243,9 @@ def wrap_inline_style(css: str) -> str:
       .then(function (data) {
         if (!data) {
           cartAnchors.forEach(function (a) {
-            var wrap = a.parentElement;
-            if (!wrap) return;
-            var badge = wrap.querySelector('.tg-cart-count-badge');
+            var host = tgCartBadgeHost(a);
+            if (!host) return;
+            var badge = host.querySelector('.tg-cart-count-badge');
             if (!badge) return;
             badge.textContent = '';
             badge.removeAttribute('data-tg-cart-visible');
@@ -263,9 +274,9 @@ def wrap_inline_style(css: str) -> str:
       })
       .catch(function () {
         cartAnchors.forEach(function (a) {
-          var wrap = a.parentElement;
-          if (!wrap) return;
-          var badge = wrap.querySelector('.tg-cart-count-badge');
+          var host = tgCartBadgeHost(a);
+          if (!host) return;
+          var badge = host.querySelector('.tg-cart-count-badge');
           if (!badge) return;
           badge.textContent = '';
           badge.removeAttribute('data-tg-cart-visible');
