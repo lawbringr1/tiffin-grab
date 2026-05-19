@@ -133,7 +133,7 @@ def wrap_inline_style(css: str) -> str:
 (function () {
   var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');
   /*
-    Promo banner link: create if missing, always sync copy/href. Kept as the last child of the
+    Referral banner link: create if missing, always sync copy/href. Kept as the last child of the
     header so it renders below Theme Builder navbar rows (desktop + mobile).
   */
   if (header) {
@@ -145,9 +145,9 @@ def wrap_inline_style(css: str) -> str:
     } else if (link.parentNode === header && header.lastElementChild !== link) {
       header.appendChild(link);
     }
-    link.href = 'https://tiffingrab.ca/tiffin-plans/';
-    link.textContent = 'Use coupon code FREE4TIFFINS - Offer valid till 18th May.';
-    link.setAttribute('aria-label', 'Tiffin plans: coupon FREE4TIFFINS. Valid till 18th May.');
+    link.href = 'https://tiffingrab.ca/referral-program/';
+    link.textContent = 'Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Tap to open Referral Program.';
+    link.setAttribute('aria-label', 'Open Referral Program page');
   }
 
   /* Cart quantity badge on Elementor icon widgets that link to the cart page (not Menu Cart widget). */
