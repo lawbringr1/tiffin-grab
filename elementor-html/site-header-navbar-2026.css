@@ -47,8 +47,8 @@ header.elementor.elementor-1863.elementor-location-header {
   padding-inline-start: env(safe-area-inset-left, 0px) !important;
   padding-inline-end: env(safe-area-inset-right, 0px) !important;
   padding-block-end: 0 !important;
-  background: var(--tg-bg) !important;
-  border-bottom: 1px solid var(--tg-border) !important;
+  background: transparent !important;
+  border-bottom: 0 !important;
   display: block !important;
 }
 
@@ -61,13 +61,13 @@ header.elementor.elementor-1863.elementor-location-header {
     transform: translateX(0);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 10px rgba(248, 113, 113, 0.22);
+      0 0 10px rgba(52, 195, 99, 0.22);
   }
   42% {
     transform: translateX(-4px);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      0 0 26px 5px rgba(252, 165, 165, 0.55);
+      0 0 26px 5px rgba(134, 239, 172, 0.55);
   }
   44% {
     transform: translateX(4px);
@@ -82,18 +82,19 @@ header.elementor.elementor-1863.elementor-location-header {
     transform: translateX(0);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      0 0 18px 3px rgba(252, 165, 165, 0.42);
+      0 0 18px 3px rgba(134, 239, 172, 0.42);
   }
   56% {
     transform: translateX(0);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 14px 2px rgba(248, 113, 113, 0.3);
+      0 0 14px 2px rgba(52, 195, 99, 0.3);
   }
 }
 
 .elementor-location-header.elementor-1863 .tg-referral-banner-link {
-  display: block;
+  /* Promo banner temporarily disabled. Set back to `block` to re-enable. */
+  display: none !important;
   width: 100%;
   box-sizing: border-box;
   text-align: center;
@@ -103,10 +104,10 @@ header.elementor.elementor-1863.elementor-location-header {
   font-weight: 600;
   line-height: 1.35;
   letter-spacing: 0.01em;
-  color: #fff7f7 !important;
-  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%);
-  border-top: 1px solid rgba(127, 29, 29, 0.75);
-  border-bottom: 1px solid rgba(127, 29, 29, 0.75);
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #34c363 0%, #1f9f4a 100%);
+  border-top: 1px solid rgba(20, 108, 53, 0.75);
+  border-bottom: 1px solid rgba(20, 108, 53, 0.75);
   padding: 0.38rem 0.9rem;
   animation: tg-banner-alert 3.5s ease-in-out infinite;
   /* After navbar rows in flow; low z-index avoids covering inner nav if themes overlap layers. */
@@ -125,7 +126,7 @@ header.elementor.elementor-1863.elementor-location-header {
 .elementor-location-header.elementor-1863 .tg-referral-banner-link:hover,
 .elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
   color: #ffffff !important;
-  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(180deg, #43d873 0%, #2bb558 100%);
 }
 
 .elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
@@ -1615,4 +1616,237 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
     position: absolute !important;
     opacity: 0 !important;
   }
+}
+
+/* ========== Floating WhatsApp beacon (sitewide) ========== */
+.tg-wa-beacon {
+  --tg-wa-beacon-size: 3.35rem;
+  --tg-wa-beacon-width: 3.35rem;
+  --tg-wa-beacon-expanded-width: 12.5rem;
+  --tg-wa-beacon-offset-x: 3rem;
+  --tg-wa-beacon-offset-y: 3rem;
+  --tg-wa-beacon-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  position: fixed;
+  right: calc(var(--tg-wa-beacon-offset-x) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--tg-wa-beacon-offset-y) + env(safe-area-inset-bottom, 0px));
+  z-index: 1107;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0;
+  box-sizing: border-box;
+  width: var(--tg-wa-beacon-width);
+  height: var(--tg-wa-beacon-size);
+  margin: 0;
+  padding: 0 0.875rem 0 0;
+  border: none;
+  border-radius: 9999px;
+  background: var(--e-global-color-whatsapp, #25d366);
+  color: #fff;
+  text-decoration: none;
+  box-shadow:
+    0 10px 28px rgba(37, 211, 102, 0.38),
+    0 2px 8px rgba(35, 26, 21, 0.12);
+  cursor: pointer;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition:
+    width 0.52s var(--tg-wa-beacon-ease),
+    transform 0.52s var(--tg-wa-beacon-ease),
+    box-shadow 0.35s ease;
+}
+
+.tg-wa-beacon__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(37, 211, 102, 0.28);
+  opacity: 0.55;
+  animation: tg-wa-beacon-pulse 3.2s ease-out infinite;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.tg-wa-beacon__icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 1.55rem;
+  height: 1.55rem;
+  flex: 0 0 1.55rem;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23ffffff%22%3E%3Cpath%20d%3D%22M17.472%2014.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94%201.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198%200-.52.074-.792.372-.272.297-1.04%201.016-1.04%202.479%200%201.462%201.065%202.875%201.213%203.074.149.198%202.096%203.2%205.077%204.487.709.306%201.262.489%201.694.625.712.227%201.36.195%201.871.118.571-.085%201.758-.719%202.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421%207.403h-.004a9.87%209.87%200%2001-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86%209.86%200%2001-1.51-5.26c.001-5.45%204.436-9.884%209.888-9.884%202.64%200%205.122%201.03%206.988%202.898a9.825%209.825%200%20012.893%206.994c-.003%205.45-4.435%209.884-9.883%209.884m8.413-18.297A11.815%2011.815%200%200012.05%200C5.495%200%20.16%205.335.157%2011.892c0%202.096.547%204.142%201.588%205.945L.057%2024l6.305-1.654a11.882%2011.882%200%20005.683%201.448h.005c6.554%200%2011.89-5.335%2011.893-11.893a11.821%2011.821%200%2000-3.48-8.413Z%22/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.tg-wa-beacon__label {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+  padding: 0 0.2rem 0 0.85rem;
+  margin: 0;
+  background: transparent;
+  color: #fff;
+  font-family: var(--tg-font, "Geist", system-ui, sans-serif);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0.4rem, 0, 0);
+  transition:
+    opacity 0.32s ease,
+    transform 0.52s var(--tg-wa-beacon-ease),
+    visibility 0s linear 0.52s;
+}
+
+@keyframes tg-wa-beacon-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .tg-wa-beacon {
+    --tg-wa-beacon-size: 3.1rem;
+    --tg-wa-beacon-width: 3.1rem;
+    --tg-wa-beacon-offset-x: 2rem;
+    --tg-wa-beacon-offset-y: 0;
+    bottom: calc(5.15rem + env(safe-area-inset-bottom, 0px));
+    padding-right: 0.78rem;
+  }
+
+  .tg-wa-beacon__icon {
+    width: 1.45rem;
+    height: 1.45rem;
+    flex-basis: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tg-wa-beacon__pulse {
+    animation: none;
+    display: none;
+  }
+
+  .tg-wa-beacon,
+  .tg-wa-beacon__label {
+    transition: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tg-wa-beacon:hover,
+  .tg-wa-beacon:focus-visible {
+    width: min(var(--tg-wa-beacon-expanded-width), calc(100vw - (var(--tg-wa-beacon-offset-x) * 2)));
+    transform: translate3d(0, -2px, 0);
+    box-shadow:
+      0 14px 34px rgba(37, 211, 102, 0.4),
+      0 4px 12px rgba(35, 26, 21, 0.14);
+  }
+
+  .tg-wa-beacon:hover .tg-wa-beacon__pulse,
+  .tg-wa-beacon:focus-visible .tg-wa-beacon__pulse {
+    opacity: 0;
+    animation: none;
+  }
+
+  .tg-wa-beacon:hover .tg-wa-beacon__label,
+  .tg-wa-beacon:focus-visible .tg-wa-beacon__label {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity 0.36s ease 0.14s,
+      transform 0.52s var(--tg-wa-beacon-ease) 0.1s,
+      visibility 0s;
+  }
+
+  .tg-wa-beacon:not(:hover):not(:focus-visible) .tg-wa-beacon__label {
+    transition:
+      opacity 0.22s ease,
+      transform 0.42s var(--tg-wa-beacon-ease),
+      visibility 0s linear 0.42s;
+  }
+}
+
+.tg-wa-beacon:focus-visible {
+  outline: 2px solid rgba(29, 92, 50, 0.45);
+  outline-offset: 3px;
+}
+
+/* =====================================================================
+   FLOATING PILL NAVBAR (2026 revamp)
+   Header location becomes a transparent sticky wrapper; the active nav
+   row (ef53437 desktop / 67924b6 mobile) becomes a centered floating
+   pill with blur + shadow. Pure CSS so it paints with the document
+   (no JS-driven layout shift / reload flicker). Last-in-file = wins.
+   ===================================================================== */
+.elementor-location-header.elementor-1863,
+header.elementor.elementor-1863.elementor-location-header {
+  background: transparent !important;
+  border-bottom: 0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 999 !important;
+  padding-block-start: calc(clamp(0.5rem, 1.6vw, 0.85rem) + env(safe-area-inset-top, 0px)) !important;
+  padding-block-end: clamp(0.4rem, 1.2vw, 0.7rem) !important;
+  /* stable paint: avoid first-frame flash from late style application */
+  contain: layout style;
+}
+
+/* the visible pill = whichever nav row is shown at this breakpoint */
+.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+.elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
+  width: min(100% - 1.5rem, 80rem) !important;
+  max-width: min(100% - 1.5rem, 80rem) !important;
+  margin-inline: auto !important;
+  background: rgba(255, 255, 255, 0.58) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(165%);
+  backdrop-filter: blur(20px) saturate(165%);
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  border-radius: 999px !important;
+  box-shadow:
+    0 10px 30px rgba(22, 32, 26, 0.10),
+    0 2px 8px rgba(22, 32, 26, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+  padding-inline: clamp(0.85rem, 2vw, 1.4rem) !important;
+  /* keep submenus / mobile drawer from being clipped by the pill radius */
+  overflow: visible !important;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* solid-fill fallback when blur/transparency is unavailable */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
+    background: #ffffff !important;
+  }
+}
+
+/* reserve consistent height so each navigation paints with zero shift */
+.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent { min-height: 3.5rem; }
+@media (max-width: 1024px) {
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { min-height: 3.25rem; }
+}
+
+/* surface tint behind the floating header (was full-bleed white before) */
+body:has(.elementor-location-header.elementor-1863) .elementor-location-header.elementor-1863 { background: transparent !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { transition: none; }
 }

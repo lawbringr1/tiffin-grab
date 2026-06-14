@@ -95,6 +95,35 @@ def with_push_build_stamp(css: str) -> str:
 
 
 TG_MOBILE_DOCK_VERSION = "tg-dock-v3"
+TG_WA_BEACON_URL_FILE = "elementor-html/tg-whatsapp-meal-plans.url"
+
+
+def tg_whatsapp_beacon_url(root: Path | None = None) -> str:
+    base = root or repo_root()
+    path = base / TG_WA_BEACON_URL_FILE
+    if not path.is_file():
+        sys.exit(f"WhatsApp beacon URL file not found: {path}")
+    url = path.read_text(encoding="utf-8").strip()
+    if not url:
+        sys.exit(f"WhatsApp beacon URL file is empty: {path}")
+    return url
+
+
+def tg_whatsapp_beacon_markup(url: str) -> str:
+    esc = (
+        url.replace("&", "&amp;")
+        .replace('"', "&quot;")
+        .replace("<", "&lt;")
+    )
+    return (
+        f'<a id="tg-wa-beacon" class="tg-wa-beacon" href="{esc}" '
+        'target="_blank" rel="noopener noreferrer" '
+        'aria-label="Chat with TiffinGrab on WhatsApp">'
+        '<span class="tg-wa-beacon__pulse" aria-hidden="true"></span>'
+        '<span class="tg-wa-beacon__icon" aria-hidden="true"></span>'
+        '<span class="tg-wa-beacon__label">Chat on WhatsApp</span>'
+        "</a>"
+    )
 
 
 def tg_mobile_dock_inner_html() -> str:
@@ -119,8 +148,9 @@ def tg_mobile_dock_inner_html() -> str:
     return base
 
 
-def wrap_inline_style(css: str) -> str:
+def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
     dock_inner_js = json.dumps(tg_mobile_dock_inner_html(), ensure_ascii=False)
+    wa_beacon_url_js = json.dumps(wa_beacon_url, ensure_ascii=False)
     dock_nav_ssr = (
         "<nav "
         'class="tg-mobile-dock" '
@@ -128,6 +158,7 @@ def wrap_inline_style(css: str) -> str:
         'aria-label="Mobile bottom navigation">'
         f"{tg_mobile_dock_inner_html()}</nav>"
     )
+    wa_beacon_ssr = tg_whatsapp_beacon_markup(wa_beacon_url)
     script_tpl = """
 <script id="tg-header-referral-banner-script">
 (function () {
@@ -137,17 +168,17 @@ def wrap_inline_style(css: str) -> str:
     header so it renders below Theme Builder navbar rows (desktop + mobile).
   */
   if (header) {
+    /*
+      Promo banner temporarily DISABLED (removed on request). Remove any existing strip on load.
+      To restore: re-create the link and set href/textContent/aria-label, e.g.
+        link = document.createElement('a'); link.className = 'tg-referral-banner-link';
+        header.appendChild(link);
+        link.href = 'https://tiffingrab.ca/healthy-meals/';
+        link.textContent = 'New: Healthy Meals launching June 22 - fresh, macro-balanced meals delivered across the GTA. Tap to preview.';
+        link.setAttribute('aria-label', 'Open Healthy Meals page');
+    */
     var link = header.querySelector('.tg-referral-banner-link');
-    if (!link) {
-      link = document.createElement('a');
-      link.className = 'tg-referral-banner-link';
-      header.appendChild(link);
-    } else if (link.parentNode === header && header.lastElementChild !== link) {
-      header.appendChild(link);
-    }
-    link.href = 'https://tiffingrab.ca/referral-program/';
-    link.textContent = 'Refer a friend: you get 1 free tiffin, friend gets 2 free tiffins. Tap to open Referral Program.';
-    link.setAttribute('aria-label', 'Open Referral Program page');
+    if (link) link.remove();
   }
 
   /* Cart quantity badge on Elementor icon widgets that link to the cart page (not Menu Cart widget). */
@@ -499,7 +530,31 @@ def wrap_inline_style(css: str) -> str:
     });
   }
 
+  var TG_WA_BEACON_URL = __WA_BEACON_URL__;
+
+  function ensureWhatsAppBeacon() {
+    var el = document.getElementById('tg-wa-beacon');
+    if (!el) {
+      el = document.createElement('a');
+      el.id = 'tg-wa-beacon';
+      el.className = 'tg-wa-beacon';
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
+      el.setAttribute('aria-label', 'Chat with TiffinGrab on WhatsApp');
+      el.innerHTML =
+        '<span class="tg-wa-beacon__pulse" aria-hidden="true"></span>' +
+        '<span class="tg-wa-beacon__icon" aria-hidden="true"></span>' +
+        '<span class="tg-wa-beacon__label">Chat on WhatsApp</span>';
+      document.body.appendChild(el);
+    }
+    el.href = TG_WA_BEACON_URL;
+    if (el.parentNode !== document.body) {
+      document.body.appendChild(el);
+    }
+  }
+
   ensureMobileDock();
+  ensureWhatsAppBeacon();
   bindGlobalSingleTapNav();
   var mqlDock = window.matchMedia('(max-width: 767px)');
   function onDockBreakpoint() {
@@ -527,10 +582,12 @@ def wrap_inline_style(css: str) -> str:
         script_tpl.strip()
         .replace("__DOCK_VERSION__", json.dumps(TG_MOBILE_DOCK_VERSION))
         .replace("__DOCK_INNER_JSON__", dock_inner_js)
+        .replace("__WA_BEACON_URL__", wa_beacon_url_js)
     )
     return (
         f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>\n'
         f"{dock_nav_ssr}\n"
+        f"{wa_beacon_ssr}\n"
         f"{script}\n"
     )
 
@@ -639,6 +696,7 @@ def main() -> None:
         sys.exit(f"MCP config not found: {mcp_path}")
 
     nav_stamped = with_push_build_stamp(nav_path.read_text(encoding="utf-8"))
+    wa_beacon_url = tg_whatsapp_beacon_url(root)
     base_url, auth = load_mcp(mcp_path)
     session_id = mcp_initialize(base_url, auth)
     replace = not args.append
@@ -711,7 +769,7 @@ def main() -> None:
                 arguments={
                     "post_id": args.header_post_id,
                     "element_id": element_id,
-                    "settings": {"html": wrap_inline_style(nav_stamped)},
+                    "settings": {"html": wrap_inline_style(nav_stamped, wa_beacon_url=wa_beacon_url)},
                 },
                 rpc_id=rpc,
             )

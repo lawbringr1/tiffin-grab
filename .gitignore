@@ -1,7 +1,28 @@
 # Secrets — do not commit
 .mcp.json
-.cursor/mcp.json
+.cursor/
 .codex/config.toml
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+*credentials*
+
+# IDE / agent tooling
+.idea/
+.claude/
+.codex/
+
+# graphify build artifacts
+graphify-out/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
 
 # MCP / Elementor debug payloads (do not commit)
 .tmp-*
