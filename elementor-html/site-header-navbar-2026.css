@@ -1956,13 +1956,13 @@ body:has(.elementor-location-header.elementor-1863) .elementor-location-header.e
    ===================================================================== */
 .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
 .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
-  background: rgba(17, 54, 32, 0.86) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(140%);
-  backdrop-filter: blur(22px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(180deg, #34c363 0%, #25a350 100%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:
-    0 12px 34px rgba(10, 30, 18, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+    0 12px 34px rgba(20, 110, 56, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
 /* logo wordmark: white "Tiffin", light-green "Grab" */
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a,
@@ -2007,3 +2007,45 @@ body:has(.elementor-location-header.elementor-1863) .elementor-location-header.e
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle * { color: #ffffff !important; }
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle svg,
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle path { stroke: #ffffff !important; fill: #ffffff !important; }
+
+/* ---- Flatten the nav-links track (was a gray --tg-muted pill) ---------- */
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 > .elementor-widget-container,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu > .elementor-widget-container,
+html body .elementor-1863 .elementor-element-21c3db0,
+html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu,
+html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* ---- Menu items: clean white links on the green pill, pill hover ------- */
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
+header.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-family: var(--tg-font) !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.01em !important;
+  padding: 0.5rem 0.9rem !important;
+  margin: 0 0.1rem !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  transition: background-color 0.18s ease, color 0.18s ease !important;
+}
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:focus-visible,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:focus-visible {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+/* active / current page link */
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current_page_item > a {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+}
