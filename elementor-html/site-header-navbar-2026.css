@@ -1899,3 +1899,111 @@ body:has(.elementor-location-header.elementor-1863) .elementor-location-header.e
 /* keep the cart count badge anchored to the icon corner */
 .elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
 .elementor-1863 .elementor-element-6974fa5 .elementor-icon { position: relative !important; overflow: visible !important; }
+
+/* =====================================================================
+   MODERN NAV FLATTEN (2026) — one clean glass pill, no nested boxes.
+   Kills the white logo lockup, the gray nav-links pill, and the oversized
+   orange icon wrappers so the bar reads modern, not "old bar in a pill".
+   ===================================================================== */
+/* logo + slogan: drop the white pill, keep the wordmark + mark + tagline */
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 0.25rem !important;
+}
+/* nav links: drop the gray pill, plain links on the glass */
+.elementor-1863 .elementor-element-21c3db0,
+.elementor-1863 .elementor-element-21c3db0 > .elementor-widget-container,
+.elementor-1863 .elementor-element-21c3db0 .uc-nav-menu,
+.elementor-1863 .elementor-element-21c3db0 ul {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+/* subtle hover affordance on each link (replaces the static gray track) */
+.elementor-1863 .elementor-element-21c3db0 a {
+  border-radius: 999px !important;
+  transition: background-color 0.18s ease, color 0.18s ease !important;
+}
+.elementor-1863 .elementor-element-21c3db0 a:hover,
+.elementor-1863 .elementor-element-21c3db0 a:focus-visible {
+  background: rgba(22, 32, 26, 0.06) !important;
+  color: #1f9f4a !important;
+}
+/* icon buttons: strip the oversized orange wrapper; inner .elementor-icon is the 40px button */
+.elementor-1863 .elementor-element-db8c479,
+.elementor-1863 .elementor-element-6ec8fc1,
+.elementor-1863 .elementor-element-6974fa5,
+.elementor-1863 .elementor-element-db8c479 > .elementor-widget-container,
+.elementor-1863 .elementor-element-6ec8fc1 > .elementor-widget-container,
+.elementor-1863 .elementor-element-6974fa5 > .elementor-widget-container {
+  background: transparent !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* =====================================================================
+   DARK GREEN BRAND PILL — the new modern navbar identity.
+   Glassy dark-green pill, white wordmark + links + ghost icons, orange
+   cart accent. Defined on every page (never reads as a white box).
+   ===================================================================== */
+.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+.elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
+  background: rgba(17, 54, 32, 0.86) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow:
+    0 12px 34px rgba(10, 30, 18, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+/* logo wordmark: white "Tiffin", light-green "Grab" */
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #ffffff !important; }
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a span,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #8fe3ab !important; }
+/* slogan / tagline (::after) muted on dark */
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
+  color: rgba(255, 255, 255, 0.62) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+/* nav links: white with a soft hover pill */
+.elementor-1863 .elementor-element-21c3db0 a,
+.elementor-1863 .elementor-element-21c3db0 a span { color: rgba(255, 255, 255, 0.92) !important; }
+.elementor-1863 .elementor-element-21c3db0 a:hover,
+.elementor-1863 .elementor-element-21c3db0 a:focus-visible { background: rgba(255, 255, 255, 0.14) !important; color: #ffffff !important; }
+.elementor-1863 .elementor-element-21c3db0 a:hover span { color: #ffffff !important; }
+/* account: ghost outline in white */
+.elementor-1863 .elementor-element-db8c479 .elementor-icon {
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+.elementor-1863 .elementor-element-db8c479 .elementor-icon:hover,
+.elementor-1863 .elementor-element-db8c479 .elementor-icon:focus-visible {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+/* cart: orange accent pops on green */
+.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
+.elementor-1863 .elementor-element-6974fa5 .elementor-icon {
+  background: #f06b1a !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  box-shadow: 0 6px 16px rgba(240, 107, 26, 0.34) !important;
+}
+.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:hover,
+.elementor-1863 .elementor-element-6974fa5 .elementor-icon:hover { background: #d3540f !important; }
+/* mobile hamburger / side-menu toggle: white on dark pill */
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle,
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle * { color: #ffffff !important; }
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle svg,
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle path { stroke: #ffffff !important; fill: #ffffff !important; }
