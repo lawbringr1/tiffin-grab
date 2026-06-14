@@ -246,81 +246,91 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
   }
 
   var tgCartBadgeTimer = null;
-  function tgRefreshCartBadges() {
+  var TG_CART_TTL = 300000; /* 5 min: skip the per-navigation cart API call when fresh */
+
+  function tgCartCacheGet() {
+    try {
+      var o = JSON.parse(localStorage.getItem('tgCartCount') || 'null');
+      return (o && typeof o.n === 'number') ? o : null;
+    } catch (_e) { return null; }
+  }
+  function tgCartCacheSet(n) {
+    try { localStorage.setItem('tgCartCount', JSON.stringify({ n: n, t: Date.now() })); } catch (_e) {}
+  }
+  function tgCartAnchors() {
     var hdr =
       document.querySelector('header.elementor.elementor-1863.elementor-location-header') ||
       document.querySelector('.elementor-location-header.elementor-1863');
-    if (!hdr) return;
-    var anchors = hdr.querySelectorAll('a.elementor-icon[href]');
-    var cartAnchors = [];
-    anchors.forEach(function (a) {
+    if (!hdr) return [];
+    var out = [];
+    hdr.querySelectorAll('a.elementor-icon[href]').forEach(function (a) {
       if (a.closest('.elementor-widget-woocommerce-menu-cart')) return;
       /* Drawer / UE side menu embeds a second mini header with its own cart icon — skip duplicates. */
       if (a.closest('.elementor-widget-ucaddon_ue_side_menu')) return;
       if (!tgIsCartPageHref(a.getAttribute('href'))) return;
-      cartAnchors.push(a);
+      out.push(a);
     });
-    if (!cartAnchors.length) return;
+    return out;
+  }
+  function tgApplyCartCount(n, anchors) {
+    anchors.forEach(function (a) {
+      var badge = tgEnsureBadgeOnCartIcon(a);
+      if (!badge) return;
+      if (!a.dataset.tgCartAriaDefault && a.getAttribute('aria-label')) {
+        a.dataset.tgCartAriaDefault = a.getAttribute('aria-label');
+      }
+      if (n > 0) {
+        badge.textContent = tgCartBadgeLabel(n);
+        badge.setAttribute('data-tg-cart-visible', '1');
+        a.setAttribute('aria-label', 'Cart, ' + n + (n === 1 ? ' item' : ' items'));
+      } else {
+        badge.textContent = '';
+        badge.removeAttribute('data-tg-cart-visible');
+        var def = a.dataset.tgCartAriaDefault;
+        if (def) a.setAttribute('aria-label', def);
+        else a.removeAttribute('aria-label');
+      }
+    });
+  }
+  function tgClearCartBadges(anchors) {
+    anchors.forEach(function (a) {
+      var host = tgCartBadgeHost(a);
+      if (!host) return;
+      var badge = host.querySelector('.tg-cart-count-badge');
+      if (!badge) return;
+      badge.textContent = '';
+      badge.removeAttribute('data-tg-cart-visible');
+    });
+  }
+
+  /* Render instantly from localStorage; only hit the Store API when forced
+     (cart change) or the cached count is stale. Eliminates a cart fetch on
+     every page navigation. */
+  function tgRefreshCartBadges(force) {
+    var anchors = tgCartAnchors();
+    if (!anchors.length) return;
+    var cached = tgCartCacheGet();
+    if (cached) tgApplyCartCount(cached.n, anchors);
+    if (!force && cached && (Date.now() - cached.t) < TG_CART_TTL) return;
 
     var cartJsonUrl = new URL('/wp-json/wc/store/v1/cart', window.location.origin).href;
-
-    fetch(cartJsonUrl, {
-      credentials: 'same-origin',
-      headers: { Accept: 'application/json' },
-    })
-      .then(function (r) {
-        return r.ok ? r.json() : null;
-      })
+    fetch(cartJsonUrl, { credentials: 'same-origin', headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
-        if (!data) {
-          cartAnchors.forEach(function (a) {
-            var host = tgCartBadgeHost(a);
-            if (!host) return;
-            var badge = host.querySelector('.tg-cart-count-badge');
-            if (!badge) return;
-            badge.textContent = '';
-            badge.removeAttribute('data-tg-cart-visible');
-          });
-          return;
-        }
+        if (!data) { if (!cached) tgClearCartBadges(anchors); return; }
         var n = tgSumCartQty(data);
-        cartAnchors.forEach(function (a) {
-          var badge = tgEnsureBadgeOnCartIcon(a);
-          if (!badge) return;
-          if (!a.dataset.tgCartAriaDefault && a.getAttribute('aria-label')) {
-            a.dataset.tgCartAriaDefault = a.getAttribute('aria-label');
-          }
-          if (n > 0) {
-            badge.textContent = tgCartBadgeLabel(n);
-            badge.setAttribute('data-tg-cart-visible', '1');
-            a.setAttribute('aria-label', 'Cart, ' + n + (n === 1 ? ' item' : ' items'));
-          } else {
-            badge.textContent = '';
-            badge.removeAttribute('data-tg-cart-visible');
-            var def = a.dataset.tgCartAriaDefault;
-            if (def) a.setAttribute('aria-label', def);
-            else a.removeAttribute('aria-label');
-          }
-        });
+        tgCartCacheSet(n);
+        tgApplyCartCount(n, anchors);
       })
-      .catch(function () {
-        cartAnchors.forEach(function (a) {
-          var host = tgCartBadgeHost(a);
-          if (!host) return;
-          var badge = host.querySelector('.tg-cart-count-badge');
-          if (!badge) return;
-          badge.textContent = '';
-          badge.removeAttribute('data-tg-cart-visible');
-        });
-      });
+      .catch(function () { if (!cached) tgClearCartBadges(anchors); });
   }
 
   function tgScheduleCartBadgeRefresh() {
     if (tgCartBadgeTimer) clearTimeout(tgCartBadgeTimer);
-    tgCartBadgeTimer = setTimeout(tgRefreshCartBadges, 200);
+    tgCartBadgeTimer = setTimeout(function () { tgRefreshCartBadges(true); }, 200);
   }
 
-  tgRefreshCartBadges();
+  tgRefreshCartBadges(false);
 
   function tgBindCartBadgeListeners() {
     if (!document.body) return;
@@ -331,7 +341,8 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
       }
     } catch (_e) {}
     document.addEventListener('wc-blocks_added_to_cart', tgScheduleCartBadgeRefresh);
-    window.addEventListener('load', tgScheduleCartBadgeRefresh);
+    /* non-forced on load: uses cached count, only fetches when stale (no per-page API call) */
+    window.addEventListener('load', function () { tgRefreshCartBadges(false); });
     window.addEventListener('pageshow', function (e) {
       if (e.persisted) tgScheduleCartBadgeRefresh();
     });
