@@ -1728,10 +1728,11 @@ header.elementor.elementor-1863.elementor-location-header {
   width: min(100% - 1.5rem, 80rem) !important;
   max-width: min(100% - 1.5rem, 80rem) !important;
   margin-inline: auto !important;
-  /* glassmorphic green: frosted, directional sheen, layered edge refraction */
+  /* glassmorphic green: frosted, directional sheen, layered edge refraction.
+     Green kept deep + high alpha so white text/icons stay readable (AA). */
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04) 42%),
-    linear-gradient(180deg, rgba(54, 198, 102, 0.68) 0%, rgba(34, 156, 76, 0.60) 100%) !important;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 42%),
+    linear-gradient(180deg, rgba(25, 116, 60, 0.88) 0%, rgba(17, 92, 47, 0.85) 100%) !important;
   -webkit-backdrop-filter: blur(26px) saturate(165%);
   backdrop-filter: blur(26px) saturate(165%);
   border: 1px solid rgba(255, 255, 255, 0.34) !important;
