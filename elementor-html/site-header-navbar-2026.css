@@ -1793,9 +1793,12 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #16201a !important; }
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a span,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #16201a !important; }
+/* slogan removed from navbar — compact logo (wordmark + mark only) to free space */
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
-  color: rgba(22, 32, 26, 0.55) !important; border-color: rgba(22, 32, 26, 0.18) !important;
+  display: none !important;
+  content: "" !important;
+  border: 0 !important;
 }
 
 /* nav menu items (literal ID + attribute selector to win over UE ID-level defaults) */
