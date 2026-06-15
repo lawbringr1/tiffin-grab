@@ -1728,19 +1728,20 @@ header.elementor.elementor-1863.elementor-location-header {
   width: min(100% - 1.5rem, 80rem) !important;
   max-width: min(100% - 1.5rem, 80rem) !important;
   margin-inline: auto !important;
-  /* glassmorphic green: frosted, directional sheen, layered edge refraction.
-     Green kept deep + high alpha so white text/icons stay readable (AA). */
+  /* Apple-style neutral liquid glass: bright frost, layered borders, edge
+     refraction. Web approximation of Apple's material (not an Apple package). */
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 42%),
-    linear-gradient(180deg, rgba(25, 116, 60, 0.88) 0%, rgba(17, 92, 47, 0.85) 100%) !important;
-  -webkit-backdrop-filter: blur(26px) saturate(165%);
-  backdrop-filter: blur(26px) saturate(165%);
-  border: 1px solid rgba(255, 255, 255, 0.34) !important;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.26) 60%),
+    rgba(255, 255, 255, 0.30) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
   border-radius: 999px !important;
   box-shadow:
-    0 16px 42px rgba(16, 92, 47, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12) !important;
+    0 16px 40px rgba(18, 28, 38, 0.16),
+    0 2px 6px rgba(18, 28, 38, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28) !important;
   padding-inline: clamp(0.85rem, 2vw, 1.4rem) !important;
   overflow: visible !important;
 }
@@ -1750,7 +1751,7 @@ header.elementor.elementor-1863.elementor-location-header {
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
-  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { background: #2aa757 !important; }
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { background: rgba(255, 255, 255, 0.92) !important; }
 }
 
 /* flatten nested boxes: logo lockup + nav track + icon wrappers */
@@ -1784,20 +1785,20 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
   padding: 0 !important; min-width: 0 !important; min-height: 0 !important; width: auto !important; height: auto !important;
 }
 
-/* logo wordmark: white + light-green "Grab", muted slogan */
+/* logo wordmark on neutral glass: dark "Tiffin", green "Grab", muted slogan */
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a,
-.elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #ffffff !important; }
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #16201a !important; }
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a span,
-.elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #8fe3ab !important; }
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #16201a !important; }
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
-  color: rgba(255, 255, 255, 0.62) !important; border-color: rgba(255, 255, 255, 0.22) !important;
+  color: rgba(22, 32, 26, 0.55) !important; border-color: rgba(22, 32, 26, 0.18) !important;
 }
 
 /* nav menu items (literal ID + attribute selector to win over UE ID-level defaults) */
 .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
 .elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a {
-  color: rgba(255, 255, 255, 0.92) !important;
+  color: rgba(22, 32, 26, 0.88) !important;
   font-family: var(--tg-font) !important; font-weight: 600 !important; font-size: 0.9rem !important;
   letter-spacing: 0.01em !important; padding: 0.5rem 0.9rem !important; margin: 0 0.1rem !important;
   border-radius: 999px !important; background: transparent !important;
@@ -1809,11 +1810,19 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:focus-visible,
 .elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:hover,
 .elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:focus-visible {
-  color: #ffffff !important; background: rgba(255, 255, 255, 0.18) !important;
+  color: #16201a !important; background: rgba(22, 32, 26, 0.07) !important;
 }
+/* selected / current page: neutral Apple-style filled pill (no green) */
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li.current_page_item > a,
 .elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
 .elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current_page_item > a {
-  color: #ffffff !important; background: rgba(255, 255, 255, 0.14) !important;
+  color: #16201a !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 2px 8px rgba(18, 28, 38, 0.14) !important;
 }
 
 /* icon buttons: account ghost (white), cart orange accent, 40px */
@@ -1826,11 +1835,11 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
   transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
 }
 .elementor-1863 .elementor-element-db8c479 .elementor-icon {
-  background: transparent !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.4) !important; color: #16201a !important; border: 1px solid rgba(22, 32, 26, 0.18) !important;
 }
 .elementor-1863 .elementor-element-db8c479 .elementor-icon:hover,
 .elementor-1863 .elementor-element-db8c479 .elementor-icon:focus-visible {
-  background: rgba(255, 255, 255, 0.14) !important; border-color: rgba(255, 255, 255, 0.45) !important;
+  background: rgba(255, 255, 255, 0.7) !important; border-color: rgba(22, 32, 26, 0.32) !important;
 }
 .elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
 .elementor-1863 .elementor-element-6974fa5 .elementor-icon {
@@ -1843,11 +1852,11 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:active,
 .elementor-1863 .elementor-element-6974fa5 .elementor-icon:active { transform: translateY(1px); }
 
-/* mobile hamburger: white on green */
+/* mobile hamburger: dark on neutral glass */
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle,
-.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle * { color: #ffffff !important; }
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle * { color: #16201a !important; }
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle svg,
-.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle path { stroke: #ffffff !important; fill: #ffffff !important; }
+.elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle path { stroke: #16201a !important; fill: #16201a !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
