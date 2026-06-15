@@ -1863,3 +1863,95 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
   .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { transition: none; }
 }
 
+/* =====================================================================
+   DESKTOP NAV — LumaBar style: icon + label per item, orange active glow.
+   ===================================================================== */
+@media (min-width: 1025px) {
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+  }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a::before {
+    font-family: "Material Symbols Outlined", sans-serif !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-size: 1.2rem !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+    -webkit-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga" 1;
+    font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24 !important;
+    -webkit-font-smoothing: antialiased;
+    color: inherit !important;
+    flex-shrink: 0 !important;
+  }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li:nth-child(1) > a::before { content: "home" !important; }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li:nth-child(2) > a::before { content: "card_giftcard" !important; }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li:nth-child(3) > a::before { content: "set_meal" !important; }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li:nth-child(4) > a::before { content: "menu_book" !important; }
+  .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li:nth-child(5) > a::before { content: "chat_bubble" !important; }
+}
+
+/* orange active glow indicator (hover, focus, current page) */
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:focus-visible,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:focus-visible,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li.current_page_item > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current_page_item > a {
+  color: #b5430b !important;
+  background: rgba(240, 107, 26, 0.12) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(240, 107, 26, 0.34),
+    0 4px 16px rgba(240, 107, 26, 0.30) !important;
+}
+
+/* =====================================================================
+   MOBILE DOCK — LumaBar style: floating frosted glass pill, icon + label,
+   orange active glow (matches desktop nav).
+   ===================================================================== */
+@media (max-width: 1024px) {
+  .tg-mobile-dock {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: calc(0.65rem + env(safe-area-inset-bottom)) !important;
+    width: auto !important;
+    max-width: calc(100% - 1.5rem) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    border-radius: 999px !important;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.26) 60%),
+      rgba(255, 255, 255, 0.30) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+      0 16px 40px rgba(18, 28, 38, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+    padding: 0.4rem 0.5rem !important;
+    gap: 0.2rem !important;
+  }
+  .tg-mobile-dock .tg-mobile-dock__item {
+    color: rgba(22, 32, 26, 0.7) !important;
+    border-radius: 999px !important;
+    padding: 0.35rem 0.55rem !important;
+    transition: color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease !important;
+  }
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"],
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"] .tg-mobile-dock__icon {
+    color: #b5430b !important;
+  }
+  .tg-mobile-dock .tg-mobile-dock__item[aria-current="page"] {
+    background: rgba(240, 107, 26, 0.12) !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(240, 107, 26, 0.34),
+      0 4px 16px rgba(240, 107, 26, 0.30) !important;
+  }
+}
+
