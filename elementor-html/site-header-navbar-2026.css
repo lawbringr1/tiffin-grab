@@ -1794,13 +1794,25 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #16201a !important; }
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a span,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #16201a !important; }
-/* tagline in logo: muted + compact (kept small so it doesn't bloat the bar) */
+/* tagline stacked BELOW the logo wordmark */
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  flex-wrap: nowrap !important;
+  gap: 0.04rem !important;
+}
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
-  color: rgba(22, 32, 26, 0.5) !important;
-  border-color: rgba(22, 32, 26, 0.16) !important;
-  font-size: 0.6rem !important;
-  letter-spacing: 0.01em !important;
+  display: block !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: rgba(22, 32, 26, 0.6) !important;
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.1 !important;
 }
 
 /* nav menu items (literal ID + attribute selector to win over UE ID-level defaults) */
@@ -1810,7 +1822,7 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
   font-family: var(--tg-font) !important; font-weight: 600 !important; font-size: 0.875rem !important;
   letter-spacing: 0 !important; padding: 0.45rem 0.6rem !important; margin: 0 !important;
   white-space: nowrap !important; max-width: none !important; overflow: visible !important; text-overflow: clip !important;
-  border-radius: 999px !important; background: transparent !important;
+  border-radius: 0.6rem !important; background: transparent !important;
   transition: background-color 0.18s ease, color 0.18s ease !important;
 }
 .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a span,
