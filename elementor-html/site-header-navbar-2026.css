@@ -1806,7 +1806,7 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
   display: block !important;
   border: 0 !important;
-  margin: 0 !important;
+  margin: 0.18rem 0 0 !important;
   padding: 0 !important;
   color: rgba(22, 32, 26, 0.6) !important;
   font-size: 0.62rem !important;
@@ -1822,7 +1822,7 @@ html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
   font-family: var(--tg-font) !important; font-weight: 600 !important; font-size: 0.875rem !important;
   letter-spacing: 0 !important; padding: 0.45rem 0.6rem !important; margin: 0 !important;
   white-space: nowrap !important; max-width: none !important; overflow: visible !important; text-overflow: clip !important;
-  border-radius: 0.6rem !important; background: transparent !important;
+  border-radius: 0.65rem !important; background: transparent !important;
   transition: background-color 0.18s ease, color 0.18s ease !important;
 }
 .elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a span,
