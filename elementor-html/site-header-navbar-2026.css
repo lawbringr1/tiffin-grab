@@ -52,94 +52,10 @@ header.elementor.elementor-1863.elementor-location-header {
   display: block !important;
 }
 
-/* ========== Sitewide promo strip (clickable link injected by inline header widget script) ========== */
-@keyframes tg-banner-alert {
-  0%,
-  36%,
-  64%,
-  100% {
-    transform: translateX(0);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 10px rgba(52, 195, 99, 0.22);
-  }
-  42% {
-    transform: translateX(-4px);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      0 0 26px 5px rgba(134, 239, 172, 0.55);
-  }
-  44% {
-    transform: translateX(4px);
-  }
-  46% {
-    transform: translateX(-3px);
-  }
-  48% {
-    transform: translateX(3px);
-  }
-  50% {
-    transform: translateX(0);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.18),
-      0 0 18px 3px rgba(134, 239, 172, 0.42);
-  }
-  56% {
-    transform: translateX(0);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      0 0 14px 2px rgba(52, 195, 99, 0.3);
-  }
-}
 
-.elementor-location-header.elementor-1863 .tg-referral-banner-link {
-  /* Promo banner temporarily disabled. Set back to `block` to re-enable. */
-  display: none !important;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-  text-decoration: none !important;
-  font-family: var(--tg-font);
-  font-size: 0.82rem;
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: 0.01em;
-  color: #ffffff !important;
-  background: linear-gradient(180deg, #34c363 0%, #1f9f4a 100%);
-  border-top: 1px solid rgba(20, 108, 53, 0.75);
-  border-bottom: 1px solid rgba(20, 108, 53, 0.75);
-  padding: 0.38rem 0.9rem;
-  animation: tg-banner-alert 3.5s ease-in-out infinite;
-  /* After navbar rows in flow; low z-index avoids covering inner nav if themes overlap layers. */
-  position: relative;
-  z-index: 0;
-  isolation: isolate;
-}
+/* Promo banner disabled — hidden site-wide (keyframes/styling removed). */
+.elementor-location-header.elementor-1863 .tg-referral-banner-link { display: none !important; }
 
-@media (prefers-reduced-motion: reduce) {
-  .elementor-location-header.elementor-1863 .tg-referral-banner-link {
-    animation: none;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  }
-}
-
-.elementor-location-header.elementor-1863 .tg-referral-banner-link:hover,
-.elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
-  color: #ffffff !important;
-  background: linear-gradient(180deg, #43d873 0%, #2bb558 100%);
-}
-
-.elementor-location-header.elementor-1863 .tg-referral-banner-link:focus-visible {
-  outline: 2px solid rgba(254, 226, 226, 0.95);
-  outline-offset: -2px;
-}
-
-@media (max-width: 767px) {
-  .elementor-location-header.elementor-1863 .tg-referral-banner-link {
-    font-size: 0.73rem;
-    padding: 0.34rem 0.65rem;
-  }
-}
 
 .elementor-location-header > .elementor-section {
   width: 100% !important;
@@ -1787,13 +1703,12 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
   outline: 2px solid rgba(29, 92, 50, 0.45);
   outline-offset: 3px;
 }
-
 /* =====================================================================
-   FLOATING PILL NAVBAR (2026 revamp)
-   Header location becomes a transparent sticky wrapper; the active nav
-   row (ef53437 desktop / 67924b6 mobile) becomes a centered floating
-   pill with blur + shadow. Pure CSS so it paints with the document
-   (no JS-driven layout shift / reload flicker). Last-in-file = wins.
+   NAVBAR 2026 — green brand floating pill (consolidated, optimized).
+   Header = transparent sticky wrapper; active nav row (ef53437 desktop /
+   67924b6 mobile) = one #34C363 glass pill. Flat internals, white text,
+   ghost account, orange cart. Pure CSS (paints with the document).
+   Replaces the layered session overrides with one authoritative block.
    ===================================================================== */
 .elementor-location-header.elementor-1863,
 header.elementor.elementor-1863.elementor-location-header {
@@ -1804,135 +1719,43 @@ header.elementor.elementor-1863.elementor-location-header {
   z-index: 999 !important;
   padding-block-start: calc(clamp(0.5rem, 1.6vw, 0.85rem) + env(safe-area-inset-top, 0px)) !important;
   padding-block-end: clamp(0.4rem, 1.2vw, 0.7rem) !important;
-  /* stable paint: avoid first-frame flash from late style application */
   contain: layout style;
 }
 
-/* the visible pill = whichever nav row is shown at this breakpoint */
+/* the floating pill (brand green #34C363) */
 .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
 .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
   width: min(100% - 1.5rem, 80rem) !important;
   max-width: min(100% - 1.5rem, 80rem) !important;
   margin-inline: auto !important;
-  background: rgba(255, 255, 255, 0.66) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(165%);
-  backdrop-filter: blur(20px) saturate(165%);
-  border: 1px solid rgba(22, 32, 26, 0.08) !important;
+  background: linear-gradient(180deg, rgba(52, 195, 99, 0.82) 0%, rgba(37, 163, 80, 0.85) 100%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   border-radius: 999px !important;
-  box-shadow:
-    0 8px 24px rgba(22, 32, 26, 0.12),
-    0 1px 2px rgba(22, 32, 26, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 12px 34px rgba(20, 110, 56, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   padding-inline: clamp(0.85rem, 2vw, 1.4rem) !important;
-  /* keep submenus / mobile drawer from being clipped by the pill radius */
   overflow: visible !important;
-  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
-
-/* solid-fill fallback when blur/transparency is unavailable */
+.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent { min-height: 3.25rem; }
+@media (max-width: 1024px) {
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { min-height: 3rem; }
+}
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
-  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
-    background: #ffffff !important;
-  }
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { background: #2aa757 !important; }
 }
 
-/* reserve consistent height so each navigation paints with zero shift */
-.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent { min-height: 3.5rem; }
-@media (max-width: 1024px) {
-  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { min-height: 3.25rem; }
-}
-
-/* surface tint behind the floating header (was full-bleed white before) */
-body:has(.elementor-location-header.elementor-1863) .elementor-location-header.elementor-1863 { background: transparent !important; }
-
-@media (prefers-reduced-motion: reduce) {
-  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
-  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { transition: none; }
-}
-
-/* ---- Nav icon buttons (shadcn-style) ---------------------------------
-   Account = ghost/outline; Cart = refined accent. Replaces the flat orange
-   squares with defined, consistent 40px buttons + hover/focus states. */
-.elementor-1863 .elementor-element-db8c479 .elementor-icon,
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-  min-width: 2.5rem !important;
-  border-radius: 0.7rem !important;
-  box-sizing: border-box !important;
-  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
-}
-/* Account: ghost / outline */
-.elementor-1863 .elementor-element-db8c479 .elementor-icon {
-  background: transparent !important;
-  color: #16201a !important;
-  border: 1px solid rgba(22, 32, 26, 0.12) !important;
-}
-.elementor-1863 .elementor-element-db8c479 .elementor-icon:hover,
-.elementor-1863 .elementor-element-db8c479 .elementor-icon:focus-visible {
-  background: rgba(22, 32, 26, 0.05) !important;
-  border-color: rgba(22, 32, 26, 0.2) !important;
-}
-/* Cart (desktop + mobile): refined accent */
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon {
-  background: #f06b1a !important;
-  color: #ffffff !important;
-  border: 1px solid transparent !important;
-  box-shadow: 0 6px 16px rgba(240, 107, 26, 0.28) !important;
-}
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:hover,
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:focus-visible,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon:hover,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon:focus-visible {
-  background: #d3540f !important;
-  box-shadow: 0 8px 20px rgba(240, 107, 26, 0.34) !important;
-}
-.elementor-1863 .elementor-element-db8c479 .elementor-icon:active,
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:active,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon:active { transform: translateY(1px); }
-/* keep the cart count badge anchored to the icon corner */
-.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
-.elementor-1863 .elementor-element-6974fa5 .elementor-icon { position: relative !important; overflow: visible !important; }
-
-/* =====================================================================
-   MODERN NAV FLATTEN (2026) — one clean glass pill, no nested boxes.
-   Kills the white logo lockup, the gray nav-links pill, and the oversized
-   orange icon wrappers so the bar reads modern, not "old bar in a pill".
-   ===================================================================== */
-/* logo + slogan: drop the white pill, keep the wordmark + mark + tagline */
-.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
-.elementor-1863 .elementor-element-95df657 .elementor-heading-title {
-  background: transparent !important;
-  border: 0 !important;
-  box-shadow: none !important;
-  padding: 0 0.25rem !important;
-}
-/* nav links: drop the gray pill, plain links on the glass */
-.elementor-1863 .elementor-element-21c3db0,
-.elementor-1863 .elementor-element-21c3db0 > .elementor-widget-container,
-.elementor-1863 .elementor-element-21c3db0 .uc-nav-menu,
-.elementor-1863 .elementor-element-21c3db0 ul {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
-}
-/* subtle hover affordance on each link (replaces the static gray track) */
-.elementor-1863 .elementor-element-21c3db0 a {
-  border-radius: 999px !important;
-  transition: background-color 0.18s ease, color 0.18s ease !important;
-}
-.elementor-1863 .elementor-element-21c3db0 a:hover,
-.elementor-1863 .elementor-element-21c3db0 a:focus-visible {
-  background: rgba(22, 32, 26, 0.06) !important;
-  color: #1f9f4a !important;
-}
-/* icon buttons: strip the oversized orange wrapper; inner .elementor-icon is the 40px button */
+/* flatten nested boxes: logo lockup + nav track + icon wrappers */
+html body .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
+html body .elementor-1863 .elementor-element-95df657 .elementor-heading-title,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 > .elementor-widget-container,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu,
+html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu > .elementor-widget-container,
+html body .elementor-1863 .elementor-element-21c3db0,
+html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu,
+html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu,
 .elementor-1863 .elementor-element-db8c479,
 .elementor-1863 .elementor-element-6ec8fc1,
 .elementor-1863 .elementor-element-6974fa5,
@@ -1940,112 +1763,87 @@ body:has(.elementor-location-header.elementor-1863) .elementor-location-header.e
 .elementor-1863 .elementor-element-6ec8fc1 > .elementor-widget-container,
 .elementor-1863 .elementor-element-6974fa5 > .elementor-widget-container {
   background: transparent !important;
-  padding: 0 !important;
   border: 0 !important;
   box-shadow: none !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
-  width: auto !important;
-  height: auto !important;
+}
+.elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title,
+.elementor-1863 .elementor-element-95df657 .elementor-heading-title { padding: 0 0.25rem !important; }
+.elementor-1863 .elementor-element-db8c479,
+.elementor-1863 .elementor-element-6ec8fc1,
+.elementor-1863 .elementor-element-6974fa5,
+.elementor-1863 .elementor-element-db8c479 > .elementor-widget-container,
+.elementor-1863 .elementor-element-6ec8fc1 > .elementor-widget-container,
+.elementor-1863 .elementor-element-6974fa5 > .elementor-widget-container {
+  padding: 0 !important; min-width: 0 !important; min-height: 0 !important; width: auto !important; height: auto !important;
 }
 
-/* =====================================================================
-   DARK GREEN BRAND PILL — the new modern navbar identity.
-   Glassy dark-green pill, white wordmark + links + ghost icons, orange
-   cart accent. Defined on every page (never reads as a white box).
-   ===================================================================== */
-.elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
-.elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent {
-  background: linear-gradient(180deg, #34c363 0%, #25a350 100%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(135%);
-  backdrop-filter: blur(18px) saturate(135%);
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow:
-    0 12px 34px rgba(20, 110, 56, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-}
-/* logo wordmark: white "Tiffin", light-green "Grab" */
+/* logo wordmark: white + light-green "Grab", muted slogan */
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a { color: #ffffff !important; }
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title a span,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title a span { color: #8fe3ab !important; }
-/* slogan / tagline (::after) muted on dark */
 .elementor-1863 .elementor-element-94e7fd8 .elementor-heading-title::after,
 .elementor-1863 .elementor-element-95df657 .elementor-heading-title::after {
-  color: rgba(255, 255, 255, 0.62) !important;
-  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: rgba(255, 255, 255, 0.62) !important; border-color: rgba(255, 255, 255, 0.22) !important;
 }
-/* nav links: white with a soft hover pill */
-.elementor-1863 .elementor-element-21c3db0 a,
-.elementor-1863 .elementor-element-21c3db0 a span { color: rgba(255, 255, 255, 0.92) !important; }
-.elementor-1863 .elementor-element-21c3db0 a:hover,
-.elementor-1863 .elementor-element-21c3db0 a:focus-visible { background: rgba(255, 255, 255, 0.14) !important; color: #ffffff !important; }
-.elementor-1863 .elementor-element-21c3db0 a:hover span { color: #ffffff !important; }
-/* account: ghost outline in white */
+
+/* nav menu items (literal ID + attribute selector to win over UE ID-level defaults) */
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a {
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-family: var(--tg-font) !important; font-weight: 600 !important; font-size: 0.9rem !important;
+  letter-spacing: 0.01em !important; padding: 0.5rem 0.9rem !important; margin: 0 0.1rem !important;
+  border-radius: 999px !important; background: transparent !important;
+  transition: background-color 0.18s ease, color 0.18s ease !important;
+}
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a span,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a span { color: inherit !important; }
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:focus-visible,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:hover,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:focus-visible {
+  color: #ffffff !important; background: rgba(255, 255, 255, 0.18) !important;
+}
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
+.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current_page_item > a {
+  color: #ffffff !important; background: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* icon buttons: account ghost (white), cart orange accent, 40px */
+.elementor-1863 .elementor-element-db8c479 .elementor-icon,
+.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
+.elementor-1863 .elementor-element-6974fa5 .elementor-icon {
+  display: inline-flex !important; align-items: center !important; justify-content: center !important;
+  width: 2.5rem !important; height: 2.5rem !important; min-width: 2.5rem !important;
+  border-radius: 0.7rem !important; box-sizing: border-box !important; position: relative !important; overflow: visible !important;
+  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
+}
 .elementor-1863 .elementor-element-db8c479 .elementor-icon {
-  background: transparent !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  background: transparent !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.28) !important;
 }
 .elementor-1863 .elementor-element-db8c479 .elementor-icon:hover,
 .elementor-1863 .elementor-element-db8c479 .elementor-icon:focus-visible {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
+  background: rgba(255, 255, 255, 0.14) !important; border-color: rgba(255, 255, 255, 0.45) !important;
 }
-/* cart: orange accent pops on green */
 .elementor-1863 .elementor-element-6ec8fc1 .elementor-icon,
 .elementor-1863 .elementor-element-6974fa5 .elementor-icon {
-  background: #f06b1a !important;
-  color: #ffffff !important;
-  border: 0 !important;
+  background: #f06b1a !important; color: #ffffff !important; border: 0 !important;
   box-shadow: 0 6px 16px rgba(240, 107, 26, 0.34) !important;
 }
 .elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:hover,
 .elementor-1863 .elementor-element-6974fa5 .elementor-icon:hover { background: #d3540f !important; }
-/* mobile hamburger / side-menu toggle: white on dark pill */
+.elementor-1863 .elementor-element-db8c479 .elementor-icon:active,
+.elementor-1863 .elementor-element-6ec8fc1 .elementor-icon:active,
+.elementor-1863 .elementor-element-6974fa5 .elementor-icon:active { transform: translateY(1px); }
+
+/* mobile hamburger: white on green */
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle,
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle * { color: #ffffff !important; }
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle svg,
 .elementor-1863 .elementor-element-4e5b519 .uc-side-menu-toggle path { stroke: #ffffff !important; fill: #ffffff !important; }
 
-/* ---- Flatten the nav-links track (was a gray --tg-muted pill) ---------- */
-html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37,
-html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 > .elementor-widget-container,
-html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu,
-html body .elementor-1863 .elementor-element-ef53437 .elementor-element-39bbf37 .elementor-widget-ucaddon_nav_menu > .elementor-widget-container,
-html body .elementor-1863 .elementor-element-21c3db0,
-html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu,
-html body .elementor-1863 .elementor-element-21c3db0 .ue-nav-menu > ul.ue-menu {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: 0 !important;
+@media (prefers-reduced-motion: reduce) {
+  .elementor-1863 .elementor-element.elementor-element-ef53437.e-con.e-parent,
+  .elementor-1863 .elementor-element.elementor-element-67924b6.e-con.e-parent { transition: none; }
 }
 
-/* ---- Menu items: clean white links on the green pill, pill hover ------- */
-.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
-header.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a,
-.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-family: var(--tg-font) !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  letter-spacing: 0.01em !important;
-  padding: 0.5rem 0.9rem !important;
-  margin: 0 0.1rem !important;
-  border-radius: 999px !important;
-  background: transparent !important;
-  transition: background-color 0.18s ease, color 0.18s ease !important;
-}
-.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:hover,
-.elementor-location-header #uc_nav_menu_elementor_21c3db0.ue-nav-menu > ul.ue-menu > li > a:focus-visible,
-.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:hover,
-.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li > a:focus-visible {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.18) !important;
-}
-/* active / current page link */
-.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current-menu-item > a,
-.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul.ue-menu > li.current_page_item > a {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.14) !important;
-}
