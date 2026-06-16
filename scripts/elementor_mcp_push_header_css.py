@@ -159,7 +159,7 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
         f"{tg_mobile_dock_inner_html()}</nav>"
     )
     wa_beacon_ssr = tg_whatsapp_beacon_markup(wa_beacon_url)
-    script_tpl = """
+    script_tpl = r"""
 <script id="tg-header-referral-banner-script">
 (function () {
   var header = document.querySelector('header.elementor.elementor-1863.elementor-location-header, .elementor-location-header.elementor-1863');

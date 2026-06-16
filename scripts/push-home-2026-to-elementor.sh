@@ -11,6 +11,7 @@ PY="$ROOT/scripts/elementor_mcp_push_html_widget.py"
 BUNDLE_PY="$ROOT/scripts/elementor_mcp_push_widgets_bundle.py"
 
 python3 "$BUNDLE_PY" "$ROOT/elementor-html/home-2026-single-page-template-1589-widgets.json"
+python3 "$BUNDLE_PY" "$ROOT/elementor-html/home-9825-whatsapp-button-link.json"
 
 # Template "Home 2026 Hero" (embedded on Home 2026 page)
 python3 "$PY" --post-id 9825 --element-id 4fd2df8 --html "$ROOT/elementor-html/home-2026-hero-tags.html"

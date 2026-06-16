@@ -1549,13 +1549,13 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
   display: inline-flex;
   flex-direction: row-reverse;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 0;
   box-sizing: border-box;
   width: var(--tg-wa-beacon-width);
   height: var(--tg-wa-beacon-size);
   margin: 0;
-  padding: 0 0.875rem 0 0;
+  padding: 0;
   border: none;
   border-radius: 9999px;
   background: var(--e-global-color-whatsapp, #25d366);
@@ -1601,10 +1601,11 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
 .tg-wa-beacon__label {
   position: relative;
   z-index: 1;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
+  max-width: 0;
   min-width: 0;
   display: block;
-  padding: 0 0.2rem 0 0.85rem;
+  padding: 0;
   margin: 0;
   background: transparent;
   color: #fff;
@@ -1614,11 +1615,14 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
   line-height: 1.2;
   letter-spacing: 0.01em;
   white-space: nowrap;
+  overflow: hidden;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
   transform: translate3d(0.4rem, 0, 0);
   transition:
+    max-width 0.52s var(--tg-wa-beacon-ease),
+    padding 0.52s var(--tg-wa-beacon-ease),
     opacity 0.32s ease,
     transform 0.52s var(--tg-wa-beacon-ease),
     visibility 0s linear 0.52s;
@@ -1642,7 +1646,6 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
     --tg-wa-beacon-offset-x: 2rem;
     --tg-wa-beacon-offset-y: 0;
     bottom: calc(5.15rem + env(safe-area-inset-bottom, 0px));
-    padding-right: 0.78rem;
   }
 
   .tg-wa-beacon__icon {
@@ -1682,10 +1685,14 @@ header.elementor-location-header [id^="uc_nav_menu_elementor_"].ue-nav-menu > ul
 
   .tg-wa-beacon:hover .tg-wa-beacon__label,
   .tg-wa-beacon:focus-visible .tg-wa-beacon__label {
+    max-width: 9rem;
+    padding: 0 0.2rem 0 0.85rem;
     opacity: 1;
     visibility: visible;
     transform: translate3d(0, 0, 0);
     transition:
+      max-width 0.52s var(--tg-wa-beacon-ease),
+      padding 0.52s var(--tg-wa-beacon-ease),
       opacity 0.36s ease 0.14s,
       transform 0.52s var(--tg-wa-beacon-ease) 0.1s,
       visibility 0s;

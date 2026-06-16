@@ -3184,6 +3184,33 @@
         return new Date(y, mo, d);
       }
 
+      /**
+       * Re-validates a selected start date against "tomorrow" recomputed live in the
+       * visitor's local timezone. Catches selections that went stale (e.g. page left
+       * open past midnight, so the chosen "tomorrow" is now today/past) and weekends —
+       * mirroring the server rule (future date, Monday–Friday). Returns an error
+       * message, or null when the date is valid.
+       */
+      function startDateProblem(ymd) {
+        if (!ymd) return "Please select a start date.";
+        var d = parseLocalYMD(ymd);
+        if (!d) return "Please select a valid start date.";
+        var now = new Date();
+        var minTomorrow = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate() + 1
+        ).getTime();
+        if (localDayStart(d).getTime() < minTomorrow) {
+          return "Your start date has passed — please pick the next day or later.";
+        }
+        var dow = d.getDay();
+        if (dow === 0 || dow === 6) {
+          return "We deliver Monday–Friday. Please choose a weekday.";
+        }
+        return null;
+      }
+
       /** Matches date-fns `format(d, "PPP")` (localized long date, no weekday). */
       function formatLongDateFromYMD(ymd) {
         var d = parseLocalYMD(ymd);
@@ -3457,6 +3484,13 @@
         }
 
         function render() {
+          // Drop a selection that went stale (page open past midnight) or landed on a
+          // weekend, so the trigger label never shows an invalid date.
+          if (selectedYmd && startDateProblem(selectedYmd)) {
+            selectedYmd = "";
+            syncValue();
+            updateTriggerLabel();
+          }
           var y = view.getFullYear();
           var m = view.getMonth();
           titleEl.textContent = view.toLocaleString(undefined, { month: "long", year: "numeric" });
@@ -3487,8 +3521,11 @@
             var ymd = formatLocalYMD(cellDate);
             btn.textContent = String(dayNum);
             var cellT = localDayStart(cellDate).getTime();
-            if (cellT < minT) {
+            var cellDow = cellDate.getDay();
+            var cellIsWeekend = cellDow === 0 || cellDow === 6;
+            if (cellT < minT || cellIsWeekend) {
               btn.disabled = true;
+              if (cellIsWeekend) btn.classList.add("tg-tplans-cal-day--weekend");
             } else {
               btn.setAttribute("aria-pressed", selectedYmd === ymd ? "true" : "false");
               btn.dataset.ymd = ymd;
@@ -3539,6 +3576,8 @@
         var curSym = cfgEl.dataset.symbol || "$";
 
         inner.innerHTML = "";
+
+        var startDateFieldName = null;
 
         var optionsSlot = document.createElement("div");
         optionsSlot.className = "tg-tplans-options-slot";
@@ -3744,6 +3783,7 @@
               var inpType = field.inputType || (key === "date" ? "date" : "text");
               var isDateField = field.tag === "input" && (inpType === "date" || key === "date");
               if (isDateField) {
+                startDateFieldName = field.name;
                 wrap.appendChild(mountPreferredStartCalendar(field, values, updateBreakdown));
               } else {
                 var inp = document.createElement("input");
@@ -3770,6 +3810,15 @@
               var f = sch.apo[i];
               if (f.required && (values[f.name] === undefined || values[f.name] === "")) {
                 showToast("Please complete: " + (f.label || f.name));
+                return;
+              }
+            }
+            if (startDateFieldName) {
+              var sdProblem = startDateProblem(values[startDateFieldName]);
+              if (sdProblem) {
+                values[startDateFieldName] = "";
+                if (typeof updateBreakdown === "function") updateBreakdown();
+                showToast(sdProblem);
                 return;
               }
             }
