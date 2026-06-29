@@ -94,19 +94,29 @@ def with_push_build_stamp(css: str) -> str:
     return stamp + stripped.lstrip("\n")
 
 
-TG_MOBILE_DOCK_VERSION = "tg-dock-v3"
+TG_MOBILE_DOCK_VERSION = "tg-dock-v4"
 TG_WA_BEACON_URL_FILE = "elementor-html/tg-whatsapp-meal-plans.url"
+# Catering-specific beacon message: floating "Chat on WhatsApp" uses this on /catering/.
+TG_WA_CATERING_URL_FILE = "elementor-html/tg-whatsapp-catering.url"
+
+
+def _read_url_file(rel: str, root: Path | None = None) -> str:
+    base = root or repo_root()
+    path = base / rel
+    if not path.is_file():
+        sys.exit(f"WhatsApp URL file not found: {path}")
+    url = path.read_text(encoding="utf-8").strip()
+    if not url:
+        sys.exit(f"WhatsApp URL file is empty: {path}")
+    return url
 
 
 def tg_whatsapp_beacon_url(root: Path | None = None) -> str:
-    base = root or repo_root()
-    path = base / TG_WA_BEACON_URL_FILE
-    if not path.is_file():
-        sys.exit(f"WhatsApp beacon URL file not found: {path}")
-    url = path.read_text(encoding="utf-8").strip()
-    if not url:
-        sys.exit(f"WhatsApp beacon URL file is empty: {path}")
-    return url
+    return _read_url_file(TG_WA_BEACON_URL_FILE, root)
+
+
+def tg_whatsapp_catering_url(root: Path | None = None) -> str:
+    return _read_url_file(TG_WA_CATERING_URL_FILE, root)
 
 
 def tg_whatsapp_beacon_markup(url: str) -> str:
@@ -135,6 +145,9 @@ def tg_mobile_dock_inner_html() -> str:
         '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/referral-program/">'
         '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">card_giftcard</span>'
         '<span class="tg-mobile-dock__label">Referral</span></a>'
+        '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/catering/">'
+        '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">restaurant</span>'
+        '<span class="tg-mobile-dock__label">Catering</span></a>'
         '<a class="tg-mobile-dock__item" href="https://tiffingrab.ca/tiffin-plans/">'
         '<span class="material-symbols-outlined tg-mobile-dock__icon" aria-hidden="true">set_meal</span>'
         '<span class="tg-mobile-dock__label">Plans</span></a>'
@@ -148,9 +161,10 @@ def tg_mobile_dock_inner_html() -> str:
     return base
 
 
-def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
+def wrap_inline_style(css: str, *, wa_beacon_url: str, wa_catering_url: str) -> str:
     dock_inner_js = json.dumps(tg_mobile_dock_inner_html(), ensure_ascii=False)
     wa_beacon_url_js = json.dumps(wa_beacon_url, ensure_ascii=False)
+    wa_catering_url_js = json.dumps(wa_catering_url, ensure_ascii=False)
     dock_nav_ssr = (
         "<nav "
         'class="tg-mobile-dock" '
@@ -169,16 +183,63 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
   */
   if (header) {
     /*
-      Promo banner temporarily DISABLED (removed on request). Remove any existing strip on load.
-      To restore: re-create the link and set href/textContent/aria-label, e.g.
-        link = document.createElement('a'); link.className = 'tg-referral-banner-link';
-        header.appendChild(link);
-        link.href = 'https://tiffingrab.ca/healthy-meals/';
-        link.textContent = 'New: Healthy Meals launching June 22 - fresh, macro-balanced meals delivered across the GTA. Tap to preview.';
-        link.setAttribute('aria-label', 'Open Healthy Meals page');
+      Promo banner ACTIVE: rotates between slides (TG_BANNER_SLIDES) every 6s BELOW the navbar.
+      Create if missing; text/href/aria swap per slide. Appended as the last child of the header so
+      it renders under the floating navbar pill (CSS keeps it in-flow). Pauses on hover/focus and when
+      the tab is hidden; reduced-motion users get instant swaps (no fade). To disable: empty the
+      slide array (or remove the block) and do `var l = header.querySelector('.tg-referral-banner-link'); if (l) l.remove();`.
+      To run a single static message again: leave one entry in TG_BANNER_SLIDES.
     */
+    var TG_BANNER_SLIDES = [
+      {
+        href: 'https://tiffingrab.ca/tiffin-plans/',
+        text: '$20 OFF for new customers - new customer signup bonus + FREE delivery. Tap to view plans.',
+        aria: 'View Tiffin plans - $20 new customer signup bonus and free delivery'
+      },
+      {
+        href: 'https://tiffingrab.ca/catering/',
+        text: 'Now serving CATERING - parties, events & bulk orders. Tap to explore catering.',
+        aria: 'Explore TiffinGrab catering - parties, events and bulk orders'
+      }
+    ];
     var link = header.querySelector('.tg-referral-banner-link');
-    if (link) link.remove();
+    if (!link) {
+      link = document.createElement('a');
+      link.className = 'tg-referral-banner-link';
+      header.appendChild(link);
+    }
+    var tgSlideIdx = 0;
+    function tgApplyBannerSlide(i) {
+      var s = TG_BANNER_SLIDES[i];
+      if (!s) return;
+      link.href = s.href;
+      link.textContent = s.text;
+      link.setAttribute('aria-label', s.aria);
+    }
+    tgApplyBannerSlide(0);
+    if (TG_BANNER_SLIDES.length > 1) {
+      var tgReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var tgBannerPaused = false;
+      if (!tgReduceMotion) {
+        link.style.transition = 'opacity .4s ease';
+        link.style.opacity = '1';
+      }
+      link.addEventListener('mouseenter', function () { tgBannerPaused = true; });
+      link.addEventListener('mouseleave', function () { tgBannerPaused = false; });
+      link.addEventListener('focusin', function () { tgBannerPaused = true; });
+      link.addEventListener('focusout', function () { tgBannerPaused = false; });
+      setInterval(function () {
+        if (tgBannerPaused || document.hidden) return;
+        var next = (tgSlideIdx + 1) % TG_BANNER_SLIDES.length;
+        if (tgReduceMotion) { tgSlideIdx = next; tgApplyBannerSlide(next); return; }
+        link.style.opacity = '0';
+        setTimeout(function () {
+          tgSlideIdx = next;
+          tgApplyBannerSlide(next);
+          link.style.opacity = '1';
+        }, 400);
+      }, 6000);
+    }
   }
 
   /* Cart quantity badge on Elementor icon widgets that link to the cart page (not Menu Cart widget). */
@@ -542,6 +603,13 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
   }
 
   var TG_WA_BEACON_URL = __WA_BEACON_URL__;
+  var TG_WA_CATERING_URL = __WA_CATERING_URL__;
+
+  function tgBeaconUrlForPage() {
+    /* Catering page: floating beacon sends the catering/bulk-order message instead of meal-plans. */
+    var p = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+    return p === '/catering' || p.endsWith('/catering') ? TG_WA_CATERING_URL : TG_WA_BEACON_URL;
+  }
 
   function ensureWhatsAppBeacon() {
     var el = document.getElementById('tg-wa-beacon');
@@ -558,7 +626,7 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
         '<span class="tg-wa-beacon__label">Chat on WhatsApp</span>';
       document.body.appendChild(el);
     }
-    el.href = TG_WA_BEACON_URL;
+    el.href = tgBeaconUrlForPage();
     if (el.parentNode !== document.body) {
       document.body.appendChild(el);
     }
@@ -594,6 +662,7 @@ def wrap_inline_style(css: str, *, wa_beacon_url: str) -> str:
         .replace("__DOCK_VERSION__", json.dumps(TG_MOBILE_DOCK_VERSION))
         .replace("__DOCK_INNER_JSON__", dock_inner_js)
         .replace("__WA_BEACON_URL__", wa_beacon_url_js)
+        .replace("__WA_CATERING_URL__", wa_catering_url_js)
     )
     return (
         f'<style id="tg-header-navbar-rules">\n{css.rstrip()}\n</style>\n'
@@ -708,6 +777,7 @@ def main() -> None:
 
     nav_stamped = with_push_build_stamp(nav_path.read_text(encoding="utf-8"))
     wa_beacon_url = tg_whatsapp_beacon_url(root)
+    wa_catering_url = tg_whatsapp_catering_url(root)
     base_url, auth = load_mcp(mcp_path)
     session_id = mcp_initialize(base_url, auth)
     replace = not args.append
@@ -780,7 +850,7 @@ def main() -> None:
                 arguments={
                     "post_id": args.header_post_id,
                     "element_id": element_id,
-                    "settings": {"html": wrap_inline_style(nav_stamped, wa_beacon_url=wa_beacon_url)},
+                    "settings": {"html": wrap_inline_style(nav_stamped, wa_beacon_url=wa_beacon_url, wa_catering_url=wa_catering_url)},
                 },
                 rpc_id=rpc,
             )
